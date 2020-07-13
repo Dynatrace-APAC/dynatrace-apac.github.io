@@ -3,8 +3,8 @@
   "format": "html",
   "prefix": "https://storage.googleapis.com",
   "mainga": "UA-49880327-14",
-  "updated": "2020-07-13T04:17:20Z",
-  "id": "training",
+  "updated": "2020-07-13T04:22:32Z",
+  "id": "kubernetes",
   "duration": 31,
   "title": "Kubernetes with Dynatrace",
   "authors": "Brandon Neo",
@@ -21,5 +21,5 @@
     "beginner"
   ],
   "feedback": "https://thebrandneo.com",
-  "url": "training"
+  "url": "kubernetes"
 }
