@@ -1,0 +1,25 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2020-07-13T01:29:20Z",
+  "id": "training",
+  "duration": 13,
+  "title": "Dynatrace K8s Training",
+  "authors": "Brandon Neo",
+  "summary": "Dynatrace K8s Training",
+  "source": "training.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "meta"
+  ],
+  "tags": [
+    "beginner"
+  ],
+  "feedback": "https://thebrandneo.com",
+  "url": "training"
+}
