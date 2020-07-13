@@ -38,17 +38,17 @@
 </ul>
 <h2 class="checklist" is-upgraded>What you&#39;ll learn</h2>
 <ul class="checklist">
-<li>Dynatrace integration with Kubernetes</li>
+<li>Deploying Dynatrace Operator via Helm Chart on Kubernetes</li>
+<li>Setup Kubernetes integration on Dynatrace</li>
 <li>Enabling early access feature flags in Dynatrace</li>
-<li>...</li>
+<li>Discover Kubernetes View on Dynatace</li>
 </ul>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="Setup your GKE Environment" duration="5">
-        <p>Setting up your Google Kubernetes Environment (GKE)</p>
-<h2 is-upgraded>Sign up for a Google Cloud Platform Account</h2>
+        <h2 is-upgraded>Sign up for a Google Cloud Platform Account</h2>
 <p>Head over to <a href="https://cloud.google.com/free/" target="_blank">Google Cloud</a> and sign up for a free GCP account with your existing Google account.</p>
 <p>You can also signup for a new Google Account if you don&#39;t have one</p>
 <p>Upon signup, you will have free credits tied to your GCP account. (12 months + 400AUD)</p>
@@ -78,7 +78,7 @@ gcloud compute instances create dynatrace-activegate --image-family ubuntu-1604-
     
       <google-codelab-step label="Setting up your Kubernetes Integration" duration="5">
         <p>As per the official instructions <a href="https://www.dynatrace.com/support/help/technology-support/cloud-platforms/kubernetes/monitoring/connect-kubernetes-clusters-to-dynatrace/" target="_blank">here</a> for the Kubernetes integration, you will need to setup an Environment Activegate first.</p>
-<p>SSH into Dynatrace-Activegate terminal and install Activegate</p>
+<h2 is-upgraded>SSH into Dynatrace-Activegate terminal and install Activegate</h2>
 <ol type="1">
 <li>On the left navigation bar in Google Cloud, go to <strong>Compute Engine</strong> -&gt; <strong>VM instances</strong><img alt="Activegate-connected" src="img/913f1f2f9a48fb05.png"></li>
 <li>Click on the SSH button on the <strong>dynatrace-activegate</strong> row and SSH into the instance<br><img alt="Activegate-connected" src="img/f87ae0de334c4442.png"></li>
@@ -90,7 +90,7 @@ gcloud compute instances create dynatrace-activegate --image-family ubuntu-1604-
 </ol>
 <p>Once completed, you should see Activegate under Deployment Status.</p>
 <p class="image-container"><img alt="Activegate-connected" src="img/17fa631de624d993.png"></p>
-<p>Setup the K8S Overview Dashboard</p>
+<h2 is-upgraded>Setup the K8S Overview Dashboard</h2>
 <p>Go to Settings -&gt; Process and Containers -&gt; Process group detection -&gt; Enable Cloud Application and workload detection</p>
 <p class="image-container"><img alt="Enable Cloud Workload" src="img/82a117212e749ac6.png"></p>
 <p>Automating the steps from our offical <a href="https://www.dynatrace.com/support/help/technology-support/cloud-platforms/kubernetes/installation-and-operation/further-integrations/connect-your-kubernetes-clusters-to-dynatrace/" target="_blank">documentation page</a>, we provided the API URL and bearer token automatically via API. Back in your main Cloud Shell terminal, enter the below</p>
@@ -148,9 +148,7 @@ gcloud compute instances create dynatrace-activegate --image-family ubuntu-1604-
     
       <google-codelab-step label="Setting up Hipster Shop" duration="5">
         <p>For our Hands-On, you will need to run <a href="https://github.com/GoogleCloudPlatform/microservices-demo" target="_blank">Hipster Shop</a> which is a Google sample application.</p>
-<ol type="1">
-<li>Run the Hipster Shop</li>
-</ol>
+<h2 is-upgraded>Run the Hipster Shop</h2>
 <pre><code>wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/master/deploy.sh | bash
 </code></pre>
 <p>Once deployed, you can locate the front-end endpoint from GCP (<strong>Kubernetes Engine -&gt; Services &amp; Ingress</strong>)</p>
@@ -162,15 +160,11 @@ gcloud compute instances create dynatrace-activegate --image-family ubuntu-1604-
       </google-codelab-step>
     
       <google-codelab-step label="Exploring Dynatrace" duration="5">
-        <ol type="1">
-<li>Automatic Discovery of services</li>
-</ol>
+        <h2 is-upgraded>Automatic Discovery of services</h2>
 <p>In Dynatrace, go to Transactions and Services to see the automatic 5 discovered services.<br><img alt="Discovered Services" src="img/9fdbb936919835e2.png"></p>
 <p>You will realized that some services are discovered but some might not match <a href="https://github.com/GoogleCloudPlatform/microservices-demo#service-architecture" target="_blank">Hipster Shop&#39;s Service architecture</a>.<br>Hipster Shop uses cutting edge technologies (such as GPRC) which Dynatrace supports with the constant evolution in the cloud.</p>
 <p class="image-container"><img alt="Architecture" src="img/a216cf5c52b7fca0.png"></p>
-<ol type="1">
-<li>Enabling additional features within OneAgent</li>
-</ol>
+<h2 is-upgraded>Enabling additional features within OneAgent</h2>
 <p>Because of the rapid rate of change coming to OneAgent, features that are in Early Access aren&#39;t automatically enabled by default.<br>This is to prevent unforseen circumstances which might impact your production environments. For the purposes of workshop, we can enable these features. Go to <strong>Settings -&gt; Service-side service monitoring -&gt; Deep Monitoring -&gt; New Oneagent Features</strong></p>
 <p>Under Global Settings, enable the following feature flags. They are on different pages so you would need to toggle through the pages.</p>
 <p>You can use the search filter bar to search for <strong>&#34;GRPC&#34;</strong><img alt="GRPC-Features" src="img/42aac0b7b99d0a8a.png"></p>
@@ -190,41 +184,31 @@ gcloud compute instances create dynatrace-activegate --image-family ubuntu-1604-
       <google-codelab-step label="Exploring Kubernetes View" duration="5">
         <p>Explore the various functionalities within the Kubernetes View such as Cluster Utilization, Cluster Workloads, K8S Events</p>
 <p class="image-container"><img alt="KubernetesUI" src="img/7de1f55ad62c8ff8.png"></p>
-<ol type="1">
-<li>Analyze the Kubernetes Cluster utilization<br><br><ul>
+<h2 is-upgraded>Analyze the Kubernetes Cluster utilization</h2>
+<ul>
 <li>Mouseover and note the CPU and Memory usage with the Min / Max</li>
 <li>Click on Analyze Nodes to drill deeper into each node</li>
 </ul>
-</li>
-</ol>
 <p class="image-container"><img alt="KubernetesUI" src="img/c60567287e19d7e0.png"></p>
-<ol type="1">
-<li>Analyze the Kubernetes Cluster Workloads<br><br><ul>
+<h2 is-upgraded>Analyze the Kubernetes Cluster Workloads</h2>
+<ul>
 <li>Notice the Workloads and Pods running spilt between Kubernetes controllers</li>
 </ul>
-</li>
-</ol>
 <p class="image-container"><img alt="KubernetesUI" src="img/bd0a8e59082e9f66.png"></p>
-<ol type="1">
-<li>Analyze the Kubernetes Events<br><br><ul>
+<h2 is-upgraded>Analyze the Kubernetes Events</h2>
+<ul>
 <li>Notice the different types of events BackOff, Unhealthy</li>
 </ul>
-</li>
-</ol>
 <p class="image-container"><img alt="KubernetesUI" src="img/f2c4d581cfc51e33.png"></p>
-<ol type="1">
-<li>Analyze the Kubernetes Namespace<br><br><ul>
+<h2 is-upgraded>Analyze the Kubernetes Namespace</h2>
+<ul>
 <li>Click on <strong>hipster-shop</strong> and drill down into various kubernetes services (Cloud applications)</li>
 </ul>
-</li>
-</ol>
 <p class="image-container"><img alt="KubernetesUI" src="img/f7172d8068080035.png"></p>
-<ol type="1">
-<li>Explore Cloud Applications by clicking onto them<br><br><ul>
+<h2 is-upgraded>Explore Cloud Applications by clicking onto them</h2>
+<ul>
 <li>Click onto each of them and discover their supporting technologies</li>
 </ul>
-</li>
-</ol>
 <p class="image-container"><img alt="KubernetesUI" src="img/ed7feb15b6cd5b5b.png"></p>
 
 
