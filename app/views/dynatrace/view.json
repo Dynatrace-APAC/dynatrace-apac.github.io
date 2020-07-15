@@ -1,0 +1,10 @@
+{
+  "title": "Dynatrace APAC Workshops",
+  "description": "Come learn about the Software Intelligent Dynatrace Platform by completing labs and workshops! The following codelabs will step you through using different parts of Google Cloud Platform. These challenges cover a range of topics such as Compute Engine, App Engine, Kubernetes, Cloud Shell. Go to https://g.co/codelabs/vslive to find more codelabs you can try at home.",
+  "logoUrl": "/dynatrace/dynatrace.svg",
+  "tags": ["dynatrace"],
+  "exclude": [
+    ".*-about$",
+    "^lang-.*"
+  ]
+}
