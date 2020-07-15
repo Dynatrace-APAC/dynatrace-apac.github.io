@@ -1,0 +1,1 @@
+var allTests=["claat/ui/cards/cardsorter_test.html","claat/uri/params_test.html"];"undefined"!=typeof module&&module.exports&&(module.exports=_allTests);

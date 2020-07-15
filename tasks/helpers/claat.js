@@ -1,0 +1,1 @@
+"use strict";const childprocess=require("child_process"),spawn=childprocess.spawn;exports.run=((s,e,r,c,n,o,i)=>{o.unshift(e,"-e",r,"-f",c,"-ga",n),spawn("claat",o,{stdio:"inherit",cwd:s,env:process.env}).on("close",s=>{if(s)throw new Error(s);i()})});

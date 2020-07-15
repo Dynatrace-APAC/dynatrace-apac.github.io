@@ -1,0 +1,44 @@
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<script src="../js/bundle/cardsorter.js"></script>
+<script>
+Polymer({
+    is: 'card-sorter',
+
+    properties: {
+      sorter: {
+        type: Object,
+        readOnly: true,
+      }
+    },
+
+    ready: function() {
+      this._setSorter(new CardSorter(this));
+    },
+
+    sort: function(o) {
+      o = (o || '').trim().toLowerCase();
+      this.sorter.sort(o);
+    },
+
+    filter: function(f) {
+      this.sorter.filter(f);
+    },
+
+    filterByCategory: function(category) {
+      this.sorter.filterByCategory(category);
+    },
+
+    filterByTags: function(tags) {
+      this.sorter.filterByTags(tags);
+    },
+
+    filterByText: function(text) {
+      this.sorter.filterByText(text);
+    },
+
+    clearFilters: function() {
+      this.sorter.clearFilter();
+    }
+  });
+</script>
