@@ -11,261 +11,308 @@ Feedback Link: https://thebrandneo.com
 ## Introduction 
 Duration: 1
 
-This repository contains labs for the Hands-On Kubernetes Session. We will be using Google Kubernetes Engine (GKE) for this hands-on but this will work on other platforms as well.
+This repository contains labs for the Hands-On Autonomous Cloud Session. We will be providing the necessary details for your to access your environment.
 
 For the purposes of the Hands-On, we will automate and make the steps seamless for the participants
 
+You will be provided with the following:
+- Dynatrace environment
+- Kubernetes Server running
+   - Sockshop Application (sample app) 
+      - with Dev and Prod Environments
+- Jenkins environment
+- Ansible environment
+
+![ACM-Setup](assets/acmsetup.jpg)
+
 ### Prerequisites
-- Dynatrace SaaS/Managed Account. Get your free SaaS trial here.
-- Google Cloud account with access to GKE. Get your free trial access here.
 - Chrome Browser
+- Autonmous Workshop Email with credentials
 
-### What You’ll Learn 
-- Deploying Dynatrace Operator via Helm Chart on Kubernetes
-- Setup Kubernetes integration on Dynatrace
-- Enabling early access feature flags in Dynatrace
-- Discover Kubernetes View on Dynatace
+![ACM-Setup](assets/acm-1.jpg)
+
+### What You’ll Learn
+- Deploy a pipeline (Sockshop) in Jenkins 
+- Installing Keptn 
+- Integrating Jenkins to Keptn and Dynatrace
+- Using Jenkins + Keptn with Dynatace for
+   - Automate Quality with Quality Gates evaluation
+   - Automate Testing Load Testing and Performance Testing
+   - Automate Operations with Self-healing with Ansible
 
 <!-- ------------------------ -->
-## Setting up your Google Kubernetes Environment (GKE)
+## Deploy a sockshop pipeline in Jenkins
 Duration: 5
 
-### Sign up for a Google Cloud Platform Account
+### Login to your Jenkins Instance
 
-Head over to https://cloud.google.com/free/ and sign up for a free GCP account with your existing Google account. 
+Access your Jenkins environment via a web browser with credentials from your email
 
-You can also signup for a new Google Account if you don't have one
+<b>Jenkins Environment</b>
+Jenkins URL: As provided in email
+Jenkins Username: admin
+Jenkins Password: password
 
-Upon signup, you will have free credits tied to your GCP account. (12 months + 400AUD)
+![Jenkins-Setup](assets/jenkins-login.png)
 
-You can login to your GCP console [here](https://console.cloud.google.com/home/).
+### Build a pipeline
 
-![GCP-Homepage](assets/Picture1.png)
+Once you logged in, mouseover "DeploySockShop" in the list, click on the down arrow and select "Build Now"
 
-### Enable Kubernetes Engine API 
+![Jenkins-Setup](assets/jenkins-1.png)
 
-You will also need to <b>Enable your API Billing</b> with Kubernetes Engine API. 
+This process will take about 1-2 mins so we will let it run. 
 
-![k8s-Engine](assets/Picture3.png)
+Once finished, you can click on "DeploySockshop" again and see the various stages of the pipeline build. 
 
-You should be prompted to the billing page while setting up your GKE instance. 
+![Jenkins-Setup](assets/jenkins-2.png)
 
-If not, you can follow the steps [here](https://support.google.com/googleapi/answer/6158867?hl=en)
 
-### Activate Cloud Shell
+This is just a demonstration of a working pipeline so there's no need to wait for it to complete.
 
-![GKE-Menu](assets/Picture4.png)
+<!-- ------------------------ -->
+## Setting up Keptn
+Duration: 5
 
-Click on the Terminal Icon on the top right
+### Login to your Kubernetes Instance
 
-A Cloud based Terminal lookalike will appear at the bottom of the page
+Login to the Kubernetes server via a SSH terminal (eg. Putty, Terminal, MobaXterm)
 
-We will start setting up our GKE Cluster 
+Access your Kubernetes environment with credentials from your email
 
-### 3. Create your GKE Cluster
+<b>Kubernetes Server</b>
+Hostname: As provided in email
+IP Address: As provided in email
+Server Username: acm_student
+Server Password: acm_workshop_secr3t
 
-![GKE-CLI](assets/Picture5.png)
-
-Create your GKE cluster named <b>k8sworkshop</b> running Ubuntu in GKE with the following command.
-We will also be creating a compute VM for a Dynatrace Activegate. We will use the Dynatrace Activegate for Kubernetes integration.
+Once you logged in, you can issue the commands below to install Keptn
+Part of the Keptn setup has been automated within the shell script below.
 
 ```bash
-gcloud container clusters create k8sworkshop --image-type=ubuntu --zone australia-southeast1-a
-gcloud compute instances create dynatrace-activegate --image-family ubuntu-1604-lts --image-project ubuntu-os-cloud --zone australia-southeast1-a
+cd dtacmworkshop/Keptn
+sudo ./installKeptn.sh
+```
+![Keptn-Setup](assets/keptn-1.png)
+
+Keptn will install it's necessary components required for its setup.
+Setup will take a 2-3 minutes.
+
+![Keptn-Setup](assets/keptn-2.png)
+
+Once completed, take note of the keptn API token which is required for the next step.
+You can also use the Keptn Bridge and API Endpoint
+
+Example:
+```bash 
+KEPTN BRIDGE: http://bridge.keptn.<YOUR-IP-ADDRESS>.nip.io 
+KEPTN ENDPOINT: https://api.keptn.<YOUR-IP-ADDRESS>.nip.io/<b>swagger-ui/</b>
 ```
 
-Once completed, you will have a running GKE Cluster!
+![Keptn-Setup](assets/keptn-4.png)
+Take note of to append <b>"/swagger-ui/"</b> to the end to view the Keptn API Swagger UI 
 
-![GKE-CLI](assets/gcp.png)
-Running <b>kubectl get nodes</b> will reveal number of nodes 
+![Keptn-Setup](assets/keptn-3.png)
+There would be no project running at the moment on Keptn's bridge, but we will be creating at the next step.
 
 <!-- ------------------------ -->
-## Setting up your Kubernetes Integration
+## Configuring Keptn within Jenkins
 Duration: 5
 
-As per the official instructions [here](https://www.dynatrace.com/support/help/technology-support/cloud-platforms/kubernetes/monitoring/connect-kubernetes-clusters-to-dynatrace/) for the Kubernetes integration, you will need to setup an Environment Activegate first.
+### Setting up Keptn Plugin within Jenkins
 
-### SSH into Dynatrace-Activegate terminal and install Activegate
+Back within Jenkins, select Jenkins from the top left > Manage Jenkins > Configure System
 
+![Plugin-Setup](assets/jenkins-3.png)
 
-1. On the left navigation bar in Google Cloud, go to <b>Compute Engine</b> -> <b>VM instances</b>
-![Activegate-connected](assets/activegate-0.png)
+Scroll down and under <b>"Global Properties"</b> enter the KEPTN API Token from the Terminal into the field
+Click "Save" to save your setting.
 
-2. Click on the SSH button on the <b>dynatrace-activegate</b> row and SSH into the instance
-![Activegate-connected](assets/activegate.png)
+![Plugin-Setup](assets/jenkins-4.png)
 
-2. Within Dynatrace, click on Deploy Dynatrace on the left menu
-3. Click on "Install Activegate" at the bottom of the page
-4. Click on "Linux"
-5. Copy Step 2 and paste into your terminal.
-6. Copy Step 4 and append "sudo" (installing as root) onto terminal
-![Copy-AG-Commands](assets/activegate-2.png)
-
-Once completed, you should see Activegate under Deployment Status.
-
-![Activegate-connected](assets/Picture9.1.png)
-
-### Setup the K8S Overview Dashboard
-
-Go to Settings -> Process and Containers -> Process group detection -> Enable Cloud Application and workload detection
-
-![Enable Cloud Workload](assets/enablecloud.png)
-
-Automating the steps from our offical [documentation page](https://www.dynatrace.com/support/help/technology-support/cloud-platforms/kubernetes/installation-and-operation/further-integrations/connect-your-kubernetes-clusters-to-dynatrace/), we provided the API URL and bearer token automatically via API. Back in your main Cloud Shell terminal, enter the below
-
-``` bash
-wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/master/setup-k8s-ui.sh | bash
-```
-With the above results, enter the values to <b>Settings</b> -> <b>Cloud and Virtualization</b> -> <b>Kubernetes</b>
-
-![K8S-integration](assets/activegate-4.png)
-1. Give a name for the connection eg. GKE K8S
-2. Enter in your Kubernetes API URL Target 
-   - Copy the Kubernetes API URL from the SSH terminal
-3. Enter in the Kubernetes Bearer Token
-   - Copy the Bearer Token from the SSH terminal
-4. Disable "Require valid certificates for communication with API server"
-5. Add another event field selector
-6. User the below for the field selector name
-``` bash
-Hipster shop 
-```
-7. User the below for the Field selector expression
-``` bash
-metadata.namespace=hipster-shop
-```
-8. Save and Click on Connect
-
-Once successfully connected, click on Kubernetes on the left menu and explore the Kubernetes UI. 
-
-![K8S-integration](assets/k8s.png)
-<!-- ------------------------ -->
-## Install Dynatrace OneAgent Operator for Kubernetes
-Duration: 5
-
-1. On your Google Cloud Console, on the left navigational bar, go to Kubernetes Engine -> Applications
-2. Click on "Deploy From Marketplace"
-3. Search for Dynatrace in the search field above
-![Activegate-connected](assets/operator.png)
-4. Click on Dynatrace OneAgent Operator and click on Configure
-5. Fill in the following fields<br>
-- API URL <br>
-Copy your Dynatrace URL and append <b>"/api"</b> to the end<br>
-![API-URL](assets/operator-1-withURL.png)
-
-- API Token <br>
-Create one from Settings -> Integration -> Dynatrace API
-  - Enable Access problem and event feed, metrics, and topology toggle
-  - Enable Write Configuration toggle (needed for Activegate setup for the next step)<br>
-![API-Token](assets/api-token.png)
-
-- PaaS token <br>
-Create one from Settings -> Integration -> Platform as a Service
-![PaaS-Token](assets/paas-token.png)
-
-Copy the values into your GCP console
-![Activegate-connected](assets/operator-1.png)
-
-6. Click on Deploy<br>
-![Activegate-connected](assets/operator-2.png)<br>
-
-Once completed, you can click on Hosts on the left panel to see your connected K8S nodes (3 nodes)  
-
-![GKE-Hosts](assets/Picture7.1.png)
-<!-- ------------------------ -->
-## Setting up Hipster Shop
-Duration: 5
-
-For our Hands-On, you will need to run <a href="https://github.com/GoogleCloudPlatform/microservices-demo">Hipster Shop</a> which is a Google sample application.
-
-### Run the Hipster Shop
-
-```bash
-wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/master/deploy.sh | bash
-```
-
-Once deployed, you can locate the front-end endpoint from GCP (<b>Kubernetes Engine -> Services & Ingress</b>)
-
-![JSON](assets/Picture10.png)
-
-Once running, you can go to the exposed frontend-external IP to go to Hipster Shop.
-
-![JSON](assets/hipstershop.png)
+Steps have been pre-configured prior to the labs. To find out more about the plugin, refer to the [Keptn Jenkins Shared Library](https://github.com/keptn-sandbox/keptn-jenkins-library) on Github. 
 
 <!-- ------------------------ -->
-## Exploring Dynatrace
-Duration: 5
+## Keptn's SLI/SLO-based Quality Gates
+Duration: 20
 
-### Automatic Discovery of services
+We will be using Jenkins Pipeline to triggers an SLI/SLO-based Quality Gate Evaluation in Keptn. 
+This can also be done through the Keptn CLI or the API. 
 
-In Dynatrace, go to Transactions and Services to see the automatic 5 discovered services.
-![Discovered Services](assets/lab5-autodiscoveredservices.png)
+![SLI-quality-gate](assets/evalpipeline_animated.gif)
 
-You will realized that some services are discovered but some might not match <a href="https://github.com/GoogleCloudPlatform/microservices-demo#service-architecture">Hipster Shop's Service architecture</a>.
-Hipster Shop uses cutting edge technologies (such as GPRC) which Dynatrace supports with the constant evolution in the cloud.
+WIthin Jenkins, mouseover "01-qualitygate-evaluation" in the list, click on the down arrow and select "Build Now"
 
-![Architecture](assets/architecture-diagram.png)
+![Quality-Gate](assets/quality-gate-1.png)
 
-### Enabling additional features within OneAgent
+The initial build will fail as Jenkins by default doesn't scan the pipeline for parameters and there are several that have to be specified. 
 
-Because of the rapid rate of change coming to OneAgent, features that are in Early Access aren't automatically enabled by default. 
-This is to prevent unforseen circumstances which might impact your production environments. For the purposes of workshop, we can enable these features. Go to <b>Settings -> Service-side service monitoring -> Deep Monitoring -> New Oneagent Features</b>
+![Quality-Gate](assets/quality-gate-2.png)
 
-Under Global Settings, enable the following feature flags. They are on different pages so you would need to toggle through the pages.
+Click on <b>"01-qualitygate-evaluation"</b> and select <b>"Build with Parameters"</b> on the left menu.
 
-You can use the search filter bar to search for <b>"GRPC"</b>
-![GRPC-Features](assets/lab5-b4EnableGRPC-settings.png )
+![Quality-Gate](assets/quality-gate-3.png)
 
-![Features](assets/features.png)
+As with the preconfigured from, we will be using the <b>"evalservice"</b> tag within Dynatrace to identify the appropriate service which we will validate the SLI and SLO. The name of the tag can be passed to our Jenkins Pipeline as a parameter. So we will be tagging a service within Dynatrace.
 
-Make sure all the below features all enabled, including the 2 additional NodeJS feature flags.
-![All-Features](assets/all-features.png)
+### Login to your Dynatrace Environment
 
-Enabling OneAgents features requires a restart of the pods. Run the following command to restart the pods.
+Access your Jenkins environment via a web browser with credentials from your email
 
-```bash
-kubectl delete pods --all -n hipster-shop
-```
-![Restart](assets/restart.png)
+<b>Dynatrace Environment</b>
+Dynatrace Tenant: As provided in email
+When you access your Dynatrace tenant for the first time you’ll need to set a password.
 
-Back in Dynatrace, go to and Transactions and Services to see the updated list of services.
-![Discovered Services](assets/lab5-AfterEnableGRPC-settings.png)
+Once you logged into Dynatrace, you will find a preconfigured Dashboard.
 
-Clicking on Go Service ":8080" followed by Service Flow, you can see that the service are automatically detected and matches the architecture diagram above.
+### Setup Tag within Dynatrace
 
-![Service Flow](assets/serviceflow.png)
+![Quality-Gate](assets/quality-gate-4.png)
+
+This dashboard will showcase the various deployment stages of Sockshop to come. 
+
+Select "Transactions and Services" on the left navigation bar and select "front-end" service
+
+![Quality-Gate](assets/quality-gate-5.gif)
+
+Drop-down "Properties and tags", Click on "Add-tag" and enter "evalservice" as tag
+
+### Build the pipeline in Jenkins
+
+Back in Jenkins, click on "Build" to run the pipeline
+
+![Quality-Gate](assets/quality-gate-6.png)
+
+Once the pipeline is completed, you can see the changes reflected in Keptn's bridge and Dynatrace.
+Within Dynatrace, you will discover a new custom info event.
+The new event will contain details of the quality gate results with details such as JobURL, JobName from Jenkins as well as Keptn source and Keptn's bridge.
+The links will also bring you to Jenkin's and Keptn's portals with more detailed information on each side.
+
+![Quality-Gate](assets/quality-gate-7.gif)
+
+To find out more about the setup of this hands-on, the full tutorial could be found [here](https://github.com/keptn-sandbox/jenkins-tutorial/blob/master/README.md#11-integrate-keptns-slislo-based-quality-gates).
 
 <!-- ------------------------ -->
-## Exploring Kubernetes View
-Duration: 5
+## Jenkins Simple Load Test OR Keptn's Performance As a Service
+Duration: 20
 
-Explore the various functionalities within the Kubernetes View such as Cluster Utilization, Cluster Workloads, K8S Events
+### Load Testing in Pipeline
 
-![KubernetesUI](assets/k8s-ui.png)
+This is an extended version of the previous build where the pipeline also has a very simple load-testing capability built-into one of the stages.
 
-### Analyze the Kubernetes Cluster utilization
-   -  Mouseover and note the CPU and Memory usage with the Min / Max
-   -  Click on Analyze Nodes to drill deeper into each node
-   
-![KubernetesUI](assets/cluster-util.png)
+![load-test](assets/perfaaspipeline_animated.gif)
 
-### Analyze the Kubernetes Cluster Workloads 
-   -  Notice the Workloads and Pods running spilt between Kubernetes controllers
+Are we going with calculated service metrics? If so, should we use [createTestStepCalculatedMetrics.sh](https://github.com/keptn-sandbox/jenkins-tutorial/blob/master/scripts/createTestStepCalculatedMetrics.sh) to automate those creation?
 
-![KubernetesUI](assets/cluster-workload.png)
+Are we able to get a load test to test against the Sockshop? If so, what is the DeploymentURI / URLPaths in Jenkins plugin?
 
-### Analyze the Kubernetes Events
-   -  Notice the different types of events BackOff, Unhealthy
+<!-- ------------------------ -->
+## Jenkins Builds a Container and Keptn does Progressive Delivery
+Duration: 20
 
-![KubernetesUI](assets/events.png)
+### Load Testing in Pipeline
 
-### Analyze the Kubernetes Namespace
-   -  Click on <b>hipster-shop</b> and drill down into various kubernetes services (Cloud applications)
+This is an extended version of the previous build where the pipeline also has a very simple load-testing capability built-into one of the stages.
 
-![KubernetesUI](assets/namespace.png)
+<!-- ------------------------ -->
+## Self Healing as a Service
+Duration: 20
 
-### Explore Cloud Applications by clicking onto them
-   - Click onto each of them and discover their supporting technologies
-   
-![KubernetesUI](assets/cloud-apps.png)
+Dynatrace integrates with many runbook automation tools such as Ansible. We'll be using Ansible to showcase self-healing problems and automate operations. 
 
+### Deploy Ansible Tower
+
+In Terminal/Cloudshell execute the script: deployTower.sh in the directory 4-DeployTower
+
+This will deploy and startup Ansible Tower. 
+This will also configure Tower, import projects, inventories, credentials (DT API token) and playbook templates.
+Take a note of the Ansible Job URL displayed by the script. You will need it for a next step.
+
+![Ansible](assets/ansible-1.png)
+
+### Login to Ansible Tower
+
+Access your Ansible environment via a web browser with credentials from your email
+
+<b>Ansible Environment</b>
+Ansible URL: As provided in email
+Ansible Username: admin
+Ansible Password: dynatrace
+
+After logging in, you'll be prompted to enter in your license key. 
+Use the license provided by the instructor or you can provide your own.
+
+![Ansible](assets/ansible-2.png)
+
+### Configure Dynatrace Problem Notification
+
+In the Dynatrace UI, navigate to Settings -> Integration -> Problem Notification -> Ansible Tower
+
+![Ansible](assets/ansible-3.png)
+
+Enter the Ansible Tower job template URL you were provided after the deployment
+Enter the credentials to access Ansible
+username : admin
+password : Dynatrace
+Click the Sent test notification button to validate your configuration
+On success, a green confirmation message will be displayed
+Save your configuration 
+
+![Ansible](assets/ansible-4.png)
+
+### Adjusting Anomaly Detection
+
+Both problem and anomaly detection in Dynatrace leverage AI technology. This means that the AI learns how each and every microservice behaves and baselines them. Therefore, in a demo scenario like we have right now, we have to override the AI engine with user-defined values to allow the creation of problems due to an artificial increase of a failure rate. (Please note: if we would have the application running and simulate end-user traffic for a couple of hours/days there would be no need for this step.)
+
+In your Dynatrace tenant, navigate to “Transaction & services” and filter by tag "[Kubernetes]stage:prod" and select ItemsController Service
+Click on the ItemsController and then on the three dots ( … ) next to the service name. Click on Edit
+On the next screen, edit the anomaly detection settings as seen in the following screenshot. - Global anomaly detection has to be turned off - Detect increases in failure rate using fixed thresholds - Alert if 0 % custom failure rate threshold is exceed during any 5-minute period. Set Sensitivity to High and change less than the value to 1 request/min.
+
+
+![Ansible](assets/ansible-5.gif)
+
+### Launch remediation playbook
+
+Navigate back to the Ansible Tower UI
+From the side menu, navigate to Resources -> Templates
+Click on the rocket icon to launch the start-campaign playbook
+Hit Next on the prompt popup window and then Launch
+As the playbook runs, the output will be displayed. Validate that the recap shows OK=2
+
+![Ansible](assets/ansible-6.png)
+
+### Observe remediation
+
+Back in ItemsController, look at the service events. The playbook have notified Dynatrace when the promotional rate was changed to 50%.
+
+![Ansible](assets/ansible-7.png)
+
+You should see the Failure Rate increasing, eventually leading to Dynatrace detecting a Problem
+You might need to refresh your browser a few times
+
+![Ansible](assets/ansible-8.png)
+
+Observe the new problem appearing. The comments section will show the remediation actions taken by Ansible Tower
+
+![Ansible](assets/ansible-9.png)
+
+Drill-down in the Problem.
+You will see a new configuration change event reported by Ansible Tower
+The promotional rate has been set back to 0% to remediate to the transaction failures
+
+![Ansible](assets/ansible-10.png)
+
+Jobs executed in Ansible Tower
+ - start-campaign (set rate to 50%)
+ - remediation
+   - push comment to Dynatrace Problem
+   - retrieve problem details
+   - launch remediation action related to problem context
+   - update Dynatrace Problem
+stop-campaign (set rate to 0%)
+
+![Ansible](assets/ansible-11.png)
+
+** Problem Resolution - Problem was resolved automatically
+
+![Ansible](assets/ansible-12.png)
