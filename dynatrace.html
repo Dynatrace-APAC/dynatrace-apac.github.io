@@ -3,11 +3,11 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="description" content="Come learn about the Software Intelligent Dynatrace Platform by completing labs and workshops! The following codelabs will step you through using different parts of the Dynatrace Platform.">
+<meta name="description" content="Come learn about the Software Intelligent Dynatrace Platform by completing labs and workshops! The following codelabs will step you through using different parts of Google Cloud Platform. These challenges cover a range of topics such as Compute Engine, App Engine, Kubernetes, Cloud Shell. Go to https://g.co/codelabs/vslive to find more codelabs you can try at home.">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="generator" content="Dynatrace APAC Workshops">
 <meta name="application-name" content="Dynatrace APAC Workshops">
-<link rel="canonical" href="https://example.com/">
+<link rel="canonical" href="https://example.com/dynatrace/">
 <link rel="preconnect" href="https://www.google-analytics.com">
 <script>
 window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
@@ -37,8 +37,8 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <meta name="theme-color" content="#455a64">
 <meta name="og:type" property="og:type" content="website">
 <meta name="og:title" property="og:title" content="Dynatrace APAC Workshops">
-<meta name="og:description" property="og:description" content="Come learn about the Software Intelligent Dynatrace Platform by completing labs and workshops! The following codelabs will step you through using different parts of the Dynatrace Platform.">
-<meta name="og:url" property="og:url" content="https://example.com/">
+<meta name="og:description" property="og:description" content="Come learn about the Software Intelligent Dynatrace Platform by completing labs and workshops! The following codelabs will step you through using different parts of Google Cloud Platform. These challenges cover a range of topics such as Compute Engine, App Engine, Kubernetes, Cloud Shell. Go to https://g.co/codelabs/vslive to find more codelabs you can try at home.">
+<meta name="og:url" property="og:url" content="https://example.com/dynatrace/">
 <meta name="og:site_name" property="og:site_name" content="Codelabs">
 <meta name="og:determiner" property="og:determiner" content="the">
 <meta name="og:locale" property="og:locale" content="en_US">
@@ -50,11 +50,11 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <meta name="og:image:alt" property="og:image:alt" content="Codelabs">
 <meta name="twitter:card" property="twitter:card" content="summary_large_image">
 <meta name="twitter:title" property="twitter:title" content="Dynatrace APAC Workshops">
-<meta name="twitter:description" property="twitter:description" content="Come learn about the Software Intelligent Dynatrace Platform by completing labs and workshops! The following codelabs will step you through using different parts of the Dynatrace Platform.">
+<meta name="twitter:description" property="twitter:description" content="Come learn about the Software Intelligent Dynatrace Platform by completing labs and workshops! The following codelabs will step you through using different parts of Google Cloud Platform. These challenges cover a range of topics such as Compute Engine, App Engine, Kubernetes, Cloud Shell. Go to https://g.co/codelabs/vslive to find more codelabs you can try at home.">
 <meta name="twitter:image" property="twitter:image" content="/images/og-image.png">
-<meta name="twitter:url" property="twitter:url" content="https://example.com/">
+<meta name="twitter:url" property="twitter:url" content="https://example.com/dynatrace/">
 </head>
-<body id="app" is="body-bind" class="loading fullbleed ">
+<body id="app" is="body-bind" class="loading fullbleed view">
 <paper-header-panel id="main" mode="standard" main>
 
 <div id="mainToolbar" class="paper-header">
@@ -72,16 +72,15 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 </div>
 </div>
  
-<header id="banner" down$="[[_toBoolean(selectedFilter)]]">
+<header id="banner" down>
 <div class="site-width">
+<div class="banner-description">
+<img id="logo" src="/dynatrace/dynatrace.svg" alt="Event logo">
+<div class="banner-meta">
+<h3>Dynatrace APAC Workshops</h3>
+<p>Come learn about the Software Intelligent Dynatrace Platform by completing labs and workshops! The following codelabs will step you through using different parts of Google Cloud Platform. These challenges cover a range of topics such as Compute Engine, App Engine, Kubernetes, Cloud Shell. Go to https://g.co/codelabs/vslive to find more codelabs you can try at home.</p>
 
-<h2 class="banner-title">Welcome to Codelabs!</h2>
-<div class="banner-description" data-filter-selected$="[[_toBoolean(selectedFilter)]]">
-<p class="banner-info">
-Codelabs provide a guided, tutorial, hands-on coding experience. Most codelabs will step you through the process of building a small application, or adding a new feature to an existing application.
-<br>
-<a href="https://github.com/googlecodelabs/tools">Codelab tools on GitHub</a>
-</p>
+</div>
 </div>
 </div>
 </div></header>
@@ -94,18 +93,10 @@ Codelabs provide a guided, tutorial, hands-on coding experience. Most codelabs w
 <paper-tab>Duration</paper-tab>
 </paper-tabs>
 </div>
-
-<paper-dropdown-menu label="Choose an event" class="dropdown-filter" no-label-float noink no-animations>
-<paper-listbox id="eventList" slot="dropdown-content" class="dropdown-content"><a href="/dynatrace/" tabindex="-1">
-<paper-item>Dynatrace APAC Workshops</paper-item>
-</a>
-
-</paper-listbox>
-</paper-dropdown-menu>
 </div>
 <card-sorter id="cards" class="site-width">
   
-<a href="/codelabs/autonomous-cloud/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-workshops" data-category="workshops" data-title="Autonomous Cloud with Dynatrace" data-duration="31" data-updated="2020-07-15T19:27:16+10:00" data-tags="dynatrace" data-pin="">
+<a href="/codelabs/autonomous-cloud/index.html?index=..%2F..dynatrace" on-tap="navigate" class="codelab-card category-workshops" data-category="workshops" data-title="Autonomous Cloud with Dynatrace" data-duration="31" data-updated="2020-07-15T19:27:16+10:00" data-tags="dynatrace" data-pin="">
 <div class="description">Autonomous Cloud with Dynatrace</div>
 <div class="card-duration">
 <span>31 min </span>
@@ -117,7 +108,7 @@ Codelabs provide a guided, tutorial, hands-on coding experience. Most codelabs w
 </div>
 </a>
   
-<a href="/codelabs/kubernetes/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-workshops" data-category="workshops" data-title="Dynatrace with Kubernetes" data-duration="31" data-updated="2020-07-15T19:26:29+10:00" data-tags="dynatrace" data-pin="">
+<a href="/codelabs/kubernetes/index.html?index=..%2F..dynatrace" on-tap="navigate" class="codelab-card category-workshops" data-category="workshops" data-title="Dynatrace with Kubernetes" data-duration="31" data-updated="2020-07-15T19:26:29+10:00" data-tags="dynatrace" data-pin="">
 <div class="description">Dynatrace with Kubernetes</div>
 <div class="card-duration">
 <span>31 min </span>
