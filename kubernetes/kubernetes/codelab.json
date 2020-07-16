@@ -1,0 +1,25 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2020-07-16T14:43:56+10:00",
+  "id": "kubernetes",
+  "duration": 31,
+  "title": "Dynatrace with Kubernetes",
+  "authors": "Brandon Neo",
+  "summary": "Dynatrace with Kubernetes",
+  "source": "kubernetes.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "workshops"
+  ],
+  "tags": [
+    "dynatrace"
+  ],
+  "feedback": "https://thebrandneo.com",
+  "url": "kubernetes"
+}
