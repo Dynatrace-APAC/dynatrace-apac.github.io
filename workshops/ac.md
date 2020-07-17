@@ -41,16 +41,16 @@ You will be provided with the following:
    - Automate Operations with Self-healing with Ansible
 
 <!-- ------------------------ -->
-## Deploy a sockshop pipeline in Jenkins
+## Deploy SampleApp in Jenkins
 Duration: 5
 
 ### Login to your Jenkins Instance
 
 Access your Jenkins environment via a web browser with credentials from your email
 
-<b>Jenkins Environment</b>
-Jenkins URL: As provided in email
-Jenkins Username: admin
+<b>Jenkins Environment</b><br>
+Jenkins URL: As provided in email<br>
+Jenkins Username: admin<br>
 Jenkins Password: password
 
 ![Jenkins-Setup](assets/jenkins-login.png)
@@ -80,10 +80,10 @@ Login to the Kubernetes server via a SSH terminal (eg. Putty, Terminal, MobaXter
 
 Access your Kubernetes environment with credentials from your email
 
-<b>Kubernetes Server</b>
-Hostname: As provided in email
-IP Address: As provided in email
-Server Username: acm_student
+<b>Kubernetes Server</b><br>
+Hostname: As provided in email<br>
+IP Address: As provided in email<br>
+Server Username: acm_student<br>
 Server Password: acm_workshop_secr3t
 
 Once you logged in, you can issue the commands below to install Keptn
@@ -106,7 +106,7 @@ You can also use the Keptn Bridge and API Endpoint
 Example:
 ```bash 
 KEPTN BRIDGE: http://bridge.keptn.<YOUR-IP-ADDRESS>.nip.io 
-KEPTN ENDPOINT: https://api.keptn.<YOUR-IP-ADDRESS>.nip.io/<b>swagger-ui/</b>
+KEPTN ENDPOINT: https://api.keptn.<YOUR-IP-ADDRESS>.nip.io/swagger-ui/
 ```
 
 ![Keptn-Setup](assets/keptn-4.png)
@@ -159,8 +159,8 @@ As with the preconfigured from, we will be using the <b>"evalservice"</b> tag wi
 
 Access your Jenkins environment via a web browser with credentials from your email
 
-<b>Dynatrace Environment</b>
-Dynatrace Tenant: As provided in email
+<b>Dynatrace Environment</b><br>
+Dynatrace Tenant: As provided in email<br>
 When you access your Dynatrace tenant for the first time you’ll need to set a password.
 
 Once you logged into Dynatrace, you will find a preconfigured Dashboard.
@@ -234,13 +234,10 @@ Take a note of the Ansible Job URL displayed by the script. You will need it for
 
 Access your Ansible environment via a web browser with credentials from your email
 
-<b>Ansible Environment</b>
-Ansible URL: As provided in email
-Ansible Username: admin
-Ansible Password: dynatrace
-
-After logging in, you'll be prompted to enter in your license key. 
-Use the license provided by the instructor or you can provide your own.
+<b>Ansible Environment</b><br>
+Ansible URL: As provided in email<br>
+Ansible Username: admin<br>
+Ansible Password: dynatrace.
 
 ![Ansible](assets/ansible-2.png)
 
@@ -250,12 +247,12 @@ In the Dynatrace UI, navigate to Settings -> Integration -> Problem Notification
 
 ![Ansible](assets/ansible-3.png)
 
-Enter the Ansible Tower job template URL you were provided after the deployment
-Enter the credentials to access Ansible
-username : admin
-password : Dynatrace
-Click the Sent test notification button to validate your configuration
-On success, a green confirmation message will be displayed
+Enter the Ansible Tower job template URL you were provided after the deployment<br>
+Enter the credentials to access Ansible<br>
+username : admin<br>
+password : Dynatrace<br>
+Click the Sent test notification button to validate your configuration<br>
+On success, a green confirmation message will be displayed<br>
 Save your configuration 
 
 ![Ansible](assets/ansible-4.png)
@@ -273,11 +270,11 @@ On the next screen, edit the anomaly detection settings as seen in the following
 
 ### Launch remediation playbook
 
-Navigate back to the Ansible Tower UI
-From the side menu, navigate to Resources -> Templates
-Click on the rocket icon to launch the start-campaign playbook
-Hit Next on the prompt popup window and then Launch
-As the playbook runs, the output will be displayed. Validate that the recap shows OK=2
+- Navigate back to the Ansible Tower UI
+- From the side menu, navigate to Resources -> Templates
+- Click on the rocket icon to launch the start-campaign playbook
+- Hit Next on the prompt popup window and then Launch
+- As the playbook runs, the output will be displayed. Validate that the recap shows OK=2
 
 ![Ansible](assets/ansible-6.png)
 

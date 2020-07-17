@@ -1,28 +1,40 @@
 
 <!doctype html>
+
 <html>
 <head>
-<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
-<meta name="theme-color" content="#4F7DC9">
-<meta charset="UTF-8">
-<title>Autonomous Cloud with Dynatrace</title>
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
-<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
-<style>
-.success{color:#1e8e3e}.error{color:red} </style>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Autonomous Cloud with Dynatrace</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
 </head>
 <body>
-<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
-<google-codelab codelab-gaid="" id="autonomous-cloud" title="Autonomous Cloud with Dynatrace" environment="web" feedback-link="https://thebrandneo.com">
-<google-codelab-step label="Introduction" duration="1">
-<p>This repository contains labs for the Hands-On Autonomous Cloud Session. We will be providing the necessary details for your to access your environment.</p>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="autonomous-cloud"
+                  title="Autonomous Cloud with Dynatrace"
+                  environment="web"
+                  feedback-link="https://thebrandneo.com">
+    
+      <google-codelab-step label="Introduction" duration="1">
+        <p>This repository contains labs for the Hands-On Autonomous Cloud Session. We will be providing the necessary details for your to access your environment.</p>
 <p>For the purposes of the Hands-On, we will automate and make the steps seamless for the participants</p>
 <p>You will be provided with the following:</p>
 <ul>
 <li>Dynatrace environment</li>
-<li>Kubernetes Server running <ul>
-<li>Sockshop Application (sample app) <ul>
+<li>Kubernetes Server running  <ul>
+<li>Sockshop Application (sample app)  <ul>
 <li>with Dev and Prod Environments</li>
 </ul>
 </li>
@@ -43,18 +55,21 @@
 <li>Deploy a pipeline (Sockshop) in Jenkins</li>
 <li>Installing Keptn</li>
 <li>Integrating Jenkins to Keptn and Dynatrace</li>
-<li>Using Jenkins + Keptn with Dynatace for <ul class="checklist">
+<li>Using Jenkins + Keptn with Dynatace for  <ul class="checklist">
 <li>Automate Quality with Quality Gates evaluation</li>
 <li>Automate Testing Load Testing and Performance Testing</li>
 <li>Automate Operations with Self-healing with Ansible</li>
 </ul>
 </li>
 </ul>
-</google-codelab-step>
-<google-codelab-step label="Deploy a sockshop pipeline in Jenkins" duration="5">
-<h2 is-upgraded>Login to your Jenkins Instance</h2>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Deploy SampleApp in Jenkins" duration="5">
+        <h2 is-upgraded>Login to your Jenkins Instance</h2>
 <p>Access your Jenkins environment via a web browser with credentials from your email</p>
-<p><strong>Jenkins Environment</strong> Jenkins URL: As provided in email Jenkins Username: admin Jenkins Password: password</p>
+<p><strong>Jenkins Environment<br></strong> Jenkins URL: As provided in email<br> Jenkins Username: admin<br> Jenkins Password: password</p>
 <p class="image-container"><img alt="Jenkins-Setup" src="img/93fcfae690e6c21d.png"></p>
 <h2 is-upgraded>Build a pipeline</h2>
 <p>Once you logged in, mouseover &#34;DeploySockShop&#34; in the list, click on the down arrow and select &#34;Build Now&#34;</p>
@@ -63,12 +78,15 @@
 <p>Once finished, you can click on &#34;DeploySockshop&#34; again and see the various stages of the pipeline build.</p>
 <p class="image-container"><img alt="Jenkins-Setup" src="img/74d62559d3576931.png"></p>
 <p>This is just a demonstration of a working pipeline so there&#39;s no need to wait for it to complete.</p>
-</google-codelab-step>
-<google-codelab-step label="Setting up Keptn" duration="5">
-<h2 is-upgraded>Login to your Kubernetes Instance</h2>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Setting up Keptn" duration="5">
+        <h2 is-upgraded>Login to your Kubernetes Instance</h2>
 <p>Login to the Kubernetes server via a SSH terminal (eg. Putty, Terminal, MobaXterm)</p>
 <p>Access your Kubernetes environment with credentials from your email</p>
-<p><strong>Kubernetes Server</strong> Hostname: As provided in email IP Address: As provided in email Server Username: acm_student Server Password: acm_workshop_secr3t</p>
+<p><strong>Kubernetes Server<br></strong> Hostname: As provided in email<br> IP Address: As provided in email<br> Server Username: acm_student<br> Server Password: acm_workshop_secr3t</p>
 <p>Once you logged in, you can issue the commands below to install Keptn Part of the Keptn setup has been automated within the shell script below.</p>
 <pre><code>cd dtacmworkshop/Keptn
 sudo ./installKeptn.sh
@@ -79,21 +97,27 @@ sudo ./installKeptn.sh
 <p>Once completed, take note of the keptn API token which is required for the next step. You can also use the Keptn Bridge and API Endpoint</p>
 <p>Example:</p>
 <pre><code>KEPTN BRIDGE: http://bridge.keptn.&lt;YOUR-IP-ADDRESS&gt;.nip.io 
-KEPTN ENDPOINT: https://api.keptn.&lt;YOUR-IP-ADDRESS&gt;.nip.io/&lt;b&gt;swagger-ui/&lt;/b&gt;
+KEPTN ENDPOINT: https://api.keptn.&lt;YOUR-IP-ADDRESS&gt;.nip.io/swagger-ui/
 </code></pre>
 <p><img alt="Keptn-Setup" src="img/9f667dd2fececa10.png"> Take note of to append <strong>&#34;/swagger-ui/&#34;</strong> to the end to view the Keptn API Swagger UI</p>
 <p><img alt="Keptn-Setup" src="img/cc17d4a8ba873695.png"> There would be no project running at the moment on Keptn&#39;s bridge, but we will be creating at the next step.</p>
-</google-codelab-step>
-<google-codelab-step label="Configuring Keptn within Jenkins" duration="5">
-<h2 is-upgraded>Setting up Keptn Plugin within Jenkins</h2>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Configuring Keptn within Jenkins" duration="5">
+        <h2 is-upgraded>Setting up Keptn Plugin within Jenkins</h2>
 <p>Back within Jenkins, select Jenkins from the top left &gt; Manage Jenkins &gt; Configure System</p>
 <p class="image-container"><img alt="Plugin-Setup" src="img/3f3d2f28032c118f.png"></p>
 <p>Scroll down and under <strong>&#34;Global Properties&#34;</strong> enter the KEPTN API Token from the Terminal into the field Click &#34;Save&#34; to save your setting.</p>
 <p class="image-container"><img alt="Plugin-Setup" src="img/15bb2746e0c893c9.png"></p>
 <p>Steps have been pre-configured prior to the labs. To find out more about the plugin, refer to the <a href="https://github.com/keptn-sandbox/keptn-jenkins-library" target="_blank">Keptn Jenkins Shared Library</a> on Github.</p>
-</google-codelab-step>
-<google-codelab-step label="Keptn&#39;s SLI/SLO-based Quality Gates" duration="20">
-<p>We will be using Jenkins Pipeline to triggers an SLI/SLO-based Quality Gate Evaluation in Keptn. This can also be done through the Keptn CLI or the API.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Keptn&#39;s SLI/SLO-based Quality Gates" duration="20">
+        <p>We will be using Jenkins Pipeline to triggers an SLI/SLO-based Quality Gate Evaluation in Keptn. This can also be done through the Keptn CLI or the API.</p>
 <p class="image-container"><img alt="SLI-quality-gate" src="img/ae7293f03464a97e.gif"></p>
 <p>WIthin Jenkins, mouseover &#34;01-qualitygate-evaluation&#34; in the list, click on the down arrow and select &#34;Build Now&#34;</p>
 <p class="image-container"><img alt="Quality-Gate" src="img/8a8502059a80bd64.png"></p>
@@ -104,7 +128,7 @@ KEPTN ENDPOINT: https://api.keptn.&lt;YOUR-IP-ADDRESS&gt;.nip.io/&lt;b&gt;swagge
 <p>As with the preconfigured from, we will be using the <strong>&#34;evalservice&#34;</strong> tag within Dynatrace to identify the appropriate service which we will validate the SLI and SLO. The name of the tag can be passed to our Jenkins Pipeline as a parameter. So we will be tagging a service within Dynatrace.</p>
 <h2 is-upgraded>Login to your Dynatrace Environment</h2>
 <p>Access your Jenkins environment via a web browser with credentials from your email</p>
-<p><strong>Dynatrace Environment</strong> Dynatrace Tenant: As provided in email When you access your Dynatrace tenant for the first time you&#39;ll need to set a password.</p>
+<p><strong>Dynatrace Environment<br></strong> Dynatrace Tenant: As provided in email<br> When you access your Dynatrace tenant for the first time you&#39;ll need to set a password.</p>
 <p>Once you logged into Dynatrace, you will find a preconfigured Dashboard.</p>
 <h2 is-upgraded>Setup Tag within Dynatrace</h2>
 <p class="image-container"><img alt="Quality-Gate" src="img/56d277efe880bfa.png"></p>
@@ -118,40 +142,54 @@ KEPTN ENDPOINT: https://api.keptn.&lt;YOUR-IP-ADDRESS&gt;.nip.io/&lt;b&gt;swagge
 <p>Once the pipeline is completed, you can see the changes reflected in Keptn&#39;s bridge and Dynatrace. Within Dynatrace, you will discover a new custom info event. The new event will contain details of the quality gate results with details such as JobURL, JobName from Jenkins as well as Keptn source and Keptn&#39;s bridge. The links will also bring you to Jenkin&#39;s and Keptn&#39;s portals with more detailed information on each side.</p>
 <p class="image-container"><img alt="Quality-Gate" src="img/4af0bea58fda670d.gif"></p>
 <p>To find out more about the setup of this hands-on, the full tutorial could be found <a href="https://github.com/keptn-sandbox/jenkins-tutorial/blob/master/README.md#11-integrate-keptns-slislo-based-quality-gates" target="_blank">here</a>.</p>
-</google-codelab-step>
-<google-codelab-step label="Jenkins Simple Load Test OR Keptn&#39;s Performance As a Service" duration="20">
-<h2 is-upgraded>Load Testing in Pipeline</h2>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Jenkins Simple Load Test OR Keptn&#39;s Performance As a Service" duration="20">
+        <h2 is-upgraded>Load Testing in Pipeline</h2>
 <p>This is an extended version of the previous build where the pipeline also has a very simple load-testing capability built-into one of the stages.</p>
 <p class="image-container"><img alt="load-test" src="img/2bcf8b34937f9f8f.gif"></p>
 <p>Are we going with calculated service metrics? If so, should we use <a href="https://github.com/keptn-sandbox/jenkins-tutorial/blob/master/scripts/createTestStepCalculatedMetrics.sh" target="_blank">createTestStepCalculatedMetrics.sh</a> to automate those creation?</p>
 <p>Are we able to get a load test to test against the Sockshop? If so, what is the DeploymentURI / URLPaths in Jenkins plugin?</p>
-</google-codelab-step>
-<google-codelab-step label="Jenkins Builds a Container and Keptn does Progressive Delivery" duration="20">
-<h2 is-upgraded>Load Testing in Pipeline</h2>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Jenkins Builds a Container and Keptn does Progressive Delivery" duration="20">
+        <h2 is-upgraded>Load Testing in Pipeline</h2>
 <p>This is an extended version of the previous build where the pipeline also has a very simple load-testing capability built-into one of the stages.</p>
-</google-codelab-step>
-<google-codelab-step label="Self Healing as a Service" duration="20">
-<p>Dynatrace integrates with many runbook automation tools such as Ansible. We&#39;ll be using Ansible to showcase self-healing problems and automate operations.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Self Healing as a Service" duration="20">
+        <p>Dynatrace integrates with many runbook automation tools such as Ansible. We&#39;ll be using Ansible to showcase self-healing problems and automate operations.</p>
 <h2 is-upgraded>Deploy Ansible Tower</h2>
 <p>In Terminal/Cloudshell execute the script: deployTower.sh in the directory 4-DeployTower</p>
 <p>This will deploy and startup Ansible Tower. This will also configure Tower, import projects, inventories, credentials (DT API token) and playbook templates. Take a note of the Ansible Job URL displayed by the script. You will need it for a next step.</p>
 <p class="image-container"><img alt="Ansible" src="img/164d8d5fdab50322.png"></p>
 <h2 is-upgraded>Login to Ansible Tower</h2>
 <p>Access your Ansible environment via a web browser with credentials from your email</p>
-<p><strong>Ansible Environment</strong> Ansible URL: As provided in email Ansible Username: admin Ansible Password: dynatrace</p>
-<p>After logging in, you&#39;ll be prompted to enter in your license key. Use the license provided by the instructor or you can provide your own.</p>
+<p><strong>Ansible Environment<br></strong> Ansible URL: As provided in email<br> Ansible Username: admin<br> Ansible Password: dynatrace.</p>
 <p class="image-container"><img alt="Ansible" src="img/ae2b41314fe99c7.png"></p>
 <h2 is-upgraded>Configure Dynatrace Problem Notification</h2>
 <p>In the Dynatrace UI, navigate to Settings -&gt; Integration -&gt; Problem Notification -&gt; Ansible Tower</p>
 <p class="image-container"><img alt="Ansible" src="img/f87ea8bf90b36282.png"></p>
-<p>Enter the Ansible Tower job template URL you were provided after the deployment Enter the credentials to access Ansible username : admin password : Dynatrace Click the Sent test notification button to validate your configuration On success, a green confirmation message will be displayed Save your configuration</p>
+<p>Enter the Ansible Tower job template URL you were provided after the deployment<br> Enter the credentials to access Ansible<br> username : admin<br> password : Dynatrace<br> Click the Sent test notification button to validate your configuration<br> On success, a green confirmation message will be displayed<br> Save your configuration</p>
 <p class="image-container"><img alt="Ansible" src="img/314aece768acc306.png"></p>
 <h2 is-upgraded>Adjusting Anomaly Detection</h2>
 <p>Both problem and anomaly detection in Dynatrace leverage AI technology. This means that the AI learns how each and every microservice behaves and baselines them. Therefore, in a demo scenario like we have right now, we have to override the AI engine with user-defined values to allow the creation of problems due to an artificial increase of a failure rate. (Please note: if we would have the application running and simulate end-user traffic for a couple of hours/days there would be no need for this step.)</p>
 <p>In your Dynatrace tenant, navigate to &#34;Transaction &amp; services&#34; and filter by tag &#34;[Kubernetes]stage:prod&#34; and select ItemsController Service Click on the ItemsController and then on the three dots ( ... ) next to the service name. Click on Edit On the next screen, edit the anomaly detection settings as seen in the following screenshot. - Global anomaly detection has to be turned off - Detect increases in failure rate using fixed thresholds - Alert if 0 % custom failure rate threshold is exceed during any 5-minute period. Set Sensitivity to High and change less than the value to 1 request/min.</p>
 <p class="image-container"><img alt="Ansible" src="img/60b06e9a63493c4f.gif"></p>
 <h2 is-upgraded>Launch remediation playbook</h2>
-<p>Navigate back to the Ansible Tower UI From the side menu, navigate to Resources -&gt; Templates Click on the rocket icon to launch the start-campaign playbook Hit Next on the prompt popup window and then Launch As the playbook runs, the output will be displayed. Validate that the recap shows OK=2</p>
+<ul>
+<li>Navigate back to the Ansible Tower UI</li>
+<li>From the side menu, navigate to Resources -&gt; Templates</li>
+<li>Click on the rocket icon to launch the start-campaign playbook</li>
+<li>Hit Next on the prompt popup window and then Launch</li>
+<li>As the playbook runs, the output will be displayed. Validate that the recap shows OK=2</li>
+</ul>
 <p class="image-container"><img alt="Ansible" src="img/653e3a8610dfd761.png"></p>
 <h2 is-upgraded>Observe remediation</h2>
 <p>Back in ItemsController, look at the service events. The playbook have notified Dynatrace when the promotional rate was changed to 50%.</p>
@@ -165,7 +203,7 @@ KEPTN ENDPOINT: https://api.keptn.&lt;YOUR-IP-ADDRESS&gt;.nip.io/&lt;b&gt;swagge
 <p>Jobs executed in Ansible Tower</p>
 <ul>
 <li>start-campaign (set rate to 50%)</li>
-<li>remediation <ul>
+<li>remediation  <ul>
 <li>push comment to Dynatrace Problem</li>
 <li>retrieve problem details</li>
 <li>launch remediation action related to problem context</li>
@@ -176,12 +214,17 @@ KEPTN ENDPOINT: https://api.keptn.&lt;YOUR-IP-ADDRESS&gt;.nip.io/&lt;b&gt;swagge
 <p class="image-container"><img alt="Ansible" src="img/431e1b170415ed37.png"></p>
 <p>** Problem Resolution - Problem was resolved automatically</p>
 <p class="image-container"><img alt="Ansible" src="img/f14e1b698d1dde7e.png"></p>
-</google-codelab-step>
-</google-codelab>
-<script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
-<script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
-<script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
-<script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
-<script src="//support.google.com/inapp/api.js"></script>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
 </body>
 </html>
