@@ -1,3 +1,3 @@
 # dynatrace-apac.github.io
 
-Website hosting content for workshops
+Website hosting workshop at https://dynatrace-apac.github.io
