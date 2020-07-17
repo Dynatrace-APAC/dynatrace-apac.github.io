@@ -23,7 +23,7 @@ You will be provided with the following:
 - Jenkins environment
 - Ansible environment
 
-![ACM-Setup](assets/acmsetup.jpg)
+![ACM-Setup](assets/acmsetup.png)
 
 ### Prerequisites
 - Chrome Browser
