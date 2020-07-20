@@ -48,11 +48,6 @@ Duration: 5
 
 Access your Jenkins environment via a web browser with credentials from your email
 
-<b>Jenkins Environment</b><br>
-Jenkins URL: As provided in email<br>
-Jenkins Username: admin<br>
-Jenkins Password: password
-
 ![Jenkins-Setup](assets/jenkins-login.png)
 
 ### Build a pipeline
@@ -80,17 +75,11 @@ Login to the Kubernetes server via a SSH terminal (eg. Putty, Terminal, MobaXter
 
 Access your Kubernetes environment with credentials from your email
 
-<b>Kubernetes Server</b><br>
-Hostname: As provided in email<br>
-IP Address: As provided in email<br>
-Server Username: acm_student<br>
-Server Password: acm_workshop_secr3t
-
 Once you logged in, you can issue the commands below to install Keptn
 Part of the Keptn setup has been automated within the shell script below.
 
 ```bash
-cd dtacmworkshop/Keptn
+cd dtacmworkshop/keptn
 sudo ./installKeptn.sh
 ```
 ![Keptn-Setup](assets/keptn-1.png)
@@ -103,11 +92,9 @@ Setup will take a 2-3 minutes.
 Once completed, take note of the keptn API token which is required for the next step.
 You can also use the Keptn Bridge and API Endpoint
 
-Example:
-```bash 
+For example:
 KEPTN BRIDGE: http://bridge.keptn.<YOUR-IP-ADDRESS>.nip.io 
-KEPTN ENDPOINT: https://api.keptn.<YOUR-IP-ADDRESS>.nip.io/swagger-ui/
-```
+KEPTN ENDPOINT: https://api.keptn.<YOUR-IP-ADDRESS>.nip.io/<b>swagger-ui/</b>
 
 ![Keptn-Setup](assets/keptn-4.png)
 Take note of to append <b>"/swagger-ui/"</b> to the end to view the Keptn API Swagger UI 
@@ -145,7 +132,7 @@ WIthin Jenkins, mouseover "01-qualitygate-evaluation" in the list, click on the 
 
 ![Quality-Gate](assets/quality-gate-1.png)
 
-The initial build will fail as Jenkins by default doesn't scan the pipeline for parameters and there are several that have to be specified. 
+The initial build will fail as Jenkins by default doesn't scan the pipeline for parameters and there are several that have to be specified. Click on "<b>01-qualitygate-evaluation</b>" to drill into the pipeline.
 
 ![Quality-Gate](assets/quality-gate-2.png)
 
@@ -153,25 +140,24 @@ Click on <b>"01-qualitygate-evaluation"</b> and select <b>"Build with Parameters
 
 ![Quality-Gate](assets/quality-gate-3.png)
 
-As with the preconfigured from, we will be using the <b>"evalservice"</b> tag within Dynatrace to identify the appropriate service which we will validate the SLI and SLO. The name of the tag can be passed to our Jenkins Pipeline as a parameter. So we will be tagging a service within Dynatrace.
+As with the preconfigured form, we will be using the <b>"evalservice"</b> tag within Dynatrace to identify the appropriate service which we will validate the SLI and SLO. The name of the tag can be passed to our Jenkins Pipeline as a parameter. So we will first need to tag a service within Dynatrace.
 
 ### Login to your Dynatrace Environment
 
-Access your Jenkins environment via a web browser with credentials from your email
+Access your Jenkins environment via a web browser with credentials from your email. <br>
+When you access your Dynatrace tenant for the first time you’ll need to set a password.<br>
 
-<b>Dynatrace Environment</b><br>
-Dynatrace Tenant: As provided in email<br>
-When you access your Dynatrace tenant for the first time you’ll need to set a password.
+![Quality-Gate](assets/quality-gate-8.png)
 
-Once you logged into Dynatrace, you will find a preconfigured Dashboard.
+Once you logged into Dynatrace, you will find a preconfigured Dashboard. 
 
 ### Setup Tag within Dynatrace
 
 ![Quality-Gate](assets/quality-gate-4.png)
 
-This dashboard will showcase the various deployment stages of Sockshop to come. 
+This prebuild dashboard will also contain links providing quick access to the various portals. 
 
-Select "Transactions and Services" on the left navigation bar and select "front-end" service
+Select "<b>Transactions and Services</b>" on the left navigation bar and select "front-end" service. 
 
 ![Quality-Gate](assets/quality-gate-5.gif)
 
@@ -179,13 +165,13 @@ Drop-down "Properties and tags", Click on "Add-tag" and enter "evalservice" as t
 
 ### Build the pipeline in Jenkins
 
-Back in Jenkins, click on "Build" to run the pipeline
+Back in Jenkins, click on "<b>Build</b>" button to run the pipeline
 
 ![Quality-Gate](assets/quality-gate-6.png)
 
-Once the pipeline is completed, you can see the changes reflected in Keptn's bridge and Dynatrace.
-Within Dynatrace, you will discover a new custom info event.
-The new event will contain details of the quality gate results with details such as JobURL, JobName from Jenkins as well as Keptn source and Keptn's bridge.
+Once the pipeline completes, you can see the changes reflected in Keptn's bridge and Dynatrace.<br>
+Within Dynatrace, you will also discover a new custom info event.<br>
+The new event will contain details of the quality gate results with details such as JobURL, JobName from Jenkins as well as Keptn source and Keptn's bridge.<br>
 The links will also bring you to Jenkin's and Keptn's portals with more detailed information on each side.
 
 ![Quality-Gate](assets/quality-gate-7.gif)
@@ -193,26 +179,100 @@ The links will also bring you to Jenkin's and Keptn's portals with more detailed
 To find out more about the setup of this hands-on, the full tutorial could be found [here](https://github.com/keptn-sandbox/jenkins-tutorial/blob/master/README.md#11-integrate-keptns-slislo-based-quality-gates).
 
 <!-- ------------------------ -->
-## Jenkins Simple Load Test OR Keptn's Performance As a Service
+## Jenkins Simple Load Test
 Duration: 20
 
 ### Load Testing in Pipeline
 
 This is an extended version of the previous build where the pipeline also has a very simple load-testing capability built-into one of the stages.
 
-![load-test](assets/perfaaspipeline_animated.gif)
+![load-test](assets/simpletestpipeline_animated.gif)
 
-Are we going with calculated service metrics? If so, should we use [createTestStepCalculatedMetrics.sh](https://github.com/keptn-sandbox/jenkins-tutorial/blob/master/scripts/createTestStepCalculatedMetrics.sh) to automate those creation?
+Go to "Transactions and Services", filter with "[Kubernetes]stag:dev" tag and tag "frontend" to identify the service. 
 
-Are we able to get a load test to test against the Sockshop? If so, what is the DeploymentURI / URLPaths in Jenkins plugin?
+![load-test](assets/load-test-2.gif)
+
+Back In Jenkins, click on "<b>Back to Dashboard</b>" to return to the list of Jenkin's pipelines.<br>
+As per the previous lab, the initial build will fail but you can drill into the "<b>Build with parameters</b>" on the 2nd attempt
+
+![load-test](assets/load-test-1.png)
+
+Change the form with the following details:<br>
+Service: <b>testservice</b><br>
+DeploymentURI: <b>Carts Dev URL</b> (as provided in email)<br>
+URL Paths: <b>/:homepage;/category.html:Category</b><br>
+
+Once completed, you can click on "<b>Build</b>" button to start the pipeline.
+
+![load-test](assets/load-test-3.png)
+
+You can also get the URL of your Carts Dev URL from your dashboard.<br>
+Simply right-click and copy link address. 
+
+![load-test](assets/load-test-4.png)
+
+Once completed, you can look at Keptn's bridge / Dynatrace's Frontend Service / Jenkins for the changes.<br>
+You will find the additional SLIs based on the calculated service metrics.
+
+![load-test](assets/load-test-5.png)
+
+To find out more about the setup of this hands-on, the full tutorial could be found [here](https://github.com/keptn-sandbox/jenkins-tutorial/blob/master/README.md#12-integrate-keptns-slislo-based-quality-gates---with-simple-testing-tool-in-pipeline).
 
 <!-- ------------------------ -->
-## Jenkins Builds a Container and Keptn does Progressive Delivery
+## Keptn's Performance Test Quality Gate
 Duration: 20
 
-### Load Testing in Pipeline
+### Performance Testing in Pipeline
 
-This is an extended version of the previous build where the pipeline also has a very simple load-testing capability built-into one of the stages.
+This lab extends the previous one where we had Jenkins execute a simple test as part of the Jenkins Pipeline. Keptn was then used for SLI/SLO based quality-gate evaluation. In this tutorial we use Keptn to also take care of the actual test execution using JMeter.
+
+![perf-test](assets/perfaaspipeline_animated.gif)
+
+We will also be using calculated service metrics as defined SLIs for the test execution.<br>
+The creation of these service metrics was created as part of the lab setup. <br>
+These metrics could be found in <b>Settings > Server-side service monitoring > Calculated Service metrics</b><br>
+
+![perf-test](assets/perf-test-4.png)
+
+These metrics as well as their dimensions will be used during the execution of the SLIs. <br>
+As we already added the "testservice" tagged, we can simply run the 3rd pipeline within Jenkins. <br>
+Back in Jenkins, click on "<b>03-performancetest-qualitygate</b>". <br><br>
+Change the form with the following details:<br>
+Service: <b>testservice</b><br>
+DeploymentURI: <b>Website Dev URL</b> (as provided in email)
+
+![perf-test](assets/perf-test-1.png)
+
+Once completed, you can click on "<b>Build</b>" button to start the pipeline.
+
+You can also get the URL of your Carts Dev URL from your dashboard.<br>
+Simply right-click and copy link address. 
+
+![perf-test](assets/perf-test-2.png)
+
+Once completed, you can look at Keptn's bridge / Dynatrace's Frontend Service / Jenkins for the changes.<br>
+Within Dynatrace, you can see the automated performance tests that ran as well as its results.
+You can also drill in context into Keptn's bridge as well as Jenkins.
+
+![perf-test](assets/perf-test-3.gif)
+
+<!-- ------------------------ -->
+## Automate SampleApp Deployment
+Duration: 20
+
+We will now modify the SampleApp Sockshop by automating it with Keptn's SLI/SLO-based Quality Gates.
+
+![deploy-app](assets/deploy-app-1.png)
+
+Within Jenkins, mouseover "<b>DeploySockShop</b>" in the list, click on the down arrow and select "<b>Configure</b>"<br>
+Open another browser tab, go to [Dynatrace APAC's Autonomous Cloud's Git Repo](https://github.com/Dynatrace-APAC/Workshop-Autonomous-Cloud/blob/master/jenkins/DeploySockShop_Keptn_LoadTest_and_QualityGate.Jenkinsfile).<br>
+Copy the <b>amended SockShop Jenkinsfile raw file</b> and replace it within the Pipeline section in Jenkins.  
+
+![deploy-app](assets/deploy-app-2.gif)
+
+Click on "<b>Save</b>" and at the "<b>Build with Parameters</b>" page, select "<b>Build Two</b>" and start the build. 
+
+![deploy-app](assets/deploy-app-3.png)
 
 <!-- ------------------------ -->
 ## Self Healing as a Service
@@ -220,63 +280,47 @@ Duration: 20
 
 Dynatrace integrates with many runbook automation tools such as Ansible. We'll be using Ansible to showcase self-healing problems and automate operations. 
 
-### Deploy Ansible Tower
-
-In Terminal/Cloudshell execute the script: deployTower.sh in the directory 4-DeployTower
-
-This will deploy and startup Ansible Tower. 
-This will also configure Tower, import projects, inventories, credentials (DT API token) and playbook templates.
-Take a note of the Ansible Job URL displayed by the script. You will need it for a next step.
-
-![Ansible](assets/ansible-1.png)
-
 ### Login to Ansible Tower
 
-Access your Ansible environment via a web browser with credentials from your email
-
-<b>Ansible Environment</b><br>
-Ansible URL: As provided in email<br>
-Ansible Username: admin<br>
-Ansible Password: dynatrace.
+Access your Ansible environment via a web browser with credentials from your email.
 
 ![Ansible](assets/ansible-2.png)
 
 ### Configure Dynatrace Problem Notification
 
-In the Dynatrace UI, navigate to Settings -> Integration -> Problem Notification -> Ansible Tower
-
-![Ansible](assets/ansible-3.png)
-
-Enter the Ansible Tower job template URL you were provided after the deployment<br>
-Enter the credentials to access Ansible<br>
-username : admin<br>
-password : Dynatrace<br>
+Within Ansible, click on "Templates" on the left navigation and copy the URL for <b>Remediation</b> Job template. <br>
+In the Dynatrace UI, navigate to <b>Settings > Integration > Problem Notification > Setup Notification > Ansible Tower </b><br>
+Enter the <b>Ansible Tower job template URL</b> you copied<br>
+Enter the credentials to access Ansible (as provided in email)<br>
 Click the Sent test notification button to validate your configuration<br>
 On success, a green confirmation message will be displayed<br>
-Save your configuration 
+Save your configuration
 
-![Ansible](assets/ansible-4.png)
+![Ansible](assets/ansible-3.gif)
 
 ### Adjusting Anomaly Detection
 
 Both problem and anomaly detection in Dynatrace leverage AI technology. This means that the AI learns how each and every microservice behaves and baselines them. Therefore, in a demo scenario like we have right now, we have to override the AI engine with user-defined values to allow the creation of problems due to an artificial increase of a failure rate. (Please note: if we would have the application running and simulate end-user traffic for a couple of hours/days there would be no need for this step.)
 
-In your Dynatrace tenant, navigate to “Transaction & services” and filter by tag "[Kubernetes]stage:prod" and select ItemsController Service
-Click on the ItemsController and then on the three dots ( … ) next to the service name. Click on Edit
-On the next screen, edit the anomaly detection settings as seen in the following screenshot. - Global anomaly detection has to be turned off - Detect increases in failure rate using fixed thresholds - Alert if 0 % custom failure rate threshold is exceed during any 5-minute period. Set Sensitivity to High and change less than the value to 1 request/min.
-
+In your Dynatrace tenant, navigate to “Transaction & services” and filter by tag "[Kubernetes]stage:dev" and select ItemsController Service<br>
+Click on the ItemsController and then on the three dots ( … ) next to the service name. Click on Edit<br>
+On the next screen, edit the anomaly detection settings as per below<br>
+- Global anomaly detection has to be turned off 
+- Detect increases in failure rate using fixed thresholds 
+- Alert if 0 % custom failure rate threshold is exceed during any 5-minute period. 
+- Set Sensitivity to High and change less than the value to 1 request/min.
 
 ![Ansible](assets/ansible-5.gif)
 
 ### Launch remediation playbook
 
-- Navigate back to the Ansible Tower UI
-- From the side menu, navigate to Resources -> Templates
-- Click on the rocket icon to launch the start-campaign playbook
-- Hit Next on the prompt popup window and then Launch
-- As the playbook runs, the output will be displayed. Validate that the recap shows OK=2
+Navigate back to the Ansible Tower UI
+From the side menu, navigate to Resources -> Templates
+Click on the rocket icon to launch the start-campaign playbook
+Hit Next on the prompt popup window and then Launch
+As the playbook runs, validate that status is successful.
 
-![Ansible](assets/ansible-6.png)
+![Ansible](assets/ansible-6.gif)
 
 ### Observe remediation
 
