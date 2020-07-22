@@ -1,10 +1,10 @@
 summary: Autonomous Cloud with Dynatrace
 id: autonomous-cloud
-categories: Workshops
-tags: dynatrace
+categories: autonomous-cloud
+tags: autonomous-cloud
 status: Published 
 authors: Brandon Neo
-Feedback Link: https://thebrandneo.com
+Feedback Link: mailto:APAC-SE-Central@dynatrace.com
 
 # Autonomous Cloud with Dynatrace
 <!-- ------------------------ -->
@@ -128,7 +128,7 @@ This can also be done through the Keptn CLI or the API.
 
 ![SLI-quality-gate](assets/evalpipeline_animated.gif)
 
-WIthin Jenkins, mouseover "01-qualitygate-evaluation" in the list, click on the down arrow and select "Build Now"
+Within Jenkins, mouseover "<b>01-qualitygate-evaluation</b>" in the list, click on the down arrow and select "<b>Build Now</b>"
 
 ![Quality-Gate](assets/quality-gate-1.png)
 
@@ -157,11 +157,11 @@ Once you logged into Dynatrace, you will find a preconfigured Dashboard.
 
 This prebuild dashboard will also contain links providing quick access to the various portals. 
 
-Select "<b>Transactions and Services</b>" on the left navigation bar and select "front-end" service. 
+Select "<b>Transactions and Services</b>" on the left navigation bar and select "<b>front-end</b>" service. 
 
 ![Quality-Gate](assets/quality-gate-5.gif)
 
-Drop-down "Properties and tags", Click on "Add-tag" and enter "evalservice" as tag
+Drop-down "<b>Properties and tags</b>", Click on "<b>Add-tag</b>" and enter "<b>evalservice</b>" as tag
 
 ### Build the pipeline in Jenkins
 
@@ -188,12 +188,13 @@ This is an extended version of the previous build where the pipeline also has a 
 
 ![load-test](assets/simpletestpipeline_animated.gif)
 
-Go to "Transactions and Services", filter with "[Kubernetes]stag:dev" tag and tag "frontend" to identify the service. 
+Go to "<b>Transactions and Services</b>", filter with "<b>[Kubernetes]stage:dev</b>" tag and tag "<b>testservice</b>" to identify the service. 
 
 ![load-test](assets/load-test-2.gif)
 
 Back In Jenkins, click on "<b>Back to Dashboard</b>" to return to the list of Jenkin's pipelines.<br>
-As per the previous lab, the initial build will fail but you can drill into the "<b>Build with parameters</b>" on the 2nd attempt
+Mouseover "<b>02-simpletest-qualitygate</b>" in the list, click on the down arrow and select "<b>Build Now</b>"<br>
+As per the previous lab, the initial build will fail but you can drill into the "<b>Build with parameters</b>" on the 2nd attempt.
 
 ![load-test](assets/load-test-1.png)
 
@@ -235,7 +236,7 @@ These metrics could be found in <b>Settings > Server-side service monitoring > C
 ![perf-test](assets/perf-test-4.png)
 
 These metrics as well as their dimensions will be used during the execution of the SLIs. <br>
-As we already added the "testservice" tagged, we can simply run the 3rd pipeline within Jenkins. <br>
+As we already added the "<b>testservice</b>" tagged, we can simply run the 3rd pipeline within Jenkins. <br>
 Back in Jenkins, click on "<b>03-performancetest-qualitygate</b>". <br><br>
 Change the form with the following details:<br>
 Service: <b>testservice</b><br>

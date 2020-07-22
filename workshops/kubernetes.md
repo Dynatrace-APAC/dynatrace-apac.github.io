@@ -1,10 +1,10 @@
 summary: Dynatrace with Kubernetes
 id: kubernetes
-categories: Workshops
-tags: dynatrace
+categories: kubernetes
+tags: kubernetes
 status: Published 
 authors: Brandon Neo
-Feedback Link: https://thebrandneo.com
+Feedback Link: mailto:APAC-SE-Central@dynatrace.com
 
 # Dynatrace with Kubernetes
 <!-- ------------------------ -->

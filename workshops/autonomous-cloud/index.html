@@ -14,7 +14,7 @@
 </head>
 <body>
 <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
-<google-codelab codelab-gaid="" id="autonomous-cloud" title="Autonomous Cloud with Dynatrace" environment="web" feedback-link="https://thebrandneo.com">
+<google-codelab codelab-gaid="" id="autonomous-cloud" title="Autonomous Cloud with Dynatrace" environment="web" feedback-link="mailto:APAC-SE-Central@dynatrace.com">
 <google-codelab-step label="Introduction" duration="1">
 <p>This repository contains labs for the Hands-On Autonomous Cloud Session. We will be providing the necessary details for your to access your environment.</p>
 <p>For the purposes of the Hands-On, we will automate and make the steps seamless for the participants</p>
@@ -90,7 +90,7 @@ sudo ./installKeptn.sh
 <google-codelab-step label="Keptn&#39;s SLI/SLO-based Quality Gates" duration="20">
 <p>We will be using Jenkins Pipeline to triggers an SLI/SLO-based Quality Gate Evaluation in Keptn. This can also be done through the Keptn CLI or the API.</p>
 <p class="image-container"><img alt="SLI-quality-gate" src="img/ae7293f03464a97e.gif"></p>
-<p>WIthin Jenkins, mouseover &#34;01-qualitygate-evaluation&#34; in the list, click on the down arrow and select &#34;Build Now&#34;</p>
+<p>Within Jenkins, mouseover &#34;<strong>01-qualitygate-evaluation</strong>&#34; in the list, click on the down arrow and select &#34;<strong>Build Now</strong>&#34;</p>
 <p class="image-container"><img alt="Quality-Gate" src="img/8a8502059a80bd64.png"></p>
 <p>The initial build will fail as Jenkins by default doesn&#39;t scan the pipeline for parameters and there are several that have to be specified. Click on &#34;<strong>01-qualitygate-evaluation</strong>&#34; to drill into the pipeline.</p>
 <p class="image-container"><img alt="Quality-Gate" src="img/120dd8f82562e73e.png"></p>
@@ -104,9 +104,9 @@ sudo ./installKeptn.sh
 <h2 is-upgraded>Setup Tag within Dynatrace</h2>
 <p class="image-container"><img alt="Quality-Gate" src="img/485d63efe3c7d03c.png"></p>
 <p>This prebuild dashboard will also contain links providing quick access to the various portals.</p>
-<p>Select &#34;<strong>Transactions and Services</strong>&#34; on the left navigation bar and select &#34;front-end&#34; service.</p>
+<p>Select &#34;<strong>Transactions and Services</strong>&#34; on the left navigation bar and select &#34;<strong>front-end</strong>&#34; service.</p>
 <p class="image-container"><img alt="Quality-Gate" src="img/aadc32346ffd9c82.gif"></p>
-<p>Drop-down &#34;Properties and tags&#34;, Click on &#34;Add-tag&#34; and enter &#34;evalservice&#34; as tag</p>
+<p>Drop-down &#34;<strong>Properties and tags</strong>&#34;, Click on &#34;<strong>Add-tag</strong>&#34; and enter &#34;<strong>evalservice</strong>&#34; as tag</p>
 <h2 is-upgraded>Build the pipeline in Jenkins</h2>
 <p>Back in Jenkins, click on &#34;<strong>Build</strong>&#34; button to run the pipeline</p>
 <p class="image-container"><img alt="Quality-Gate" src="img/1585be2772adc9e7.png"></p>
@@ -118,9 +118,9 @@ sudo ./installKeptn.sh
 <h2 is-upgraded>Load Testing in Pipeline</h2>
 <p>This is an extended version of the previous build where the pipeline also has a very simple load-testing capability built-into one of the stages.</p>
 <p class="image-container"><img alt="load-test" src="img/874863104272faea.gif"></p>
-<p>Go to &#34;Transactions and Services&#34;, filter with &#34;[Kubernetes]stag:dev&#34; tag and tag &#34;frontend&#34; to identify the service.</p>
+<p>Go to &#34;<strong>Transactions and Services</strong>&#34;, filter with &#34;<strong>[Kubernetes]stage:dev</strong>&#34; tag and tag &#34;<strong>testservice</strong>&#34; to identify the service.</p>
 <p class="image-container"><img alt="load-test" src="img/78c1d5868c11ecfd.gif"></p>
-<p>Back In Jenkins, click on &#34;<strong>Back to Dashboard</strong>&#34; to return to the list of Jenkin&#39;s pipelines.<br> As per the previous lab, the initial build will fail but you can drill into the &#34;<strong>Build with parameters</strong>&#34; on the 2nd attempt</p>
+<p>Back In Jenkins, click on &#34;<strong>Back to Dashboard</strong>&#34; to return to the list of Jenkin&#39;s pipelines.<br> Mouseover &#34;<strong>02-simpletest-qualitygate</strong>&#34; in the list, click on the down arrow and select &#34;<strong>Build Now</strong>&#34;<br> As per the previous lab, the initial build will fail but you can drill into the &#34;<strong>Build with parameters</strong>&#34; on the 2nd attempt.</p>
 <p class="image-container"><img alt="load-test" src="img/7252dfeec2bde69a.png"></p>
 <p>Change the form with the following details:<br> Service: <strong>testservice<br></strong> DeploymentURI: <strong>Carts Dev URL</strong> (as provided in email)<br> URL Paths: <strong>/:homepage;/category.html:Category<br></strong></p>
 <p>Once completed, you can click on &#34;<strong>Build</strong>&#34; button to start the pipeline.</p>
@@ -137,7 +137,7 @@ sudo ./installKeptn.sh
 <p class="image-container"><img alt="perf-test" src="img/2bcf8b34937f9f8f.gif"></p>
 <p>We will also be using calculated service metrics as defined SLIs for the test execution.<br> The creation of these service metrics was created as part of the lab setup. <br> These metrics could be found in <strong>Settings &gt; Server-side service monitoring &gt; Calculated Service metrics<br></strong></p>
 <p class="image-container"><img alt="perf-test" src="img/f9b6eb1c09a0c8ec.png"></p>
-<p>These metrics as well as their dimensions will be used during the execution of the SLIs. <br> As we already added the &#34;testservice&#34; tagged, we can simply run the 3rd pipeline within Jenkins. <br> Back in Jenkins, click on &#34;<strong>03-performancetest-qualitygate</strong>&#34;. <br><br> Change the form with the following details:<br> Service: <strong>testservice<br></strong> DeploymentURI: <strong>Website Dev URL</strong> (as provided in email)</p>
+<p>These metrics as well as their dimensions will be used during the execution of the SLIs. <br> As we already added the &#34;<strong>testservice</strong>&#34; tagged, we can simply run the 3rd pipeline within Jenkins. <br> Back in Jenkins, click on &#34;<strong>03-performancetest-qualitygate</strong>&#34;. <br><br> Change the form with the following details:<br> Service: <strong>testservice<br></strong> DeploymentURI: <strong>Website Dev URL</strong> (as provided in email)</p>
 <p class="image-container"><img alt="perf-test" src="img/853e3bf96d381d02.png"></p>
 <p>Once completed, you can click on &#34;<strong>Build</strong>&#34; button to start the pipeline.</p>
 <p>You can also get the URL of your Carts Dev URL from your dashboard.<br> Simply right-click and copy link address.</p>

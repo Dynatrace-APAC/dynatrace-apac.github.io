@@ -3,7 +3,7 @@
   "format": "html",
   "prefix": "https://storage.googleapis.com",
   "mainga": "UA-49880327-14",
-  "updated": "2020-07-16T14:43:56+10:00",
+  "updated": "2020-07-22T17:09:37+10:00",
   "id": "kubernetes",
   "duration": 31,
   "title": "Dynatrace with Kubernetes",
@@ -15,11 +15,11 @@
     "published"
   ],
   "category": [
-    "workshops"
+    "kubernetes"
   ],
   "tags": [
-    "dynatrace"
+    "kubernetes"
   ],
-  "feedback": "https://thebrandneo.com",
+  "feedback": "mailto:APAC-SE-Central@dynatrace.com",
   "url": "kubernetes"
 }
