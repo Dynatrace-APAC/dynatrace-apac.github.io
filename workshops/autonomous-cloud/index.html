@@ -195,20 +195,20 @@ sudo ./installKeptn.sh
 <p>Access your Ansible environment via a web browser with credentials from your email.</p>
 <p class="image-container"><img alt="Ansible" src="img/2fd8f373915b372b.png"></p>
 <h2 is-upgraded>Configure Dynatrace Problem Notification</h2>
-<p>Within Ansible, click on &#34;Templates&#34; on the left navigation and copy the URL for <strong>Remediation</strong> Job template. <br> In the Dynatrace UI, navigate to <strong>Settings &gt; Integration &gt; Problem Notification &gt; Setup Notification &gt; Ansible Tower <br></strong> Enter the <strong>Ansible Tower job template URL</strong> you copied<br> Enter the credentials to access Ansible (as provided in email)<br> Click the Sent test notification button to validate your configuration<br> On success, a green confirmation message will be displayed<br> Save your configuration</p>
+<p>Within Ansible, click on &#34;<strong>Templates</strong>&#34; on the left navigation and copy the URL for <strong>Remediation</strong> Job template. <br> In the Dynatrace UI, navigate to <strong>Settings &gt; Integration &gt; Problem Notification &gt; Setup Notification &gt; Ansible Tower <br></strong> Enter the <strong>Ansible Tower job template URL</strong> you copied<br> Enter the credentials to access Ansible (as provided in email)<br> Click the Sent test notification button to validate your configuration<br> On success, a green confirmation message will be displayed<br> Save your configuration</p>
 <p class="image-container"><img alt="Ansible" src="img/29f86ae4b544ea8b.gif"></p>
 <h2 is-upgraded>Adjusting Anomaly Detection</h2>
-<p>Both problem and anomaly detection in Dynatrace leverage AI technology. This means that the AI learns how each and every microservice behaves and baselines them. Therefore, in a demo scenario like we have right now, we have to override the AI engine with user-defined values to allow the creation of problems due to an artificial increase of a failure rate. (Please note: if we would have the application running and simulate end-user traffic for a couple of hours/days there would be no need for this step.)</p>
-<p>In your Dynatrace tenant, navigate to &#34;Transaction &amp; services&#34; and filter by tag &#34;[Kubernetes]stage:dev&#34; and select ItemsController Service<br> Click on the ItemsController and then on the three dots ( ... ) next to the service name. Click on Edit<br> On the next screen, edit the anomaly detection settings as per below<br></p>
+<p>Both problem and anomaly detection in Dynatrace leverage our DAVIS AI technology. This means that DAVIS learns how each and every microservice behaves and baselines them. Therefore, in a demo scenario like we have right now, we have to override the AI engine with user-defined values to allow the creation of problems due to an artificial increase of a failure rate. (Please note: if we would have the application running and simulate end-user traffic for a couple of hours/days there would be no need for this step.)</p>
+<p>In your Dynatrace tenant, navigate to &#34;<strong>Transaction &amp; services</strong>&#34; and filter by tag &#34;<strong>[Kubernetes]stage:prod</strong>&#34; and select ItemsController Service<br> Within the ItemsController Service page, click on on the <strong>three dots ( ... )</strong> next to the service name. Click on <strong>Edit<br></strong> On the next screen, edit the <strong>anomaly detection settings</strong> as per below<br></p>
 <ul>
-<li>Global anomaly detection has to be turned off </li>
-<li>Detect increases in failure rate using fixed thresholds </li>
-<li>Alert if 0 % custom failure rate threshold is exceed during any 5-minute period.</li>
-<li>Set Sensitivity to High and change less than the value to 1 request/min.</li>
+<li>Disable <strong>Global anomaly detection</strong></li>
+<li>Detect increases in failure rate using <strong>fixed thresholds</strong></li>
+<li>Alert if <strong>0 %</strong> custom failure rate threshold is exceed during any 5-minute period.</li>
+<li>Set Sensitivity to <strong>High</strong> and change less than the value to <strong>1 request/min</strong>.</li>
 </ul>
 <p class="image-container"><img alt="Ansible" src="img/60b06e9a63493c4f.gif"></p>
 <h2 is-upgraded>Launch remediation playbook</h2>
-<p>Navigate back to the Ansible Tower UI From the side menu, navigate to Resources -&gt; Templates Click on the rocket icon to launch the start-campaign playbook Hit Next on the prompt popup window and then Launch As the playbook runs, validate that status is successful.</p>
+<p>Navigate back to the Ansible Tower UI. From the side menu, navigate to <strong>Resources -&gt; Templates</strong>.<br> Click on the <strong>rocket icon</strong> to launch the start-campaign playbook. <br> Hit <strong>Next</strong> on the prompt popup window and then <strong>Launch</strong>. <br> As the playbook runs, validate that status is successful.</p>
 <p class="image-container"><img alt="Ansible" src="img/ef93d54be88c554a.gif"></p>
 <h2 is-upgraded>Observe remediation</h2>
 <p>Back in ItemsController, look at the service events. The playbook have notified Dynatrace when the promotional rate was changed to 50%.</p>

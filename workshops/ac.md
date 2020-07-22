@@ -290,7 +290,7 @@ Access your Ansible environment via a web browser with credentials from your ema
 
 ### Configure Dynatrace Problem Notification
 
-Within Ansible, click on "Templates" on the left navigation and copy the URL for <b>Remediation</b> Job template. <br>
+Within Ansible, click on "<b>Templates</b>" on the left navigation and copy the URL for <b>Remediation</b> Job template. <br>
 In the Dynatrace UI, navigate to <b>Settings > Integration > Problem Notification > Setup Notification > Ansible Tower </b><br>
 Enter the <b>Ansible Tower job template URL</b> you copied<br>
 Enter the credentials to access Ansible (as provided in email)<br>
@@ -302,24 +302,23 @@ Save your configuration
 
 ### Adjusting Anomaly Detection
 
-Both problem and anomaly detection in Dynatrace leverage AI technology. This means that the AI learns how each and every microservice behaves and baselines them. Therefore, in a demo scenario like we have right now, we have to override the AI engine with user-defined values to allow the creation of problems due to an artificial increase of a failure rate. (Please note: if we would have the application running and simulate end-user traffic for a couple of hours/days there would be no need for this step.)
+Both problem and anomaly detection in Dynatrace leverage our DAVIS AI technology. This means that DAVIS learns how each and every microservice behaves and baselines them. Therefore, in a demo scenario like we have right now, we have to override the AI engine with user-defined values to allow the creation of problems due to an artificial increase of a failure rate. (Please note: if we would have the application running and simulate end-user traffic for a couple of hours/days there would be no need for this step.)
 
-In your Dynatrace tenant, navigate to “Transaction & services” and filter by tag "[Kubernetes]stage:dev" and select ItemsController Service<br>
-Click on the ItemsController and then on the three dots ( … ) next to the service name. Click on Edit<br>
-On the next screen, edit the anomaly detection settings as per below<br>
-- Global anomaly detection has to be turned off 
-- Detect increases in failure rate using fixed thresholds 
-- Alert if 0 % custom failure rate threshold is exceed during any 5-minute period. 
-- Set Sensitivity to High and change less than the value to 1 request/min.
+In your Dynatrace tenant, navigate to “<b>Transaction & services</b>” and filter by tag "<b>[Kubernetes]stage:prod</b>" and select ItemsController Service<br>
+Within the ItemsController Service page, click on on the <b>three dots ( … )</b> next to the service name. Click on <b>Edit</b><br>
+On the next screen, edit the <b>anomaly detection settings</b> as per below<br>
+- Disable <b>Global anomaly detection</b>
+- Detect increases in failure rate using <b>fixed thresholds</b> 
+- Alert if <b>0 %</b> custom failure rate threshold is exceed during any 5-minute period. 
+- Set Sensitivity to <b>High</b> and change less than the value to <b>1 request/min</b>.
 
 ![Ansible](assets/ansible-5.gif)
 
 ### Launch remediation playbook
 
-Navigate back to the Ansible Tower UI
-From the side menu, navigate to Resources -> Templates
-Click on the rocket icon to launch the start-campaign playbook
-Hit Next on the prompt popup window and then Launch
+Navigate back to the Ansible Tower UI. From the side menu, navigate to <b>Resources -> Templates</b>.<br>
+Click on the <b>rocket icon</b> to launch the start-campaign playbook. <br>
+Hit <b>Next</b> on the prompt popup window and then <b>Launch</b>. <br>
 As the playbook runs, validate that status is successful.
 
 ![Ansible](assets/ansible-6.gif)
