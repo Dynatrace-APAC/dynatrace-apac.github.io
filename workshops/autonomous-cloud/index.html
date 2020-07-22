@@ -1,28 +1,40 @@
 
 <!doctype html>
+
 <html>
 <head>
-<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
-<meta name="theme-color" content="#4F7DC9">
-<meta charset="UTF-8">
-<title>Autonomous Cloud with Dynatrace</title>
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
-<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
-<style>
-.success{color:#1e8e3e}.error{color:red} </style>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Autonomous Cloud with Dynatrace</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
 </head>
 <body>
-<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
-<google-codelab codelab-gaid="" id="autonomous-cloud" title="Autonomous Cloud with Dynatrace" environment="web" feedback-link="mailto:APAC-SE-Central@dynatrace.com">
-<google-codelab-step label="Introduction" duration="1">
-<p>This repository contains labs for the Hands-On Autonomous Cloud Session. We will be providing the necessary details for your to access your environment.</p>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="autonomous-cloud"
+                  title="Autonomous Cloud with Dynatrace"
+                  environment="web"
+                  feedback-link="mailto:APAC-SE-Central@dynatrace.com">
+    
+      <google-codelab-step label="Introduction" duration="1">
+        <p>This repository contains labs for the Hands-On Autonomous Cloud Session. We will be providing the necessary details for your to access your environment.</p>
 <p>For the purposes of the Hands-On, we will automate and make the steps seamless for the participants</p>
 <p>You will be provided with the following:</p>
 <ul>
 <li>Dynatrace environment</li>
-<li>Kubernetes Server running <ul>
-<li>Sockshop Application (sample app) <ul>
+<li>Kubernetes Server running  <ul>
+<li>Sockshop Application (sample app)  <ul>
 <li>with Dev and Prod Environments</li>
 </ul>
 </li>
@@ -43,16 +55,19 @@
 <li>Deploy a pipeline (Sockshop) in Jenkins</li>
 <li>Installing Keptn</li>
 <li>Integrating Jenkins to Keptn and Dynatrace</li>
-<li>Using Jenkins + Keptn with Dynatace for <ul class="checklist">
+<li>Using Jenkins + Keptn with Dynatace for  <ul class="checklist">
 <li>Automate Quality with Quality Gates evaluation</li>
 <li>Automate Testing Load Testing and Performance Testing</li>
 <li>Automate Operations with Self-healing with Ansible</li>
 </ul>
 </li>
 </ul>
-</google-codelab-step>
-<google-codelab-step label="Deploy SampleApp in Jenkins" duration="5">
-<h2 is-upgraded>Login to your Jenkins Instance</h2>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Deploy SampleApp in Jenkins" duration="5">
+        <h2 is-upgraded>Login to your Jenkins Instance</h2>
 <p>Access your Jenkins environment via a web browser with credentials from your email</p>
 <p class="image-container"><img alt="Jenkins-Setup" src="img/93fcfae690e6c21d.png"></p>
 <h2 is-upgraded>Build a pipeline</h2>
@@ -62,9 +77,12 @@
 <p>Once finished, you can click on &#34;DeploySockshop&#34; again and see the various stages of the pipeline build.</p>
 <p class="image-container"><img alt="Jenkins-Setup" src="img/74d62559d3576931.png"></p>
 <p>This is just a demonstration of a working pipeline so there&#39;s no need to wait for it to complete.</p>
-</google-codelab-step>
-<google-codelab-step label="Setting up Keptn" duration="5">
-<h2 is-upgraded>Login to your Kubernetes Instance</h2>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Setting up Keptn" duration="5">
+        <h2 is-upgraded>Login to your Kubernetes Instance</h2>
 <p>Login to the Kubernetes server via a SSH terminal (eg. Putty, Terminal, MobaXterm)</p>
 <p>Access your Kubernetes environment with credentials from your email</p>
 <p>Once you logged in, you can issue the commands below to install Keptn Part of the Keptn setup has been automated within the shell script below.</p>
@@ -78,17 +96,23 @@ sudo ./installKeptn.sh
 <p>For example: KEPTN BRIDGE: http://bridge.keptn..nip.io KEPTN ENDPOINT: https://api.keptn..nip.io/<strong>swagger-ui/</strong></p>
 <p><img alt="Keptn-Setup" src="img/9f667dd2fececa10.png"> Take note of to append <strong>&#34;/swagger-ui/&#34;</strong> to the end to view the Keptn API Swagger UI</p>
 <p><img alt="Keptn-Setup" src="img/cc17d4a8ba873695.png"> There would be no project running at the moment on Keptn&#39;s bridge, but we will be creating at the next step.</p>
-</google-codelab-step>
-<google-codelab-step label="Configuring Keptn within Jenkins" duration="5">
-<h2 is-upgraded>Setting up Keptn Plugin within Jenkins</h2>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Configuring Keptn within Jenkins" duration="5">
+        <h2 is-upgraded>Setting up Keptn Plugin within Jenkins</h2>
 <p>Back within Jenkins, select Jenkins from the top left &gt; Manage Jenkins &gt; Configure System</p>
 <p class="image-container"><img alt="Plugin-Setup" src="img/3f3d2f28032c118f.png"></p>
-<p>Scroll down and under <strong>&#34;Global Properties&#34;</strong> enter the KEPTN API Token from the Terminal into the field Click &#34;Save&#34; to save your setting.</p>
+<p>Scroll down and under <strong>&#34;Global Properties&#34;</strong> enter the KEPTN API Token from the Terminal into the field Click &#34;<strong>Save</strong>&#34; to save your setting.</p>
 <p class="image-container"><img alt="Plugin-Setup" src="img/15bb2746e0c893c9.png"></p>
 <p>Steps have been pre-configured prior to the labs. To find out more about the plugin, refer to the <a href="https://github.com/keptn-sandbox/keptn-jenkins-library" target="_blank">Keptn Jenkins Shared Library</a> on Github.</p>
-</google-codelab-step>
-<google-codelab-step label="Keptn&#39;s SLI/SLO-based Quality Gates" duration="20">
-<p>We will be using Jenkins Pipeline to triggers an SLI/SLO-based Quality Gate Evaluation in Keptn. This can also be done through the Keptn CLI or the API.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Keptn&#39;s SLI/SLO-based Quality Gates" duration="20">
+        <p>We will be using Jenkins Pipeline to triggers an SLI/SLO-based Quality Gate Evaluation in Keptn. This can also be done through the Keptn CLI or the API.</p>
 <p class="image-container"><img alt="SLI-quality-gate" src="img/ae7293f03464a97e.gif"></p>
 <p>Within Jenkins, mouseover &#34;<strong>01-qualitygate-evaluation</strong>&#34; in the list, click on the down arrow and select &#34;<strong>Build Now</strong>&#34;</p>
 <p class="image-container"><img alt="Quality-Gate" src="img/8a8502059a80bd64.png"></p>
@@ -99,12 +123,12 @@ sudo ./installKeptn.sh
 <p>As with the preconfigured form, we will be using the <strong>&#34;evalservice&#34;</strong> tag within Dynatrace to identify the appropriate service which we will validate the SLI and SLO. The name of the tag can be passed to our Jenkins Pipeline as a parameter. So we will first need to tag a service within Dynatrace.</p>
 <h2 is-upgraded>Login to your Dynatrace Environment</h2>
 <p>Access your Jenkins environment via a web browser with credentials from your email. <br> When you access your Dynatrace tenant for the first time you&#39;ll need to set a password.<br></p>
-<p class="image-container"><img alt="Quality-Gate" src="img/c58a4d493dc266f6.png"></p>
+<p class="image-container"><img alt="Quality-Gate" src="img/3b39f8380e527051.png"></p>
 <p>Once you logged into Dynatrace, you will find a preconfigured Dashboard.</p>
 <h2 is-upgraded>Setup Tag within Dynatrace</h2>
 <p class="image-container"><img alt="Quality-Gate" src="img/485d63efe3c7d03c.png"></p>
 <p>This prebuild dashboard will also contain links providing quick access to the various portals.</p>
-<p>Select &#34;<strong>Transactions and Services</strong>&#34; on the left navigation bar and select &#34;<strong>front-end</strong>&#34; service.</p>
+<p>Select &#34;<strong>Transactions and Services</strong>&#34; on the left navigation bar and select &#34;<strong>front-end</strong>&#34; service. <br> This can be either for Dev or Prod service.</p>
 <p class="image-container"><img alt="Quality-Gate" src="img/aadc32346ffd9c82.gif"></p>
 <p>Drop-down &#34;<strong>Properties and tags</strong>&#34;, Click on &#34;<strong>Add-tag</strong>&#34; and enter &#34;<strong>evalservice</strong>&#34; as tag</p>
 <h2 is-upgraded>Build the pipeline in Jenkins</h2>
@@ -113,9 +137,12 @@ sudo ./installKeptn.sh
 <p>Once the pipeline completes, you can see the changes reflected in Keptn&#39;s bridge and Dynatrace.<br> Within Dynatrace, you will also discover a new custom info event.<br> The new event will contain details of the quality gate results with details such as JobURL, JobName from Jenkins as well as Keptn source and Keptn&#39;s bridge.<br> The links will also bring you to Jenkin&#39;s and Keptn&#39;s portals with more detailed information on each side.</p>
 <p class="image-container"><img alt="Quality-Gate" src="img/4af0bea58fda670d.gif"></p>
 <p>To find out more about the setup of this hands-on, the full tutorial could be found <a href="https://github.com/keptn-sandbox/jenkins-tutorial/blob/master/README.md#11-integrate-keptns-slislo-based-quality-gates" target="_blank">here</a>.</p>
-</google-codelab-step>
-<google-codelab-step label="Jenkins Simple Load Test" duration="20">
-<h2 is-upgraded>Load Testing in Pipeline</h2>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Jenkins Simple Load Test" duration="20">
+        <h2 is-upgraded>Load Testing in Pipeline</h2>
 <p>This is an extended version of the previous build where the pipeline also has a very simple load-testing capability built-into one of the stages.</p>
 <p class="image-container"><img alt="load-test" src="img/874863104272faea.gif"></p>
 <p>Go to &#34;<strong>Transactions and Services</strong>&#34;, filter with &#34;<strong>[Kubernetes]stage:dev</strong>&#34; tag and tag &#34;<strong>testservice</strong>&#34; to identify the service.</p>
@@ -130,9 +157,12 @@ sudo ./installKeptn.sh
 <p>Once completed, you can look at Keptn&#39;s bridge / Dynatrace&#39;s Frontend Service / Jenkins for the changes.<br> You will find the additional SLIs based on the calculated service metrics.</p>
 <p class="image-container"><img alt="load-test" src="img/4a335a7fd9880a7f.png"></p>
 <p>To find out more about the setup of this hands-on, the full tutorial could be found <a href="https://github.com/keptn-sandbox/jenkins-tutorial/blob/master/README.md#12-integrate-keptns-slislo-based-quality-gates---with-simple-testing-tool-in-pipeline" target="_blank">here</a>.</p>
-</google-codelab-step>
-<google-codelab-step label="Keptn&#39;s Performance Test Quality Gate" duration="20">
-<h2 is-upgraded>Performance Testing in Pipeline</h2>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Keptn&#39;s Performance Test Quality Gate" duration="20">
+        <h2 is-upgraded>Performance Testing in Pipeline</h2>
 <p>This lab extends the previous one where we had Jenkins execute a simple test as part of the Jenkins Pipeline. Keptn was then used for SLI/SLO based quality-gate evaluation. In this tutorial we use Keptn to also take care of the actual test execution using JMeter.</p>
 <p class="image-container"><img alt="perf-test" src="img/2bcf8b34937f9f8f.gif"></p>
 <p>We will also be using calculated service metrics as defined SLIs for the test execution.<br> The creation of these service metrics was created as part of the lab setup. <br> These metrics could be found in <strong>Settings &gt; Server-side service monitoring &gt; Calculated Service metrics<br></strong></p>
@@ -142,19 +172,25 @@ sudo ./installKeptn.sh
 <p>Once completed, you can click on &#34;<strong>Build</strong>&#34; button to start the pipeline.</p>
 <p>You can also get the URL of your Carts Dev URL from your dashboard.<br> Simply right-click and copy link address.</p>
 <p class="image-container"><img alt="perf-test" src="img/d23f7359d88397fa.png"></p>
-<p>Once completed, you can look at Keptn&#39;s bridge / Dynatrace&#39;s Frontend Service / Jenkins for the changes.<br> Within Dynatrace, you can see the automated performance tests that ran as well as its results. You can also drill in context into Keptn&#39;s bridge as well as Jenkins.</p>
+<p>Once completed, you can look at Keptn&#39;s bridge / Dynatrace&#39;s Frontend Service / Jenkins for the changes.<br> Within Dynatrace, you can see the automated performance tests that generated a pass result for the quality gate.<br> You can also drill in context into Keptn&#39;s bridge as well as Jenkins.</p>
 <p class="image-container"><img alt="perf-test" src="img/b4d6d670bfd63c1a.gif"></p>
-</google-codelab-step>
-<google-codelab-step label="Automate SampleApp Deployment" duration="20">
-<p>We will now modify the SampleApp Sockshop by automating it with Keptn&#39;s SLI/SLO-based Quality Gates.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Automate SampleApp Deployment" duration="20">
+        <p>We will now modify the SampleApp Sockshop by automating it with Keptn&#39;s SLI/SLO-based Quality Gates.</p>
 <p class="image-container"><img alt="deploy-app" src="img/73d9583fc386d2a5.png"></p>
 <p>Within Jenkins, mouseover &#34;<strong>DeploySockShop</strong>&#34; in the list, click on the down arrow and select &#34;<strong>Configure</strong>&#34;<br> Open another browser tab, go to <a href="https://github.com/Dynatrace-APAC/Workshop-Autonomous-Cloud/blob/master/jenkins/DeploySockShop_Keptn_LoadTest_and_QualityGate.Jenkinsfile" target="_blank">Dynatrace APAC&#39;s Autonomous Cloud&#39;s Git Repo</a>.<br> Copy the <strong>amended SockShop Jenkinsfile raw file</strong> and replace it within the Pipeline section in Jenkins.</p>
 <p class="image-container"><img alt="deploy-app" src="img/565ac2a88279616.gif"></p>
 <p>Click on &#34;<strong>Save</strong>&#34; and at the &#34;<strong>Build with Parameters</strong>&#34; page, select &#34;<strong>Build Two</strong>&#34; and start the build.</p>
 <p class="image-container"><img alt="deploy-app" src="img/cd0aaacd25e6ba4a.png"></p>
-</google-codelab-step>
-<google-codelab-step label="Self Healing as a Service" duration="20">
-<p>Dynatrace integrates with many runbook automation tools such as Ansible. We&#39;ll be using Ansible to showcase self-healing problems and automate operations.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Self Healing as a Service" duration="20">
+        <p>Dynatrace integrates with many runbook automation tools such as Ansible. We&#39;ll be using Ansible to showcase self-healing problems and automate operations.</p>
 <h2 is-upgraded>Login to Ansible Tower</h2>
 <p>Access your Ansible environment via a web browser with credentials from your email.</p>
 <p class="image-container"><img alt="Ansible" src="img/2fd8f373915b372b.png"></p>
@@ -186,7 +222,7 @@ sudo ./installKeptn.sh
 <p>Jobs executed in Ansible Tower</p>
 <ul>
 <li>start-campaign (set rate to 50%)</li>
-<li>remediation <ul>
+<li>remediation  <ul>
 <li>push comment to Dynatrace Problem</li>
 <li>retrieve problem details</li>
 <li>launch remediation action related to problem context</li>
@@ -197,12 +233,17 @@ sudo ./installKeptn.sh
 <p class="image-container"><img alt="Ansible" src="img/431e1b170415ed37.png"></p>
 <p>** Problem Resolution - Problem was resolved automatically</p>
 <p class="image-container"><img alt="Ansible" src="img/f14e1b698d1dde7e.png"></p>
-</google-codelab-step>
-</google-codelab>
-<script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
-<script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
-<script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
-<script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
-<script src="//support.google.com/inapp/api.js"></script>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
 </body>
 </html>

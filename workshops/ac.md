@@ -113,7 +113,7 @@ Back within Jenkins, select Jenkins from the top left > Manage Jenkins > Configu
 ![Plugin-Setup](assets/jenkins-3.png)
 
 Scroll down and under <b>"Global Properties"</b> enter the KEPTN API Token from the Terminal into the field
-Click "Save" to save your setting.
+Click "<b>Save</b>" to save your setting.
 
 ![Plugin-Setup](assets/jenkins-4.png)
 
@@ -157,7 +157,8 @@ Once you logged into Dynatrace, you will find a preconfigured Dashboard.
 
 This prebuild dashboard will also contain links providing quick access to the various portals. 
 
-Select "<b>Transactions and Services</b>" on the left navigation bar and select "<b>front-end</b>" service. 
+Select "<b>Transactions and Services</b>" on the left navigation bar and select "<b>front-end</b>" service. <br>
+This can be either for Dev or Prod service. 
 
 ![Quality-Gate](assets/quality-gate-5.gif)
 
@@ -252,7 +253,7 @@ Simply right-click and copy link address.
 ![perf-test](assets/perf-test-2.png)
 
 Once completed, you can look at Keptn's bridge / Dynatrace's Frontend Service / Jenkins for the changes.<br>
-Within Dynatrace, you can see the automated performance tests that ran as well as its results.
+Within Dynatrace, you can see the automated performance tests that generated a pass result for the quality gate.<br>
 You can also drill in context into Keptn's bridge as well as Jenkins.
 
 ![perf-test](assets/perf-test-3.gif)
