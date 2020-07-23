@@ -52,13 +52,13 @@ Access your Jenkins environment via a web browser with credentials from your ema
 
 ### Build a pipeline
 
-Once you logged in, mouseover "DeploySockShop" in the list, click on the down arrow and select "Build Now"
+Once you logged in, mouseover "<b>DeploySockShop</b>" in the list, click on the down arrow and select "<b>Build Now</b>"
 
 ![Jenkins-Setup](assets/jenkins-1.png)
 
 This process will take about 1-2 mins so we will let it run. 
 
-Once finished, you can click on "DeploySockshop" again and see the various stages of the pipeline build. 
+Once finished, you can click on "<b>DeploySockshop</b>" again and see the various stages of the pipeline build. 
 
 ![Jenkins-Setup](assets/jenkins-2.png)
 
@@ -89,7 +89,7 @@ Setup will take a 2-3 minutes.
 
 ![Keptn-Setup](assets/keptn-2.png)
 
-Once completed, take note of the keptn API token which is required for the next step.
+Once completed, take note of the <b>keptn API token</b> which is required for the next step.
 You can also use the Keptn Bridge and API Endpoint
 
 For example:<br>
@@ -108,7 +108,7 @@ Duration: 5
 
 ### Setting up Keptn Plugin within Jenkins
 
-Back within Jenkins, select Jenkins from the top left > Manage Jenkins > Configure System
+Back within Jenkins, select <b>Jenkins (from the top left) > Manage Jenkins > Configure System</b>
 
 ![Plugin-Setup](assets/jenkins-3.png)
 
