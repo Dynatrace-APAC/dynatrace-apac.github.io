@@ -191,6 +191,11 @@ sudo ./installKeptn.sh
     
       <google-codelab-step label="Self Healing as a Service" duration="20">
         <p>Dynatrace integrates with many runbook automation tools such as Ansible. We&#39;ll be using Ansible to showcase self-healing problems and automate operations.</p>
+<h2 is-upgraded>Generate Load for Carts Service</h2>
+<p>Within the SSH terminal, run the following commands to trigger load for the carts service.</p>
+<pre><code>cd ~acm_student/dtacmworkshop/utils/
+sudo ./cartsLoadTest.sh
+</code></pre>
 <h2 is-upgraded>Login to Ansible Tower</h2>
 <p>Access your Ansible environment via a web browser with credentials from your email.</p>
 <p class="image-container"><img alt="Ansible" src="img/2fd8f373915b372b.png"></p>

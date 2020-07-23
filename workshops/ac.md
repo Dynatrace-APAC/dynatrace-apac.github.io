@@ -282,6 +282,15 @@ Duration: 20
 
 Dynatrace integrates with many runbook automation tools such as Ansible. We'll be using Ansible to showcase self-healing problems and automate operations. 
 
+### Generate Load for Carts Service
+
+Within the SSH terminal, run the following commands to trigger load for the carts service.
+
+```bash
+cd ~acm_student/dtacmworkshop/utils/
+sudo ./cartsLoadTest.sh
+```
+
 ### Login to Ansible Tower
 
 Access your Ansible environment via a web browser with credentials from your email.
