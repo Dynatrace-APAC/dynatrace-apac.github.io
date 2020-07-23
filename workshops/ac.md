@@ -35,7 +35,7 @@ You will be provided with the following:
 - Deploy a pipeline (Sockshop) in Jenkins 
 - Installing Keptn 
 - Integrating Jenkins to Keptn and Dynatrace
-- Using Jenkins + Keptn with Dynatace for
+- Using Jenkins + Keptn with Dynatrace for
    - Automate Quality with Quality Gates evaluation
    - Automate Testing Load Testing and Performance Testing
    - Automate Operations with Self-healing with Ansible
