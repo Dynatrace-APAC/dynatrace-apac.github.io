@@ -75,7 +75,7 @@ Login to the Kubernetes server via a SSH terminal (eg. Putty, Terminal, MobaXter
 
 Access your Kubernetes environment with credentials from your email
 
-Once you logged in, you can issue the commands below to install Keptn
+Once you logged in, you can issue the commands below to install Keptn<br>
 Part of the Keptn setup has been automated within the shell script below.
 
 ```bash
@@ -112,7 +112,7 @@ Back within Jenkins, select Jenkins from the top left > Manage Jenkins > Configu
 
 ![Plugin-Setup](assets/jenkins-3.png)
 
-Scroll down and under <b>"Global Properties"</b> enter the KEPTN API Token from the Terminal into the field
+Scroll down and under <b>"Global Properties"</b> enter the KEPTN API Token from the Terminal into the field<br>
 Click "<b>Save</b>" to save your setting.
 
 ![Plugin-Setup](assets/jenkins-4.png)
