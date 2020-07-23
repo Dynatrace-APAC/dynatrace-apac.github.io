@@ -92,9 +92,9 @@ Setup will take a 2-3 minutes.
 Once completed, take note of the keptn API token which is required for the next step.
 You can also use the Keptn Bridge and API Endpoint
 
-For example:
-KEPTN BRIDGE: http://bridge.keptn.<YOUR-IP-ADDRESS>.nip.io 
-KEPTN ENDPOINT: https://api.keptn.<YOUR-IP-ADDRESS>.nip.io/<b>swagger-ui/</b>
+For example:<br>
+KEPTN BRIDGE: http://bridge.keptn.<b><i>YOUR-IP-ADDRESS</i></b>.nip.io<br> 
+KEPTN ENDPOINT: https://api.keptn.<b><i>YOUR-IP-ADDRESS</i></b>.nip.io/<b>swagger-ui/</b>
 
 ![Keptn-Setup](assets/keptn-4.png)
 Take note of to append <b>"/swagger-ui/"</b> to the end to view the Keptn API Swagger UI 
