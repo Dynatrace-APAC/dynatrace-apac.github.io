@@ -201,7 +201,7 @@ As per the previous lab, the initial build will fail but you can drill into the 
 
 Change the form with the following details:<br>
 Service: <b>testservice</b><br>
-DeploymentURI: <b>Carts Dev URL</b> (as provided in email)<br>
+DeploymentURI: <b>Website Dev URL</b> (as provided in email)<br>
 URL Paths: <b>/:homepage;/category.html:Category</b><br>
 
 Once completed, you can click on "<b>Build</b>" button to start the pipeline.

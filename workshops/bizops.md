@@ -1,52 +1,77 @@
-summary: Dynatrace with Kubernetes
-id: kubernetes
-categories: kubernetes
-tags: kubernetes
+summary: BizOps with Dynatrace
+id: bizops
+categories: bizops
+tags: bizops
 status: Published 
 authors: Brandon Neo
 Feedback Link: mailto:APAC-SE-Central@dynatrace.com
 
-# Dynatrace with Kubernetes
+# BizOps with Dynatrace
 <!-- ------------------------ -->
-## Introduction 
+## Bridging the Gap to the Business
 Duration: 1
 
-This repository contains labs for the Hands-On Kubernetes Session. We will be using Google Kubernetes Engine (GKE) for this hands-on but this will work on other platforms as well.
+This Repo contains the labs we are going to work though as part of the BizOps – Bridging the Gap to the Business Hands On Workshop.
 
 For the purposes of the Hands-On, we will automate and make the steps seamless for the participants
 
 ### Prerequisites
-- Dynatrace SaaS/Managed Account. Get your free SaaS trial here.
-- Google Cloud account with access to GKE. Get your free trial access here.
-- Chrome Browser
+- Dynatrace SaaS/Managed Account. Get your free SaaS trial [here](https://www.dynatrace.com/trial/).
 
-### What You’ll Learn 
-- Deploying Dynatrace Operator via Helm Chart on Kubernetes
-- Setup Kubernetes integration on Dynatrace
-- Enabling early access feature flags in Dynatrace
-- Discover Kubernetes View on Dynatace
+### Lab Setup
+The following steps are used for this lab:
+- AWS account (used to create an EC2 instance from a public AMI)
+    * Signup to a free trial [here](https://aws.amazon.com/free/)
+- Sample Application 
+    * Sample App is based on [easyTravel Docker](https://github.com/Dynatrace/easyTravel-Docker)
+    * Follow the [Prerequisite Actions](https://github.com/Dynatrace-APAC/Workshop-BizOps/tree/master/Prerequisite%20Actions) to create the application that will be used throughout this workshop.
+
+### What You’ll Learn
+- Understand Real User Monitoring setup with easyTravel App 
+- Learn Digital Business Analytics
+- Learn Dynatrace Capabilities such as
+    * User Action Naming
+    * Key User Actions
+    * User Session Properties
+    * User Session Query Language (USQL)
+    * Dynatrace Dashboards
 
 <!-- ------------------------ -->
-## Setting up your Google Kubernetes Environment (GKE)
+## RUM Setup
 Duration: 5
 
-### Sign up for a Google Cloud Platform Account
+In this lab, we will be doing basic setup within Dynatrace
 
-Head over to https://cloud.google.com/free/ and sign up for a free GCP account with your existing Google account. 
+### Key User Actions 
 
-You can also signup for a new Google Account if you don't have one
+- Access the **easyTravel Website** application
+- Under **Top 3 user actions** click **View full details**
+- Scroll down to **Top 100 user actions** and filter a user action e.g. **orange-booking-finish.jsf**
 
-Upon signup, you will have free credits tied to your GCP account. (12 months + 400AUD)
+[Conversion Goal](/assets/conversion_goal_filter.PNG)
 
-You can login to your GCP console [here](https://console.cloud.google.com/home/).
+- Click on the user action e.g **Loading of page /orange-booking-finish.jsf** then click on **Mark as key user action**
 
-![GCP-Homepage](assets/k8s/Picture1.png)
+![Conversion Goal](/assets/conversion_goal_makua.PNG)
+
+Repeat the above to add the following as key user actions:
+
+- loading of page /
+- loading of page /orange.jsf
+- loading of page /orange-booking-finish.jsf
+- loading of page /orange-booking-review.jsf
+- loading of page /orange-booking-payment.jsf
+- click on "login" on page /orange.jsf
+- click on "login" on page /
+- click on "search" on page /orange.jsf
+- click on "search" on page /
+- loading of page /special-offers.jsp
 
 ### Enable Kubernetes Engine API 
 
 You will also need to <b>Enable your API Billing</b> with Kubernetes Engine API. 
 
-![k8s-Engine](assets/k8s/Picture3.png)
+![k8s-Engine](assets/Picture3.png)
 
 You should be prompted to the billing page while setting up your GKE instance. 
 
@@ -54,7 +79,7 @@ If not, you can follow the steps [here](https://support.google.com/googleapi/ans
 
 ### Activate Cloud Shell
 
-![GKE-Menu](assets/k8s/Picture4.png)
+![GKE-Menu](assets/Picture4.png)
 
 Click on the Terminal Icon on the top right
 
@@ -64,7 +89,7 @@ We will start setting up our GKE Cluster
 
 ### 3. Create your GKE Cluster
 
-![GKE-CLI](assets/k8s/Picture5.png)
+![GKE-CLI](assets/Picture5.png)
 
 Create your GKE cluster named <b>k8sworkshop</b> running Ubuntu in GKE with the following command.
 We will also be creating a compute VM for a Dynatrace Activegate. We will use the Dynatrace Activegate for Kubernetes integration.
@@ -76,7 +101,7 @@ gcloud compute instances create dynatrace-activegate --image-family ubuntu-1604-
 
 Once completed, you will have a running GKE Cluster!
 
-![GKE-CLI](assets/k8s/gcp.png)
+![GKE-CLI](assets/gcp.png)
 Running <b>kubectl get nodes</b> will reveal number of nodes 
 
 <!-- ------------------------ -->
@@ -89,27 +114,27 @@ As per the official instructions [here](https://www.dynatrace.com/support/help/t
 
 
 1. On the left navigation bar in Google Cloud, go to <b>Compute Engine</b> -> <b>VM instances</b>
-![Activegate-connected](assets/k8s/activegate-0.png)
+![Activegate-connected](assets/activegate-0.png)
 
 2. Click on the SSH button on the <b>dynatrace-activegate</b> row and SSH into the instance
-![Activegate-connected](assets/k8s/activegate.png)
+![Activegate-connected](assets/activegate.png)
 
 2. Within Dynatrace, click on Deploy Dynatrace on the left menu
 3. Click on "Install Activegate" at the bottom of the page
 4. Click on "Linux"
 5. Copy Step 2 and paste into your terminal.
 6. Copy Step 4 and append "sudo" (installing as root) onto terminal
-![Copy-AG-Commands](assets/k8s/activegate-2.png)
+![Copy-AG-Commands](assets/activegate-2.png)
 
 Once completed, you should see Activegate under Deployment Status.
 
-![Activegate-connected](assets/k8s/Picture9.1.png)
+![Activegate-connected](assets/Picture9.1.png)
 
 ### Setup the K8S Overview Dashboard
 
 Go to Settings -> Process and Containers -> Process group detection -> Enable Cloud Application and workload detection
 
-![Enable Cloud Workload](assets/k8s/enablecloud.png)
+![Enable Cloud Workload](assets/enablecloud.png)
 
 Automating the steps from our offical [documentation page](https://www.dynatrace.com/support/help/technology-support/cloud-platforms/kubernetes/installation-and-operation/further-integrations/connect-your-kubernetes-clusters-to-dynatrace/), we provided the API URL and bearer token automatically via API. Back in your main Cloud Shell terminal, enter the below
 
@@ -118,7 +143,7 @@ wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/ma
 ```
 With the above results, enter the values to <b>Settings</b> -> <b>Cloud and Virtualization</b> -> <b>Kubernetes</b>
 
-![K8S-integration](assets/k8s/activegate-4.png)
+![K8S-integration](assets/activegate-4.png)
 1. Give a name for the connection eg. GKE K8S
 2. Enter in your Kubernetes API URL Target 
    - Copy the Kubernetes API URL from the SSH terminal
@@ -138,7 +163,7 @@ metadata.namespace=hipster-shop
 
 Once successfully connected, click on Kubernetes on the left menu and explore the Kubernetes UI. 
 
-![K8S-integration](assets/k8s/k8s.png)
+![K8S-integration](assets/k8s.png)
 <!-- ------------------------ -->
 ## Install Dynatrace OneAgent Operator for Kubernetes
 Duration: 5
@@ -146,32 +171,32 @@ Duration: 5
 1. On your Google Cloud Console, on the left navigational bar, go to Kubernetes Engine -> Applications
 2. Click on "Deploy From Marketplace"
 3. Search for Dynatrace in the search field above
-![Activegate-connected](assets/k8s/operator.png)
+![Activegate-connected](assets/operator.png)
 4. Click on Dynatrace OneAgent Operator and click on Configure
 5. Fill in the following fields<br>
 - API URL <br>
 Copy your Dynatrace URL and append <b>"/api"</b> to the end<br>
-![API-URL](assets/k8s/operator-1-withURL.png)
+![API-URL](assets/operator-1-withURL.png)
 
 - API Token <br>
 Create one from Settings -> Integration -> Dynatrace API
   - Enable Access problem and event feed, metrics, and topology toggle
   - Enable Write Configuration toggle (needed for Activegate setup for the next step)<br>
-![API-Token](assets/k8s/api-token.png)
+![API-Token](assets/api-token.png)
 
 - PaaS token <br>
 Create one from Settings -> Integration -> Platform as a Service
-![PaaS-Token](assets/k8s/paas-token.png)
+![PaaS-Token](assets/paas-token.png)
 
 Copy the values into your GCP console
-![Activegate-connected](assets/k8s/operator-1.png)
+![Activegate-connected](assets/operator-1.png)
 
 6. Click on Deploy<br>
-![Activegate-connected](assets/k8s/operator-2.png)<br>
+![Activegate-connected](assets/operator-2.png)<br>
 
 Once completed, you can click on Hosts on the left panel to see your connected K8S nodes (3 nodes)  
 
-![GKE-Hosts](assets/k8s/Picture7.1.png)
+![GKE-Hosts](assets/Picture7.1.png)
 <!-- ------------------------ -->
 ## Setting up Hipster Shop
 Duration: 5
@@ -186,11 +211,11 @@ wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/ma
 
 Once deployed, you can locate the front-end endpoint from GCP (<b>Kubernetes Engine -> Services & Ingress</b>)
 
-![JSON](assets/k8s/Picture10.png)
+![JSON](assets/Picture10.png)
 
 Once running, you can go to the exposed frontend-external IP to go to Hipster Shop.
 
-![JSON](assets/k8s/hipstershop.png)
+![JSON](assets/hipstershop.png)
 
 <!-- ------------------------ -->
 ## Exploring Dynatrace
@@ -199,12 +224,12 @@ Duration: 5
 ### Automatic Discovery of services
 
 In Dynatrace, go to Transactions and Services to see the automatic 5 discovered services.
-![Discovered Services](assets/k8s/lab5-autodiscoveredservices.png)
+![Discovered Services](assets/lab5-autodiscoveredservices.png)
 
 You will realized that some services are discovered but some might not match <a href="https://github.com/GoogleCloudPlatform/microservices-demo#service-architecture">Hipster Shop's Service architecture</a>.
 Hipster Shop uses cutting edge technologies (such as GPRC) which Dynatrace supports with the constant evolution in the cloud.
 
-![Architecture](assets/k8s/architecture-diagram.png)
+![Architecture](assets/architecture-diagram.png)
 
 ### Enabling additional features within OneAgent
 
@@ -214,26 +239,26 @@ This is to prevent unforseen circumstances which might impact your production en
 Under Global Settings, enable the following feature flags. They are on different pages so you would need to toggle through the pages.
 
 You can use the search filter bar to search for <b>"GRPC"</b>
-![GRPC-Features](assets/k8s/lab5-b4EnableGRPC-settings.png )
+![GRPC-Features](assets/lab5-b4EnableGRPC-settings.png )
 
-![Features](assets/k8s/features.png)
+![Features](assets/features.png)
 
 Make sure all the below features all enabled, including the 2 additional NodeJS feature flags.
-![All-Features](assets/k8s/all-features.png)
+![All-Features](assets/all-features.png)
 
 Enabling OneAgents features requires a restart of the pods. Run the following command to restart the pods.
 
 ```bash
 kubectl delete pods --all -n hipster-shop
 ```
-![Restart](assets/k8s/restart.png)
+![Restart](assets/restart.png)
 
 Back in Dynatrace, go to and Transactions and Services to see the updated list of services.
-![Discovered Services](assets/k8s/lab5-AfterEnableGRPC-settings.png)
+![Discovered Services](assets/lab5-AfterEnableGRPC-settings.png)
 
 Clicking on Go Service ":8080" followed by Service Flow, you can see that the service are automatically detected and matches the architecture diagram above.
 
-![Service Flow](assets/k8s/serviceflow.png)
+![Service Flow](assets/serviceflow.png)
 
 <!-- ------------------------ -->
 ## Exploring Kubernetes View
@@ -241,31 +266,34 @@ Duration: 5
 
 Explore the various functionalities within the Kubernetes View such as Cluster Utilization, Cluster Workloads, K8S Events
 
-![KubernetesUI](assets/k8s/k8s-ui.png)
+![KubernetesUI](assets/k8s-ui.png)
 
 ### Analyze the Kubernetes Cluster utilization
    -  Mouseover and note the CPU and Memory usage with the Min / Max
    -  Click on Analyze Nodes to drill deeper into each node
    
-![KubernetesUI](assets/k8s/cluster-util.png)
+![KubernetesUI](assets/cluster-util.png)
 
 ### Analyze the Kubernetes Cluster Workloads 
    -  Notice the Workloads and Pods running spilt between Kubernetes controllers
 
-![KubernetesUI](assets/k8s/cluster-workload.png)
+![KubernetesUI](assets/cluster-workload.png)
 
 ### Analyze the Kubernetes Events
    -  Notice the different types of events BackOff, Unhealthy
 
-![KubernetesUI](assets/k8s/events.png)
+![KubernetesUI](assets/events.png)
 
 ### Analyze the Kubernetes Namespace
    -  Click on <b>hipster-shop</b> and drill down into various kubernetes services (Cloud applications)
 
-![KubernetesUI](assets/k8s/namespace.png)
+![KubernetesUI](assets/namespace.png)
 
 ### Explore Cloud Applications by clicking onto them
    - Click onto each of them and discover their supporting technologies
    
-![KubernetesUI](assets/k8s/cloud-apps.png)
+![KubernetesUI](assets/cloud-apps.png)
+
+
+
 
