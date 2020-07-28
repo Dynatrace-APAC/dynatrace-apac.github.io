@@ -1006,7 +1006,7 @@ Please clone the [repository](https://github.com/Dynatrace/BizOpsConfigurator) o
 
 3. Click on **Deploy Tenant Overview** and select the **BizOps Template**
 
-![BizOpsConfigurator](assets/bizops/BizOpsConfig-2.png)
+![BizOpsConfigurator](assets/bizops/BizOpsConfig-4.png)
 
 4. Click on **Deploy App Overview** and select **Easytravel** for the dropdown for both App Overview and Release overview. Click **Upload**
 
