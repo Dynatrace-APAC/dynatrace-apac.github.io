@@ -995,12 +995,12 @@ Navigate back to the Dynatrace dashboards. The dashboard should look something l
 ##  BizOps Configurator
 Duration: 20
 
-BizOps Configurator - https://dynatrace.github.io/BizOpsConfigurator/ <br>
-Please clone the [repository](https://github.com/Dynatrace/BizOpsConfigurator) or create a **Personal Access Token** if you plan to use the BizOps Configurator to avoid hitting GitHub API limits
+Go to the [BizOps Configurator](https://dynatrace.github.io/BizOpsConfigurator/) URL.<br>
 
 Follow the **Step 2** instructions on the [BizOps Prereqs](https://dynatrace.github.io/BizOpsConfigurator/#prerequisites) page to setup your API Token. The following steps should have been setup as per the previous labs.
 
-Click on **Begin** and provide your tenant URL and API token.
+Click on **Begin** and provide your tenant URL and API token. <br>
+Please clone the [repository](https://github.com/Dynatrace/BizOpsConfigurator) or create a **Personal Access Token** if you plan to use the BizOps Configurator to avoid hitting GitHub API limits
 
 ![BizOpsConfigurator](assets/bizops/BizOpsConfig-2.png)
 
