@@ -44,7 +44,7 @@ You can login to your GCP console [here](https://console.cloud.google.com/home/)
 
 ### Enable Kubernetes Engine API 
 
-You will also need to <b>Enable your API Billing</b> with Kubernetes Engine API. 
+You will also need to **Enable your API Billing** with Kubernetes Engine API. 
 
 ![k8s-Engine](assets/k8s/Picture3.png)
 
@@ -66,7 +66,7 @@ We will start setting up our GKE Cluster
 
 ![GKE-CLI](assets/k8s/Picture5.png)
 
-Create your GKE cluster named <b>k8sworkshop</b> running Ubuntu in GKE with the following command.
+Create your GKE cluster named **k8sworkshop** running Ubuntu in GKE with the following command.
 We will also be creating a compute VM for a Dynatrace Activegate. We will use the Dynatrace Activegate for Kubernetes integration.
 
 ```bash
@@ -77,7 +77,7 @@ gcloud compute instances create dynatrace-activegate --image-family ubuntu-1604-
 Once completed, you will have a running GKE Cluster!
 
 ![GKE-CLI](assets/k8s/gcp.png)
-Running <b>kubectl get nodes</b> will reveal number of nodes 
+Running **kubectl get nodes** will reveal number of nodes 
 
 <!-- ------------------------ -->
 ## Setting up your Kubernetes Integration
@@ -88,10 +88,10 @@ As per the official instructions [here](https://www.dynatrace.com/support/help/t
 ### SSH into Dynatrace-Activegate terminal and install Activegate
 
 
-1. On the left navigation bar in Google Cloud, go to <b>Compute Engine</b> -> <b>VM instances</b>
+1. On the left navigation bar in Google Cloud, go to **Compute Engine** -> **VM instances**
 ![Activegate-connected](assets/k8s/activegate-0.png)
 
-2. Click on the SSH button on the <b>dynatrace-activegate</b> row and SSH into the instance
+2. Click on the SSH button on the **dynatrace-activegate** row and SSH into the instance
 ![Activegate-connected](assets/k8s/activegate.png)
 
 2. Within Dynatrace, click on Deploy Dynatrace on the left menu
@@ -116,7 +116,7 @@ Automating the steps from our offical [documentation page](https://www.dynatrace
 ``` bash
 wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/master/setup-k8s-ui.sh | bash
 ```
-With the above results, enter the values to <b>Settings</b> -> <b>Cloud and Virtualization</b> -> <b>Kubernetes</b>
+With the above results, enter the values to **Settings** -> **Cloud and Virtualization** -> **Kubernetes**
 
 ![K8S-integration](assets/k8s/activegate-4.png)
 1. Give a name for the connection eg. GKE K8S
@@ -127,13 +127,9 @@ With the above results, enter the values to <b>Settings</b> -> <b>Cloud and Virt
 4. Disable "Require valid certificates for communication with API server"
 5. Add another event field selector
 6. User the below for the field selector name
-``` bash
-Hipster shop 
-```
+`Hipster shop`
 7. User the below for the Field selector expression
-``` bash
-metadata.namespace=hipster-shop
-```
+`metadata.namespace=hipster-shop`
 8. Save and Click on Connect
 
 Once successfully connected, click on Kubernetes on the left menu and explore the Kubernetes UI. 
@@ -150,7 +146,7 @@ Duration: 5
 4. Click on Dynatrace OneAgent Operator and click on Configure
 5. Fill in the following fields<br>
 - API URL <br>
-Copy your Dynatrace URL and append <b>"/api"</b> to the end<br>
+Copy your Dynatrace URL and append **"/api"** to the end<br>
 ![API-URL](assets/k8s/operator-1-withURL.png)
 
 - API Token <br>
@@ -184,7 +180,7 @@ For our Hands-On, you will need to run <a href="https://github.com/GoogleCloudPl
 wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/master/deploy.sh | bash
 ```
 
-Once deployed, you can locate the front-end endpoint from GCP (<b>Kubernetes Engine -> Services & Ingress</b>)
+Once deployed, you can locate the front-end endpoint from GCP (**Kubernetes Engine -> Services & Ingress**)
 
 ![JSON](assets/k8s/Picture10.png)
 
@@ -209,11 +205,11 @@ Hipster Shop uses cutting edge technologies (such as GPRC) which Dynatrace suppo
 ### Enabling additional features within OneAgent
 
 Because of the rapid rate of change coming to OneAgent, features that are in Early Access aren't automatically enabled by default. 
-This is to prevent unforseen circumstances which might impact your production environments. For the purposes of workshop, we can enable these features. Go to <b>Settings -> Service-side service monitoring -> Deep Monitoring -> New Oneagent Features</b>
+This is to prevent unforseen circumstances which might impact your production environments. For the purposes of workshop, we can enable these features. Go to **Settings -> Service-side service monitoring -> Deep Monitoring -> New Oneagent Features**
 
 Under Global Settings, enable the following feature flags. They are on different pages so you would need to toggle through the pages.
 
-You can use the search filter bar to search for <b>"GRPC"</b>
+You can use the search filter bar to search for **"GRPC"**
 ![GRPC-Features](assets/k8s/lab5-b4EnableGRPC-settings.png )
 
 ![Features](assets/k8s/features.png)
@@ -260,7 +256,7 @@ Explore the various functionalities within the Kubernetes View such as Cluster U
 ![KubernetesUI](assets/k8s/events.png)
 
 ### Analyze the Kubernetes Namespace
-   -  Click on <b>hipster-shop</b> and drill down into various kubernetes services (Cloud applications)
+   -  Click on **hipster-shop** and drill down into various kubernetes services (Cloud applications)
 
 ![KubernetesUI](assets/k8s/namespace.png)
 

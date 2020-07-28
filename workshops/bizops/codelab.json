@@ -1,0 +1,25 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2020-07-28T09:58:40+10:00",
+  "id": "bizops",
+  "duration": 168,
+  "title": "BizOps with Dynatrace",
+  "authors": "Brandon Neo",
+  "summary": "BizOps with Dynatrace",
+  "source": "bizops.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "bizops"
+  ],
+  "tags": [
+    "bizops"
+  ],
+  "feedback": "mailto:APAC-SE-Central@dynatrace.com",
+  "url": "bizops"
+}

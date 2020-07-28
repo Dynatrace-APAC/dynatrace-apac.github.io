@@ -1,0 +1,1021 @@
+
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+<meta name="theme-color" content="#4F7DC9">
+<meta charset="UTF-8">
+<title>BizOps with Dynatrace</title>
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+<style>
+.success{color:#1e8e3e}.error{color:red} </style>
+</head>
+<body>
+<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+<google-codelab codelab-gaid="" id="bizops" title="BizOps with Dynatrace" environment="web" feedback-link="mailto:APAC-SE-Central@dynatrace.com">
+<google-codelab-step label="Bridging the Gap to the Business" duration="1">
+<p>This Repo contains the labs we are going to work though as part of the BizOps – Bridging the Gap to the Business Hands On Workshop.</p>
+<p>For the purposes of the Hands-On, we will automate and make the steps seamless for the participants</p>
+<h2 is-upgraded>Prerequisites</h2>
+<ul>
+<li>Dynatrace SaaS/Managed Account. Get your free SaaS trial <a href="https://www.dynatrace.com/trial/" target="_blank">here</a>.</li>
+</ul>
+<h2 is-upgraded>Lab Setup</h2>
+<p>The following steps are used for this lab:</p>
+<ul>
+<li>AWS account (used to create an EC2 instance from a public AMI) <ul>
+<li>Signup to a free trial <a href="https://aws.amazon.com/free/" target="_blank">here</a></li>
+</ul>
+</li>
+<li>Sample Application <ul>
+<li>Sample App is based on <a href="https://github.com/Dynatrace/easyTravel-Docker" target="_blank">easyTravel Docker</a></li>
+<li>Follow the <a href="https://github.com/Dynatrace-APAC/Workshop-BizOps/tree/master/Prerequisite%20Actions" target="_blank">Prerequisite Actions</a> to create the application that will be used throughout this workshop.</li>
+</ul>
+</li>
+</ul>
+<h2 class="checklist" is-upgraded>What You&#39;ll Learn</h2>
+<ul class="checklist">
+<li>Understand Real User Monitoring setup with easyTravel App</li>
+<li>Learn Digital Business Analytics</li>
+<li>Learn Dynatrace Capabilities such as <ul class="checklist">
+<li>User Action Naming</li>
+<li>Key User Actions</li>
+<li>User Session Properties</li>
+<li>User Session Query Language (USQL)</li>
+<li>Dynatrace Dashboards</li>
+</ul>
+</li>
+</ul>
+</google-codelab-step>
+<google-codelab-step label="Dynatrace RUM Setup" duration="2">
+<p>In this lab, we will be doing basic setup within Dynatrace.</p>
+<p>Some of these tuning tips has already been done for you.</p>
+<ul>
+<li>Enable JavaScript framework support​</li>
+<li>Configure User Tagging​</li>
+<li>Configure User Action Naming​</li>
+<li>Add Key User Actions​</li>
+<li>Usability analytics​</li>
+</ul>
+<h2 is-upgraded>Marking Key User Actions</h2>
+<ul>
+<li>Access the <strong>easyTravel Website</strong> application</li>
+<li>Under <strong>Top 3 user actions</strong> click <strong>View full details</strong></li>
+<li>Scroll down to <strong>Top 100 user actions</strong> and filter a user action e.g. <strong>orange-booking-finish.jsf</strong></li>
+</ul>
+<p class="image-container"><img alt="Conversion Goal" src="img/c73695c2377086b2.PNG"></p>
+<ul>
+<li>Click on the user action e.g <strong>Loading of page /orange-booking-finish.jsf</strong> then click on <strong>Mark as key user action</strong></li>
+</ul>
+<p class="image-container"><img alt="Conversion Goal" src="img/11fe8365537367f2.PNG"></p>
+<p>Repeat the above to add the following as key user actions:</p>
+<ul>
+<li>loading of page /</li>
+<li>loading of page /orange.jsf</li>
+<li>loading of page /orange-booking-finish.jsf</li>
+<li>loading of page /orange-booking-review.jsf</li>
+<li>loading of page /orange-booking-payment.jsf</li>
+<li>click on &#34;login&#34; on page /orange.jsf</li>
+<li>click on &#34;login&#34; on page /</li>
+<li>click on &#34;search&#34; on page /orange.jsf</li>
+<li>click on &#34;search&#34; on page /</li>
+<li>loading of page /special-offers.jsp</li>
+</ul>
+</google-codelab-step>
+<google-codelab-step label="Creating a Basic Dashboard" duration="5">
+<p>In this lab, we will create the following dashboard:</p>
+<p class="image-container"><img alt="Basic Dashboard" src="img/f7434945c63b9347.PNG"></p>
+<h2 is-upgraded>Dashboard Components</h2>
+<p>The above dashboard has the following components:</p>
+<p>Out of the Box Tiles:</p>
+<ul>
+<li><strong>Application Health</strong></li>
+<li><strong>Top web applications</strong></li>
+<li><strong>Web Application</strong> &gt; easyTravel Website</li>
+</ul>
+<p>Custom Chart Tiles:</p>
+<ul>
+<li>Action count (by Apdex category)<ul>
+<li>Category: Applications</li>
+<li>Metric: Action count (by Apdex category) (Sum)</li>
+<li>View Results as: Timeseries</li>
+<li>Dimensions to split by: <ul>
+<li>Web Application: true, Filtered by <strong>easyTravel Website</strong></li>
+<li>Apdex category: true</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Action count (by Apdex category)<ul>
+<li>Category: Applications</li>
+<li>Metric: Action count (by Apdex category) (Sum)</li>
+<li>View Results as: Pie</li>
+<li>Dimensions to split by: <ul>
+<li>Web Application: true, Filtered by <strong>easyTravel Website</strong></li>
+<li>Apdex category: true</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Real User Errors<ul>
+<li>Category: Applications</li>
+<li>Metric: Count of errors (by user type, error type and error origin) (Sum)</li>
+<li>View Results as: Pie</li>
+<li>Dimensions to split by: <ul>
+<li>Web Application: true, Filtered by <strong>easyTravel Website</strong></li>
+<li>User type: true, Filtered by: <strong>Real Users</strong></li>
+<li>Error origin: true</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Active Sessions<ul>
+<li>Category: Applications</li>
+<li>Metric: Active Sessions</li>
+<li>View Results as: Top List</li>
+<li>Dimensions to split by: <ul>
+<li>Web Application: true, Filtered by <strong>easyTravel Website</strong></li>
+<li>Users: true</li>
+<li>User type: true</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Session Duration<ul>
+<li>Category: Applications</li>
+<li>Metric: Session Duration</li>
+<li>View Results as: Top List <ul>
+<li>Dimensions to split by:</li>
+<li>Web Application: true, Filtered by <strong>easyTravel Website</strong></li>
+<li>Users: true</li>
+<li>User type: true</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</google-codelab-step>
+<google-codelab-step label="Creating Conversion Rates" duration="5">
+<p>In this lab, we will create conversion goals for the easyTravel application</p>
+<h2 is-upgraded>Conversion Goal</h2>
+<p>Access the easyTravel Website application monitoring settings <strong>Applications &gt; easyTravel Website &gt; (...) &gt; Edit</strong></p>
+<p>Select <strong>Conversion Goals</strong> and click <strong>Add goal</strong> and enter the following:</p>
+<ul>
+<li>Name: <strong>Successful Bookings<br></strong></li>
+<li>Type of goal: <strong>User Action<br></strong></li>
+<li>Rule applies to: <strong>Load actions<br></strong></li>
+<li>Rule: Action Name &gt; contains &gt; <strong>loading of page /orange-booking-finish.jsf</strong></li>
+</ul>
+<p class="image-container"><img alt="Conversion Goal" src="img/99b398d2b52655b.PNG"></p>
+<p>Check results aginst the application: <strong>easyTravel</strong> &gt; <strong>User behavior</strong></p>
+<p class="image-container"><img alt="Conversion Goal" src="img/839a86fb3c8aab2a.PNG"></p>
+</google-codelab-step>
+<google-codelab-step label="Sessions Properties - Part 1" duration="15">
+<p>In this lab, we will create a session properties to expose business data to Dynatrace</p>
+<h2 is-upgraded>Membership Status</h2>
+<p>1) Access the easyTravel Website application monitoring settings</p>
+<p><strong>Applications &gt; easyTravel Website &gt; (...) Edit</strong></p>
+<p>2) Select <strong>Session and User action properties</strong>, and click <strong>Custom defined property</strong> and enter the following:</p>
+<ul>
+<li>Expression Type: <strong>CSS Selector<br></strong></li>
+<li>Data Type: <strong>String<br></strong></li>
+<li>Display Name: <strong>Membership Status<br></strong></li>
+<li>Key: <strong>membershipstatus<br></strong></li>
+<li>CSS Selector: <code>#loginForm\:j_idt43</code><br></li>
+<li>Store as user action property: <strong>false<br></strong></li>
+<li>Store as session property: <strong>true<br></strong></li>
+<li>Apply cleanup rule: <strong>true<br></strong></li>
+<li>Cleanup Rule Regex: <code>(.*?) status!</code><br></li>
+</ul>
+<p class="image-container"><img alt="User Session Property Config" src="img/8087db6065a621c2.PNG"></p>
+<p>3) Click <strong>Save Property</strong></p>
+<p>It may take 5-10 mins to see results in Dynatrace because session properties are only available when the user session is completed.</p>
+<p>You can view the user sessions that have the membershipstatus set by running the following USQL:</p>
+<pre><code>SELECT * FROM usersession WHERE stringProperties.membershipstatus IS NOT NULL ORDER BY startTime DESC
+</code></pre>
+</google-codelab-step>
+<google-codelab-step label="Creating Sessions Properties - Part 2" duration="20">
+<p>In this lab, we will create a session properties to expose business data Booking Total and Destination to Dynatrace</p>
+<h2 is-upgraded>Booking Total</h2>
+<p>First get the <strong>CSS selector</strong> for the Booking Total field.</p>
+<p>1) Assess the easyTravel homepage (the URL provied to you) 2) Seach for a destination e.g. Gold Coast and click <strong>Book Now</strong></p>
+<p class="image-container"><img alt="easyTravel Step 1" src="img/208343fac90ba795.png"></p>
+<p>3) Login with username: <strong>janet</strong> and password: <strong>janet</strong> and click <strong>Next</strong></p>
+<p class="image-container"><img alt="easyTravel Step 2" src="img/26b26bbac0618799.png"></p>
+<p>4) Right click on the Round-trip ticket price $ value and click <strong>inspect</strong></p>
+<p class="image-container"><img alt="easyTravel Step 3" src="img/c9586f91b229f147.png"></p>
+<p>5) Right click on the td element and select <strong>Copy</strong> &gt; <strong>Copy Selector</strong></p>
+<p class="image-container"><img alt="easyTravel Step 4" src="img/cd04441f6ecc2660.png"></p>
+<p>Second create the session property in Dynatrace.</p>
+<p>1) Access the easyTravel application monitoring settings <strong>Applications &gt; easyTravel &gt; (...) Edit</strong></p>
+<p>2) Select <strong>Session and User action properties</strong> and click <strong>Custom defined property</strong> and enter the following:</p>
+<ul>
+<li>Expression Type: <strong>CSS Selector<br></strong></li>
+<li>Data Type: <strong>Double</strong></li>
+<li>CSS Selector: <strong>The CSS Selector you copied above</strong> e.g <code>#iceform\:j_idt77-11-1 &gt; span</code></li>
+<li>Display Name: <strong>Booking Total</strong></li>
+<li>Key: <strong>bookingtotal</strong></li>
+<li>Display Name: <strong>Booking Total</strong></li>
+<li>Store as user action property: <strong>false</strong></li>
+<li>Store as session property: <strong>true</strong></li>
+<li>Apply cleanup rule: <strong>true</strong></li>
+<li>Cleanup Rule Regex: <code>\$(.*+)</code></li>
+</ul>
+<p>You can view the user sessions that have the booking total value by running the following USQL:</p>
+<pre><code>SELECT * FROM usersession WHERE doubleProperties.bookingtotal IS NOT NULL ORDER BY startTime DESC
+</code></pre>
+<h2 is-upgraded>Trip Journey</h2>
+<p>For the trip Journey, back in easyTravel:</p>
+<p>1) Right click on the <strong>Journey</strong> value and click <strong>inspect</strong></p>
+<p class="image-container"><img alt="easyTravel Step 3" src="img/c3bcca7d49073112.png"></p>
+<p>2) Right click on the span element and select <strong>Copy</strong> &gt; <strong>Copy Selector</strong></p>
+<p class="image-container"><img alt="easyTravel Step 4" src="img/b54097e8803c556.png"></p>
+<p>Create the session property in Dynatrace.</p>
+<p>1) Select <strong>Session and User action properties</strong> and click <strong>Custom defined property</strong> and enter the following:</p>
+<ul>
+<li>Expression Type: <strong>CSS Selector<br></strong></li>
+<li>Data Type: <strong>String</strong></li>
+<li>CSS Selector: <strong>The CSS Selector you copied above</strong> e.g. <code>#iceform\:popupDetailsLink</code></li>
+<li>Display Name: <strong>Journey</strong></li>
+<li>Key: <strong>journey</strong></li>
+<li>Store as user action property: <strong>false</strong></li>
+<li>Store as session property: <strong>true</strong></li>
+<li>Apply cleanup rule: <strong>false</strong></li>
+</ul>
+<p>You can view the user sessions that have the destination value by running the following USQL:</p>
+<pre><code>SELECT * FROM usersession WHERE stringProperties.journey IS NOT NULL ORDER BY startTime DESC
+</code></pre>
+<p>It may take 5-10 mins to see results in Dynatrace because session properties are only available when the user session is completed.</p>
+</google-codelab-step>
+<google-codelab-step label="User Session Query Language (USQL)" duration="20">
+<h2 is-upgraded>Creating a Basic USQL Dashboard</h2>
+<p>In this lab, we will create the following dashboard:</p>
+<p class="image-container"><img alt="Basic Dashboard" src="img/730906ee6d99d4cc.PNG"></p>
+<h2 is-upgraded>Dashboard Components</h2>
+<p>The above dashboard has the following components:</p>
+<p>Out of the Box Tiles:</p>
+<ul>
+<li><strong>Live user activity</strong></li>
+<li><strong>Top web applications</strong></li>
+<li><strong>Application health</strong></li>
+</ul>
+<p>USQL Tiles:</p>
+<h2 is-upgraded>Single Value Tiles</h2>
+<ul>
+<li>Satisfied Users<ul>
+<li>USQL Category: <strong>select count(usersessionid) as &#34;Satisfied Users&#34; from usersession where userExperienceScore=&#34;SATISFIED&#34;</strong></li>
+<li>Compare with previous timeframe: <strong>true</strong></li>
+<li>Dynamic time-frame shift: <strong>true</strong></li>
+<li>Visualization types: <strong>Single value</strong></li>
+</ul>
+</li>
+<li>Tolerated Users<ul>
+<li>USQL Category: <strong>select count(usersessionid) as &#34;Tolerated Users&#34; from usersession where userExperienceScore=&#34;TOLERATED&#34;</strong></li>
+<li>Compare with previous timeframe: <strong>true</strong></li>
+<li>Dynamic time-frame shift: <strong>true</strong></li>
+<li>Visualization types: <strong>Single value</strong></li>
+</ul>
+</li>
+<li>Frustrated Users<ul>
+<li>USQL Category: <strong>select count(usersessionid) as &#34;Frustrated Users&#34; from usersession where userExperienceScore=&#34;FRUSTRATED&#34;</strong></li>
+<li>Compare with previous timeframe: <strong>true</strong></li>
+<li>Dynamic time-frame shift: <strong>true</strong></li>
+<li>Visualization types: <strong>Single value</strong></li>
+</ul>
+</li>
+<li>Duration 90th Percentile<ul>
+<li>USQL Category: <strong>select PERCENTILE(duration,90) as &#34;Duration 90th Percentile&#34; from useraction</strong></li>
+<li>Compare with previous timeframe: <strong>true</strong></li>
+<li>Dynamic time-frame shift: <strong>true</strong></li>
+<li>Visualization types: <strong>Single value</strong></li>
+</ul>
+</li>
+<li>Visually Complete 90th Percentile<ul>
+<li>USQL Category: <strong>select PERCENTILE(visuallyCompleteTime,90) as &#34;Visually Complete 90th Percentile&#34; from useraction</strong></li>
+<li>Compare with previous timeframe: <strong>true</strong></li>
+<li>Dynamic time-frame shift: <strong>true</strong></li>
+<li>Visualization types: <strong>Single value</strong></li>
+</ul>
+</li>
+<li>Speed Index 90th Percentile<ul>
+<li>USQL Category: <strong>select PERCENTILE(speedIndex,90) as &#34;Speed Index 90th Percentile&#34; from useraction</strong></li>
+<li>Compare with previous timeframe: <strong>true</strong></li>
+<li>Dynamic time-frame shift: <strong>true</strong></li>
+<li>Visualization types: <strong>Single value</strong></li>
+</ul>
+</li>
+</ul>
+<h2 is-upgraded>Charts</h2>
+<ul>
+<li>Duration<ul>
+<li>USQL Category: <strong>select DISTINCT DATETIME(starttime, &#34;HH:mm&#34;, &#34;10m&#34;) as &#34;Time&#34;, avg(useraction.duration) as &#34;Duration&#34; from useraction</strong></li>
+<li>Compare with previous timeframe: <strong>false</strong></li>
+<li>Visualization types: <strong>Bar chart</strong></li>
+</ul>
+</li>
+<li>Visually Complete<ul>
+<li>USQL Category: <strong>select DISTINCT DATETIME(starttime, &#34;HH:mm&#34;, &#34;10m&#34;) as &#34;Time&#34;, AVG(visuallyCompleteTime) as &#34;Visually Complete&#34; from useraction</strong></li>
+<li>Compare with previous timeframe: <strong>false</strong></li>
+<li>Visualization types: <strong>Bar chart</strong></li>
+</ul>
+</li>
+<li>Speed Index<ul>
+<li>USQL Category: <strong>select DISTINCT DATETIME(starttime, &#34;HH:mm&#34;, &#34;10m&#34;) as &#34;Time&#34;, AVG(speedIndex) as &#34;Speed Index&#34; from useraction</strong></li>
+<li>Compare with previous timeframe: <strong>false</strong></li>
+<li>Visualization types: <strong>Bar chart</strong></li>
+</ul>
+</li>
+</ul>
+</google-codelab-step>
+<google-codelab-step label="Creating a Business Dashboard" duration="20">
+<p>In this lab, we will create the following dashboard:</p>
+<p class="image-container"><img alt="Business Dashboard" src="img/3d0989d1e82baa94.PNG"></p>
+<h2 is-upgraded>Dashboard Components</h2>
+<p>The above dashboard has the following components:</p>
+<p>1) <strong>User Behavior</strong> &gt; <strong>easyTravel Website</strong></p>
+<p>2) <strong>Top conversion goals</strong> &gt; <strong>easyTravel Website</strong></p>
+<p>3) <strong>Conversion goal</strong> &gt; <strong>easyTravel Website</strong> &gt; <strong>Sucessful Bookings</strong></p>
+<p>4) <strong>Bounce Rate</strong> &gt; <strong>easyTravel Website</strong></p>
+<p>5) <strong>Key user actions</strong> &gt; <strong>easyTravel Website</strong></p>
+<p>6) <strong>User Session Query</strong> - Revenue</p>
+<pre><code>    SELECT SUM(doubleProperties.bookingtotal) AS &#34;Revenue (USD)&#34; FROM usersession WHERE useraction.application=&#34;easyTravel Website&#34; and (useraction.name=&#34;loading of page /orange-booking-finish.jsf&#34;) 
+</code></pre>
+<p>7) <strong>User Session Query</strong> - Total Revenue by Hour</p>
+<pre><code>   SELECT DISTINCT DATETIME(starttime, &#34;HH:mm&#34;, &#34;30m&#34;) as &#34;Time&#34;,AVG(usersession.doubleProperties.bookingtotal) AS &#34;Revenue (USD)&#34; FROM usersession WHERE useraction.application=&#34;easyTravel Website&#34; and (useraction.name=&#34;loading of page /orange-booking-finish.jsf&#34;) 
+</code></pre>
+<p>8) <strong>User Session Query</strong> - Revenue by Loyalty Status - Chart</p>
+<pre><code>   SELECT usersession.stringProperties.membershipstatus, SUM(usersession.doubleProperties.bookingtotal) AS &#34;Revenue&#34; FROM usersession WHERE useraction.application=&#34;easyTravel Website&#34; and (useraction.name=&#34;loading of page /orange-booking-finish.jsf&#34;) and usersession.stringProperties.membershipstatus IS NOT NULL GROUP BY usersession.stringProperties.membershipstatus
+</code></pre>
+<p>9) <strong>User Session Query</strong> - Revenue by Loyalty Status - Table</p>
+<pre><code>   SELECT usersession.stringProperties.membershipstatus AS &#34;Loyalty Status&#34;, SUM(usersession.doubleProperties.bookingtotal) AS &#34;Revenue&#34; FROM usersession WHERE useraction.application=&#34;easyTravel Website&#34; and (useraction.name=&#34;loading of page /orange-booking-finish.jsf&#34;) and usersession.stringProperties.membershipstatus IS NOT NULL GROUP BY usersession.stringProperties.membershipstatus
+</code></pre>
+<p>10) <strong>User Session Query</strong> - Bookings by Trip Destination</p>
+<pre><code>    SELECT usersession.stringProperties.journey, SUM(usersession.doubleProperties.bookingtotal) FROM usersession WHERE useraction.application=&#34;easyTravel Website&#34; and (useraction.name=&#34;loading of page /orange-booking-finish.jsf&#34;) and usersession.stringProperties.journey IS NOT NULL GROUP BY usersession.stringProperties.journey    
+</code></pre>
+<p>11) <strong>User Session Query</strong> - Revenue by Loyalty Users</p>
+<pre><code>    SELECT userId AS &#34;Customer&#34;, country AS &#34;Origin Country&#34;, stringProperties.membershipstatus AS &#34;Loyalty Status&#34;, SUM(doubleProperties.bookingtotal) AS &#34;Revenue&#34;, AVG(doubleProperties.bookingtotal) AS &#34;Average Trip Spend&#34; FROM usersession WHERE useraction.application=&#34;easyTravel Website&#34; and (useraction.name=&#34;loading of page /orange-booking-finish.jsf&#34;) and doubleProperties.bookingtotal IS NOT NULL AND CITY IS NOT NULL AND userId IS NOT NULL AND stringProperties.membershipstatus  IN (&#34;Gold&#34;, &#34;Platinum&#34;, &#34;Silver&#34;) GROUP BY userId, country, stringProperties.membershipstatus ORDER BY sum(doubleProperties.bookingtotal) DESC
+</code></pre>
+<p>12) <strong>User Session Query</strong> - Revenue by Purchasing City</p>
+<pre><code>    SELECT city AS &#34;Origin City&#34;, country AS &#34;Origin Country&#34;, SUM(doubleProperties.bookingtotal) AS &#34;Revenue&#34;, AVG(doubleProperties.bookingtotal) AS &#34;Average Trip Spend&#34; FROM usersession WHERE useraction.application=&#34;easyTravel Website&#34; and (useraction.name=&#34;loading of page /orange-booking-finish.jsf&#34;) and doubleProperties.bookingtotal IS NOT NULL AND CITY IS NOT NULL GROUP BY city, country ORDER BY sum(doubleProperties.bookingtotal) DESC
+</code></pre>
+</google-codelab-step>
+<google-codelab-step label="Basic Funnel Dashboard" duration="20">
+<p>In this lab, we will create a dashboard to display a basic sales funnel.</p>
+<p>In the Dynatrace UI, create a new dashboard named &#34;Sales Funnel&#34; (<strong>Dashboards</strong> &gt; <strong>Create Dashboard</strong>)</p>
+<ol type="1">
+<li>Add the User Sessions Query to the dashboard and configure the tile</li>
+</ol>
+<p class="image-container"><img alt="USQL Icon" src="img/f13a6db8213d9b6b.PNG"></p>
+<ol type="1">
+<li>Enter the UQSL as follows</li>
+</ol>
+<p><strong>select count(*) as &#34;Homepage Requests&#34; from usersession where useraction.name = &#34;loading of page /orange.jsf&#34;</strong></p>
+<p class="image-container"><img alt="USQL" src="img/623f4c11bebc65af.PNG"></p>
+<ol type="1">
+<li>Click on &#34;Save Changes to dashboard&#34;</li>
+<li>Repeat the above steps to create dashboard tiles for:</li>
+</ol>
+<p>Review Page:</p>
+<pre><code>select count(*) as &#34;Review Page Requests&#34; from usersession where useraction.name=&#34;loading of page /orange.jsf&#34; and useraction.name=&#34;loading of page /orange-booking-review.jsf&#34;
+</code></pre>
+<p>Payment Page:</p>
+<pre><code>select count(*) as &#34;Payment Page Requests&#34; from usersession where useraction.name=&#34;loading of page /orange.jsf&#34; and useraction.name=&#34;loading of page /orange-booking-review.jsf&#34; and useraction.name=&#34;loading of page /orange-booking-payment.jsf&#34;
+</code></pre>
+<p>Finish Page:</p>
+<pre><code>select count(*) as &#34;Finish Page Requests&#34; from usersession where useraction.name=&#34;loading of page /orange.jsf&#34; and useraction.name=&#34;loading of page /orange-booking-review.jsf&#34; and useraction.name=&#34;loading of page /orange-booking-payment.jsf&#34; and useraction.name=&#34;loading of page /orange-booking-finish.jsf&#34;
+</code></pre>
+<p>When you are finished your dashboard should look something like this:</p>
+<p class="image-container"><img alt="Dashboard Basic Funnel" src="img/2cb4c817c01c4b89.PNG"></p>
+</google-codelab-step>
+<google-codelab-step label="Creating a Dashboard using API" duration="20">
+<p>In this lab, we will create a dashsboard using the Dashboard API.</p>
+<p>You will need an API token with the <strong>Read configuration</strong> and <strong>Write Configuration</strong> permissions for this session.</p>
+<p class="image-container"><img alt="Dashboard API Permissions" src="img/3ba508c3d5c1f0c5.PNG"></p>
+<h2 is-upgraded>Step-by-step Guide - Access API Explorer</h2>
+<p>In the Dynatrace dashboard, navigate to the Configuration API: <strong>Settings -&gt; Integration -&gt; Dynatrace API &gt; Dynatrace API Explorer</strong></p>
+<p>Select <strong>Configuration API</strong> from the top right drop down menu.</p>
+<p>Authorise <strong>ReadConfigToken (apiKey)</strong> and <strong>WriteConfigToken (apiKey)</strong> for this session.</p>
+<h2 is-upgraded>Step-by-step Guide - Create Dashboard using API</h2>
+<ol type="1">
+<li>In the API list select <strong>Dashboards</strong></li>
+<li>Select <strong>POST /dashboards</strong></li>
+</ol>
+<p class="image-container"><img alt="Dashboard API" src="img/148d3e52526d5109.png"></p>
+<ol type="1">
+<li>Select <strong>Try it Out</strong></li>
+<li>The following json will create a dashboard. Copy the JSON into the Example Value field</li>
+</ol>
+<pre><code>{
+  &#34;dashboardMetadata&#34;: {
+    &#34;name&#34;: &#34;Executive Overview Dashboard&#34;,
+    &#34;shared&#34;: false,
+    &#34;sharingDetails&#34;: {
+      &#34;linkShared&#34;: true,
+      &#34;published&#34;: false
+    },
+    &#34;dashboardFilter&#34;: {
+      &#34;timeframe&#34;: &#34;l_2_HOURS&#34;,
+      &#34;managementZone&#34;: null
+    }
+  },
+  &#34;tiles&#34;: [
+    {
+      &#34;name&#34;: &#34;Top web applications&#34;,
+      &#34;tileType&#34;: &#34;APPLICATIONS_MOST_ACTIVE&#34;,
+      &#34;configured&#34;: true,
+      &#34;bounds&#34;: {
+        &#34;top&#34;: 494,
+        &#34;left&#34;: 0,
+        &#34;width&#34;: 304,
+        &#34;height&#34;: 304
+      },
+      &#34;tileFilter&#34;: {
+        &#34;managementZone&#34;: null
+      }
+    },
+    {
+      &#34;name&#34;: &#34;Overview&#34;,
+      &#34;tileType&#34;: &#34;HEADER&#34;,
+      &#34;configured&#34;: true,
+      &#34;bounds&#34;: {
+        &#34;top&#34;: 0,
+        &#34;left&#34;: 0,
+        &#34;width&#34;: 304,
+        &#34;height&#34;: 38
+      },
+      &#34;tileFilter&#34;: {
+        &#34;managementZone&#34;: null
+      }
+    },
+    {
+      &#34;name&#34;: &#34;Problems&#34;,
+      &#34;tileType&#34;: &#34;OPEN_PROBLEMS&#34;,
+      &#34;configured&#34;: true,
+      &#34;bounds&#34;: {
+        &#34;top&#34;: 38,
+        &#34;left&#34;: 0,
+        &#34;width&#34;: 152,
+        &#34;height&#34;: 152
+      },
+      &#34;tileFilter&#34;: {
+        &#34;managementZone&#34;: null
+      }
+    },
+    {
+      &#34;name&#34;: &#34;Service health&#34;,
+      &#34;tileType&#34;: &#34;SERVICES&#34;,
+      &#34;configured&#34;: true,
+      &#34;bounds&#34;: {
+        &#34;top&#34;: 798,
+        &#34;left&#34;: 152,
+        &#34;width&#34;: 152,
+        &#34;height&#34;: 152
+      },
+      &#34;tileFilter&#34;: {
+        &#34;managementZone&#34;: null
+      },
+      &#34;filterConfig&#34;: null,
+      &#34;chartVisible&#34;: true
+    },
+    {
+      &#34;name&#34;: &#34;Host health&#34;,
+      &#34;tileType&#34;: &#34;HOSTS&#34;,
+      &#34;configured&#34;: true,
+      &#34;bounds&#34;: {
+        &#34;top&#34;: 798,
+        &#34;left&#34;: 0,
+        &#34;width&#34;: 152,
+        &#34;height&#34;: 152
+      },
+      &#34;tileFilter&#34;: {
+        &#34;managementZone&#34;: null
+      },
+      &#34;filterConfig&#34;: null,
+      &#34;chartVisible&#34;: true
+    },
+    {
+      &#34;name&#34;: &#34;Application health&#34;,
+      &#34;tileType&#34;: &#34;APPLICATIONS&#34;,
+      &#34;configured&#34;: true,
+      &#34;bounds&#34;: {
+        &#34;top&#34;: 38,
+        &#34;left&#34;: 152,
+        &#34;width&#34;: 152,
+        &#34;height&#34;: 152
+      },
+      &#34;tileFilter&#34;: {
+        &#34;managementZone&#34;: null
+      },
+      &#34;filterConfig&#34;: null,
+      &#34;chartVisible&#34;: true
+    },
+    {
+      &#34;name&#34;: &#34;World map&#34;,
+      &#34;tileType&#34;: &#34;APPLICATION_WORLDMAP&#34;,
+      &#34;configured&#34;: true,
+      &#34;bounds&#34;: {
+        &#34;top&#34;: 38,
+        &#34;left&#34;: 380,
+        &#34;width&#34;: 304,
+        &#34;height&#34;: 304
+      },
+      &#34;tileFilter&#34;: {
+        &#34;managementZone&#34;: null
+      },
+      &#34;assignedEntities&#34;: [
+        &#34;APPLICATION-534A6A58D004195A&#34;
+      ],
+      &#34;metric&#34;: &#34;APDEX&#34;
+    },
+    {
+      &#34;name&#34;: &#34;User behavior&#34;,
+      &#34;tileType&#34;: &#34;SESSION_METRICS&#34;,
+      &#34;configured&#34;: true,
+      &#34;bounds&#34;: {
+        &#34;top&#34;: 342,
+        &#34;left&#34;: 380,
+        &#34;width&#34;: 304,
+        &#34;height&#34;: 304
+      },
+      &#34;tileFilter&#34;: {
+        &#34;managementZone&#34;: null
+      },
+      &#34;assignedEntities&#34;: [
+        &#34;APPLICATION-534A6A58D004195A&#34;
+      ]
+    },
+    {
+      &#34;name&#34;: &#34;User breakdown&#34;,
+      &#34;tileType&#34;: &#34;USERS&#34;,
+      &#34;configured&#34;: true,
+      &#34;bounds&#34;: {
+        &#34;top&#34;: 342,
+        &#34;left&#34;: 684,
+        &#34;width&#34;: 304,
+        &#34;height&#34;: 304
+      },
+      &#34;tileFilter&#34;: {
+        &#34;managementZone&#34;: null
+      },
+      &#34;assignedEntities&#34;: [
+        &#34;APPLICATION-534A6A58D004195A&#34;
+      ]
+    },
+    {
+      &#34;name&#34;: &#34;Bounce rate&#34;,
+      &#34;tileType&#34;: &#34;BOUNCE_RATE&#34;,
+      &#34;configured&#34;: true,
+      &#34;bounds&#34;: {
+        &#34;top&#34;: 342,
+        &#34;left&#34;: 988,
+        &#34;width&#34;: 304,
+        &#34;height&#34;: 304
+      },
+      &#34;tileFilter&#34;: {
+        &#34;managementZone&#34;: null
+      },
+      &#34;assignedEntities&#34;: [
+        &#34;APPLICATION-534A6A58D004195A&#34;
+      ]
+    },
+    {
+      &#34;name&#34;: &#34;JavaScript errors&#34;,
+      &#34;tileType&#34;: &#34;UEM_JSERRORS_OVERALL&#34;,
+      &#34;configured&#34;: true,
+      &#34;bounds&#34;: {
+        &#34;top&#34;: 646,
+        &#34;left&#34;: 380,
+        &#34;width&#34;: 304,
+        &#34;height&#34;: 304
+      },
+      &#34;tileFilter&#34;: {
+        &#34;managementZone&#34;: null
+      },
+      &#34;assignedEntities&#34;: [
+        &#34;APPLICATION-534A6A58D004195A&#34;
+      ]
+    },
+    {
+      &#34;name&#34;: &#34;Resources&#34;,
+      &#34;tileType&#34;: &#34;RESOURCES&#34;,
+      &#34;configured&#34;: true,
+      &#34;bounds&#34;: {
+        &#34;top&#34;: 646,
+        &#34;left&#34;: 988,
+        &#34;width&#34;: 304,
+        &#34;height&#34;: 304
+      },
+      &#34;tileFilter&#34;: {
+        &#34;managementZone&#34;: null
+      },
+      &#34;assignedEntities&#34;: [
+        &#34;APPLICATION-534A6A58D004195A&#34;
+      ],
+      &#34;metric&#34;: &#34;ACTION_COUNT&#34;
+    },
+    {
+      &#34;name&#34;: &#34;Most used 3rd parties&#34;,
+      &#34;tileType&#34;: &#34;THIRD_PARTY_MOST_ACTIVE&#34;,
+      &#34;configured&#34;: true,
+      &#34;bounds&#34;: {
+        &#34;top&#34;: 646,
+        &#34;left&#34;: 684,
+        &#34;width&#34;: 304,
+        &#34;height&#34;: 304
+      },
+      &#34;tileFilter&#34;: {
+        &#34;managementZone&#34;: null
+      },
+      &#34;assignedEntities&#34;: [
+        &#34;APPLICATION-534A6A58D004195A&#34;
+      ],
+      &#34;metric&#34;: &#34;ACTION_COUNT&#34;
+    },
+    {
+      &#34;name&#34;: &#34;Live user activity&#34;,
+      &#34;tileType&#34;: &#34;UEM_ACTIVE_SESSIONS&#34;,
+      &#34;configured&#34;: true,
+      &#34;bounds&#34;: {
+        &#34;top&#34;: 190,
+        &#34;left&#34;: 0,
+        &#34;width&#34;: 304,
+        &#34;height&#34;: 304
+      },
+      &#34;tileFilter&#34;: {
+        &#34;managementZone&#34;: null
+      }
+    },
+    {
+      &#34;name&#34;: &#34;Web application&#34;,
+      &#34;tileType&#34;: &#34;APPLICATION&#34;,
+      &#34;configured&#34;: true,
+      &#34;bounds&#34;: {
+        &#34;top&#34;: 38,
+        &#34;left&#34;: 988,
+        &#34;width&#34;: 304,
+        &#34;height&#34;: 304
+      },
+      &#34;tileFilter&#34;: {
+        &#34;managementZone&#34;: null
+      },
+      &#34;assignedEntities&#34;: [
+        &#34;APPLICATION-534A6A58D004195A&#34;
+      ]
+    },
+    {
+      &#34;name&#34;: &#34;World map&#34;,
+      &#34;tileType&#34;: &#34;APPLICATION_WORLDMAP&#34;,
+      &#34;configured&#34;: true,
+      &#34;bounds&#34;: {
+        &#34;top&#34;: 38,
+        &#34;left&#34;: 684,
+        &#34;width&#34;: 304,
+        &#34;height&#34;: 304
+      },
+      &#34;tileFilter&#34;: {
+        &#34;managementZone&#34;: null
+      },
+      &#34;assignedEntities&#34;: [
+        &#34;APPLICATION-534A6A58D004195A&#34;
+      ],
+      &#34;metric&#34;: &#34;SESSION_USERS&#34;
+    },
+    {
+      &#34;name&#34;: &#34;Markdown&#34;,
+      &#34;tileType&#34;: &#34;MARKDOWN&#34;,
+      &#34;configured&#34;: true,
+      &#34;bounds&#34;: {
+        &#34;top&#34;: 0,
+        &#34;left&#34;: 380,
+        &#34;width&#34;: 1254,
+        &#34;height&#34;: 38
+      },
+      &#34;tileFilter&#34;: {
+        &#34;managementZone&#34;: null
+      },
+      &#34;markdown&#34;: &#34;##[easyTravel Production Overview](#uemapplications/uemappmetrics;uemapplicationId=APPLICATION-534A6A58D004195A)&#34;
+    },
+    {
+      &#34;name&#34;: &#34;Markdown&#34;,
+      &#34;tileType&#34;: &#34;MARKDOWN&#34;,
+      &#34;configured&#34;: true,
+      &#34;bounds&#34;: {
+        &#34;top&#34;: 266,
+        &#34;left&#34;: 1330,
+        &#34;width&#34;: 304,
+        &#34;height&#34;: 38
+      },
+      &#34;tileFilter&#34;: {
+        &#34;managementZone&#34;: null
+      },
+      &#34;markdown&#34;: &#34;### [Hosts Overview](#newhosts)\n\n&#34;
+    },
+    {
+      &#34;name&#34;: &#34;Markdown&#34;,
+      &#34;tileType&#34;: &#34;MARKDOWN&#34;,
+      &#34;configured&#34;: true,
+      &#34;bounds&#34;: {
+        &#34;top&#34;: 38,
+        &#34;left&#34;: 1330,
+        &#34;width&#34;: 304,
+        &#34;height&#34;: 38
+      },
+      &#34;tileFilter&#34;: {
+        &#34;managementZone&#34;: null
+      },
+      &#34;markdown&#34;: &#34;###[Services Overview](#newservices)&#34;
+    },
+    {
+      &#34;name&#34;: &#34;Markdown&#34;,
+      &#34;tileType&#34;: &#34;MARKDOWN&#34;,
+      &#34;configured&#34;: true,
+      &#34;bounds&#34;: {
+        &#34;top&#34;: 494,
+        &#34;left&#34;: 1330,
+        &#34;width&#34;: 304,
+        &#34;height&#34;: 38
+      },
+      &#34;tileFilter&#34;: {
+        &#34;managementZone&#34;: null
+      },
+      &#34;markdown&#34;: &#34;### [Database Overview](#databases)&#34;
+    },
+    {
+      &#34;name&#34;: &#34;&#34;,
+      &#34;tileType&#34;: &#34;SERVICES&#34;,
+      &#34;configured&#34;: true,
+      &#34;bounds&#34;: {
+        &#34;top&#34;: 76,
+        &#34;left&#34;: 1330,
+        &#34;width&#34;: 152,
+        &#34;height&#34;: 190
+      },
+      &#34;tileFilter&#34;: {
+        &#34;managementZone&#34;: null
+      },
+      &#34;filterConfig&#34;: {
+        &#34;type&#34;: &#34;SERVICE&#34;,
+        &#34;customName&#34;: &#34;Java&#34;,
+        &#34;defaultName&#34;: &#34;Java&#34;,
+        &#34;chartConfig&#34;: {
+          &#34;type&#34;: &#34;TIMESERIES&#34;,
+          &#34;series&#34;: [],
+          &#34;resultMetadata&#34;: {}
+        },
+        &#34;filtersPerEntityType&#34;: {
+          &#34;SERVICE&#34;: {
+            &#34;SERVICE_SOFTWARE_TECH&#34;: [
+              &#34;JAVA&#34;
+            ]
+          }
+        }
+      },
+      &#34;chartVisible&#34;: true
+    },
+    {
+      &#34;name&#34;: &#34;Markdown&#34;,
+      &#34;tileType&#34;: &#34;MARKDOWN&#34;,
+      &#34;configured&#34;: true,
+      &#34;bounds&#34;: {
+        &#34;top&#34;: 722,
+        &#34;left&#34;: 1330,
+        &#34;width&#34;: 152,
+        &#34;height&#34;: 228
+      },
+      &#34;tileFilter&#34;: {
+        &#34;managementZone&#34;: null
+      },
+      &#34;markdown&#34;: &#34;## Links\n---\n[Docker Overview](#docker)  \n[AWS Overview](#awses)  \n[Azure Overview](#azures)  \n[VMWare Overview](#vcenters)  \n[Network Overview](#networkoverview)&#34;
+    },
+    {
+      &#34;name&#34;: &#34;Markdown&#34;,
+      &#34;tileType&#34;: &#34;MARKDOWN&#34;,
+      &#34;configured&#34;: true,
+      &#34;bounds&#34;: {
+        &#34;top&#34;: 722,
+        &#34;left&#34;: 1482,
+        &#34;width&#34;: 152,
+        &#34;height&#34;: 228
+      },
+      &#34;tileFilter&#34;: {
+        &#34;managementZone&#34;: null
+      },
+      &#34;markdown&#34;: &#34;## Help\n---\n[Dynatrace Help](https://www.dynatrace.com/support/help/)  \n[Contact Support](https://www.dynatrace.com/support/contact-support/)  \n[What is Dynatrace?](https://www.dynatrace.com/support/help/get-started/what-is-dynatrace/)  \n[Dynatrace University](https://university.dynatrace.com/)  \n[Dynatrace Youtube](https://www.youtube.com/channel/UCcYJ-5q_AfmjQ4XTjTS0o3g)&#34;
+    },
+    {
+      &#34;name&#34;: &#34;&#34;,
+      &#34;tileType&#34;: &#34;SERVICES&#34;,
+      &#34;configured&#34;: true,
+      &#34;bounds&#34;: {
+        &#34;top&#34;: 76,
+        &#34;left&#34;: 1482,
+        &#34;width&#34;: 152,
+        &#34;height&#34;: 190
+      },
+      &#34;tileFilter&#34;: {
+        &#34;managementZone&#34;: null
+      },
+      &#34;filterConfig&#34;: {
+        &#34;type&#34;: &#34;SERVICE&#34;,
+        &#34;customName&#34;: &#34;Nginx Services&#34;,
+        &#34;defaultName&#34;: &#34;Nginx Services&#34;,
+        &#34;chartConfig&#34;: {
+          &#34;type&#34;: &#34;TIMESERIES&#34;,
+          &#34;series&#34;: [],
+          &#34;resultMetadata&#34;: {}
+        },
+        &#34;filtersPerEntityType&#34;: {
+          &#34;SERVICE&#34;: {
+            &#34;SERVICE_SOFTWARE_TECH&#34;: [
+              &#34;NGINX&#34;
+            ]
+          }
+        }
+      },
+      &#34;chartVisible&#34;: true
+    },
+    {
+      &#34;name&#34;: &#34;&#34;,
+      &#34;tileType&#34;: &#34;HOSTS&#34;,
+      &#34;configured&#34;: true,
+      &#34;bounds&#34;: {
+        &#34;top&#34;: 304,
+        &#34;left&#34;: 1330,
+        &#34;width&#34;: 304,
+        &#34;height&#34;: 190
+      },
+      &#34;tileFilter&#34;: {
+        &#34;managementZone&#34;: null
+      },
+      &#34;filterConfig&#34;: {
+        &#34;type&#34;: &#34;HOST&#34;,
+        &#34;customName&#34;: &#34;AWS Hosts&#34;,
+        &#34;defaultName&#34;: &#34;AWS Hosts&#34;,
+        &#34;chartConfig&#34;: {
+          &#34;type&#34;: &#34;TIMESERIES&#34;,
+          &#34;series&#34;: [],
+          &#34;resultMetadata&#34;: {}
+        },
+        &#34;filtersPerEntityType&#34;: {
+          &#34;HOST&#34;: {
+            &#34;HOST_VIRTUALIZATION&#34;: [
+              &#34;1&#34;
+            ]
+          }
+        }
+      },
+      &#34;chartVisible&#34;: true
+    },
+    {
+      &#34;name&#34;: &#34;&#34;,
+      &#34;tileType&#34;: &#34;DATABASES_OVERVIEW&#34;,
+      &#34;configured&#34;: true,
+      &#34;bounds&#34;: {
+        &#34;top&#34;: 532,
+        &#34;left&#34;: 1330,
+        &#34;width&#34;: 304,
+        &#34;height&#34;: 190
+      },
+      &#34;tileFilter&#34;: {
+        &#34;managementZone&#34;: null
+      },
+      &#34;filterConfig&#34;: {
+        &#34;type&#34;: &#34;DATABASE&#34;,
+        &#34;customName&#34;: &#34;Databases&#34;,
+        &#34;defaultName&#34;: &#34;Databases&#34;,
+        &#34;chartConfig&#34;: {
+          &#34;type&#34;: &#34;TIMESERIES&#34;,
+          &#34;series&#34;: [],
+          &#34;resultMetadata&#34;: {}
+        },
+        &#34;filtersPerEntityType&#34;: {}
+      },
+      &#34;chartVisible&#34;: true
+    }
+  ]
+}
+</code></pre>
+<ol type="1">
+<li>Select <strong>Execute</strong>, to create your browser test.</li>
+</ol>
+<p>The server response should be response code <strong>201</strong> with a response body like the following:</p>
+<pre><code>{
+  &#34;id&#34;: &#34;8f721746-8e2b-40fe-bd3b-61c1657d59df&#34;,
+  &#34;name&#34;: &#34;Executive Overview Dashboard&#34;
+}
+</code></pre>
+<p>Navigate back to the Dynatrace dashboards. The dashboard should look something like this:</p>
+<p class="image-container"><img alt="Dashboard" src="img/b3e5f0e8ee31ea9f.PNG"></p>
+</google-codelab-step>
+<google-codelab-step label="BizOps Configurator" duration="20">
+<p>BizOps Configurator - https://dynatrace.github.io/BizOpsConfigurator/ <br> Please clone the <a href="https://github.com/Dynatrace/BizOpsConfigurator" target="_blank">repository</a> or create a <strong>Personal Access Token</strong> if you plan to use the BizOps Configurator to avoid hitting GitHub API limits</p>
+<ol type="1">
+<li>Follow the <strong>Step 2</strong> instructions on the <a href="https://dynatrace.github.io/BizOpsConfigurator/#prerequisites" target="_blank">BizOps Prereqs</a> page to setup your API Token. The following steps should have been setup as per the previous labs.</li>
+<li>Click on <strong>Begin</strong> and provide your tenant URL and API token.</li>
+</ol>
+<p class="image-container"><img alt="BizOpsConfigurator" src="img/aa6aea708ee9e8fe.png"></p>
+<ol type="1">
+<li>Click on <strong>Deploy Tenant Overview</strong> and select the <strong>BizOps Template</strong></li>
+</ol>
+<p class="image-container"><img alt="BizOpsConfigurator" src="img/aa6aea708ee9e8fe.png"></p>
+<ol type="1">
+<li>Click on <strong>Deploy App Overview</strong> and select <strong>Easytravel</strong> for the dropdown for both App Overview and Release overview. Click <strong>Upload</strong></li>
+</ol>
+<p class="image-container"><img alt="BizOpsConfigurator" src="img/258967ff925f6cd8.png"></p>
+<ol type="1">
+<li>Click on <strong>Deploy Journey</strong>, use &#34;<strong>Book Travel</strong>&#34; under Journey Name and select <strong>cartamount</strong> for KPI with <strong>Revenue</strong> as name.</li>
+</ol>
+<p class="image-container"><img alt="BizOpsConfigurator" src="img/bbf9350508450485.png"></p>
+<ol type="1">
+<li>Drag the Key User Actions to the funnel to build out the funnel steps.</li>
+</ol>
+<p class="image-container"><img alt="BizOpsConfigurator" src="img/1e339463007809bc.png"></p>
+<ol type="1">
+<li>Check back in Dynatrace to see the Book Travel Overview funnel dashboard.</li>
+</ol>
+<p class="image-container"><img alt="BizOpsConfigurator" src="img/c27235af6175081c.png"></p>
+</google-codelab-step>
+<google-codelab-step label="Exporting into Excel and Power BI" duration="20">
+<p>In this lab is split into two sections, the first section generates an API token request URL we can use the fetch data from Dynatrace. The second section uses this URL to import data into Excel. If you already have an API token and URL then jump stright to the part of this lab</p>
+<h2 is-upgraded>Section 1 - Create API Token &amp; Timeseries API Call</h2>
+<h3 is-upgraded>Create API Token</h3>
+<p>First we need to create a API token.</p>
+<p>In the Dynatrace dashboard, navigate to the Configuration API: <strong>Settings -&gt; Integration -&gt; Dynatrace API</strong></p>
+<ol type="1">
+<li>Click <strong>Generate token</strong></li>
+</ol>
+<p class="image-container"><img alt="Generate Token" src="img/74540c1051531e6c.PNG"></p>
+<ol type="1">
+<li>Enter a name for your token and select the appropriate access switches for the token, then click <strong>Generate</strong>.</li>
+</ol>
+<p>In this lab we will only need <strong>Access problem and event feed, metrics and topology</strong></p>
+<p class="image-container"><img alt="Add Token Name" src="img/627edbe1f47771c7.PNG"></p>
+<ol type="1">
+<li>Click the down arrow (under the edit column) to display your token. <strong>Take note of the token for later use.</strong></li>
+</ol>
+<p class="image-container"><img alt="Add Token Name" src="img/169fdb7b8b7da3ec.PNG"></p>
+<h3 is-upgraded>Access API Explorer</h3>
+<p>In the Dynatrace dashboard, navigate to the Configuration API: <strong>Settings -&gt; Integration -&gt; Dynatrace API</strong></p>
+<ol type="1">
+<li>Click <strong>Dynatrace API Explorer</strong></li>
+</ol>
+<p>Ensure you are using <strong>Environment API v2</strong> (top right corner of the screen)</p>
+<ol type="1">
+<li>Click <strong>Authorize</strong></li>
+<li>Enter your API token under the <strong>DataExport</strong> (apiKey) and click <strong>Authorise</strong></li>
+</ol>
+<p class="image-container"><img alt="Authorise API with Token" src="img/46f727f08167de61.PNG"></p>
+<ol type="1">
+<li>Click <strong>Close</strong></li>
+</ol>
+<p class="image-container"><img alt="Authorise API" src="img/a1eb999c0fdaa21c.PNG"></p>
+<h3 is-upgraded>Timeseries API Call</h3>
+<ol type="1">
+<li>In the API list select <strong>Metrics</strong></li>
+<li>Select <strong>GET /metrics/query</strong></li>
+<li>Click <strong>Try it out</strong></li>
+</ol>
+<p class="image-container"><img alt="Tryout Timeseries API" src="img/66941c7195fe8fdb.PNG"></p>
+<ol type="1">
+<li>Enter the following parameters:<ul>
+<li>metricSelector: <strong>builtin:apps.web.apdex.userType:filter(eq(User type,Real users)):names</strong></li>
+<li>resolution: <strong>5m</strong></li>
+<li>from: <strong>now-4h</strong></li>
+</ul>
+</li>
+<li>Change Response content type to <strong>text/csv; header=present; charset=utf-8</strong></li>
+</ol>
+<p class="image-container"><img alt="Tryout Timeseries API" src="img/3140a475b7a13e49.PNG"></p>
+<ol type="1">
+<li>Click <strong>Execute</strong>. If successful the result should be shown looking something like this:</li>
+</ol>
+<p class="image-container"><img alt="API Result" src="img/c3972ba1d5ebd374.PNG"></p>
+<p>Copy the <strong>Request URL</strong> for use in the next section.</p>
+<h2 is-upgraded>Section 2 - Create API Token &amp; Timeseries API Call</h2>
+<ol type="1">
+<li>Open Excel and create a new workbook.</li>
+<li>Select: <strong>Data &gt; From Web</strong></li>
+<li>Select <strong>Advanced</strong></li>
+<li>Enter your <strong>Request URL</strong> in <strong>URL Parts</strong></li>
+<li>Add the following <strong>HTTP request header parameter</strong> then click <strong>OK</strong> and <strong>Connect</strong>Accept text/csv; header=present; charset=utf-8 Authorization Api-Token </li>
+</ol>
+<p class="image-container"><img alt="API Result" src="img/6119e7fdcca13ef9.PNG"></p>
+<ol type="1">
+<li>Click Load</li>
+</ol>
+<p class="image-container"><img alt="API Result" src="img/a90d43f6da7c3f68.PNG"></p>
+<ol type="1">
+<li>You data sould be imported</li>
+</ol>
+<p class="image-container"><img alt="API Result" src="img/108b0d3e94c6e162.PNG"></p>
+</google-codelab-step>
+</google-codelab>
+<script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+<script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+<script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+<script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+<script src="//support.google.com/inapp/api.js"></script>
+</body>
+</html>
