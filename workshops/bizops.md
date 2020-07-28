@@ -201,7 +201,7 @@ You can view the user sessions that have the membershipstatus set  by running th
 
 <!-- ------------------------ -->
 ## Creating Sessions Properties - Part 2
-Duration: 20
+Duration: 15
 
 In this lab, we will create a session properties to expose business data Booking Total and Destination to Dynatrace
 
@@ -291,7 +291,7 @@ It may take 5-10 mins to see results in Dynatrace because session properties are
 
 <!-- ------------------------ -->
 ##  User Session Query Language (USQL)
-Duration: 20
+Duration: 15
 
 ### Creating a Basic USQL Dashboard
 
@@ -368,7 +368,7 @@ USQL Tiles:
 
 <!-- ------------------------ -->
 ##  Creating a Business Dashboard
-Duration: 20
+Duration: 15
 
 In this lab, we will create the following dashboard:
 
@@ -418,7 +418,7 @@ The above dashboard has the following components:
 
 <!-- ------------------------ -->
 ##  Basic Funnel Dashboard
-Duration: 20
+Duration: 10
 
 In this lab, we will create a dashboard to display a basic sales funnel.
 
@@ -456,7 +456,7 @@ When you are finished your dashboard should look something like this:
 
 <!-- ------------------------ -->
 ##  Creating a Dashboard using API
-Duration: 20
+Duration: 10
 
 In this lab, we will create a dashsboard using the Dashboard API.
 
@@ -998,29 +998,29 @@ Duration: 20
 BizOps Configurator - https://dynatrace.github.io/BizOpsConfigurator/ <br>
 Please clone the [repository](https://github.com/Dynatrace/BizOpsConfigurator) or create a **Personal Access Token** if you plan to use the BizOps Configurator to avoid hitting GitHub API limits
 
-1. Follow the **Step 2** instructions on the [BizOps Prereqs](https://dynatrace.github.io/BizOpsConfigurator/#prerequisites) page to setup your API Token. The following steps should have been setup as per the previous labs.
+Follow the **Step 2** instructions on the [BizOps Prereqs](https://dynatrace.github.io/BizOpsConfigurator/#prerequisites) page to setup your API Token. The following steps should have been setup as per the previous labs.
 
-2. Click on **Begin** and provide your tenant URL and API token.
+Click on **Begin** and provide your tenant URL and API token.
 
 ![BizOpsConfigurator](assets/bizops/BizOpsConfig-2.png)
 
-3. Click on **Deploy Tenant Overview** and select the **BizOps Template**
+Click on **Deploy Tenant Overview** and select the **BizOps Template**
 
 ![BizOpsConfigurator](assets/bizops/BizOpsConfig-4.png)
 
-4. Click on **Deploy App Overview** and select **Easytravel** for the dropdown for both App Overview and Release overview. Click **Upload**
+Click on **Deploy App Overview** and select **Easytravel** for the dropdown for both App Overview and Release overview. Click **Upload**
 
 ![BizOpsConfigurator](assets/bizops/BizOpsConfig-6.png)
 
-5. Click on **Deploy Journey**, use "**Book Travel**" under Journey Name and select **cartamount** for KPI with **Revenue** as name. 
+Click on **Deploy Journey**, use "**Book Travel**" under Journey Name and select **cartamount** for KPI with **Revenue** as name. 
 
 ![BizOpsConfigurator](assets/bizops/BizOpsConfig-9.png)
 
-6. Drag the Key User Actions to the funnel to build out the funnel steps. 
+Drag the Key User Actions to the funnel to build out the funnel steps. 
 
 ![BizOpsConfigurator](assets/bizops/BizOpsConfig-11.png)
 
-7. Check back in Dynatrace to see the Book Travel Overview funnel dashboard.
+Check back in Dynatrace to see the Book Travel Overview funnel dashboard.
 
 ![BizOpsConfigurator](assets/bizops/BizOpsConfig-15.png)
 
