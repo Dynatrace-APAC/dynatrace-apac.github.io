@@ -1,0 +1,25 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2020-07-28T18:56:10+10:00",
+  "id": "dem",
+  "duration": 76,
+  "title": "Digital Experience Management with Dynatrace",
+  "authors": "Brandon Neo",
+  "summary": "Digital Experience Management with Dynatrace",
+  "source": "dem.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "dem"
+  ],
+  "tags": [
+    "dem"
+  ],
+  "feedback": "mailto:APAC-SE-Central@dynatrace.com",
+  "url": "dem"
+}

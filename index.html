@@ -1,22 +1,21 @@
+
 <!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="description" content="Dynatrace APAC Workshops provide a guided, tutorial, hands-on learning experience.">
+<meta name="description" content="Codelabs provide a guided, tutorial, hands-on coding experience. Most codelabs will step you through the process of building a small application, or adding a new feature to an existing application.">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="generator" content="Dynatrace APAC Workshops">
-<meta name="application-name" content="Dynatrace APAC Workshops">
+<meta name="generator" content="Codelabs">
+<meta name="application-name" content="Codelabs">
 <link rel="canonical" href="https://dynatrace-apac.github.io/">
 <link rel="preconnect" href="https://www.google-analytics.com">
 <script>
-<!-- 
 window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
     ga('create', 'UA-49880327-14', 'auto');
     ga('send', 'pageview');
--->
 </script>
 <script async src="https://www.google-analytics.com/analytics.js"></script>
-<title>Dynatrace APAC Workshops</title>
+<title>Codelabs</title>
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="import" href="/elements/elements.html">
 <style is="custom-style">
@@ -36,7 +35,7 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <meta name="theme-color" content="#455a64">
 <meta name="og:type" property="og:type" content="website">
 <meta name="og:title" property="og:title" content="Codelabs">
-<meta name="og:description" property="og:description" content="Dynatrace APAC Workshops provide a guided, tutorial, hands-on learning experience.">
+<meta name="og:description" property="og:description" content="Codelabs provide a guided, tutorial, hands-on coding experience. Most codelabs will step you through the process of building a small application, or adding a new feature to an existing application.">
 <meta name="og:url" property="og:url" content="https://dynatrace-apac.github.io/">
 <meta name="og:site_name" property="og:site_name" content="Codelabs">
 <meta name="og:determiner" property="og:determiner" content="the">
@@ -46,10 +45,10 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <meta name="og:image:type" property="og:image:type" content="image/png">
 <meta name="og:image:width" property="og:image:width" content="1200">
 <meta name="og:image:height" property="og:image:height" content="1200">
-<meta name="og:image:alt" property="og:image:alt" content="Dynatrace APAC Workshops">
+<meta name="og:image:alt" property="og:image:alt" content="Dynatrace">
 <meta name="twitter:card" property="twitter:card" content="summary_large_image">
-<meta name="twitter:title" property="twitter:title" content="Dynatrace APAC Workshops">
-<meta name="twitter:description" property="twitter:description" content="Dynatrace APAC Workshops provide a guided, tutorial, hands-on learning experience.">
+<meta name="twitter:title" property="twitter:title" content="Codelabs">
+<meta name="twitter:description" property="twitter:description" content="Codelabs provide a guided, tutorial, hands-on coding experience. Most codelabs will step you through the process of building a small application, or adding a new feature to an existing application.">
 <meta name="twitter:image" property="twitter:image" content="/images/og-image.png">
 <meta name="twitter:url" property="twitter:url" content="https://dynatrace-apac.github.io/">
 </head>
@@ -71,10 +70,10 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 </div>
 <header id="banner" down$="[[_toBoolean(selectedFilter)]]">
 <div class="site-width">
-<h2 class="banner-title">Welcome to APAC Workshops</h2>
+<h2 class="banner-title">Welcome to APAC Workshops!</h2>
 <div class="banner-description" data-filter-selected$="[[_toBoolean(selectedFilter)]]">
 <p class="banner-info">
-The Dynatrace APAC Workshops provide a guided, tutorial-based hands-on learning experience. These labs will provide sessions that are presented by Dynatrace APAC Engineering team but will also be feasible for self-learning. Please reach out to <a href="mailto:APAC-SE-Central@dynatrace.com">APAC-SE-Central@dynatrace.com</a> if you have other questions. 
+The Dynatrace APAC Workshops provide a guided, tutorial-based hands-on learning experience. These labs will provide sessions that are presented by Dynatrace APAC Engineering team but will also be feasible for self-learning. Please reach out to <a href="mailto:APAC-SE-Central@dynatrace.com">APAC-SE-Central@dynatrace.com</a> if you have other questions.
 </p>
 </div>
 </div>
@@ -88,47 +87,57 @@ The Dynatrace APAC Workshops provide a guided, tutorial-based hands-on learning 
 <paper-tab>Duration</paper-tab>
 </paper-tabs>
 </div>
- <!--
-<paper-dropdown-menu label="Choose an event" class="dropdown-filter" no-label-float noink no-animations>
-<paper-listbox id="eventList" slot="dropdown-content" class="dropdown-content"><a href="/vslive/" tabindex="-1">
-<paper-item>Visual Studio Live</paper-item>
-</a>
+<paper-dropdown-menu label="Filter by category" class="dropdown-filter" no-label-float noink no-animations>
+<paper-listbox id="categorylist" slot="dropdown-content" class="dropdown-content" on-iron-activate="onCategoryActivate" attr-for-selected="filter">
+<paper-item filter="autonomous-cloud">autonomous-cloud</paper-item>
+<paper-item filter="bizops">bizops</paper-item>
+<paper-item filter="dem">dem</paper-item>
+<paper-item filter="kubernetes">kubernetes</paper-item>
 </paper-listbox>
-</paper-dropdown-menu>
--->
-</div>
+</paper-dropdown-menu></div>
 <card-sorter id="cards" class="site-width">
-<a href="/workshops/autonomous-cloud/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-autonomous-cloud" data-category="autonomous-cloud" data-title="Autonomous Cloud with Dynatrace" data-duration="116" data-updated="2020-07-21T14:26:04+10:00" data-tags="autonomous-cloud" data-pin="">
-<div class="description">Autonomous Cloud with Dynatrace</div>    
+<a href="/workshops/autonomous-cloud/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-autonomous-cloud" data-category="autonomous-cloud" data-title="Autonomous Cloud with Dynatrace" data-duration="116" data-updated="2020-07-23T16:32:52+10:00" data-tags="autonomous-cloud" data-pin="">
+<div class="description">Autonomous Cloud with Dynatrace</div>
 <div class="card-duration">
 <span>116 min </span>
-<span>Updated Jul 21, 2020</span>
+<span>Updated Jul 23, 2020</span>
 </div>
 <div class="card-footer">
 <div class="category-icon autonomous-cloud-icon"></div>
 <paper-button class="autonomous-cloud-bg">Start</paper-button>
 </div>
 </a>
-<a href="/workshops/kubernetes/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-kubernetes" data-category="kubernetes" data-title="Dynatrace with Kubernetes" data-duration="31" data-updated="2020-07-21T14:25:46+10:00" data-tags="kubernetes" data-pin="">
-<div class="description">Dynatrace with Kubernetes</div>
-<div class="card-duration">
-<span>31 min </span>
-<span>Updated Jul 16, 2020</span>
-</div>
-<div class="card-footer">
-<div class="category-icon kubernetes-icon"></div>
-<paper-button class="kubernetes-bg">Start</paper-button>
-</div>
-</a>
-<a href="/workshops/bizops/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-bizops" data-category="bizops" data-title="BizOps with Dynatrace" data-duration="168" data-updated="2020-07-28T09:58:40+10:00" data-tags="bizops" data-pin="">
+<a href="/workshops/bizops/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-bizops" data-category="bizops" data-title="BizOps with Dynatrace" data-duration="133" data-updated="2020-07-28T15:48:24+10:00" data-tags="bizops" data-pin="">
 <div class="description">BizOps with Dynatrace</div>
 <div class="card-duration">
-<span>168 min </span>
-<span>Updated Jul 27, 2020</span>
+<span>133 min </span>
+<span>Updated Jul 28, 2020</span>
 </div>
 <div class="card-footer">
 <div class="category-icon bizops-icon"></div>
 <paper-button class="bizops-bg">Start</paper-button>
+</div>
+</a>
+<a href="/workshops/dem/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-dem" data-category="dem" data-title="Digital Experience Management with Dynatrace" data-duration="76" data-updated="2020-07-28T18:56:10+10:00" data-tags="dem" data-pin="">
+<div class="description">Digital Experience Management with Dynatrace</div>
+<div class="card-duration">
+<span>76 min </span>
+<span>Updated Jul 28, 2020</span>
+</div>
+<div class="card-footer">
+<div class="category-icon dem-icon"></div>
+<paper-button class="dem-bg">Start</paper-button>
+</div>
+</a>
+<a href="/workshops/kubernetes/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-kubernetes" data-category="kubernetes" data-title="Dynatrace with Kubernetes" data-duration="31" data-updated="2020-07-23T16:20:40+10:00" data-tags="kubernetes" data-pin="">
+<div class="description">Dynatrace with Kubernetes</div>
+<div class="card-duration">
+<span>31 min </span>
+<span>Updated Jul 23, 2020</span>
+</div>
+<div class="card-footer">
+<div class="category-icon kubernetes-icon"></div>
+<paper-button class="kubernetes-bg">Start</paper-button>
 </div>
 </a>
 </card-sorter>
@@ -144,7 +153,7 @@ Loading Codelabs, please wait...
 <li><a href="https://help.dynatrace.com/">Documentation</a></li>
 <li><a href="https://university.dynatrace.com/">University</a></li>
 <li><a href="https://answers.dynatrace.com/">Forums</a></li>
-<li><a href="https://www.youtube.com/c/dynatrace">Youtube</a></li>    
+<li><a href="https://www.youtube.com/c/dynatrace">Youtube</a></li>
 </ul>
 </div>
 <div class="link-list">
@@ -152,7 +161,7 @@ Loading Codelabs, please wait...
 <ul>
 <li><a href="https://github.com/Dynatrace-APAC">Github</a></li>
 <li><a href="https://www.dynatrace.com/news/?region=apac&post_type=event">Events</a></li>
-<li><a href="https://dynatrace.sharepoint.com/sites/Sales/APAC/SitePages/APAC.aspx">Sharepoint</a></li> 
+<li><a href="https://dynatrace.sharepoint.com/sites/Sales/APAC/SitePages/APAC.aspx">Sharepoint</a></li>
 </ul>
 </div>
 <div class="link-list">

@@ -1,0 +1,323 @@
+
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+<meta name="theme-color" content="#4F7DC9">
+<meta charset="UTF-8">
+<title>Digital Experience Management with Dynatrace</title>
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+<style>
+.success{color:#1e8e3e}.error{color:red} </style>
+</head>
+<body>
+<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+<google-codelab codelab-gaid="" id="dem" title="Digital Experience Management with Dynatrace" environment="web" feedback-link="mailto:APAC-SE-Central@dynatrace.com">
+<google-codelab-step label="Introduction" duration="1">
+<p>This repository contains the hands on for the Dynatrace Digital Experience Management (DEM) Workshop.</p>
+<h2 is-upgraded>Prerequisites</h2>
+<ul>
+<li>Dynatrace SaaS/Managed Account. Get your free SaaS trial <a href="https://www.dynatrace.com/trial/" target="_blank">here</a>.</li>
+<li>AWS account, with the ability to create an EC2 instance from a public AMI. Signup to a free trial <a href="https://aws.amazon.com/free/" target="_blank">here</a>.</li>
+<li>Chrome Browser</li>
+<li>SSH client such as <a href="https://mobaxterm.mobatek.net/" target="_blank">mobaxterm</a>.</li>
+</ul>
+<h2 is-upgraded>Lab Setup</h2>
+<p>The following steps are used for this lab:</p>
+<ul>
+<li>Sample Application <ul>
+<li>Sample App is based on <a href="https://github.com/Dynatrace/easyTravel-Docker" target="_blank">easyTravel Docker</a></li>
+<li>Follow the <a href="https://github.com/Dynatrace-APAC/Workshop-DEM/tree/master/Prerequisite%20Actions" target="_blank">Prerequisite Actions</a> to create the application that will be used throughout this workshop.</li>
+</ul>
+</li>
+</ul>
+<h2 class="checklist" is-upgraded>What You&#39;ll Learn</h2>
+<ul class="checklist">
+<li>Understand Real User Monitoring setup with easyTravel App</li>
+<li>Learn Synthetic in Dynatrace</li>
+<li>Learn Session Replay in Dynatrace</li>
+<li>Learn User Session Query Language (USQL)</li>
+</ul>
+</google-codelab-step>
+<google-codelab-step label="Basic Setup" duration="15">
+<p>In this exercise, we will deploy the OneAgent to a Linux instance and let the OneAgent discover what is running in that instance.</p>
+<h2 is-upgraded>Download the OneAgent</h2>
+<p>Use PuTTy (Windows) or Terminal (Mac), ssh into the instance (IP address using the your PEM Key)</p>
+<p>Open your browser and access the Dynatrace URL.</p>
+<p>Select Deploy Dynatrace from the navigation menu.</p>
+<p class="image-container"><img alt="Deploy" src="img/4c4c6ca8743a5da0.jpg"></p>
+<p>Click the Start installation button and select Linux.</p>
+<p class="image-container"><img alt="Deploy" src="img/c264302b27f0d98a.jpg"></p>
+<p class="image-container"><img alt="Deploy" src="img/9d371d07d4df41d9.jpg"></p>
+<p>Choose the installer type from the drop-down list (we&#39;ll use the default x86/64). Use the Linux shell script installer on any Linux system that&#39;s supported by Dynatrace, regardless of the packaging system your distribution depends on.</p>
+<p><strong>Copy</strong> the command provided in the &#34;Use this command on the target host&#34; text field. <strong>Paste</strong> the command into your terminal window and execute it.</p>
+<p class="image-container"><img alt="Deploy" src="img/eec1df7fb0e3c1db.jpg"></p>
+<p>Example:</p>
+<pre><code>$  wget  -O Dynatrace-OneAgent-Linux-1.171.252.sh &lt;follow screen shot above&gt;
+--2019-08-07 10:17:45--  https://&lt;URL&gt;
+Resolving &lt;URL&gt;... &lt;IP&gt;
+Connecting to &lt;URL&gt; | &lt;IP&gt;|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 139134801 (133M) [application/octet-stream]
+Saving to: ‘Dynatrace-OneAgent-Linux-1.171.252.sh&#39;
+
+100%[======================================&gt;] 139,134,801 84.3MB/s   in 1.6s
+
+2019-08-07 10:17:47 (84.3 MB/s) - ‘Dynatrace-OneAgent-Linux-1.171.252.sh&#39; saved [139134801/139134801]
+
+$
+</code></pre>
+<h2 is-upgraded>Execute the installation script</h2>
+<p>(Optional) Once the download is complete, you can verify the signature by copying the command from the &#34;Verify signature&#34; text field, then pasting the command into your terminal window and executing it. Make sure your system is up to date, especially SSL and related certificate libraries.</p>
+<p><strong>Copy</strong> the command that&#39;s provided in the text box &#34;And run the installer with root rights&#34; text field.</p>
+<p class="image-container"><img alt="Deploy" src="img/ecdf25fe7a756e0c.jpg"></p>
+<p><strong>Paste</strong> the command into your terminal window and execute it. You&#39;ll need to make the script executable before you can run it.</p>
+<p><strong>Note that you&#39;ll need root access.</strong> You can use sudo to run the installation script. To do this, type the following command into the directory where you downloaded the installation script.</p>
+<p>Example:</p>
+<pre><code>$ sudo /bin/sh Dynatrace-OneAgent-Linux-1.171.252.sh
+10:21:42 Checking root privileges...
+10:21:42 OK
+10:21:42 Installation started ...
+...
+10:22:14 Starting agents...
+10:22:14 oneagent service started
+10:22:14 Checking if agent is connected to the server...
+10:22:16 Dynatrace OneAgent has successfully connected to Dynatrace Cluster Node. After completing Dynatrace OneAgent installation on this machine, please return to your browser to complete the remainder of the installation.
+$
+
+</code></pre>
+<h2 is-upgraded>Validate the installation in Deployment status</h2>
+<p class="image-container"><img alt="Deploy" src="img/b95c02828c19e39.jpg"></p>
+<p>Reference: https://www.dynatrace.com/support/help/technology-support/operating-systems/linux/</p>
+<h2 is-upgraded>Start Easy Travel application</h2>
+<p>To start Easy Travel execute the following command:</p>
+<pre><code>$ cd ~
+$ ./restart_easyTravel.sh
+Stopping loadgen  ... done
+Stopping www      ... done
+Stopping frontend ... done
+Stopping backend  ... done
+Stopping mongodb  ... done
+Removing loadgen  ... done
+Removing www      ... done
+Removing frontend ... done
+Removing backend  ... done
+Removing mongodb  ... done
+ip-172-31-7-147
+APM
+Creating mongodb ... done
+Creating backend ... done
+Creating frontend ... done
+Creating www      ... done
+Creating loadgen  ... done
+$
+
+</code></pre>
+<p>Easy Travel will take about 5 minutes to complete starting up. If you would like to check the status, you can enter this command:</p>
+<pre><code>$ sudo docker ps
+CONTAINER ID        IMAGE                           COMMAND                  CREATED             STATUS              PORTS                                                NAMES
+0f9cb477bcf0        dynatrace/easytravel-loadgen    &#34;/bin/sh -c /run-pro...&#34;   19 minutes ago      Up 19 minutes                                                            loadgen
+a3d241d88ecf        dynatrace/easytravel-nginx      &#34;/bin/sh -c /run-pro...&#34;   19 minutes ago      Up 19 minutes       443/tcp, 0.0.0.0:80-&gt;80/tcp, 8080/tcp                www
+82300947a19a        dynatrace/easytravel-frontend   &#34;/bin/sh -c /run-pro...&#34;   19 minutes ago      Up 19 minutes       0.0.0.0:32771-&gt;8080/tcp                              frontend
+3dc6e8e3f468        dynatrace/easytravel-backend    &#34;/bin/sh -c /run-pro...&#34;   19 minutes ago      Up 19 minutes       0.0.0.0:32770-&gt;8080/tcp                              backend
+f88098f89e90        dynatrace/easytravel-mongodb    &#34;/bin/sh -c ${SCRIPT...&#34;   19 minutes ago      Up 19 minutes       0.0.0.0:32769-&gt;27017/tcp, 0.0.0.0:32768-&gt;28017/tcp   mongodb
+
+</code></pre>
+<p>If you see the above 5 containers, it would mean that Easy Travel containers have started. If you do not see the 5 conatiners, it means that Easy Travel is still starting and you might want to wait a few minutes more.</p>
+<p>To access the Easy Travel portal, use the Public DNS of your instance. Copy / paste the Public DNS into your browser.</p>
+<p>Get the Public DNS for your instance from the AWS Console or execute this command:</p>
+<pre><code>$ curl http://169.254.169.254/latest/meta-data/public-hostname
+ec2-xxx-xxx-xxx-xxx.ap-southeast-2.compute.amazonaws.com
+</code></pre>
+<h2 is-upgraded>Explore the Smartscape</h2>
+<p>While waiting for Easy Travel to start, you can explore Dynatrace and using the Smartscape, Dynatrace will automatically discover the processes and dependencies that comprises the Easy Travel application!</p>
+<p><a href="https://www.dynatrace.com/support/help/get-started/4-things-youll-absolutely-love-about-dynatrace/" target="_blank">4 things</a> that you will love about Dynatrace!</p>
+<p class="image-container"><img alt="Smartscape" src="img/868e111ca8bd48bd.png"></p>
+</google-codelab-step>
+<google-codelab-step label="Configure Real User Monitoring" duration="15">
+<p>In this exercise, we will cover the basics of configuring Real User Monitoring. These are some of the best practices that should be followed every time the Dynatrace JavaScript agent is deployed, be it an automated or manual injection.</p>
+<p>More information can be found here: <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/setup-and-configuration/web-applications/" target="_blank">How to use Dynatrace &gt; Real User Monitoring &gt; Setup and configuration &gt; Web applications</a></p>
+<p>There are 3 tasks in this exercise:</p>
+<ul>
+<li>[ ] Task 1: Defining an application</li>
+<li>[ ] Task 2: Selecting the appropriate JavaScript frameworks</li>
+<li>[ ] Task 3: Tagging a user session</li>
+</ul>
+<h2 is-upgraded>Task 1. Defining an application</h2>
+<p>Reference: https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/setup-and-configuration/web-applications/initial-configuration/define-your-applications-via-the-my-web-application-placeholder</p>
+<ol type="1">
+<li>Select <strong>Applications</strong> from the navigation menu.</li>
+<li>Click the <strong>My web application</strong> placeholder application.</li>
+<li>Scroll down to find the Top 3 included domains panel. This panel includes the domains that contain the largest number of actions that have been automatically detected by OneAgent in your environment.</li>
+<li>Click <strong>View full details</strong>.</li>
+</ol>
+<p class="image-container"><img alt="Deploy" src="img/7f730d61fef090a4.png"></p>
+<ol type="1">
+<li>Select a domain from the list appearing under Top domains and expand it by clicking the <strong>arrow under Transfer domain</strong>.</li>
+<li>Click <strong>Create new application</strong>. Your application will be created and listed on the Applications page. From now on, all user actions that are monitored on this domain will be mapped onto the newly created application. Alternatively, you may want to add the domain to an existing application, in case some applications have already been created. To do this, expand the list box, select an application and click Transfer.</li>
+</ol>
+<p class="image-container"><img alt="Deploy" src="img/393748100eeaccb6.png"></p>
+<p>As you may want to use a more intuitive name for your application, you can easily rename it. To rename an application:</p>
+<ol type="1">
+<li>Select <strong>Applications</strong> from the navigation menu.</li>
+<li>Click your newly created application to access the application&#39;s overview page.</li>
+<li>Click the Browse button (...) and select <strong>Edit</strong>.</li>
+<li>Type in the name you prefer in the text box appearing on top of the page. For this workshop please use <strong>easyTravel</strong> as the application name. Note that application names must be unique.</li>
+</ol>
+<h2 is-upgraded>Task 2. Selecting the appropriate JavaScript frameworks</h2>
+<ol type="1">
+<li>Select <strong>Applications</strong> from the navigation menu.</li>
+<li>Select the newly created application (the entry in your Dynatrace console will be different from the screen shot)</li>
+</ol>
+<p class="image-container"><img alt="Deploy" src="img/5fb5f640f88730ec.png"></p>
+<ol type="1">
+<li>Click the Browse button (...) and select <strong>Edit</strong>.</li>
+<li>Select <strong>Async requests and single page apps</strong></li>
+<li>Enable the following frameworks as shown in the screen below</li>
+<li>Click on <strong>Save</strong></li>
+</ol>
+<p class="image-container"><img alt="Deploy" src="img/bf2928e26cc8c439.png"></p>
+<h2 is-upgraded>Task 3. Tagging a user session</h2>
+<p>Reference: https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/how-to-use-real-user-monitoring/cross-application-user-session-analytics/identify-individual-users-for-session-analysis/</p>
+<p>We will be tagging users based on page metadata.</p>
+<p>This approach to user tagging works by capturing available data in your application&#39;s page source. If you take a close look at your application&#39;s page source, you&#39;ll likely find that usernames are already included somewhere. Usernames may be included in the text of a DOM element, a meta tag, a JavaScript variable, or even a cookie attribute. For example, easyTravel, the Dynatrace demo application, includes the user name in a welcome message in the upper-right corner of the home page (see image below). Using the development tools that are built into most browsers, you can generate a unique CSS selector for this particular element.</p>
+<p class="image-container"><img alt="User tagging based on page metadata" src="img/89b5122e1cec4525.png"></p>
+<p>Once you&#39;ve identified where usernames are located in your page source, you can create user tags based on the usernames. To do this, return to Dynatrace and execute the following steps:</p>
+<ol type="1">
+<li>Select <strong>User tag</strong></li>
+<li>Click on <strong>Add tag (identifier) rule</strong></li>
+<li>Select the drop down <strong>CSS Selector</strong></li>
+<li>Paste the CSS Selector which you copied earlier from your browser&#39;s Developer Tool. Since the CSS Selector also picks up some additional text, we can apply a clean up rule.</li>
+<li>Click <strong>Add tag (identifier) rule</strong></li>
+<li>Click on <strong>Save</strong></li>
+</ol>
+<p class="image-container"><img alt="Deploy" src="img/f2d61068f088107f.png"></p>
+<p><strong>Hint:</strong></p>
+<ul>
+<li>CSS Selector</li>
+</ul>
+<pre><code>#loginForm\:j_idt39
+</code></pre>
+<ul>
+<li>Clean up rule</li>
+</ul>
+<pre><code>Hello (.*)!
+</code></pre>
+</google-codelab-step>
+<google-codelab-step label="Configure Synthetic Test" duration="15">
+<p>In this exercise, we will cover creating a single URL synthetic test in Dynatrace. Dynatrace offers three types of synthetic monitoring: single-URL browser monitors, browser clickpaths, and HTTP monitors.</p>
+<p>More information can be found here: <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/synthetic-monitoring" target="_blank">How to use Dynatrace &gt; Syntheic Monitoring</a></p>
+<h2 is-upgraded>1. Create a simple browser monitors for Easy Travel</h2>
+<ol type="1">
+<li>Select <strong>Synthetic</strong> from the navigation menu.</li>
+<li>Click the <strong>Create a synthetic monitor</strong> button at top right.</li>
+<li>Click <strong>Create a browser monitor</strong>.</li>
+</ol>
+<p class="image-container"><img alt="SR" src="img/dad2f77b03f7dfd1.png"></p>
+<ol type="1">
+<li>On the Configure a synthetic monitor page, type in the URL (Public DNS) of your Easy Travel application and name the monitor <strong>easyTravel Homepage</strong>.</li>
+<li>For Device profile, leave it as the default (i.e. Desktop)</li>
+</ol>
+<p class="image-container"><img alt="SR" src="img/b0ab3de58b1085ee.png"></p>
+<ol type="1">
+<li>Click on <strong>Select Frequency &amp; Locations</strong>. For Frequency, select <strong>5</strong> mins</li>
+<li>Use the following 2 locations <ul>
+<li>Sydney</li>
+<li>Canbarra</li>
+</ul>
+</li>
+</ol>
+<p class="image-container"><img alt="SR" src="img/f7d81640246263a6.png"></p>
+<ol type="1">
+<li>Click on <strong>View monitor summary</strong> to advance in the wizard</li>
+<li>Click on <strong>Create browser monitor</strong> to complete the creation of the synthetic monitor</li>
+</ol>
+<p>Reference: https://www.dynatrace.com/support/help/how-to-use-dynatrace/synthetic-monitoring/browser-monitors/create-a-single-url-browser-monitor/</p>
+<h2 is-upgraded>2. (Optional) Create a browser clickpath synthetic monitor for Easy Travel</h2>
+<ul>
+<li>You will need to install the <strong>Dynatrace recorder (chrome plugin)</strong></li>
+<li>Only <strong>Chrome</strong> is supported due to the requirement to run a plugin</li>
+</ul>
+<ol type="1">
+<li>Select <strong>Synthetic</strong> from the navigation menu.</li>
+<li>Click <strong>Create a synthetic monitor</strong> &gt; <strong>Create a browser monitor</strong>.</li>
+<li>First-time users are asked to install the Chrome plugin. Click <strong>Install Dynatrace Synthetic Recorder</strong> at the bottom of the page.</li>
+<li>On the extension page, click Add to Chrome &gt; Add Extension.</li>
+</ol>
+<p>Reference: https://www.dynatrace.com/support/help/how-to-use-dynatrace/synthetic-monitoring/browser-monitors/record-a-browser-clickpath/</p>
+<h2 is-upgraded>3. DISABLE or DELETE all tests when done!</h2>
+<p class="image-container"><img alt="SR" src="img/53f6747ed1613f3f.png"></p>
+</google-codelab-step>
+<google-codelab-step label="Configure Session Replay" duration="15">
+<p>This exercise covers configuring Session Replay in Dynatrace.</p>
+<p>Read about Session Replay here: <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/basic-concepts/session-replay/" target="_blank">How to use Dynatrace &gt; Real User Monitoring &gt; Basic RUM concepts &gt; Session Replay</a></p>
+<h2 is-upgraded>1. Enable Session Replay</h2>
+<ol type="1">
+<li>Select <strong>Applications</strong> from the navigation menu.</li>
+<li>Select the application you want to configure.</li>
+<li>Click the Browse [...] menu button and select <strong>Edit</strong>.</li>
+<li>From the Application settings menu, select <strong>Session Replay</strong>.</li>
+<li>Turn the <strong>Enable Session Replay</strong> button on.</li>
+</ol>
+<p class="image-container"><img alt="SR" src="img/a193e57db7971b76.png"></p>
+<ol type="1">
+<li>Click on <strong>Save</strong> and then access the Easy Travel application using your browser and navigate around the application.</li>
+<li>After a couple minutes, find your session under <strong>User Sessions</strong><ul>
+<li>Hint: You can filter for sessions that have Replay enabled</li>
+</ul>
+</li>
+</ol>
+<p class="image-container"><img alt="SR" src="img/75eab961d667a94c.png"></p>
+<ol type="1">
+<li>Replay your session</li>
+</ol>
+<p class="image-container"><img alt="SR" src="img/d85fc98930fb3a94.png"></p>
+<p class="image-container"><img alt="SR" src="img/2c7e2af9da9c95cd.png"></p>
+<p class="image-container"><img alt="SR" src="img/e82e0184ea3dbe44.png"></p>
+<h2 is-upgraded>2. Additional configuration for for personal data protection</h2>
+<p>Reference: https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/setup-and-configuration/web-applications/additional-configuration/configure-session-replay-for-personal-data-protection/</p>
+<p class="image-container"><img alt="SR" src="img/909e1f4f0d38a89d.png"></p>
+</google-codelab-step>
+<google-codelab-step label="Introduction to USQL" duration="15">
+<p>Dynatrace captures detailed user session data each time a user interacts with your monitored application. This data includes all user actions and high level performance data. Using either the Dynatrace API or Dynatrace User Sessions Query Language (USQL), you can easily run powerful queries, segmentations, and aggregations on this captured data.</p>
+<p>User Sessions Query Language isn&#39;t SQL and Dynatrace doesn&#39;t store user session data in a relational database. User Sessions Query Language is a Dynatrace-specific query language, though it does rely on some SQL concepts and the syntax is similar, which makes it easy to get started.</p>
+<p>A typical use case for using USQL is to build dashboards to visualize business metrics.</p>
+<p class="image-container"><img alt="USQL" src="img/50eee202e37eb4ec.png"></p>
+<p>Reference: https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/how-to-use-real-user-monitoring/cross-application-user-session-analytics/custom-queries-segmentation-and-aggregation-of-session-data/</p>
+<h2 is-upgraded>1. Explore USQL</h2>
+<ol type="1">
+<li>Select User Sessions from the navigation menu</li>
+<li>Use the Filter at the top bar, select your application&#39;s name</li>
+<li>Click on &#34;User Session queries&#34;</li>
+</ol>
+<p class="image-container"><img alt="USQL" src="img/b9bb708e60a8ad53.png"></p>
+<ol type="1">
+<li>A default USQL query is automatically created for you based on the application you selected</li>
+</ol>
+<p class="image-container"><img alt="USQL" src="img/2d867123a395b5d2.png"></p>
+<p><strong>Sample queries</strong></p>
+<p>Sample 1</p>
+<pre><code>SELECT DATETIME(starttime, &#39;MM/dd/yyyy hh:mm&#39;, &#39;30m&#39;),AVG(useraction.visuallyCompleteTime)
+FROM usersession
+WHERE country IS &#34;United States&#34; GROUP BY DATETIME(starttime, &#39;MM/dd/yyyy hh:mm&#39;, &#39;30m&#39;)
+</code></pre>
+<p>Sample 2</p>
+<pre><code>SELECT userId, SUM(totalErrorCount) FROM usersession
+WHERE totalErrorCount IS NOT NULL
+GROUP BY userId ORDER BY SUM(totalErrorCount) DESC
+</code></pre>
+<p>Sample 3</p>
+<pre><code>SELECT COUNT(*) FROM usersession WHERE useraction.name = &#34;Loading of page /orange.jsf&#34;
+</code></pre>
+<p>Are you able to describe what each sample query is trying to visualize?</p>
+</google-codelab-step>
+</google-codelab>
+<script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+<script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+<script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+<script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+<script src="//support.google.com/inapp/api.js"></script>
+</body>
+</html>
