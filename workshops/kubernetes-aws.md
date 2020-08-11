@@ -31,13 +31,6 @@ For the purposes of the Hands-On, we will automate and make the steps seamless f
 ##  Install Dynatrace OneAgent Operator for Kubernetes
 Duration: 15
 
-### Optional Step unless running Containerd
-Before running the Oneagent Operator, please make sure that deep monitoring for Containerd Monitoring is enabled
-
-Go to *Settings -> Processes and Container -> Container Monitoring*
-
-![GKE-CLI-Indentation](assets/k8s-aws/Picture6.1.png)
-
 ### Create Operator necessary objects
 
 OneAgent Operator acts on its separate namespace dynatrace. It holds the operator deployment and all dependent objects like permissions, custom resources and the corresponding DaemonSet
@@ -118,22 +111,22 @@ And that's it! Dynatrace is now monitoring your Kubernetes Environment!
 POSITIVE
 : The installation steps above have been extracted from our [official documentation page](https://www.dynatrace.com/support/help/technology-support/cloud-platforms/google-cloud-platform/google-kubernetes-engine/deploy-oneagent-on-google-kubernetes-engine-clusters/)
 
-### Troubleshooting steps
+### ⚠️ Troubleshooting steps
 
 Negative
-: ⚠️ To **check status of pods**, run command below. You should get a **Running** as a return.<br>
+: To **check status of pods**, run command below. You should get a **Running** as a return.<br>
 `kubectl get pods -n dynatrace`
 
 Negative
-: ⚠️ To **delete all pods**, run command below. This will cycle through the pods and you will have new pod instances.<br>
+: To **delete all pods**, run command below. This will cycle through the pods and you will have new pod instances.<br>
 `kubectl delete --all pods --namespace=dynatrace`
 
 Negative
-: ⚠️ To **clean up and restart installation**, run command below.<br>
+: To **clean up and restart installation**, run command below.<br>
 `wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes-AWS/master/cleanup.sh | bash`
 
 Negative
-: ⚠️ To **install everything in our automated script**, run command below.<br>
+: To **install everything in our automated script**, run command below.<br>
 `wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes-AWS/master/install-oneagent-operator-workshop.sh | bash`
 
 Negative
@@ -224,7 +217,7 @@ Duration: 5
 
 With the Sockshop app restarted, you should be able to see services in Dynatrace.
 
-Referring to `/dtacmworkshop/manifests/sockshop-app/production/front-end.yml`, we will want to setup Dynatrace to automatically pick up the annotations and labels
+Referring to `~/dtacmworkshop/manifests/sockshop-app/production/front-end.yml`, we will want to setup Dynatrace to automatically pick up the annotations and labels
 
 ```bash
 apiVersion: extensions/v1beta1
@@ -289,7 +282,7 @@ Positive
 
 ### Adding Environment variables
 
-In shell terminal, add some Environment Variables to `/dtacmworkshop/manifests/sockshop-app/production/front-end.yml`
+In shell terminal, add some Environment Variables to `~/dtacmworkshop/manifests/sockshop-app/production/front-end.yml`
 
 **Make sure that the indentation is correct and that they aren't any error promptings**
 
@@ -306,7 +299,7 @@ In shell terminal, add some Environment Variables to `/dtacmworkshop/manifests/s
 After saving, run the below command to re-apply the change.
 
 ```bash
-kubectl apply -f /dtacmworkshop/manifests/sockshop-app/production/front-end.yml
+kubectl apply -f ~/dtacmworkshop/manifests/sockshop-app/production/front-end.yml
 wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes-AWS/master/recycle-sockshop-frontend.sh | bash
 ```
 

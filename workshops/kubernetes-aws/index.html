@@ -49,11 +49,7 @@
       </google-codelab-step>
     
       <google-codelab-step label="Install Dynatrace OneAgent Operator for Kubernetes" duration="15">
-        <h2 is-upgraded>Optional Step unless running Containerd</h2>
-<p>Before running the Oneagent Operator, please make sure that deep monitoring for Containerd Monitoring is enabled</p>
-<p>Go to <em>Settings -&gt; Processes and Container -&gt; Container Monitoring</em></p>
-<p class="image-container"><img alt="GKE-CLI-Indentation" src="img/5ad97d5d8c024bfc.png"></p>
-<h2 is-upgraded>Create Operator necessary objects</h2>
+        <h2 is-upgraded>Create Operator necessary objects</h2>
 <p>OneAgent Operator acts on its separate namespace dynatrace. It holds the operator deployment and all dependent objects like permissions, custom resources and the corresponding DaemonSet</p>
 <pre><code>kubectl create namespace dynatrace
 kubectl apply -f https://github.com/Dynatrace/dynatrace-oneagent-operator/releases/latest/download/kubernetes.yaml
@@ -115,14 +111,14 @@ spec:
 <p>And that&#39;s it! Dynatrace is now monitoring your Kubernetes Environment!</p>
 <aside class="special"><p>The installation steps above have been extracted from our <a href="https://www.dynatrace.com/support/help/technology-support/cloud-platforms/google-cloud-platform/google-kubernetes-engine/deploy-oneagent-on-google-kubernetes-engine-clusters/" target="_blank">official documentation page</a></p>
 </aside>
-<h2 is-upgraded>Troubleshooting steps</h2>
-<aside class="warning"><p>⚠️ To <strong>check status of pods</strong>, run command below. You should get a <strong>Running</strong> as a return.<br><code>kubectl get pods -n dynatrace</code></p>
+<h2 is-upgraded>⚠️ Troubleshooting steps</h2>
+<aside class="warning"><p>To <strong>check status of pods</strong>, run command below. You should get a <strong>Running</strong> as a return.<br><code>kubectl get pods -n dynatrace</code></p>
 </aside>
-<aside class="warning"><p>⚠️ To <strong>delete all pods</strong>, run command below. This will cycle through the pods and you will have new pod instances.<br><code>kubectl delete --all pods --namespace=dynatrace</code></p>
+<aside class="warning"><p>To <strong>delete all pods</strong>, run command below. This will cycle through the pods and you will have new pod instances.<br><code>kubectl delete --all pods --namespace=dynatrace</code></p>
 </aside>
-<aside class="warning"><p>⚠️ To <strong>clean up and restart installation</strong>, run command below.<br><code>wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes-AWS/master/cleanup.sh | bash</code></p>
+<aside class="warning"><p>To <strong>clean up and restart installation</strong>, run command below.<br><code>wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes-AWS/master/cleanup.sh | bash</code></p>
 </aside>
-<aside class="warning"><p>⚠️ To <strong>install everything in our automated script</strong>, run command below.<br><code>wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes-AWS/master/install-oneagent-operator-workshop.sh | bash</code></p>
+<aside class="warning"><p>To <strong>install everything in our automated script</strong>, run command below.<br><code>wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes-AWS/master/install-oneagent-operator-workshop.sh | bash</code></p>
 </aside>
 <aside class="warning"><p>Official troubleshooting page could be found <a href="https://www.dynatrace.com/support/help/technology-support/cloud-platforms/google-cloud-platform/google-kubernetes-engine/installation-and-operation/full-stack/troubleshoot-oneagent-on-google-kubernetes-engine/" target="_blank">here</a></p>
 </aside>
@@ -189,7 +185,7 @@ kubectl delete pods --all -n production
     
       <google-codelab-step label="Kubernetes Labels and Annotations" duration="5">
         <p>With the Sockshop app restarted, you should be able to see services in Dynatrace.</p>
-<p>Referring to <code>/dtacmworkshop/manifests/sockshop-app/production/front-end.yml</code>, we will want to setup Dynatrace to automatically pick up the annotations and labels</p>
+<p>Referring to <code>~/dtacmworkshop/manifests/sockshop-app/production/front-end.yml</code>, we will want to setup Dynatrace to automatically pick up the annotations and labels</p>
 <pre><code>apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -236,7 +232,7 @@ spec:
     
       <google-codelab-step label="Container Environment Variables" duration="0">
         <h2 is-upgraded>Adding Environment variables</h2>
-<p>In shell terminal, add some Environment Variables to <code>/dtacmworkshop/manifests/sockshop-app/production/front-end.yml</code></p>
+<p>In shell terminal, add some Environment Variables to <code>~/dtacmworkshop/manifests/sockshop-app/production/front-end.yml</code></p>
 <p><strong>Make sure that the indentation is correct and that they aren&#39;t any error promptings</strong></p>
 <pre><code>        env:
         - name: DT_TAGS
@@ -246,7 +242,7 @@ spec:
 </code></pre>
 <p class="image-container"><img alt="JSON" src="img/f1f275ad07f20c73.png"></p>
 <p>After saving, run the below command to re-apply the change.</p>
-<pre><code>kubectl apply -f /dtacmworkshop/manifests/sockshop-app/production/front-end.yml
+<pre><code>kubectl apply -f ~/dtacmworkshop/manifests/sockshop-app/production/front-end.yml
 wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes-AWS/master/recycle-sockshop-frontend.sh | bash
 </code></pre>
 <h2 is-upgraded>Validate</h2>
