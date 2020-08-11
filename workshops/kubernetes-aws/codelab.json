@@ -1,0 +1,25 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2020-08-11T15:47:03+10:00",
+  "id": "kubernetes-aws",
+  "duration": 46,
+  "title": "Dynatrace with Kubernetes on AWS",
+  "authors": "Brandon Neo",
+  "summary": "Dynatrace with Kubernetes on AWS",
+  "source": "kubernetes-aws.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "kubernetes"
+  ],
+  "tags": [
+    "kubernetes"
+  ],
+  "feedback": "mailto:APAC-SE-Central@dynatrace.com",
+  "url": "kubernetes-aws"
+}
