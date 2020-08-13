@@ -17,6 +17,7 @@ For the purposes of the Hands-On, we will automate and make the steps seamless f
 
 ### Prerequisites
 - Dynatrace SaaS/Managed Account. Get your free SaaS trial here.
+- * SSH client such as [mobaxterm](https://mobaxterm.mobatek.net/).
 - Chrome Browser
 
 ### What You’ll Learn 
@@ -28,88 +29,87 @@ For the purposes of the Hands-On, we will automate and make the steps seamless f
 - Discover Kubernetes View on Dynatrace
 
 <!-- ------------------------ -->
-##  Install Dynatrace OneAgent Operator for Kubernetes
+##  Install Dynatrace OneAgent Operator
 Duration: 15
 
-### Create Operator necessary objects
+Locate the link in the email to login to your allocated Dynatrace tenant. 
 
-OneAgent Operator acts on its separate namespace dynatrace. It holds the operator deployment and all dependent objects like permissions, custom resources and the corresponding DaemonSet
+Go to **Deploy Dynatrace -> Start installation -> Kubernetes** 
 
-```bash
-kubectl create namespace dynatrace
-kubectl apply -f https://github.com/Dynatrace/dynatrace-oneagent-operator/releases/latest/download/kubernetes.yaml
-```
+![k8s-setup](assets/k8s/k8s-setup.png)
+
+### Install Helm 3 and above
+
+OneAgent Operator could be installed via various kubernetes deployment strategies. Following instructions from the UI, we will first setup Helm 3.  
+
+Use the following command to install Helm 3. When prompted, enter your **admin password** which is found in the welcome email. 
+
+`sudo snap install helm --classic`
 
 ### Get API and PaaS Tokens in Dynatrace
-Within Dynatrace, get the following tokens for authentication.
+Follow the steps on screen to create your API and PaaS tokens. 
+You will find the API token automatically configured with the necessary permissions. 
+Once created, select the **newly created tokens** from both of the **drop-down fields**.
+Other commands will also be pre-populated with the necessary steps.
 
-- API Token
-   - Create one from **Settings -> Integration -> Dynatrace API**
-   - Enable **Access problem and event feed, metrics, and topology** toggle
-- Platform-as-a-Service token
-   - Create one from **Settings -> Integration -> Platform as a Service**
-- Substitute the tokens with **API_TOKEN** and **PAAS_TOKEN** from the bash command below
+![k8s-setup](assets/k8s/api-paas-ui.gif)
 
-```bash
-kubectl -n dynatrace create secret generic oneagent --from-literal="apiToken=API_TOKEN" --from-literal="paasToken=PAAS_TOKEN"
-```
-
-### Save Custom Resource
-The rollout of Dynatrace OneAgent is governed by a custom resource of type OneAgent. Retrieve the cr.yaml file from the GitHub repository.
+### Add the OneAgent Helm Repo
+Follow the setup steps and run the following commands. 
 
 ```bash
-curl -o cr.yaml https://raw.githubusercontent.com/Dynatrace/dynatrace-oneagent-operator/master/deploy/cr.yaml
+helm repo add dynatrace https://raw.githubusercontent.com/Dynatrace/helm-charts/master/repos/stable
+kubectl create namespace dynatrace
 ```
+### Create a and apply values.yaml
 
-Get the tenant ID from your Workshop environment. Edit the cr.yaml with your tenant ID.
+Run the below command to create new file called **values.yaml**
 
-SHOW IMAGE
+`nano values.yaml`
+
+Copy and paste to the terminal and save the file with **Ctrl-X** followed by **Y** and **Enter** 
 
 **EXAMPLE**
 
 ```bash
-apiVersion: dynatrace.com/v1alpha1
-kind: OneAgent
-metadata:
-  # a descriptive name for this object.
-  # all created child objects will be based on it.
-  name: oneagent
-  namespace: dynatrace
-spec:
-  # dynatrace api url including `/api` path at the end
-  # either set ENVIRONMENTID to the proper tenant id or change the apiUrl as a whole, e.q. for Managed
-  apiUrl: https://mou612.managed-sprint.dynalabs.io/e/<ENVIRONMENT ID>/api
-  # disable certificate validation checks for installer download and API communication
+platform: "kubernetes"
+
+oneagent:
+  name: "oneagent"
+  apiUrl: "https://mou612.managed-sprint.dynalabs.io/e/ef121dc4-3995-4231-9e3a-0e3050db9e7f/api"
+  args:
+    - --set-app-log-content-access=true
   skipCertCheck: false
-  # name of secret holding `apiToken` and `paasToken`
-  # if unset, name of custom resource is used
-```
-
-Also, **enable Istio** by uncommenting line 51 and changing the value to **true** within the YAML file.
-
-```bash
- #priorityClassName: PRIORITYCLASS
-  # disables automatic restarts of oneagent pods in case a new version is available
-  #disableAgentUpdate: false
-  # when enabled, and if Istio is installed on the Kubernetes environment, then the Operator will create the corresponding
-  # VirtualService and ServiceEntries objects to allow access to the Dynatrace cluster from the agent.
   enableIstio: true
-  # DNS Policy for OneAgent pods (optional.) Empty for default (ClusterFirst), more at
-  # https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy
-  #dnsPolicy: ""
+
+secret:
+  apiToken: "S0pO-hppT0q8Xu1WMrpf9"
+  paasToken: "TO3WtWrcQnqZJrb4WHncP"
 ```
-Afterwhich, apply the cr.yaml file.
+Copy the next command to **apply the values.yaml** and **deploy OneAgent on Kubernetes**.
 
 ```bash
-kubectl apply -f cr.yaml
+helm install dynatrace-oneagent-operator \
+dynatrace/dynatrace-oneagent-operator -n\
+dynatrace --values values.yaml
 ```
+If successful, you should get a positive output with **STATUS: deployed** as per below.
 
-SHOW IMAGE 
+```bash
+NAME: dynatrace-oneagent-operator
+LAST DEPLOYED: Thu Aug 13 01:25:26 2020
+NAMESPACE: dynatrace
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+Thank you for installing dynatrace-oneagent-operator.
 
-And that's it! Dynatrace is now monitoring your Kubernetes Environment!
+Your release is named dynatrace-oneagent-operator.
+```
 
 POSITIVE
-: The installation steps above have been extracted from our [official documentation page](https://www.dynatrace.com/support/help/technology-support/cloud-platforms/google-cloud-platform/google-kubernetes-engine/deploy-oneagent-on-google-kubernetes-engine-clusters/)
+: You can also check out other means of installation at our [official documentation page](https://www.dynatrace.com/support/help/technology-support/cloud-platforms/google-cloud-platform/google-kubernetes-engine/deploy-oneagent-on-google-kubernetes-engine-clusters/)
 
 ### ⚠️ Troubleshooting steps
 
@@ -118,27 +118,23 @@ Negative
 `kubectl get pods -n dynatrace`
 
 Negative
+: To **check the logs**, run command below.<br>
+`kubectl logs -f deployment/dynatrace-oneagent-operator -n dynatrace`
+
+Negative
 : To **delete all pods**, run command below. This will cycle through the pods and you will have new pod instances.<br>
-`kubectl delete --all pods --namespace=dynatrace`
-
-Negative
-: To **clean up and restart installation**, run command below.<br>
-`wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes-AWS/master/cleanup.sh | bash`
-
-Negative
-: To **install everything in our automated script**, run command below.<br>
-`wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes-AWS/master/install-oneagent-operator-workshop.sh | bash`
+`kubectl delete --all pods -n dynatrace`
 
 Negative
 : Official troubleshooting page could be found [here](https://www.dynatrace.com/support/help/technology-support/cloud-platforms/google-cloud-platform/google-kubernetes-engine/installation-and-operation/full-stack/troubleshoot-oneagent-on-google-kubernetes-engine/)
 
-If everything is working, you will see the hosts appearing under Hosts from clicking Hosts under the left navigation bar.
+If everything is working, you will see the host appearing when you click on **Show Deployment status**
 
 ### Restart Sockshop Sample App
 
-You can see the various processes automatically detected but Dynatrace prompts you to restart them. This is so that we could automatically instrument them without code changes.
+You can see the various processes automatically detected but Dynatrace prompts you to restart them. This is required for us to automatically instrument them without code changes.
 
-Run the below command to cycle through your services for Dev and Production.
+Run the below command to cycle through your services for **Dev** and **Production**.
 
 ```bash
 kubectl delete pods --all -n dev
@@ -157,11 +153,12 @@ Positive
 - Click on **Install Activegate** at the bottom of the page
 - Click on **Linux**
 - Copy **Step 2** and paste into your shell terminal.
-- Copy **Step 4** and append "**sudo**" (installing as root) onto shell terminal
+- Copy **Step 4** and append "**sudo**" (installing as root) onto shell terminal. 
+When prompted, enter your **admin password** which is found in the welcome email. 
 
 ![Copy-AG-Commands](assets/k8s/activegate-2.png)
 
-Once completed, you should see Activegate under Deployment Status.
+Once completed, you should see Activegate under **Deployment Status**.
 
 ![Activegate-connected](assets/k8s/Picture9.1.png)
 
@@ -173,13 +170,18 @@ Go to **Settings -> Process and Containers -> Process group detection -> Enable 
 
 ### Create a Service Account and Cluster role
 
-Create a service account and cluster role for accessing the Kubernetes API. This creates the bearer token necessary to authenticate in the Kubernetes API. Use the following snippet.
+Create a service account and cluster role for accessing the Kubernetes API. This creates the bearer token necessary to authenticate in the Kubernetes API. Use the following snippet in your shell terminal.
 
 ```bash
 kubectl apply -f https://www.dynatrace.com/support/help/codefiles/kubernetes/kubernetes-monitoring-service-account.yaml
 ```
+### Setup your Kubernetes Integration
+
+Go to **Settings -> Cloud and Virtualization -> Kubernetes -> Connect new cluster**
 
 ### Get the Kubernetes API URL
+
+Enter the below command and copy it for the **Kubernetes API URL**.
 
 ```bash
 kubectl get ing k8-api-ingress | grep -oP 'api.kubernetes[^[:blank:]]*'
@@ -187,22 +189,24 @@ kubectl get ing k8-api-ingress | grep -oP 'api.kubernetes[^[:blank:]]*'
 
 ### Get the Bearer Token
 
+Enter the below command and copy it for the **Kubernetes Bearer Token**.
+
 ```bash
 kubectl get secret $(kubectl get sa dynatrace-monitoring -o jsonpath='{.secrets[0].name}' -n dynatrace) -o jsonpath='{.data.token}' -n dynatrace | base64 --decode
 ```
-With the above results, enter the values to **Settings -> Cloud and Virtualization -> Kubernetes**
 
 ![K8S-integration](assets/k8s/activegate-4.png)
 
-- Give a name for the connection eg. **GKE K8S**
+- Give a name for the connection eg. **Kubernetes**
 - Enter in your **Kubernetes API URL Target**
-   - Append **https** before your API URL
+   - Append **https://** before your API URL
 - Enter in the **Kubernetes Bearer Token**
 - **Disable** "Require valid certificates for communication with API server"
 - **Add** another event field selector
 - Use `Non-node` for the field selector name
-- Use `involvedObject.kind!=Node` for the Field selector expression
-- **Save** and Click on Connect
+- Use `involvedObject.kind!=Node` for the Field selector expression and **Save**
+- Toggle ON **Monitor Events**
+- Click on **Connect**
 
 Once successfully connected, click on Kubernetes on the left menu and explore the Kubernetes UI. 
 
@@ -277,12 +281,14 @@ Positive
 : The above steps are taken from [our official documentation page](https://www.dynatrace.com/support/help/technology-support/cloud-platforms/kubernetes/other-deployments-and-configurations/leverage-tags-defined-in-kubernetes-deployments/)
 
 <!-- ------------------------ -->
-
 ## Container Environment Variables
+Duration: 5
 
 ### Adding Environment variables
 
-In shell terminal, add some Environment Variables to `~/dtacmworkshop/manifests/sockshop-app/production/front-end.yml`
+In shell terminal, add some Environment Variables with the following command
+
+`nano ~/dtacmworkshop/manifests/sockshop-app/production/front-end.yml`
 
 **Make sure that the indentation is correct and that they aren't any error promptings**
 
@@ -293,10 +299,9 @@ In shell terminal, add some Environment Variables to `~/dtacmworkshop/manifests/
         - name: DT_CUSTOM_PROP
           value: "SERVICE_TYPE=FRONTEND"
 ```
-
 ![JSON](assets/k8s/Picture13.png)
 
-After saving, run the below command to re-apply the change.
+Save the amended file with **Ctrl-X**, followed by **Y** and **Enter** and run the below command to re-apply the change.
 
 ```bash
 kubectl apply -f ~/dtacmworkshop/manifests/sockshop-app/production/front-end.yml
@@ -311,6 +316,7 @@ Once working, you can validate the change in Dynatrace
 
 <!-- ------------------------ -->
 ## Process Group & Service Naming Rules for K8s
+Duration: 10
 
 ### Process Group Naming Rules
 
@@ -324,11 +330,11 @@ In the conditions drop-down, select the property **Kubernetes namespace** and th
 
 ![JSON](assets/k8s/Picture15.png)
 
-Click on **Preview**
+Click on **Preview** to view the matching entities 
 
 ![JSON](assets/k8s/Picture16.png)
 
-Click on **Save**
+Click on **Create Rule** and **Save Changes** in the pop-up.
 
 ### Validate
 
@@ -348,11 +354,11 @@ In the conditions drop-down, select the property **Kubernetes namespace** and th
 
 ![JSON](assets/k8s/Picture18.png)
 
-Click on **Preview**
+Click on **Preview** to view the matching entities 
 
 ![JSON](assets/k8s/Picture19.png)
 
-Click on **Save**
+Click on **Create Rule** and **Save Changes** in the pop-up.
 
 ### Validate
 
@@ -363,15 +369,16 @@ Once working, you can validate the change in Dynatrace
 <!-- ------------------------ -->
 
 ## Process Detection for Canary Deployment
+Duration: 15
 
 ### Deploy the Canary Release 
 
 Run the command below to trigger the canary release
 ```bash
-wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes-AWS/master/deploy-canary.sh | bash
+kubectl apply -f https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes-AWS/master/manifests/sockshop-app/canary/front-end-canary.yml
 ```
 
-Execute **kubectl get pods -n production -o wide** and you will see you now have both **stable and canary releases running for the front-end service**
+Execute `kubectl get pods -n production -o wide` and you will see you now have both **stable and canary releases running for the front-end service**
 
 ![JSON](assets/k8s/Picture21.png)
 
@@ -384,7 +391,7 @@ For monitoring purposes, it should be the same service
 
 In the Dynatrace console, go in **Settings -> Processes and containers -> Process group detection**.
 
-Expand the Process detection rules section. 
+Expand the **Process group detection rules** section. 
 
 Click **Add detection** rule.
 
@@ -403,12 +410,6 @@ Run the below command to **recycle both stable and canary frontend pods**. The p
 
 ```bash
 wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes-AWS/master/recycle-sockshop-frontend.sh | bash
-```
-
-Run the command below to **make sure the pods are ready**
-
-```bash
-kubectl get deployments -n production -l tier=frontend
 ```
 
 Within Dynatrace, you can see that the Process Groups have been merged.

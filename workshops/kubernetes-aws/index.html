@@ -33,6 +33,7 @@
 <h2 is-upgraded>Prerequisites</h2>
 <ul>
 <li>Dynatrace SaaS/Managed Account. Get your free SaaS trial here.</li>
+<li>* SSH client such as <a href="https://mobaxterm.mobatek.net/" target="_blank">mobaxterm</a>.</li>
 <li>Chrome Browser</li>
 </ul>
 <h2 class="checklist" is-upgraded>What You&#39;ll Learn</h2>
@@ -48,84 +49,73 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="Install Dynatrace OneAgent Operator for Kubernetes" duration="15">
-        <h2 is-upgraded>Create Operator necessary objects</h2>
-<p>OneAgent Operator acts on its separate namespace dynatrace. It holds the operator deployment and all dependent objects like permissions, custom resources and the corresponding DaemonSet</p>
-<pre><code>kubectl create namespace dynatrace
-kubectl apply -f https://github.com/Dynatrace/dynatrace-oneagent-operator/releases/latest/download/kubernetes.yaml
-</code></pre>
+      <google-codelab-step label="Install Dynatrace OneAgent Operator" duration="15">
+        <p>Locate the link in the email to login to your allocated Dynatrace tenant.</p>
+<p>Go to <strong>Deploy Dynatrace -&gt; Start installation -&gt; Kubernetes</strong></p>
+<p class="image-container"><img alt="k8s-setup" src="img/e0ad295b815cadc7.png"></p>
+<h2 is-upgraded>Install Helm 3 and above</h2>
+<p>OneAgent Operator could be installed via various kubernetes deployment strategies. Following instructions from the UI, we will first setup Helm 3.</p>
+<p>Use the following command to install Helm 3. When prompted, enter your <strong>admin password</strong> which is found in the welcome email.</p>
+<p><code>sudo snap install helm --classic</code></p>
 <h2 is-upgraded>Get API and PaaS Tokens in Dynatrace</h2>
-<p>Within Dynatrace, get the following tokens for authentication.</p>
-<ul>
-<li>API Token  <ul>
-<li>Create one from <strong>Settings -&gt; Integration -&gt; Dynatrace API</strong></li>
-<li>Enable <strong>Access problem and event feed, metrics, and topology</strong> toggle</li>
-</ul>
-</li>
-<li>Platform-as-a-Service token  <ul>
-<li>Create one from <strong>Settings -&gt; Integration -&gt; Platform as a Service</strong></li>
-</ul>
-</li>
-<li>Substitute the tokens with <strong>API_TOKEN</strong> and <strong>PAAS_TOKEN</strong> from the bash command below</li>
-</ul>
-<pre><code>kubectl -n dynatrace create secret generic oneagent --from-literal=&#34;apiToken=API_TOKEN&#34; --from-literal=&#34;paasToken=PAAS_TOKEN&#34;
+<p>Follow the steps on screen to create your API and PaaS tokens. You will find the API token automatically configured with the necessary permissions. Once created, select the <strong>newly created tokens</strong> from both of the <strong>drop-down fields</strong>. Other commands will also be pre-populated with the necessary steps.</p>
+<p class="image-container"><img alt="k8s-setup" src="img/ce4b0dd79940a999.gif"></p>
+<h2 is-upgraded>Add the OneAgent Helm Repo</h2>
+<p>Follow the setup steps and run the following commands.</p>
+<pre><code>helm repo add dynatrace https://raw.githubusercontent.com/Dynatrace/helm-charts/master/repos/stable
+kubectl create namespace dynatrace
 </code></pre>
-<h2 is-upgraded>Save Custom Resource</h2>
-<p>The rollout of Dynatrace OneAgent is governed by a custom resource of type OneAgent. Retrieve the cr.yaml file from the GitHub repository.</p>
-<pre><code>curl -o cr.yaml https://raw.githubusercontent.com/Dynatrace/dynatrace-oneagent-operator/master/deploy/cr.yaml
-</code></pre>
-<p>Get the tenant ID from your Workshop environment. Edit the cr.yaml with your tenant ID.</p>
-<p>SHOW IMAGE</p>
+<h2 is-upgraded>Create a and apply values.yaml</h2>
+<p>Run the below command to create new file called <strong>values.yaml</strong></p>
+<p><code>nano values.yaml</code></p>
+<p>Copy and paste to the terminal and save the file with <strong>Ctrl-X</strong> followed by <strong>Y</strong> and <strong>Enter</strong></p>
 <p><strong>EXAMPLE</strong></p>
-<pre><code>apiVersion: dynatrace.com/v1alpha1
-kind: OneAgent
-metadata:
-  # a descriptive name for this object.
-  # all created child objects will be based on it.
-  name: oneagent
-  namespace: dynatrace
-spec:
-  # dynatrace api url including `/api` path at the end
-  # either set ENVIRONMENTID to the proper tenant id or change the apiUrl as a whole, e.q. for Managed
-  apiUrl: https://mou612.managed-sprint.dynalabs.io/e/&lt;ENVIRONMENT ID&gt;/api
-  # disable certificate validation checks for installer download and API communication
+<pre><code>platform: &#34;kubernetes&#34;
+
+oneagent:
+  name: &#34;oneagent&#34;
+  apiUrl: &#34;https://mou612.managed-sprint.dynalabs.io/e/ef121dc4-3995-4231-9e3a-0e3050db9e7f/api&#34;
+  args:
+    - --set-app-log-content-access=true
   skipCertCheck: false
-  # name of secret holding `apiToken` and `paasToken`
-  # if unset, name of custom resource is used
-</code></pre>
-<p>Also, <strong>enable Istio</strong> by uncommenting line 51 and changing the value to <strong>true</strong> within the YAML file.</p>
-<pre><code> #priorityClassName: PRIORITYCLASS
-  # disables automatic restarts of oneagent pods in case a new version is available
-  #disableAgentUpdate: false
-  # when enabled, and if Istio is installed on the Kubernetes environment, then the Operator will create the corresponding
-  # VirtualService and ServiceEntries objects to allow access to the Dynatrace cluster from the agent.
   enableIstio: true
-  # DNS Policy for OneAgent pods (optional.) Empty for default (ClusterFirst), more at
-  # https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy
-  #dnsPolicy: &#34;&#34;
+
+secret:
+  apiToken: &#34;S0pO-hppT0q8Xu1WMrpf9&#34;
+  paasToken: &#34;TO3WtWrcQnqZJrb4WHncP&#34;
 </code></pre>
-<p>Afterwhich, apply the cr.yaml file.</p>
-<pre><code>kubectl apply -f cr.yaml
+<p>Copy the next command to <strong>apply the values.yaml</strong> and <strong>deploy OneAgent on Kubernetes</strong>.</p>
+<pre><code>helm install dynatrace-oneagent-operator \
+dynatrace/dynatrace-oneagent-operator -n\
+dynatrace --values values.yaml
 </code></pre>
-<p>SHOW IMAGE</p>
-<p>And that&#39;s it! Dynatrace is now monitoring your Kubernetes Environment!</p>
-<aside class="special"><p>The installation steps above have been extracted from our <a href="https://www.dynatrace.com/support/help/technology-support/cloud-platforms/google-cloud-platform/google-kubernetes-engine/deploy-oneagent-on-google-kubernetes-engine-clusters/" target="_blank">official documentation page</a></p>
+<p>If successful, you should get a positive output with <strong>STATUS: deployed</strong> as per below.</p>
+<pre><code>NAME: dynatrace-oneagent-operator
+LAST DEPLOYED: Thu Aug 13 01:25:26 2020
+NAMESPACE: dynatrace
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+Thank you for installing dynatrace-oneagent-operator.
+
+Your release is named dynatrace-oneagent-operator.
+</code></pre>
+<aside class="special"><p>You can also check out other means of installation at our <a href="https://www.dynatrace.com/support/help/technology-support/cloud-platforms/google-cloud-platform/google-kubernetes-engine/deploy-oneagent-on-google-kubernetes-engine-clusters/" target="_blank">official documentation page</a></p>
 </aside>
 <h2 is-upgraded>⚠️ Troubleshooting steps</h2>
 <aside class="warning"><p>To <strong>check status of pods</strong>, run command below. You should get a <strong>Running</strong> as a return.<br><code>kubectl get pods -n dynatrace</code></p>
 </aside>
-<aside class="warning"><p>To <strong>delete all pods</strong>, run command below. This will cycle through the pods and you will have new pod instances.<br><code>kubectl delete --all pods --namespace=dynatrace</code></p>
+<aside class="warning"><p>To <strong>check the logs</strong>, run command below.<br><code>kubectl logs -f deployment/dynatrace-oneagent-operator -n dynatrace</code></p>
 </aside>
-<aside class="warning"><p>To <strong>clean up and restart installation</strong>, run command below.<br><code>wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes-AWS/master/cleanup.sh | bash</code></p>
-</aside>
-<aside class="warning"><p>To <strong>install everything in our automated script</strong>, run command below.<br><code>wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes-AWS/master/install-oneagent-operator-workshop.sh | bash</code></p>
+<aside class="warning"><p>To <strong>delete all pods</strong>, run command below. This will cycle through the pods and you will have new pod instances.<br><code>kubectl delete --all pods -n dynatrace</code></p>
 </aside>
 <aside class="warning"><p>Official troubleshooting page could be found <a href="https://www.dynatrace.com/support/help/technology-support/cloud-platforms/google-cloud-platform/google-kubernetes-engine/installation-and-operation/full-stack/troubleshoot-oneagent-on-google-kubernetes-engine/" target="_blank">here</a></p>
 </aside>
-<p>If everything is working, you will see the hosts appearing under Hosts from clicking Hosts under the left navigation bar.</p>
+<p>If everything is working, you will see the host appearing when you click on <strong>Show Deployment status</strong></p>
 <h2 is-upgraded>Restart Sockshop Sample App</h2>
-<p>You can see the various processes automatically detected but Dynatrace prompts you to restart them. This is so that we could automatically instrument them without code changes.</p>
-<p>Run the below command to cycle through your services for Dev and Production.</p>
+<p>You can see the various processes automatically detected but Dynatrace prompts you to restart them. This is required for us to automatically instrument them without code changes.</p>
+<p>Run the below command to cycle through your services for <strong>Dev</strong> and <strong>Production</strong>.</p>
 <pre><code>kubectl delete pods --all -n dev
 kubectl delete pods --all -n production
 </code></pre>
@@ -142,38 +132,42 @@ kubectl delete pods --all -n production
 <li>Click on <strong>Install Activegate</strong> at the bottom of the page</li>
 <li>Click on <strong>Linux</strong></li>
 <li>Copy <strong>Step 2</strong> and paste into your shell terminal.</li>
-<li>Copy <strong>Step 4</strong> and append &#34;<strong>sudo</strong>&#34; (installing as root) onto shell terminal</li>
+<li>Copy <strong>Step 4</strong> and append &#34;<strong>sudo</strong>&#34; (installing as root) onto shell terminal. When prompted, enter your <strong>admin password</strong> which is found in the welcome email.</li>
 </ul>
 <p class="image-container"><img alt="Copy-AG-Commands" src="img/59b203467afcdf73.png"></p>
-<p>Once completed, you should see Activegate under Deployment Status.</p>
+<p>Once completed, you should see Activegate under <strong>Deployment Status</strong>.</p>
 <p class="image-container"><img alt="Activegate-connected" src="img/17fa631de624d993.png"></p>
 <h2 is-upgraded>Setup the K8S Overview Dashboard</h2>
 <p>Go to <strong>Settings -&gt; Process and Containers -&gt; Process group detection -&gt; Enable Cloud Application and workload detection</strong></p>
 <p class="image-container"><img alt="Enable Cloud Workload" src="img/82a117212e749ac6.png"></p>
 <h2 is-upgraded>Create a Service Account and Cluster role</h2>
-<p>Create a service account and cluster role for accessing the Kubernetes API. This creates the bearer token necessary to authenticate in the Kubernetes API. Use the following snippet.</p>
+<p>Create a service account and cluster role for accessing the Kubernetes API. This creates the bearer token necessary to authenticate in the Kubernetes API. Use the following snippet in your shell terminal.</p>
 <pre><code>kubectl apply -f https://www.dynatrace.com/support/help/codefiles/kubernetes/kubernetes-monitoring-service-account.yaml
 </code></pre>
+<h2 is-upgraded>Setup your Kubernetes Integration</h2>
+<p>Go to <strong>Settings -&gt; Cloud and Virtualization -&gt; Kubernetes -&gt; Connect new cluster</strong></p>
 <h2 is-upgraded>Get the Kubernetes API URL</h2>
+<p>Enter the below command and copy it for the <strong>Kubernetes API URL</strong>.</p>
 <pre><code>kubectl get ing k8-api-ingress | grep -oP &#39;api.kubernetes[^[:blank:]]*&#39;
 </code></pre>
 <h2 is-upgraded>Get the Bearer Token</h2>
+<p>Enter the below command and copy it for the <strong>Kubernetes Bearer Token</strong>.</p>
 <pre><code>kubectl get secret $(kubectl get sa dynatrace-monitoring -o jsonpath=&#39;{.secrets[0].name}&#39; -n dynatrace) -o jsonpath=&#39;{.data.token}&#39; -n dynatrace | base64 --decode
 </code></pre>
-<p>With the above results, enter the values to <strong>Settings -&gt; Cloud and Virtualization -&gt; Kubernetes</strong></p>
 <p class="image-container"><img alt="K8S-integration" src="img/b2fead2e1021a73e.png"></p>
 <ul>
-<li>Give a name for the connection eg. <strong>GKE K8S</strong></li>
+<li>Give a name for the connection eg. <strong>Kubernetes</strong></li>
 <li>Enter in your <strong>Kubernetes API URL Target</strong><ul>
-<li>Append <strong>https</strong> before your API URL</li>
+<li>Append <strong>https://</strong> before your API URL</li>
 </ul>
 </li>
 <li>Enter in the <strong>Kubernetes Bearer Token</strong></li>
 <li><strong>Disable</strong> &#34;Require valid certificates for communication with API server&#34;</li>
 <li><strong>Add</strong> another event field selector</li>
 <li>Use <code>Non-node</code> for the field selector name</li>
-<li>Use <code>involvedObject.kind!=Node</code> for the Field selector expression</li>
-<li><strong>Save</strong> and Click on Connect</li>
+<li>Use <code>involvedObject.kind!=Node</code> for the Field selector expression and <strong>Save</strong></li>
+<li>Toggle ON <strong>Monitor Events</strong></li>
+<li>Click on <strong>Connect</strong></li>
 </ul>
 <p>Once successfully connected, click on Kubernetes on the left menu and explore the Kubernetes UI.</p>
 <p class="image-container"><img alt="K8S-integration" src="img/7d6c347024a69961.png"></p>
@@ -230,9 +224,10 @@ spec:
 
       </google-codelab-step>
     
-      <google-codelab-step label="Container Environment Variables" duration="0">
+      <google-codelab-step label="Container Environment Variables" duration="5">
         <h2 is-upgraded>Adding Environment variables</h2>
-<p>In shell terminal, add some Environment Variables to <code>~/dtacmworkshop/manifests/sockshop-app/production/front-end.yml</code></p>
+<p>In shell terminal, add some Environment Variables with the following command</p>
+<p><code>nano ~/dtacmworkshop/manifests/sockshop-app/production/front-end.yml</code></p>
 <p><strong>Make sure that the indentation is correct and that they aren&#39;t any error promptings</strong></p>
 <pre><code>        env:
         - name: DT_TAGS
@@ -241,7 +236,7 @@ spec:
           value: &#34;SERVICE_TYPE=FRONTEND&#34;
 </code></pre>
 <p class="image-container"><img alt="JSON" src="img/f1f275ad07f20c73.png"></p>
-<p>After saving, run the below command to re-apply the change.</p>
+<p>Save the amended file with <strong>Ctrl-X</strong>, followed by <strong>Y</strong> and <strong>Enter</strong> and run the below command to re-apply the change.</p>
 <pre><code>kubectl apply -f ~/dtacmworkshop/manifests/sockshop-app/production/front-end.yml
 wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes-AWS/master/recycle-sockshop-frontend.sh | bash
 </code></pre>
@@ -252,16 +247,16 @@ wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes-AW
 
       </google-codelab-step>
     
-      <google-codelab-step label="Process Group &amp; Service Naming Rules for K8s" duration="0">
+      <google-codelab-step label="Process Group &amp; Service Naming Rules for K8s" duration="10">
         <h2 is-upgraded>Process Group Naming Rules</h2>
 <p>Go to <strong>Settings -&gt; Processes and containers -&gt; Process group naming</strong> and click <strong>Add a new rule</strong></p>
 <p>Provide a name to the rule, for example : <strong>Kubernetes Project.Namespace.Container</strong></p>
 <p>Enter this format : <code>k8s-{ProcessGroup:Kubernetes:pipeline.project}.{ProcessGroup:KubernetesNamespace}.{ProcessGroup:KubernetesContainerName}</code></p>
 <p>In the conditions drop-down, select the property <strong>Kubernetes namespace</strong> and the condition <strong>exists</strong></p>
 <p class="image-container"><img alt="JSON" src="img/b64b28b68e82847d.png"></p>
-<p>Click on <strong>Preview</strong></p>
+<p>Click on <strong>Preview</strong> to view the matching entities</p>
 <p class="image-container"><img alt="JSON" src="img/df4ba84f25ca514.png"></p>
-<p>Click on <strong>Save</strong></p>
+<p>Click on <strong>Create Rule</strong> and <strong>Save Changes</strong> in the pop-up.</p>
 <h2 is-upgraded>Validate</h2>
 <p>Once working, you can validate the change in Dynatrace</p>
 <p class="image-container"><img alt="JSON" src="img/346bd172f9f61b64.png"></p>
@@ -271,9 +266,9 @@ wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes-AW
 <p>Enter this format : <code>{Service:DetectedName}.{ProcessGroup:KubernetesNamespace}</code></p>
 <p>In the conditions drop-down, select the property <strong>Kubernetes namespace</strong> and the condition <strong>exists</strong></p>
 <p class="image-container"><img alt="JSON" src="img/b5c4b783606dafd4.png"></p>
-<p>Click on <strong>Preview</strong></p>
+<p>Click on <strong>Preview</strong> to view the matching entities</p>
 <p class="image-container"><img alt="JSON" src="img/3cde4d9d4e7bab4d.png"></p>
-<p>Click on <strong>Save</strong></p>
+<p>Click on <strong>Create Rule</strong> and <strong>Save Changes</strong> in the pop-up.</p>
 <h2 is-upgraded>Validate</h2>
 <p>Once working, you can validate the change in Dynatrace</p>
 <p class="image-container"><img alt="JSON" src="img/922b9bc9a538fb9b.png"></p>
@@ -281,18 +276,18 @@ wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes-AW
 
       </google-codelab-step>
     
-      <google-codelab-step label="Process Detection for Canary Deployment" duration="0">
+      <google-codelab-step label="Process Detection for Canary Deployment" duration="15">
         <h2 is-upgraded>Deploy the Canary Release</h2>
 <p>Run the command below to trigger the canary release</p>
-<pre><code>wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes-AWS/master/deploy-canary.sh | bash
+<pre><code>kubectl apply -f https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes-AWS/master/manifests/sockshop-app/canary/front-end-canary.yml
 </code></pre>
-<p>Execute <strong>kubectl get pods -n production -o wide</strong> and you will see you now have both <strong>stable and canary releases running for the front-end service</strong></p>
+<p>Execute <code>kubectl get pods -n production -o wide</code> and you will see you now have both <strong>stable and canary releases running for the front-end service</strong></p>
 <p class="image-container"><img alt="JSON" src="img/1309f5d8a96d63ea.png"></p>
 <p>Wait 1-2 minutes then look the Services in Dynatrace. You have <strong>2 services in production</strong>, one for <strong>stable</strong> and one for <strong>canary</strong> release. For monitoring purposes, it should be the same service</p>
 <p class="image-container"><img alt="JSON" src="img/541a18456643b56e.png"></p>
 <h2 is-upgraded>Process Detection Rule Config</h2>
 <p>In the Dynatrace console, go in <strong>Settings -&gt; Processes and containers -&gt; Process group detection</strong>.</p>
-<p>Expand the Process detection rules section.</p>
+<p>Expand the <strong>Process group detection rules</strong> section.</p>
 <p>Click <strong>Add detection</strong> rule.</p>
 <p>Select Use a <strong>process property</strong> to seperate processes</p>
 <p class="image-container"><img alt="JSON" src="img/3cdd3aa899fd8ef4.png"></p>
@@ -301,9 +296,6 @@ wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes-AW
 <p class="image-container"><img alt="JSON" src="img/b64bf745b5a8e7bc.png"></p>
 <p>Run the below command to <strong>recycle both stable and canary frontend pods</strong>. The process detection rules are applied on process startup.</p>
 <pre><code>wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes-AWS/master/recycle-sockshop-frontend.sh | bash
-</code></pre>
-<p>Run the command below to <strong>make sure the pods are ready</strong></p>
-<pre><code>kubectl get deployments -n production -l tier=frontend
 </code></pre>
 <p>Within Dynatrace, you can see that the Process Groups have been merged.</p>
 <p class="image-container"><img alt="Process-Group-Merged" src="img/b5bae69fd73c80c5.png"></p>
