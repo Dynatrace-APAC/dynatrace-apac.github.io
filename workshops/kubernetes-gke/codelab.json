@@ -3,23 +3,23 @@
   "format": "html",
   "prefix": "https://storage.googleapis.com",
   "mainga": "UA-49880327-14",
-  "updated": "2020-08-13T14:51:48+10:00",
-  "id": "kubernetes",
-  "duration": 76,
-  "title": "Dynatrace with Kubernetes",
+  "updated": "2020-08-13T15:20:00+10:00",
+  "id": "kubernetes-gke",
+  "duration": 31,
+  "title": "Dynatrace with Kubernetes on GKE",
   "authors": "Brandon Neo",
-  "summary": "Dynatrace with Kubernetes",
-  "source": "kubernetes.md",
+  "summary": "Dynatrace with Kubernetes on GKE",
+  "source": "kubernetes-gke.md",
   "theme": "",
   "status": [
     "published"
   ],
   "category": [
-    "kubernetes"
+    "kubernetes-gke"
   ],
   "tags": [
     "kubernetes"
   ],
   "feedback": "mailto:APAC-SE-Central@dynatrace.com",
-  "url": "kubernetes"
+  "url": "kubernetes-gke"
 }
