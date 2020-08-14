@@ -16,7 +16,7 @@ This repository contains labs for the Hands-On Kubernetes Session. We will be us
 For the purposes of the Hands-On, we will automate and make the steps seamless for the participants
 
 ### Prerequisites
-- Dynatrace SaaS/Managed Account. Get your free SaaS trial here.
+- Dynatrace SaaS/Managed Account. Get your free SaaS trial [here](https://www.dynatrace.com/trial/).
 - * SSH client such as [mobaxterm](https://mobaxterm.mobatek.net/).
 - Chrome Browser
 
