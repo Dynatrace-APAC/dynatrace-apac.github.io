@@ -241,7 +241,7 @@ Follow the preloaded setup at <button>
 </button>
 
 - Enter in your **tenantUrl** and **API-Token**
-- Click **Next**. <em>(The persona, usecase and workflow is already selected for you.)</em>
+- Click **Next**. <em>(The persona, usecase and workflow are already selected for you.)</em>
 - Click **Done**.
 
 ![K8S-Dashboards](assets/k8s/k8s-dashboards.gif)
