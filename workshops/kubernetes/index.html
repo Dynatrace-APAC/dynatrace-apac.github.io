@@ -357,28 +357,6 @@ wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes-AW
 
       </google-codelab-step>
     
-      <google-codelab-step label="Exploring Dynatrace" duration="5">
-        <h2 is-upgraded>Automatic Discovery of services</h2>
-<p>In Dynatrace, go to Transactions and Services to see the automatic 5 discovered services. <img alt="Discovered Services" src="img/9fdbb936919835e2.png"></p>
-<p>You will realized that some services are discovered but some might not match <a href="https://github.com/GoogleCloudPlatform/microservices-demo#service-architecture" target="_blank">Hipster Shop&#39;s Service architecture</a>. Hipster Shop uses cutting edge technologies (such as GPRC) which Dynatrace supports with the constant evolution in the cloud.</p>
-<p class="image-container"><img alt="Architecture" src="img/a216cf5c52b7fca0.png"></p>
-<h2 is-upgraded>Enabling additional features within OneAgent</h2>
-<p>Because of the rapid rate of change coming to OneAgent, features that are in Early Access aren&#39;t automatically enabled by default. This is to prevent unforseen circumstances which might impact your production environments. For the purposes of workshop, we can enable these features. Go to <strong>Settings -&gt; Service-side service monitoring -&gt; Deep Monitoring -&gt; New Oneagent Features</strong></p>
-<p>Under Global Settings, enable the following feature flags. They are on different pages so you would need to toggle through the pages.</p>
-<p>You can use the search filter bar to search for <strong>&#34;GRPC&#34;</strong><img alt="GRPC-Features" src="img/42aac0b7b99d0a8a.png"></p>
-<p class="image-container"><img alt="Features" src="img/61bdb2a03a90f742.png"></p>
-<p>Make sure all the below features all enabled, including the 2 additional NodeJS feature flags. <img alt="All-Features" src="img/3633df8c61ae4677.png"></p>
-<p>Enabling OneAgents features requires a restart of the pods. Run the following command to restart the pods.</p>
-<pre><code>kubectl delete pods --all -n hipster-shop
-</code></pre>
-<p class="image-container"><img alt="Restart" src="img/8dfdab2042c64ce1.png"></p>
-<p>Back in Dynatrace, go to and Transactions and Services to see the updated list of services. <img alt="Discovered Services" src="img/2a76911ba825632d.png"></p>
-<p>Clicking on Go Service &#34;:8080&#34; followed by Service Flow, you can see that the service are automatically detected and matches the architecture diagram above.</p>
-<p class="image-container"><img alt="Service Flow" src="img/5f4b25c1b42e6a7d.png"></p>
-
-
-      </google-codelab-step>
-    
       <google-codelab-step label="Exploring Kubernetes View" duration="5">
         <p>Explore the various functionalities within the Kubernetes View such as Cluster Utilization, Cluster Workloads, K8S Events</p>
 <p class="image-container"><img alt="KubernetesUI" src="img/7de1f55ad62c8ff8.png"></p>

@@ -509,49 +509,6 @@ Choose **Response Time - Server** and select **Service Instance** as Dimension S
 ![JSON](assets/k8s/Picture27.png)
 
 <!-- ------------------------ -->
-## Exploring Dynatrace
-Duration: 5
-
-### Automatic Discovery of services
-
-In Dynatrace, go to Transactions and Services to see the automatic 5 discovered services.
-![Discovered Services](assets/k8s/lab5-autodiscoveredservices.png)
-
-You will realized that some services are discovered but some might not match <a href="https://github.com/GoogleCloudPlatform/microservices-demo#service-architecture">Hipster Shop's Service architecture</a>.
-Hipster Shop uses cutting edge technologies (such as GPRC) which Dynatrace supports with the constant evolution in the cloud.
-
-![Architecture](assets/k8s/architecture-diagram.png)
-
-### Enabling additional features within OneAgent
-
-Because of the rapid rate of change coming to OneAgent, features that are in Early Access aren't automatically enabled by default. 
-This is to prevent unforseen circumstances which might impact your production environments. For the purposes of workshop, we can enable these features. Go to **Settings -> Service-side service monitoring -> Deep Monitoring -> New Oneagent Features**
-
-Under Global Settings, enable the following feature flags. They are on different pages so you would need to toggle through the pages.
-
-You can use the search filter bar to search for **"GRPC"**
-![GRPC-Features](assets/k8s/lab5-b4EnableGRPC-settings.png )
-
-![Features](assets/k8s/features.png)
-
-Make sure all the below features all enabled, including the 2 additional NodeJS feature flags.
-![All-Features](assets/k8s/all-features.png)
-
-Enabling OneAgents features requires a restart of the pods. Run the following command to restart the pods.
-
-```bash
-kubectl delete pods --all -n hipster-shop
-```
-![Restart](assets/k8s/restart.png)
-
-Back in Dynatrace, go to and Transactions and Services to see the updated list of services.
-![Discovered Services](assets/k8s/lab5-AfterEnableGRPC-settings.png)
-
-Clicking on Go Service ":8080" followed by Service Flow, you can see that the service are automatically detected and matches the architecture diagram above.
-
-![Service Flow](assets/k8s/serviceflow.png)
-
-<!-- ------------------------ -->
 ## Exploring Kubernetes View
 Duration: 5
 
