@@ -17,7 +17,7 @@ For the purposes of the Hands-On, we will automate and make the steps seamless f
 
 ### Prerequisites
 - Dynatrace SaaS/Managed Account. Get your free SaaS trial [here](https://www.dynatrace.com/trial/).
-- * SSH client such as [mobaxterm](https://mobaxterm.mobatek.net/).
+- SSH client such as [mobaxterm](https://mobaxterm.mobatek.net/).
 - Chrome Browser
 
 ### What You’ll Learn 
