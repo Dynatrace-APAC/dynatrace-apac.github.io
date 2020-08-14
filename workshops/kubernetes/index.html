@@ -1,34 +1,22 @@
 
 <!doctype html>
-
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-  <meta name="theme-color" content="#4F7DC9">
-  <meta charset="UTF-8">
-  <title>Dynatrace with Kubernetes</title>
-  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
-  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
-  <style>
-    .success {
-      color: #1e8e3e;
-    }
-    .error {
-      color: red;
-    }
-  </style>
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+<meta name="theme-color" content="#4F7DC9">
+<meta charset="UTF-8">
+<title>Dynatrace with Kubernetes</title>
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+<style>
+.success{color:#1e8e3e}.error{color:red} </style>
 </head>
 <body>
-  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
-  <google-codelab codelab-gaid=""
-                  id="kubernetes"
-                  title="Dynatrace with Kubernetes"
-                  environment="web"
-                  feedback-link="mailto:APAC-SE-Central@dynatrace.com">
-    
-      <google-codelab-step label="Introduction" duration="1">
-        <p>This repository contains labs for the Hands-On Kubernetes Session. We will be using Kubernetes instance running in AWS for this hands-on but this will work on other platforms as well.</p>
+<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+<google-codelab codelab-gaid="" id="kubernetes" title="Dynatrace with Kubernetes" environment="web" feedback-link="mailto:APAC-SE-Central@dynatrace.com">
+<google-codelab-step label="Introduction" duration="1">
+<p>This repository contains labs for the Hands-On Kubernetes Session. We will be using Kubernetes instance running in AWS for this hands-on but this will work on other platforms as well.</p>
 <p>For the purposes of the Hands-On, we will automate and make the steps seamless for the participants</p>
 <h2 is-upgraded>Prerequisites</h2>
 <ul>
@@ -45,12 +33,9 @@
 <li>Process Group Naming &amp; Service Naming for Kubernetes</li>
 <li>Discover Kubernetes View on Dynatrace</li>
 </ul>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Install Dynatrace OneAgent Operator" duration="15">
-        <p>Locate the link in the email to login to your allocated Dynatrace tenant.</p>
+</google-codelab-step>
+<google-codelab-step label="Install Dynatrace OneAgent Operator" duration="15">
+<p>Locate the link in the email to login to your allocated Dynatrace tenant.</p>
 <p>Go to <strong>Deploy Dynatrace -&gt; Start installation -&gt; Kubernetes</strong></p>
 <p class="image-container"><img alt="k8s-setup" src="img/e0ad295b815cadc7.png"></p>
 <h2 is-upgraded>Install Helm 3 and above</h2>
@@ -121,12 +106,9 @@ Your release is named dynatrace-oneagent-operator.
 <pre><code>kubectl delete pods --all -n dev
 kubectl delete pods --all -n production
 </code></pre>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Setting up your Kubernetes Integration" duration="15">
-        <aside class="special"><p>As per the official instructions <a href="https://www.dynatrace.com/support/help/technology-support/cloud-platforms/kubernetes/monitoring/connect-kubernetes-clusters-to-dynatrace/" target="_blank">here</a> for the Kubernetes integration, you will need to setup an <strong>Environment Activegate</strong> first.</p>
+</google-codelab-step>
+<google-codelab-step label="Setting up your Kubernetes Integration" duration="15">
+<aside class="special"><p>As per the official instructions <a href="https://www.dynatrace.com/support/help/technology-support/cloud-platforms/kubernetes/monitoring/connect-kubernetes-clusters-to-dynatrace/" target="_blank">here</a> for the Kubernetes integration, you will need to setup an <strong>Environment Activegate</strong> first.</p>
 </aside>
 <h2 is-upgraded>Setup Activegate</h2>
 <ul>
@@ -175,12 +157,9 @@ kubectl delete pods --all -n production
 <p class="image-container"><img alt="K8S-integration" src="img/7d6c347024a69961.png"></p>
 <aside class="special"><p>The above steps are taken from our <a href="https://www.dynatrace.com/support/help/technology-support/cloud-platforms/kubernetes/installation-and-operation/further-integrations/connect-your-kubernetes-clusters-to-dynatrace/" target="_blank">offical documentation page</a>. We have adapted the API command for lab purposes.</p>
 </aside>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Kubernetes Dashboards" duration="10">
-        <h2 is-upgraded>Dashboard Setup via BizOps Configurator</h2>
+</google-codelab-step>
+<google-codelab-step label="Kubernetes Dashboards" duration="10">
+<h2 is-upgraded>Dashboard Setup via BizOps Configurator</h2>
 <p>We will be using automatically creating Kubernetes Dashboards via <a href="https://dynatrace.github.io/BizOpsConfigurator/" target="_blank">BizOps Configurator</a></p>
 <p>Setup the token with the <strong>permissions</strong> as per below</p>
 <ul>
@@ -217,12 +196,9 @@ kubectl delete pods --all -n production
 <h2 is-upgraded>User Experience</h2>
 <p>Are your endusers satisfied? how is the engagement, experience and user behaviour of your applications? Get the insights of all your applications and users in an instance.</p>
 <p class="image-container"><img alt="#" src="img/d436fa8f38e53637.png"></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Kubernetes Labels and Annotations" duration="5">
-        <p>With the Sockshop app restarted, you should be able to see services in Dynatrace.</p>
+</google-codelab-step>
+<google-codelab-step label="Kubernetes Labels and Annotations" duration="5">
+<p>With the Sockshop app restarted, you should be able to see services in Dynatrace.</p>
 <p>Referring to <code>~/dtacmworkshop/manifests/sockshop-app/production/front-end.yml</code>, we will want to setup Dynatrace to automatically pick up the annotations and labels</p>
 <pre><code>apiVersion: extensions/v1beta1
 kind: Deployment
@@ -264,12 +240,9 @@ spec:
 <p class="image-container"><img alt="JSON" src="img/b6395fda1489ac5c.png"></p>
 <aside class="special"><p>The above steps are taken from <a href="https://www.dynatrace.com/support/help/technology-support/cloud-platforms/kubernetes/other-deployments-and-configurations/leverage-tags-defined-in-kubernetes-deployments/" target="_blank">our official documentation page</a></p>
 </aside>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Container Environment Variables" duration="5">
-        <h2 is-upgraded>Adding Environment variables</h2>
+</google-codelab-step>
+<google-codelab-step label="Container Environment Variables" duration="5">
+<h2 is-upgraded>Adding Environment variables</h2>
 <p>In shell terminal, add some Environment Variables with the following command</p>
 <p><code>nano ~/dtacmworkshop/manifests/sockshop-app/production/front-end.yml</code></p>
 <p><strong>Make sure that the indentation is correct and that they aren&#39;t any error promptings</strong></p>
@@ -287,12 +260,9 @@ wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/ma
 <h2 is-upgraded>Validate</h2>
 <p>Once working, you can validate the change in Dynatrace</p>
 <p class="image-container"><img alt="JSON" src="img/7fa97a4869eaf4d4.png"></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Process Group &amp; Service Naming Rules for K8s" duration="10">
-        <h2 is-upgraded>Process Group Naming Rules</h2>
+</google-codelab-step>
+<google-codelab-step label="Process Group &amp; Service Naming Rules for K8s" duration="10">
+<h2 is-upgraded>Process Group Naming Rules</h2>
 <p>Go to <strong>Settings -&gt; Processes and containers -&gt; Process group naming</strong> and click <strong>Add a new rule</strong></p>
 <p>Provide a name to the rule, for example : <strong>Kubernetes Project.Namespace.Container</strong></p>
 <p>Enter this format : <code>k8s-{ProcessGroup:Kubernetes:pipeline.project}.{ProcessGroup:KubernetesNamespace}.{ProcessGroup:KubernetesContainerName}</code></p>
@@ -316,12 +286,9 @@ wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/ma
 <h2 is-upgraded>Validate</h2>
 <p>Once working, you can validate the change in Dynatrace</p>
 <p class="image-container"><img alt="JSON" src="img/922b9bc9a538fb9b.png"></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Process Detection for Canary Deployment" duration="15">
-        <h2 is-upgraded>Deploy the Canary Release</h2>
+</google-codelab-step>
+<google-codelab-step label="Process Detection for Canary Deployment" duration="15">
+<h2 is-upgraded>Deploy the Canary Release</h2>
 <p>Run the command below to trigger the canary release</p>
 <pre><code>kubectl apply -f https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/master/manifests/sockshop-app/canary/front-end-canary.yml
 </code></pre>
@@ -353,12 +320,9 @@ wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/ma
 <p class="image-container"><img alt="JSON" src="img/288b43e1a2543dcc.png"></p>
 <p>Choose <strong>Response Time - Server</strong> and select <strong>Service Instance</strong> as Dimension Splitting</p>
 <p class="image-container"><img alt="JSON" src="img/d481a75092eec9f9.png"></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Exploring Kubernetes View" duration="5">
-        <p>Explore the various functionalities within the Kubernetes View such as Cluster Utilization, Cluster Workloads, K8S Events</p>
+</google-codelab-step>
+<google-codelab-step label="Exploring Kubernetes View" duration="5">
+<p>Explore the various functionalities within the Kubernetes View such as Cluster Utilization, Cluster Workloads, K8S Events</p>
 <p class="image-container"><img alt="KubernetesUI" src="img/7de1f55ad62c8ff8.png"></p>
 <h2 is-upgraded>Analyze the Kubernetes Cluster utilization</h2>
 <ul>
@@ -386,17 +350,12 @@ wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/ma
 <li>Click onto each of them and discover their supporting technologies</li>
 </ul>
 <p class="image-container"><img alt="KubernetesUI" src="img/ed7feb15b6cd5b5b.png"></p>
-
-
-      </google-codelab-step>
-    
-  </google-codelab>
-
-  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
-  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
-  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
-  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
-  <script src="//support.google.com/inapp/api.js"></script>
-
+</google-codelab-step>
+</google-codelab>
+<script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+<script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+<script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+<script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+<script src="//support.google.com/inapp/api.js"></script>
 </body>
 </html>
