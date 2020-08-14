@@ -341,7 +341,7 @@ Wait for the Dynatrace to pickup the change.
 
 Negative
 : ⚠️ To manually recycle the apps, run command below.
-`wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes-AWS/master/recycle-sockshop-frontend.sh | bash`
+`wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/master/recycle-sockshop-frontend.sh | bash`
 
 ### Validate
 
@@ -377,7 +377,7 @@ Save the amended file with **Ctrl-X**, followed by **Y** and **Enter** and run t
 
 ```bash
 kubectl apply -f ~/dtacmworkshop/manifests/sockshop-app/production/front-end.yml
-wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes-AWS/master/recycle-sockshop-frontend.sh | bash
+wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/master/recycle-sockshop-frontend.sh | bash
 ```
 
 ### Validate
@@ -447,7 +447,7 @@ Duration: 15
 
 Run the command below to trigger the canary release
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes-AWS/master/manifests/sockshop-app/canary/front-end-canary.yml
+kubectl apply -f https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/master/manifests/sockshop-app/canary/front-end-canary.yml
 ```
 
 Execute `kubectl get pods -n production -o wide` and you will see you now have both **stable and canary releases running for the front-end service**
@@ -481,7 +481,7 @@ Remember the pod names have **".stable "or ".canary"** in their name to distingu
 Run the below command to **recycle both stable and canary frontend pods**. The process detection rules are applied on process startup.
 
 ```bash
-wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes-AWS/master/recycle-sockshop-frontend.sh | bash
+wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/master/recycle-sockshop-frontend.sh | bash
 ```
 
 Within Dynatrace, you can see that the Process Groups have been merged.
