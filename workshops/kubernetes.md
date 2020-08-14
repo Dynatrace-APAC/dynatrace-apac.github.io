@@ -67,7 +67,7 @@ Run the below command to create new file called **values.yaml**
 
 `nano values.yaml`
 
-Copy and paste in content in your own terminal and save the file with **Ctrl-X** followed by **Y** and **Enter** 
+Copy and paste in content in your Dyntrace tenant and save the file with **Ctrl-X** followed by **Y** and **Enter** 
 
 **EXAMPLE**
 
