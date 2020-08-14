@@ -68,21 +68,21 @@ kubectl create namespace dynatrace
 <h2 is-upgraded>Create a and apply values.yaml</h2>
 <p>Run the below command to create new file called <strong>values.yaml</strong></p>
 <p><code>nano values.yaml</code></p>
-<p>Copy and paste to the terminal and save the file with <strong>Ctrl-X</strong> followed by <strong>Y</strong> and <strong>Enter</strong></p>
+<p>Copy and paste in content in your own terminal and save the file with <strong>Ctrl-X</strong> followed by <strong>Y</strong> and <strong>Enter</strong></p>
 <p><strong>EXAMPLE</strong></p>
 <pre><code>platform: &#34;kubernetes&#34;
 
 oneagent:
   name: &#34;oneagent&#34;
-  apiUrl: &#34;https://mou612.managed-sprint.dynalabs.io/e/ef121dc4-3995-4231-9e3a-0e3050db9e7f/api&#34;
+  apiUrl: &#34;https://mou612.managed-sprint.dynalabs.io/e/&lt;ENVIRONMENT ID&gt;/api&#34;
   args:
     - --set-app-log-content-access=true
   skipCertCheck: false
   enableIstio: true
 
 secret:
-  apiToken: &#34;S0pO-hppT0q8Xu1WMrpf9&#34;
-  paasToken: &#34;TO3WtWrcQnqZJrb4WHncP&#34;
+  apiToken: &#34;&lt;API KEY&gt;&#34;
+  paasToken: &#34;&lt;PAAS KEY&gt;&#34;
 </code></pre>
 <p>Copy the next command to <strong>apply the values.yaml</strong> and <strong>deploy OneAgent on Kubernetes</strong>.</p>
 <pre><code>helm install dynatrace-oneagent-operator \
@@ -107,6 +107,8 @@ Your release is named dynatrace-oneagent-operator.
 <aside class="warning"><p>To <strong>check status of pods</strong>, run command below. You should get a <strong>Running</strong> as a return.<br><code>kubectl get pods -n dynatrace</code></p>
 </aside>
 <aside class="warning"><p>To <strong>check the logs</strong>, run command below.<br><code>kubectl logs -f deployment/dynatrace-oneagent-operator -n dynatrace</code></p>
+</aside>
+<aside class="warning"><p>To <strong>delete secrets</strong>, run command below. You might have included a wrong secret previously. <br><code>kubectl delete secret --all -n dynatrace</code></p>
 </aside>
 <aside class="warning"><p>To <strong>delete all pods</strong>, run command below. This will cycle through the pods and you will have new pod instances.<br><code>kubectl delete --all pods -n dynatrace</code></p>
 </aside>
