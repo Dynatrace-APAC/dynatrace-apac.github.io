@@ -67,7 +67,7 @@ Run the below command to create new file called **values.yaml**
 
 `nano values.yaml`
 
-Copy and paste to the terminal and save the file with **Ctrl-X** followed by **Y** and **Enter** 
+Copy and paste in content in your own terminal and save the file with **Ctrl-X** followed by **Y** and **Enter** 
 
 **EXAMPLE**
 
@@ -76,15 +76,15 @@ platform: "kubernetes"
 
 oneagent:
   name: "oneagent"
-  apiUrl: "https://mou612.managed-sprint.dynalabs.io/e/ef121dc4-3995-4231-9e3a-0e3050db9e7f/api"
+  apiUrl: "https://mou612.managed-sprint.dynalabs.io/e/<ENVIRONMENT ID>/api"
   args:
     - --set-app-log-content-access=true
   skipCertCheck: false
   enableIstio: true
 
 secret:
-  apiToken: "S0pO-hppT0q8Xu1WMrpf9"
-  paasToken: "TO3WtWrcQnqZJrb4WHncP"
+  apiToken: "<API KEY>"
+  paasToken: "<PAAS KEY>"
 ```
 Copy the next command to **apply the values.yaml** and **deploy OneAgent on Kubernetes**.
 
@@ -120,6 +120,10 @@ Negative
 Negative
 : To **check the logs**, run command below.<br>
 `kubectl logs -f deployment/dynatrace-oneagent-operator -n dynatrace`
+
+Negative
+: To **delete secrets**, run command below. You might have included a wrong secret previously. <br>
+`kubectl delete secret --all -n dynatrace`
 
 Negative
 : To **delete all pods**, run command below. This will cycle through the pods and you will have new pod instances.<br>
@@ -239,8 +243,6 @@ Follow the preloaded setup at <button>
 - Enter in your **tenantUrl** and **API-Token**
 - Click **Next**. <em>(The persona, usecase and workflow is already selected for you.)</em>
 - Click **Done**.
-
-Explore your **new Kubernetes Dashboards.**
 
 ![K8S-Dashboards](assets/k8s/k8s-dashboards.gif)
 
