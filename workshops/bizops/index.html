@@ -1,22 +1,34 @@
 
 <!doctype html>
+
 <html>
 <head>
-<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
-<meta name="theme-color" content="#4F7DC9">
-<meta charset="UTF-8">
-<title>BizOps with Dynatrace</title>
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
-<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
-<style>
-.success{color:#1e8e3e}.error{color:red} </style>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>BizOps with Dynatrace</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
 </head>
 <body>
-<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
-<google-codelab codelab-gaid="" id="bizops" title="BizOps with Dynatrace" environment="web" feedback-link="mailto:APAC-SE-Central@dynatrace.com">
-<google-codelab-step label="Bridging the Gap to the Business" duration="1">
-<p>This Repo contains the labs we are going to work though as part of the BizOps – Bridging the Gap to the Business Hands On Workshop.</p>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid="UA-175467274-1"
+                  id="bizops"
+                  title="BizOps with Dynatrace"
+                  environment="web"
+                  feedback-link="mailto:APAC-SE-Central@dynatrace.com">
+    
+      <google-codelab-step label="Bridging the Gap to the Business" duration="1">
+        <p>This Repo contains the labs we are going to work though as part of the BizOps – Bridging the Gap to the Business Hands On Workshop.</p>
 <p>For the purposes of the Hands-On, we will automate and make the steps seamless for the participants</p>
 <h2 is-upgraded>Prerequisites</h2>
 <ul>
@@ -25,11 +37,11 @@
 <h2 is-upgraded>Lab Setup</h2>
 <p>The following steps are used for this lab:</p>
 <ul>
-<li>AWS account (used to create an EC2 instance from a public AMI) <ul>
+<li>AWS account (used to create an EC2 instance from a public AMI)  <ul>
 <li>Signup to a free trial <a href="https://aws.amazon.com/free/" target="_blank">here</a></li>
 </ul>
 </li>
-<li>Sample Application <ul>
+<li>Sample Application  <ul>
 <li>Sample App is based on <a href="https://github.com/Dynatrace/easyTravel-Docker" target="_blank">easyTravel Docker</a></li>
 <li>Follow the <a href="https://github.com/Dynatrace-APAC/Workshop-BizOps/tree/master/Prerequisite%20Actions" target="_blank">Prerequisite Actions</a> to create the application that will be used throughout this workshop.</li>
 </ul>
@@ -39,7 +51,7 @@
 <ul class="checklist">
 <li>Understand Real User Monitoring setup with easyTravel App</li>
 <li>Learn Digital Business Analytics</li>
-<li>Learn Dynatrace Capabilities such as <ul class="checklist">
+<li>Learn Dynatrace Capabilities such as  <ul class="checklist">
 <li>User Action Naming</li>
 <li>Key User Actions</li>
 <li>User Session Properties</li>
@@ -48,9 +60,12 @@
 </ul>
 </li>
 </ul>
-</google-codelab-step>
-<google-codelab-step label="Dynatrace RUM Setup" duration="2">
-<p>In this lab, we will be doing basic setup within Dynatrace.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Dynatrace RUM Setup" duration="2">
+        <p>In this lab, we will be doing basic setup within Dynatrace.</p>
 <p>Some of these tuning tips has already been done for you.</p>
 <ul>
 <li>Enable JavaScript framework support​</li>
@@ -83,9 +98,12 @@
 <li>click on &#34;search&#34; on page /</li>
 <li>loading of page /special-offers.jsp</li>
 </ul>
-</google-codelab-step>
-<google-codelab-step label="Creating a Basic Dashboard" duration="5">
-<p>In this lab, we will create the following dashboard:</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Creating a Basic Dashboard" duration="5">
+        <p>In this lab, we will create the following dashboard:</p>
 <p class="image-container"><img alt="Basic Dashboard" src="img/f7434945c63b9347.PNG"></p>
 <h2 is-upgraded>Dashboard Components</h2>
 <p>The above dashboard has the following components:</p>
@@ -101,7 +119,7 @@
 <li>Category: Applications</li>
 <li>Metric: Action count (by Apdex category) (Sum)</li>
 <li>View Results as: Timeseries</li>
-<li>Dimensions to split by: <ul>
+<li>Dimensions to split by:  <ul>
 <li>Web Application: true, Filtered by <strong>easyTravel Website</strong></li>
 <li>Apdex category: true</li>
 </ul>
@@ -112,7 +130,7 @@
 <li>Category: Applications</li>
 <li>Metric: Action count (by Apdex category) (Sum)</li>
 <li>View Results as: Pie</li>
-<li>Dimensions to split by: <ul>
+<li>Dimensions to split by:  <ul>
 <li>Web Application: true, Filtered by <strong>easyTravel Website</strong></li>
 <li>Apdex category: true</li>
 </ul>
@@ -123,7 +141,7 @@
 <li>Category: Applications</li>
 <li>Metric: Count of errors (by user type, error type and error origin) (Sum)</li>
 <li>View Results as: Pie</li>
-<li>Dimensions to split by: <ul>
+<li>Dimensions to split by:  <ul>
 <li>Web Application: true, Filtered by <strong>easyTravel Website</strong></li>
 <li>User type: true, Filtered by: <strong>Real Users</strong></li>
 <li>Error origin: true</li>
@@ -135,7 +153,7 @@
 <li>Category: Applications</li>
 <li>Metric: Active Sessions</li>
 <li>View Results as: Top List</li>
-<li>Dimensions to split by: <ul>
+<li>Dimensions to split by:  <ul>
 <li>Web Application: true, Filtered by <strong>easyTravel Website</strong></li>
 <li>Users: true</li>
 <li>User type: true</li>
@@ -146,7 +164,7 @@
 <li>Session Duration<ul>
 <li>Category: Applications</li>
 <li>Metric: Session Duration</li>
-<li>View Results as: Top List <ul>
+<li>View Results as: Top List  <ul>
 <li>Dimensions to split by:</li>
 <li>Web Application: true, Filtered by <strong>easyTravel Website</strong></li>
 <li>Users: true</li>
@@ -156,11 +174,14 @@
 </ul>
 </li>
 </ul>
-</google-codelab-step>
-<google-codelab-step label="Creating Conversion Rates" duration="5">
-<p>In this lab, we will create conversion goals for the easyTravel application</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Creating Conversion Rates" duration="5">
+        <p>In this lab, we will create conversion goals for the easyTravel application</p>
 <h2 is-upgraded>Conversion Goal</h2>
-<p>Access the easyTravel Website application monitoring settings <strong>Applications &gt; easyTravel Website &gt; (...) &gt; Edit</strong></p>
+<p>Access the easyTravel Website application monitoring settings   <strong>Applications &gt; easyTravel Website &gt; (...) &gt; Edit</strong></p>
 <p>Select <strong>Conversion Goals</strong> and click <strong>Add goal</strong> and enter the following:</p>
 <ul>
 <li>Name: <strong>Successful Bookings<br></strong></li>
@@ -171,9 +192,12 @@
 <p class="image-container"><img alt="Conversion Goal" src="img/99b398d2b52655b.PNG"></p>
 <p>Check results aginst the application: <strong>easyTravel</strong> &gt; <strong>User behavior</strong></p>
 <p class="image-container"><img alt="Conversion Goal" src="img/839a86fb3c8aab2a.PNG"></p>
-</google-codelab-step>
-<google-codelab-step label="Sessions Properties - Part 1" duration="15">
-<p>In this lab, we will create a session properties to expose business data to Dynatrace</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Sessions Properties - Part 1" duration="15">
+        <p>In this lab, we will create a session properties to expose business data to Dynatrace</p>
 <h2 is-upgraded>Membership Status</h2>
 <p>1) Access the easyTravel Website application monitoring settings</p>
 <p><strong>Applications &gt; easyTravel Website &gt; (...) Edit</strong></p>
@@ -181,9 +205,9 @@
 <ul>
 <li>Expression Type: <strong>CSS Selector<br></strong></li>
 <li>Data Type: <strong>String<br></strong></li>
-<li>Display Name: <strong>Membership Status<br></strong></li>
-<li>Key: <strong>membershipstatus<br></strong></li>
-<li>CSS Selector: <code>#loginForm\:j_idt43</code><br></li>
+<li>Display Name:  <strong>Membership Status<br></strong></li>
+<li>Key:  <strong>membershipstatus<br></strong></li>
+<li>CSS Selector:  <code>#loginForm\:j_idt43</code><br></li>
 <li>Store as user action property: <strong>false<br></strong></li>
 <li>Store as session property: <strong>true<br></strong></li>
 <li>Apply cleanup rule: <strong>true<br></strong></li>
@@ -192,12 +216,15 @@
 <p class="image-container"><img alt="User Session Property Config" src="img/8087db6065a621c2.PNG"></p>
 <p>3) Click <strong>Save Property</strong></p>
 <p>It may take 5-10 mins to see results in Dynatrace because session properties are only available when the user session is completed.</p>
-<p>You can view the user sessions that have the membershipstatus set by running the following USQL:</p>
+<p>You can view the user sessions that have the membershipstatus set  by running the following USQL:</p>
 <pre><code>SELECT * FROM usersession WHERE stringProperties.membershipstatus IS NOT NULL ORDER BY startTime DESC
 </code></pre>
-</google-codelab-step>
-<google-codelab-step label="Creating Sessions Properties - Part 2" duration="15">
-<p>In this lab, we will create a session properties to expose business data Booking Total and Destination to Dynatrace</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Creating Sessions Properties - Part 2" duration="15">
+        <p>In this lab, we will create a session properties to expose business data Booking Total and Destination to Dynatrace</p>
 <h2 is-upgraded>Booking Total</h2>
 <p>First get the <strong>CSS selector</strong> for the Booking Total field.</p>
 <p>1) Assess the easyTravel homepage (the URL provied to you) 2) Seach for a destination e.g. Gold Coast and click <strong>Book Now</strong></p>
@@ -209,14 +236,14 @@
 <p>5) Right click on the td element and select <strong>Copy</strong> &gt; <strong>Copy Selector</strong></p>
 <p class="image-container"><img alt="easyTravel Step 4" src="img/cd04441f6ecc2660.png"></p>
 <p>Second create the session property in Dynatrace.</p>
-<p>1) Access the easyTravel application monitoring settings <strong>Applications &gt; easyTravel &gt; (...) Edit</strong></p>
+<p>1) Access the easyTravel application monitoring settings   <strong>Applications &gt; easyTravel &gt; (...) Edit</strong></p>
 <p>2) Select <strong>Session and User action properties</strong> and click <strong>Custom defined property</strong> and enter the following:</p>
 <ul>
 <li>Expression Type: <strong>CSS Selector<br></strong></li>
 <li>Data Type: <strong>Double</strong></li>
-<li>CSS Selector: <strong>The CSS Selector you copied above</strong> e.g <code>#iceform\:j_idt77-11-1 &gt; span</code></li>
-<li>Display Name: <strong>Booking Total</strong></li>
-<li>Key: <strong>bookingtotal</strong></li>
+<li>CSS Selector:  <strong>The CSS Selector you copied above</strong>  e.g <code>#iceform\:j_idt77-11-1 &gt; span</code></li>
+<li>Display Name:  <strong>Booking Total</strong></li>
+<li>Key:  <strong>bookingtotal</strong></li>
 <li>Display Name: <strong>Booking Total</strong></li>
 <li>Store as user action property: <strong>false</strong></li>
 <li>Store as session property: <strong>true</strong></li>
@@ -237,9 +264,9 @@
 <ul>
 <li>Expression Type: <strong>CSS Selector<br></strong></li>
 <li>Data Type: <strong>String</strong></li>
-<li>CSS Selector: <strong>The CSS Selector you copied above</strong> e.g. <code>#iceform\:popupDetailsLink</code></li>
+<li>CSS Selector:  <strong>The CSS Selector you copied above</strong> e.g. <code>#iceform\:popupDetailsLink</code></li>
 <li>Display Name: <strong>Journey</strong></li>
-<li>Key: <strong>journey</strong></li>
+<li>Key:  <strong>journey</strong></li>
 <li>Store as user action property: <strong>false</strong></li>
 <li>Store as session property: <strong>true</strong></li>
 <li>Apply cleanup rule: <strong>false</strong></li>
@@ -248,9 +275,12 @@
 <pre><code>SELECT * FROM usersession WHERE stringProperties.journey IS NOT NULL ORDER BY startTime DESC
 </code></pre>
 <p>It may take 5-10 mins to see results in Dynatrace because session properties are only available when the user session is completed.</p>
-</google-codelab-step>
-<google-codelab-step label="User Session Query Language (USQL)" duration="15">
-<h2 is-upgraded>Creating a Basic USQL Dashboard</h2>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="User Session Query Language (USQL)" duration="15">
+        <h2 is-upgraded>Creating a Basic USQL Dashboard</h2>
 <p>In this lab, we will create the following dashboard:</p>
 <p class="image-container"><img alt="Basic Dashboard" src="img/730906ee6d99d4cc.PNG"></p>
 <h2 is-upgraded>Dashboard Components</h2>
@@ -328,9 +358,12 @@
 </ul>
 </li>
 </ul>
-</google-codelab-step>
-<google-codelab-step label="Creating a Business Dashboard" duration="15">
-<p>In this lab, we will create the following dashboard:</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Creating a Business Dashboard" duration="15">
+        <p>In this lab, we will create the following dashboard:</p>
 <p class="image-container"><img alt="Business Dashboard" src="img/3d0989d1e82baa94.PNG"></p>
 <h2 is-upgraded>Dashboard Components</h2>
 <p>The above dashboard has the following components:</p>
@@ -360,9 +393,12 @@
 <p>12) <strong>User Session Query</strong> - Revenue by Purchasing City</p>
 <pre><code>    SELECT city AS &#34;Origin City&#34;, country AS &#34;Origin Country&#34;, SUM(doubleProperties.bookingtotal) AS &#34;Revenue&#34;, AVG(doubleProperties.bookingtotal) AS &#34;Average Trip Spend&#34; FROM usersession WHERE useraction.application=&#34;easyTravel Website&#34; and (useraction.name=&#34;loading of page /orange-booking-finish.jsf&#34;) and doubleProperties.bookingtotal IS NOT NULL AND CITY IS NOT NULL GROUP BY city, country ORDER BY sum(doubleProperties.bookingtotal) DESC
 </code></pre>
-</google-codelab-step>
-<google-codelab-step label="Basic Funnel Dashboard" duration="10">
-<p>In this lab, we will create a dashboard to display a basic sales funnel.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Basic Funnel Dashboard" duration="10">
+        <p>In this lab, we will create a dashboard to display a basic sales funnel.</p>
 <p>In the Dynatrace UI, create a new dashboard named &#34;Sales Funnel&#34; (<strong>Dashboards</strong> &gt; <strong>Create Dashboard</strong>)</p>
 <ol type="1">
 <li>Add the User Sessions Query to the dashboard and configure the tile</li>
@@ -388,9 +424,12 @@
 </code></pre>
 <p>When you are finished your dashboard should look something like this:</p>
 <p class="image-container"><img alt="Dashboard Basic Funnel" src="img/2cb4c817c01c4b89.PNG"></p>
-</google-codelab-step>
-<google-codelab-step label="Creating a Dashboard using API" duration="10">
-<p>In this lab, we will create a dashsboard using the Dashboard API.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Creating a Dashboard using API" duration="10">
+        <p>In this lab, we will create a dashsboard using the Dashboard API.</p>
 <p>You will need an API token with the <strong>Read configuration</strong> and <strong>Write Configuration</strong> permissions for this session.</p>
 <p class="image-container"><img alt="Dashboard API Permissions" src="img/3ba508c3d5c1f0c5.PNG"></p>
 <h2 is-upgraded>Step-by-step Guide - Access API Explorer</h2>
@@ -908,9 +947,12 @@
 </code></pre>
 <p>Navigate back to the Dynatrace dashboards. The dashboard should look something like this:</p>
 <p class="image-container"><img alt="Dashboard" src="img/b3e5f0e8ee31ea9f.PNG"></p>
-</google-codelab-step>
-<google-codelab-step label="BizOps Configurator" duration="20">
-<p>Go to the <a href="https://dynatrace.github.io/BizOpsConfigurator/" target="_blank">BizOps Configurator</a> URL.<br></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="BizOps Configurator" duration="20">
+        <p>Go to the <a href="https://dynatrace.github.io/BizOpsConfigurator/" target="_blank">BizOps Configurator</a> URL.<br></p>
 <p>Follow the <strong>Step 2</strong> instructions on the <a href="https://dynatrace.github.io/BizOpsConfigurator/#prerequisites" target="_blank">BizOps Prereqs</a> page to setup your API Token.</p>
 <p>Click on <strong>Begin</strong> and provide your tenant URL and API token. <br> Please clone the <a href="https://github.com/Dynatrace/BizOpsConfigurator" target="_blank">repository</a> or create a <strong>Personal Access Token</strong> if you plan to use the BizOps Configurator to avoid hitting GitHub API limits</p>
 <p class="image-container"><img alt="BizOpsConfigurator" src="img/aa6aea708ee9e8fe.png"></p>
@@ -924,9 +966,12 @@
 <p class="image-container"><img alt="BizOpsConfigurator" src="img/1e339463007809bc.png"></p>
 <p>Check back in Dynatrace to see the Book Travel Overview funnel dashboard.</p>
 <p class="image-container"><img alt="BizOpsConfigurator" src="img/c27235af6175081c.png"></p>
-</google-codelab-step>
-<google-codelab-step label="Exporting into Excel and Power BI" duration="20">
-<p>In this lab is split into two sections, the first section generates an API token request URL we can use the fetch data from Dynatrace. The second section uses this URL to import data into Excel. If you already have an API token and URL then jump stright to the part of this lab</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Exporting into Excel and Power BI" duration="20">
+        <p>In this lab is split into two sections, the first section generates an API token request URL we can use the fetch data from Dynatrace. The second section uses this URL to import data into Excel. If you already have an API token and URL then jump stright to the part of this lab</p>
 <h2 is-upgraded>Section 1 - Create API Token &amp; Timeseries API Call</h2>
 <h3 is-upgraded>Create API Token</h3>
 <p>First we need to create a API token.</p>
@@ -987,7 +1032,7 @@
 <li>Select: <strong>Data &gt; From Web</strong></li>
 <li>Select <strong>Advanced</strong></li>
 <li>Enter your <strong>Request URL</strong> in <strong>URL Parts</strong></li>
-<li>Add the following <strong>HTTP request header parameter</strong> then click <strong>OK</strong> and <strong>Connect</strong>Accept text/csv; header=present; charset=utf-8 Authorization Api-Token </li>
+<li>Add the following <strong>HTTP request header parameter</strong> then click <strong>OK</strong> and <strong>Connect</strong>Accept text/csv; header=present; charset=utf-8  Authorization Api-Token </li>
 </ol>
 <p class="image-container"><img alt="API Result" src="img/6119e7fdcca13ef9.PNG"></p>
 <ol type="1">
@@ -998,12 +1043,17 @@
 <li>You data sould be imported</li>
 </ol>
 <p class="image-container"><img alt="API Result" src="img/108b0d3e94c6e162.PNG"></p>
-</google-codelab-step>
-</google-codelab>
-<script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
-<script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
-<script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
-<script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
-<script src="//support.google.com/inapp/api.js"></script>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
 </body>
 </html>

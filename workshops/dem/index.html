@@ -1,22 +1,34 @@
 
 <!doctype html>
+
 <html>
 <head>
-<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
-<meta name="theme-color" content="#4F7DC9">
-<meta charset="UTF-8">
-<title>Digital Experience Management with Dynatrace</title>
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
-<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
-<style>
-.success{color:#1e8e3e}.error{color:red} </style>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Digital Experience Management with Dynatrace</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
 </head>
 <body>
-<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
-<google-codelab codelab-gaid="" id="dem" title="Digital Experience Management with Dynatrace" environment="web" feedback-link="mailto:APAC-SE-Central@dynatrace.com">
-<google-codelab-step label="Introduction" duration="1">
-<p>This repository contains the hands on for the Dynatrace Digital Experience Management (DEM) Workshop.</p>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid="UA-175467274-1"
+                  id="dem"
+                  title="Digital Experience Management with Dynatrace"
+                  environment="web"
+                  feedback-link="mailto:APAC-SE-Central@dynatrace.com">
+    
+      <google-codelab-step label="Introduction" duration="1">
+        <p>This repository contains the hands on for the Dynatrace Digital Experience Management (DEM) Workshop.</p>
 <h2 is-upgraded>Prerequisites</h2>
 <ul>
 <li>Dynatrace SaaS/Managed Account. Get your free SaaS trial <a href="https://www.dynatrace.com/trial/" target="_blank">here</a>.</li>
@@ -27,7 +39,7 @@
 <h2 is-upgraded>Lab Setup</h2>
 <p>The following steps are used for this lab:</p>
 <ul>
-<li>Sample Application <ul>
+<li>Sample Application  <ul>
 <li>Sample App is based on <a href="https://github.com/Dynatrace/easyTravel-Docker" target="_blank">easyTravel Docker</a></li>
 <li>Follow the <a href="https://github.com/Dynatrace-APAC/Workshop-DEM/tree/master/Prerequisite%20Actions" target="_blank">Prerequisite Actions</a> to create the application that will be used throughout this workshop.</li>
 </ul>
@@ -40,9 +52,12 @@
 <li>Learn Session Replay in Dynatrace</li>
 <li>Learn User Session Query Language (USQL)</li>
 </ul>
-</google-codelab-step>
-<google-codelab-step label="Basic Setup" duration="15">
-<p>In this exercise, we will deploy the OneAgent to a Linux instance and let the OneAgent discover what is running in that instance.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Basic Setup" duration="15">
+        <p>In this exercise, we will deploy the OneAgent to a Linux instance and let the OneAgent discover what is running in that instance.</p>
 <h2 is-upgraded>Download the OneAgent</h2>
 <p>Use PuTTy (Windows) or Terminal (Mac), ssh into the instance (IP address using the your PEM Key)</p>
 <p>Open your browser and access the Dynatrace URL.</p>
@@ -74,7 +89,7 @@ $
 <p><strong>Copy</strong> the command that&#39;s provided in the text box &#34;And run the installer with root rights&#34; text field.</p>
 <p class="image-container"><img alt="Deploy" src="img/ecdf25fe7a756e0c.jpg"></p>
 <p><strong>Paste</strong> the command into your terminal window and execute it. You&#39;ll need to make the script executable before you can run it.</p>
-<p><strong>Note that you&#39;ll need root access.</strong> You can use sudo to run the installation script. To do this, type the following command into the directory where you downloaded the installation script.</p>
+<p><strong>Note that you&#39;ll need root access.</strong>  You can use sudo to run the installation script. To do this, type the following command into the directory where you downloaded the installation script.</p>
 <p>Example:</p>
 <pre><code>$ sudo /bin/sh Dynatrace-OneAgent-Linux-1.171.252.sh
 10:21:42 Checking root privileges...
@@ -135,9 +150,12 @@ ec2-xxx-xxx-xxx-xxx.ap-southeast-2.compute.amazonaws.com
 <p>While waiting for Easy Travel to start, you can explore Dynatrace and using the Smartscape, Dynatrace will automatically discover the processes and dependencies that comprises the Easy Travel application!</p>
 <p><a href="https://www.dynatrace.com/support/help/get-started/4-things-youll-absolutely-love-about-dynatrace/" target="_blank">4 things</a> that you will love about Dynatrace!</p>
 <p class="image-container"><img alt="Smartscape" src="img/868e111ca8bd48bd.png"></p>
-</google-codelab-step>
-<google-codelab-step label="Configure Real User Monitoring" duration="15">
-<p>In this exercise, we will cover the basics of configuring Real User Monitoring. These are some of the best practices that should be followed every time the Dynatrace JavaScript agent is deployed, be it an automated or manual injection.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Configure Real User Monitoring" duration="15">
+        <p>In this exercise, we will cover the basics of configuring Real User Monitoring. These are some of the best practices that should be followed every time the Dynatrace JavaScript agent is deployed, be it an automated or manual injection.</p>
 <p>More information can be found here: <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/setup-and-configuration/web-applications/" target="_blank">How to use Dynatrace &gt; Real User Monitoring &gt; Setup and configuration &gt; Web applications</a></p>
 <p>There are 3 tasks in this exercise:</p>
 <ul>
@@ -205,9 +223,12 @@ ec2-xxx-xxx-xxx-xxx.ap-southeast-2.compute.amazonaws.com
 </ul>
 <pre><code>Hello (.*)!
 </code></pre>
-</google-codelab-step>
-<google-codelab-step label="Configure Synthetic Test" duration="15">
-<p>In this exercise, we will cover creating a single URL synthetic test in Dynatrace. Dynatrace offers three types of synthetic monitoring: single-URL browser monitors, browser clickpaths, and HTTP monitors.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Configure Synthetic Test" duration="15">
+        <p>In this exercise, we will cover creating a single URL synthetic test in Dynatrace. Dynatrace offers three types of synthetic monitoring: single-URL browser monitors, browser clickpaths, and HTTP monitors.</p>
 <p>More information can be found here: <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/synthetic-monitoring" target="_blank">How to use Dynatrace &gt; Syntheic Monitoring</a></p>
 <h2 is-upgraded>1. Create a simple browser monitors for Easy Travel</h2>
 <ol type="1">
@@ -223,7 +244,7 @@ ec2-xxx-xxx-xxx-xxx.ap-southeast-2.compute.amazonaws.com
 <p class="image-container"><img alt="SR" src="img/b0ab3de58b1085ee.png"></p>
 <ol type="1">
 <li>Click on <strong>Select Frequency &amp; Locations</strong>. For Frequency, select <strong>5</strong> mins</li>
-<li>Use the following 2 locations <ul>
+<li>Use the following 2 locations  <ul>
 <li>Sydney</li>
 <li>Canbarra</li>
 </ul>
@@ -249,9 +270,12 @@ ec2-xxx-xxx-xxx-xxx.ap-southeast-2.compute.amazonaws.com
 <p>Reference: https://www.dynatrace.com/support/help/how-to-use-dynatrace/synthetic-monitoring/browser-monitors/record-a-browser-clickpath/</p>
 <h2 is-upgraded>3. DISABLE or DELETE all tests when done!</h2>
 <p class="image-container"><img alt="SR" src="img/53f6747ed1613f3f.png"></p>
-</google-codelab-step>
-<google-codelab-step label="Configure Session Replay" duration="15">
-<p>This exercise covers configuring Session Replay in Dynatrace.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Configure Session Replay" duration="15">
+        <p>This exercise covers configuring Session Replay in Dynatrace.</p>
 <p>Read about Session Replay here: <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/basic-concepts/session-replay/" target="_blank">How to use Dynatrace &gt; Real User Monitoring &gt; Basic RUM concepts &gt; Session Replay</a></p>
 <h2 is-upgraded>1. Enable Session Replay</h2>
 <ol type="1">
@@ -279,9 +303,12 @@ ec2-xxx-xxx-xxx-xxx.ap-southeast-2.compute.amazonaws.com
 <h2 is-upgraded>2. Additional configuration for for personal data protection</h2>
 <p>Reference: https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/setup-and-configuration/web-applications/additional-configuration/configure-session-replay-for-personal-data-protection/</p>
 <p class="image-container"><img alt="SR" src="img/909e1f4f0d38a89d.png"></p>
-</google-codelab-step>
-<google-codelab-step label="Introduction to USQL" duration="15">
-<p>Dynatrace captures detailed user session data each time a user interacts with your monitored application. This data includes all user actions and high level performance data. Using either the Dynatrace API or Dynatrace User Sessions Query Language (USQL), you can easily run powerful queries, segmentations, and aggregations on this captured data.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Introduction to USQL" duration="15">
+        <p>Dynatrace captures detailed user session data each time a user interacts with your monitored application. This data includes all user actions and high level performance data. Using either the Dynatrace API or Dynatrace User Sessions Query Language (USQL), you can easily run powerful queries, segmentations, and aggregations on this captured data.</p>
 <p>User Sessions Query Language isn&#39;t SQL and Dynatrace doesn&#39;t store user session data in a relational database. User Sessions Query Language is a Dynatrace-specific query language, though it does rely on some SQL concepts and the syntax is similar, which makes it easy to get started.</p>
 <p>A typical use case for using USQL is to build dashboards to visualize business metrics.</p>
 <p class="image-container"><img alt="USQL" src="img/50eee202e37eb4ec.png"></p>
@@ -312,12 +339,17 @@ GROUP BY userId ORDER BY SUM(totalErrorCount) DESC
 <pre><code>SELECT COUNT(*) FROM usersession WHERE useraction.name = &#34;Loading of page /orange.jsf&#34;
 </code></pre>
 <p>Are you able to describe what each sample query is trying to visualize?</p>
-</google-codelab-step>
-</google-codelab>
-<script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
-<script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
-<script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
-<script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
-<script src="//support.google.com/inapp/api.js"></script>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
 </body>
 </html>

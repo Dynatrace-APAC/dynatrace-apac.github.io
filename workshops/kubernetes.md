@@ -441,7 +441,7 @@ Once working, you can validate the change in Dynatrace
 
 <!-- ------------------------ -->
 
-## Process Detection for Canary Deployment
+## (Optional) Process Detection for Canary Deployment 
 Duration: 15
 
 ### Deploy the Canary Release 
@@ -463,6 +463,12 @@ For monitoring purposes, it should be the same service
 ### Process Detection Rule Config
 
 In the Dynatrace console, go in **Settings -> Processes and containers -> Process group detection**.
+
+Expand the **Cloud application and workload detection** section. 
+
+As per our [documentation](https://www.dynatrace.com/support/help/how-to-use-dynatrace/process-groups/configuration/adapt-the-composition-of-default-process-groups/#cloud-applications-and-workload-detection), you will need to use the **disable Cloud application and workload detection** while **enabling the rule based tag feature** with `DT-ContainerBoundariesAffected` to select the process groups. 
+
+![Disable-cloud-apps](assets/k8s/disable-cloud-workload.png)
 
 Expand the **Process group detection rules** section. 
 
@@ -543,3 +549,28 @@ Explore the various functionalities within the Kubernetes View such as Cluster U
    
 ![KubernetesUI](assets/k8s/cloud-apps.png)
 
+<!-- ------------------------ -->
+
+## Feedback
+Duration: 3
+
+We hope you enjoyed this lab and found it useful. We would love your feedback!
+<form>
+  <name>How was your overall experience with this lab?</name>
+  <input value="Excellent" />
+  <input value="Good" />
+  <input value="Average" />
+  <input value="Fair" />
+  <input value="Poor" />
+</form>
+
+<form>
+  <name>What did you benefit most from this lab?</name>
+  <input value="Using OneAgent Operator to deploy in Kubernetes" />
+  <input value="Setting up Kubernetes integation" />
+  <input value="Process Group Naming & Service Naming for Kubernetes" />
+  <input value="Understanding Kubernetes within Dynatrace" />
+</form>
+
+Positive
+: 💡 For other ideas and suggestions, please **[reach out via email](mailto:APAC-SE-Central@dynatrace.com)**.
