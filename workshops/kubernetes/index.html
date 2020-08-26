@@ -179,48 +179,6 @@ kubectl delete pods --all -n production
 
       </google-codelab-step>
     
-      <google-codelab-step label="Kubernetes Dashboards" duration="10">
-        <h2 is-upgraded>Dashboard Setup via BizOps Configurator</h2>
-<p>We will be using automatically creating Kubernetes Dashboards via <a href="https://dynatrace.github.io/BizOpsConfigurator/" target="_blank">BizOps Configurator</a></p>
-<p>Setup the token with the <strong>permissions</strong> as per below</p>
-<ul>
-<li><strong>Access problem and event feed, metrics and topology</strong></li>
-<li><strong>Read configuration</strong></li>
-<li><strong>Write configuration</strong></li>
-<li><strong>User sessions</strong></li>
-</ul>
-<p class="image-container"><img alt="K8S-Dashboards" src="img/7847c59cb9f67867.png"></p>
-<p>Follow the preloaded setup at <a href="https://dynatrace.github.io/BizOpsConfigurator/#deploy/persona/Ops/Platform%20Overview/K8s%20Overview" target="_blank"><paper-button class="colored" raised>BizOps Configurator</paper-button></a></p>
-<ul>
-<li>Enter in your <strong>tenantUrl</strong> and <strong>API-Token</strong></li>
-<li>Click <strong>Next</strong>. <em>(The persona, usecase and workflow are already selected for you.)</em></li>
-<li>Click <strong>Done</strong>.</li>
-</ul>
-<p class="image-container"><img alt="K8S-Dashboards" src="img/adb4d77660176128.gif"></p>
-<aside class="special"><p>⚠️ In order for the entities to be filtered properly, you&#39;ll need to add a tag <strong>[Kubernetes]namespace</strong> to your services/pods, so this could be filtered properly in the Performance Engineering Dashboard. This will be later OOTB in the product.</p>
-</aside>
-<aside class="special"><p>⚠️ Works with Dynatrace 196+</p>
-</aside>
-<h2 is-upgraded>Kubernetes Overview</h2>
-<p class="image-container"><img alt="#" src="img/d43554f07eeb86b1.png"></p>
-<h2 is-upgraded>Cluster utilization</h2>
-<p>See the Kubernetes cluster utilization. CPU and Memory Request and limits over time for all nodes and splitted by namespaces.</p>
-<p class="image-container"><img alt="#" src="img/cbc33314ebc71953.png"></p>
-<h2 is-upgraded>Resource Quotas</h2>
-<p>Get an overview and understanding of the Kubernetes resource quotas (Memory and CPU) assigned to your namespaces and its usage. <img alt="#" src="img/781aad1caf0a3651.png"></p>
-<h2 is-upgraded>Container usage &amp; health</h2>
-<p>Understand the health and phases of your Pods in your clusters. Their memory and cpu usage, which pods are throttled, have failed or are pending to be scheduled. Also check if you have Out-of-memory killed containers.</p>
-<p class="image-container"><img alt="#" src="img/da0f3468894b69c.png"></p>
-<h2 is-upgraded>Performance Engineering</h2>
-<p>Give your developers and SRE engineers all they need to understand and improve the performance of each app, pod and each transaction on your clusters. View the response time percentiles, slow transactions, database executions per microservice, its network usage and more. Filter the transactions by App label, namespace and much more.</p>
-<p class="image-container"><img alt="#" src="img/d6a668cc6a8dcfdf.png"></p>
-<h2 is-upgraded>User Experience</h2>
-<p>Are your endusers satisfied? how is the engagement, experience and user behaviour of your applications? Get the insights of all your applications and users in an instance.</p>
-<p class="image-container"><img alt="#" src="img/d436fa8f38e53637.png"></p>
-
-
-      </google-codelab-step>
-    
       <google-codelab-step label="Kubernetes Labels and Annotations" duration="5">
         <p>With the Sockshop app restarted, you should be able to see services in Dynatrace.</p>
 <p>Referring to <code>~/dtacmworkshop/manifests/sockshop-app/production/front-end.yml</code>, we will want to setup Dynatrace to automatically pick up the annotations and labels</p>
@@ -356,6 +314,48 @@ wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/ma
 <p class="image-container"><img alt="JSON" src="img/288b43e1a2543dcc.png"></p>
 <p>Choose <strong>Response Time - Server</strong> and select <strong>Service Instance</strong> as Dimension Splitting</p>
 <p class="image-container"><img alt="JSON" src="img/d481a75092eec9f9.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Kubernetes Dashboards" duration="10">
+        <h2 is-upgraded>Dashboard Setup via BizOps Configurator</h2>
+<p>We will be using automatically creating Kubernetes Dashboards via <a href="https://dynatrace.github.io/BizOpsConfigurator/" target="_blank">BizOps Configurator</a></p>
+<p>Setup the token with the <strong>permissions</strong> as per below</p>
+<ul>
+<li><strong>Access problem and event feed, metrics and topology</strong></li>
+<li><strong>Read configuration</strong></li>
+<li><strong>Write configuration</strong></li>
+<li><strong>User sessions</strong></li>
+</ul>
+<p class="image-container"><img alt="K8S-Dashboards" src="img/7847c59cb9f67867.png"></p>
+<p>Follow the preloaded setup at <a href="https://dynatrace.github.io/BizOpsConfigurator/#deploy/persona/Ops/Platform%20Overview/K8s%20Overview" target="_blank"><paper-button class="colored" raised>BizOps Configurator</paper-button></a></p>
+<ul>
+<li>Enter in your <strong>tenantUrl</strong> and <strong>API-Token</strong></li>
+<li>Click <strong>Next</strong>. <em>(The persona, usecase and workflow are already selected for you.)</em></li>
+<li>Click <strong>Done</strong>.</li>
+</ul>
+<p class="image-container"><img alt="K8S-Dashboards" src="img/adb4d77660176128.gif"></p>
+<aside class="special"><p>⚠️ In order for the entities to be filtered properly, you&#39;ll need to add a tag <strong>[Kubernetes]namespace</strong> to your services/pods, so this could be filtered properly in the Performance Engineering Dashboard. This will be later OOTB in the product.</p>
+</aside>
+<aside class="special"><p>⚠️ Works with Dynatrace 196+</p>
+</aside>
+<h2 is-upgraded>Kubernetes Overview</h2>
+<p class="image-container"><img alt="#" src="img/d43554f07eeb86b1.png"></p>
+<h2 is-upgraded>Cluster utilization</h2>
+<p>See the Kubernetes cluster utilization. CPU and Memory Request and limits over time for all nodes and splitted by namespaces.</p>
+<p class="image-container"><img alt="#" src="img/cbc33314ebc71953.png"></p>
+<h2 is-upgraded>Resource Quotas</h2>
+<p>Get an overview and understanding of the Kubernetes resource quotas (Memory and CPU) assigned to your namespaces and its usage. <img alt="#" src="img/781aad1caf0a3651.png"></p>
+<h2 is-upgraded>Container usage &amp; health</h2>
+<p>Understand the health and phases of your Pods in your clusters. Their memory and cpu usage, which pods are throttled, have failed or are pending to be scheduled. Also check if you have Out-of-memory killed containers.</p>
+<p class="image-container"><img alt="#" src="img/da0f3468894b69c.png"></p>
+<h2 is-upgraded>Performance Engineering</h2>
+<p>Give your developers and SRE engineers all they need to understand and improve the performance of each app, pod and each transaction on your clusters. View the response time percentiles, slow transactions, database executions per microservice, its network usage and more. Filter the transactions by App label, namespace and much more.</p>
+<p class="image-container"><img alt="#" src="img/d6a668cc6a8dcfdf.png"></p>
+<h2 is-upgraded>User Experience</h2>
+<p>Are your endusers satisfied? how is the engagement, experience and user behaviour of your applications? Get the insights of all your applications and users in an instance.</p>
+<p class="image-container"><img alt="#" src="img/d436fa8f38e53637.png"></p>
 
 
       </google-codelab-step>
