@@ -572,5 +572,14 @@ We hope you enjoyed this lab and found it useful. We would love your feedback!
   <input value="Understanding Kubernetes within Dynatrace" />
 </form>
 
+<form>
+  <name>How likely are you to recommend this lab to a friend or colleague?</name>
+  <input value="Very Likely" />
+  <input value="Moderately Likely" />
+  <input value="Neither Likely nor unlikely" />
+  <input value="Moderately Unlikely" />
+  <input value="Very Unlikely" />
+</form>
+
 Positive
-: 💡 For other ideas and suggestions, please **[reach out via email](mailto:APAC-SE-Central@dynatrace.com)**.
+: 💡 For other ideas and suggestions, please **[reach out via email](mailto:APAC-SE-Central@dynatrace.com?subject=Kubernetes Workshop - Ideas and Suggestions")**.
