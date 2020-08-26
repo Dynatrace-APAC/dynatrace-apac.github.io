@@ -197,7 +197,7 @@ kubectl get ing k8-api-ingress | grep -oP 'api.kubernetes[^[:blank:]]*'
 Enter the below command and copy it for the **Kubernetes Bearer Token**.
 
 ```bash
-kubectl get secret $(kubectl get sa dynatrace-monitoring -o jsonpath='{.secrets[0].name}' -n dynatrace) -o jsonpath='{.data.token}' -n dynatrace | base64 --decode
+kubectl get secret $(kubectl get sa dynatrace-monitoring -o jsonpath='{.secrets[0].name}' -n dynatrace) -o jsonpath='{.data.token}' -n dynatrace | base64 --decode &
 ```
 
 ![K8S-integration](assets/k8s/activegate-4.png)

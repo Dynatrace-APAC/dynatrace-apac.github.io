@@ -154,7 +154,7 @@ kubectl delete pods --all -n production
 </code></pre>
 <h2 is-upgraded>Get the Bearer Token</h2>
 <p>Enter the below command and copy it for the <strong>Kubernetes Bearer Token</strong>.</p>
-<pre><code>kubectl get secret $(kubectl get sa dynatrace-monitoring -o jsonpath=&#39;{.secrets[0].name}&#39; -n dynatrace) -o jsonpath=&#39;{.data.token}&#39; -n dynatrace | base64 --decode
+<pre><code>kubectl get secret $(kubectl get sa dynatrace-monitoring -o jsonpath=&#39;{.secrets[0].name}&#39; -n dynatrace) -o jsonpath=&#39;{.data.token}&#39; -n dynatrace | base64 --decode &amp;
 </code></pre>
 <p class="image-container"><img alt="K8S-integration" src="img/b2fead2e1021a73e.png"></p>
 <ul>
