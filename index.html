@@ -19,7 +19,7 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="import" href="/elements/elements.html">
 <style is="custom-style">
-:root{--paper-tabs-selection-bar-color:currentcolor;--paper-input-container-underline:{display:none};--paper-input-container-underline-focus:{display:none};}.dropdown-filter{--paper-input-container:{padding:8px}} </style>
+:root{--paper-tabs-selection-bar-color:currentcolor;--paper-input-container-underline:{display:none};--paper-input-container-underline-focus:{display:none};}.dropdown-filter{--paper-input-container:{background-color:#23282d;display:block;padding:4px}} </style>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="#455a64">
 <meta name="apple-mobile-web-app-title" content="Dynatrace">
@@ -57,7 +57,7 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <div id="mainToolbar" class="paper-header">
 <div class="site-width layout horizontal">
 <a href="/">
-<img src="/images/logo.png" class="logo-devs" alt="Dynatrace Logo">
+<img src="/images/dynatrace-logo.svg" class="logo-devs" alt="Dynatrace Logo">
 </a>
 <div id="searchbar">
 <paper-input-container no-label-float>
@@ -70,10 +70,10 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 </div>
 <header id="banner" down$="[[_toBoolean(selectedFilter)]]">
 <div class="site-width">
-<h2 class="banner-title">Welcome to APAC Workshops!</h2>
+<h2 class="banner-title">Welcome to APAC Tech Labs</h2>
 <div class="banner-description" data-filter-selected$="[[_toBoolean(selectedFilter)]]">
 <p class="banner-info">
-The Dynatrace APAC Workshops provide a guided, tutorial-based hands-on learning experience. These labs will provide sessions that are presented by Dynatrace APAC Engineering team but will also be feasible for self-learning. Please reach out to <a href="mailto:APAC-SE-Central@dynatrace.com">APAC-SE-Central@dynatrace.com</a> if you have other questions.
+These Tech Labs provide a guided, tutorial-based hands-on learning experience for users interested in learning Dynatrace. The labs will provide content for sessions conducted by the Dynatrace APAC Engineering team but will also be feasible for self-paced learning. Please reach out to <a href="mailto:APAC-SE-Central@dynatrace.com">APAC-SE-Central@dynatrace.com</a> if you have other questions.
 </p>
 </div>
 </div>
@@ -97,10 +97,10 @@ The Dynatrace APAC Workshops provide a guided, tutorial-based hands-on learning 
 </paper-listbox>
 </paper-dropdown-menu></div>
 <card-sorter id="cards" class="site-width">
-<a href="/workshops/autonomous-cloud/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-autonomous-cloud" data-category="autonomous-cloud" data-title="Autonomous Cloud with Dynatrace" data-duration="116" data-updated="2020-07-23T16:32:52+10:00" data-tags="autonomous-cloud" data-pin="">
+<a href="/codelabs/autonomous-cloud/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-autonomous-cloud" data-category="autonomous-cloud" data-title="Autonomous Cloud with Dynatrace" data-duration="119" data-updated="2020-07-23T16:32:52+10:00" data-tags="autonomous-cloud" data-pin="">
 <div class="description">Autonomous Cloud with Dynatrace</div>
 <div class="card-duration">
-<span>116 min </span>
+<span>119 min </span>
 <span>Updated Jul 23, 2020</span>
 </div>
 <div class="card-footer">
@@ -108,10 +108,10 @@ The Dynatrace APAC Workshops provide a guided, tutorial-based hands-on learning 
 <paper-button class="autonomous-cloud-bg">Start</paper-button>
 </div>
 </a>
-<a href="/workshops/bizops/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-bizops" data-category="bizops" data-title="BizOps with Dynatrace" data-duration="133" data-updated="2020-07-28T15:48:24+10:00" data-tags="bizops" data-pin="">
+<a href="/codelabs/bizops/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-bizops" data-category="bizops" data-title="BizOps with Dynatrace" data-duration="136" data-updated="2020-07-28T15:48:24+10:00" data-tags="bizops" data-pin="">
 <div class="description">BizOps with Dynatrace</div>
 <div class="card-duration">
-<span>133 min </span>
+<span>136 min </span>
 <span>Updated Jul 28, 2020</span>
 </div>
 <div class="card-footer">
@@ -119,10 +119,10 @@ The Dynatrace APAC Workshops provide a guided, tutorial-based hands-on learning 
 <paper-button class="bizops-bg">Start</paper-button>
 </div>
 </a>
-<a href="/workshops/dem/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-dem" data-category="dem" data-title="Digital Experience Management with Dynatrace" data-duration="76" data-updated="2020-08-14T11:53:02+10:00" data-tags="dem" data-pin="">
+<a href="/codelabs/dem/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-dem" data-category="dem" data-title="Digital Experience Management with Dynatrace" data-duration="79" data-updated="2020-08-14T11:53:02+10:00" data-tags="dem" data-pin="">
 <div class="description">Digital Experience Management with Dynatrace</div>
 <div class="card-duration">
-<span>76 min </span>
+<span>79 min </span>
 <span>Updated Aug 14, 2020</span>
 </div>
 <div class="card-footer">
@@ -130,22 +130,22 @@ The Dynatrace APAC Workshops provide a guided, tutorial-based hands-on learning 
 <paper-button class="dem-bg">Start</paper-button>
 </div>
 </a>
-<a href="/workshops/kubernetes/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-kubernetes" data-category="kubernetes" data-title="Dynatrace with Kubernetes" data-duration="81" data-updated="2020-08-14T11:27:32+10:00" data-tags="kubernetes" data-pin="">
+<a href="/codelabs/kubernetes/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-kubernetes" data-category="kubernetes" data-title="Dynatrace with Kubernetes" data-duration="84" data-updated="2020-08-26T14:45:15+10:00" data-tags="kubernetes" data-pin="">
 <div class="description">Dynatrace with Kubernetes</div>
 <div class="card-duration">
-<span>81 min </span>
-<span>Updated Aug 14, 2020</span>
+<span>84 min </span>
+<span>Updated Aug 26, 2020</span>
 </div>
 <div class="card-footer">
 <div class="category-icon kubernetes-icon"></div>
 <paper-button class="kubernetes-bg">Start</paper-button>
 </div>
 </a>
-<a href="/workshops/kubernetes-gke/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-kubernetes-gke" data-category="kubernetes-gke" data-title="Dynatrace with Kubernetes on GKE" data-duration="31" data-updated="2020-08-13T15:20:00+10:00" data-tags="kubernetes" data-pin="">
+<a href="/codelabs/kubernetes-gke/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-kubernetes-gke" data-category="kubernetes-gke" data-title="Dynatrace with Kubernetes on GKE" data-duration="34" data-updated="2020-08-26T14:45:15+10:00" data-tags="kubernetes" data-pin="">
 <div class="description">Dynatrace with Kubernetes on GKE</div>
 <div class="card-duration">
-<span>31 min </span>
-<span>Updated Aug 13, 2020</span>
+<span>34 min </span>
+<span>Updated Aug 26, 2020</span>
 </div>
 <div class="card-footer">
 <div class="category-icon kubernetes-gke-icon"></div>
@@ -186,6 +186,7 @@ Loading Codelabs, please wait...
 </div>
 </footer>
 <div class="footerbar">
+<hr>
 <div class="site-width layout horizontal center justified">
 <span>
 <a href="https://www.dynatrace.com/company/trust-center/terms-of-use/">Terms</a>

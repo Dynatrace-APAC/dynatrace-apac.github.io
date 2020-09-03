@@ -1,11 +1,11 @@
 {
   "environment": "web",
   "format": "html",
-  "prefix": "https://storage.googleapis.com",
+  "prefix": "../../elements",
   "mainga": "UA-49880327-14",
   "updated": "2020-08-14T11:53:02+10:00",
   "id": "dem",
-  "duration": 76,
+  "duration": 79,
   "title": "Digital Experience Management with Dynatrace",
   "authors": "Brandon Neo",
   "summary": "Digital Experience Management with Dynatrace",
