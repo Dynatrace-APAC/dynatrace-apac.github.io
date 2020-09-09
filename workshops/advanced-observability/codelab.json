@@ -1,7 +1,7 @@
 {
   "environment": "web",
   "format": "html",
-  "prefix": "https://storage.googleapis.com",
+  "prefix": "../../elements",
   "mainga": "UA-49880327-14",
   "updated": "2020-09-09T12:00:06+10:00",
   "id": "advanced-observability",
