@@ -1,6 +1,6 @@
 summary: Dynatrace with Kubernetes
 id: kubernetes
-categories: kubernetes
+categories: Tech Labs
 tags: kubernetes
 status: Published 
 authors: Brandon Neo

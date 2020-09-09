@@ -1,6 +1,6 @@
 summary: Autonomous Cloud with Dynatrace
 id: autonomous-cloud
-categories: autonomous-cloud
+categories: Tech Labs
 tags: autonomous-cloud
 status: Published 
 authors: Brandon Neo

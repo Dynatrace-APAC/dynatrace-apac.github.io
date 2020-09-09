@@ -1,6 +1,6 @@
 summary: BizOps with Dynatrace
 id: bizops
-categories: bizops
+categories: Tech Labs
 tags: bizops
 status: Published 
 authors: Brandon Neo

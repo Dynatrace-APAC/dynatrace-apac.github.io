@@ -1,6 +1,6 @@
 summary: Digital Experience Management with Dynatrace
 id: dem
-categories: dem
+categories: Tech Labs
 tags: dem
 status: Published 
 authors: Brandon Neo

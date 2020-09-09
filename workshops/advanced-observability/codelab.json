@@ -1,0 +1,26 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2020-09-09T12:00:06+10:00",
+  "id": "advanced-observability",
+  "duration": 64,
+  "title": "Advanced Observability with Dynatrace",
+  "authors": "Brandon Neo",
+  "summary": "Advanced Observability with Dynatrace",
+  "source": "advanced-observability.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "tech labs"
+  ],
+  "tags": [
+    "dem"
+  ],
+  "feedback": "mailto:APAC-SE-Central@dynatrace.com",
+  "ga": "UA-175467274-1",
+  "url": "advanced-observability"
+}
