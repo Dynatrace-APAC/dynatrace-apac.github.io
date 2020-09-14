@@ -184,9 +184,7 @@ localhost                  : ok=11   changed=1    unreachable=0    failed=0    s
         <p>Like most real world examples, you will find Dynatrace already automatically instrumenting your applications. But for deep code level visibility, you will need to restart those services.</p>
 <h2 is-upgraded>Restart Sample Application</h2>
 <p>Run the command below to restart the Sample Application Easytravel.</p>
-<p><code>sudo wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Advanced-Observability/master/setup_easyTravel.sh | bash</code></p>
-<p>You can check out status by referring to the logs.</p>
-<p><code>tail -50f nohup.out</code></p>
+<p><code>./restart_easyTravel.sh</code></p>
 <h2 is-upgraded>Explore the Smartscape</h2>
 <p>While waiting for Easy Travel to start, you can explore Dynatrace and using the Smartscape, Dynatrace will automatically discover the processes and dependencies that comprises the Easy Travel application!</p>
 <p><a href="https://www.dynatrace.com/support/help/get-started/4-things-youll-absolutely-love-about-dynatrace/" target="_blank">4 things</a> that you will love about Dynatrace!</p>

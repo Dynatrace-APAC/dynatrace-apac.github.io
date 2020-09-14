@@ -42,9 +42,7 @@ In this exercise, we will deploy the OneAgent to a Linux instance via Ansible.
 Based off our [Dynatrace Ansible Github](https://github.com/Dynatrace/Dynatrace-OneAgent-Ansible), you can rollout Dynatrace Oneagent easily across on Linux and Windows Operating Systems with different available configurations and ensures the OneAgent service maintains a running state. It also provides the tasks to interact with the various OneAgent configuration files.
 
 Adapting from an [Ansible example](https://github.com/popecruzdt/dt-ansible), we will be installing that on our host.
-Other Ansible playbooks
-
-[Ansible for Linux](https://github.com/popecruzdt/dt-ansible/blob/popecruzdt/dt-oneagent-install-linux.yml)
+Other Ansible playbooks examples can be seen [here](https://github.com/popecruzdt/dt-ansible/blob/popecruzdt/dt-oneagent-install-linux.yml)
 
 ### Installing Ansible
 
@@ -52,14 +50,28 @@ Use the command below to setup Ansible in your Linux host
 
 `wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Advanced-Observability/master/setup_ansible.sh | bash`
 
+Positive:
+: Once it's finished, run the following command to check the status of ansible 
+`ansible --version`
+
+You should see that it's successfully installed along with it's dependencies
+
+```bash
+ansible 2.9.13
+config file = /etc/ansible/ansible.cfg
+configured module search path = [u'/home/advanced-observability-workshop/.ansible/plugins/modules', u'/usr/share/ansible/plugins/modules']
+ansible python module location = /usr/lib/python2.7/dist-packages/ansible
+executable location = /usr/bin/ansible
+python version = 2.7.17 (default, Jul 20 2020, 15:37:01) [GCC 7.5.0]
+```
+
 ### Download the Ansible playbook
 
 Use the command below to setup Ansible in your Linux host
 
-`wget https://raw.githubusercontent.com/popecruzdt/dt-ansible/popecruzdt/dt-oneagent-install-linux.yml`
+`wget https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Advanced-Observability/master/dt-oneagent-install-linux.yml`
 
-Using `more dt-oneagent-install-linux.yml`, we can explore the file to preview the necessary variables that we need to provide.
-For the purposes of the lab, we will use only be using Ansible to rollout on a host. But in a real world context, you can run the playbook across multiple hosts or environments. 
+Using the command`more dt-oneagent-install-linux.yml`, we can explore the file to preview the necessary variables that we need to provide. For the purposes of the lab, we will use only be using Ansible to rollout on a host. But in a real world context, you can run the playbook across multiple hosts or environments. 
 
 ```bash
 # dynatrace oneagent install on linux
@@ -95,7 +107,7 @@ Click on **Generate** and **copy** the token by selecting **Reveal token** to us
 
 ###  Running the playbook
 
-Gather and adjust the variables which you can use for the playbook.
+Using the command below, make changes to the **dt_api_token** and **dt_api_endpoint** variables. You can tweak the command with a text editor eg. Notepad++
 
 **EXAMPLE**
 
@@ -112,31 +124,82 @@ dt-oneagent-install-linux.yml
 
 ![Deploy](assets/adv-observe/dynatrace-env.png)
 
-Example:
+**OUTPUT EXAMPLE**
 
 ```bash
-TO DO OUTPUT EXAMPLE
-$
+PLAY [dynatrace oneagent install on linux] ********************************************************************************************************************
 
+TASK [Gathering Facts] ****************************************************************************************************************************************
+ok: [localhost]
+
+TASK [validate ansible execution on linux with sudo access] ***************************************************************************************************
+ok: [localhost]
+
+TASK [get latest oneagent version from dynatrace environment api] *********************************************************************************************
+ok: [localhost]
+
+TASK [set oneagent latest version fact (dt_latest_version)] ***************************************************************************************************
+ok: [localhost]
+
+TASK [check if oneagent is already installed] *****************************************************************************************************************
+ok: [localhost]
+
+TASK [check installed oneagent version] ***********************************************************************************************************************
+skipping: [localhost]
+
+TASK [set oneagent current version fact (dt_current_version)] *************************************************************************************************
+skipping: [localhost]
+
+TASK [debug output current version] ***************************************************************************************************************************
+skipping: [localhost]
+
+TASK [debug output latest version] ****************************************************************************************************************************
+ok: [localhost] => {
+    "dt_latest_version": "1.201.96.20200911-082031"
+}
+
+TASK [download oneagent install file] *************************************************************************************************************************
+[DEPRECATION WARNING]: Supplying `headers` as a string is deprecated. Please use dict/hash format for `headers`. This feature will be removed in version 2.10.
+ Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+ok: [localhost]
+
+TASK [install: execute oneagent install file with root privileges] ********************************************************************************************
+changed: [localhost]
+
+TASK [update: execute oneagent install file with root privileges] *********************************************************************************************
+skipping: [localhost]
+
+TASK [validate oneagent installation] *************************************************************************************************************************
+ok: [localhost]
+
+TASK [check host group is correct] ****************************************************************************************************************************
+ok: [localhost]
+
+TASK [set current host group fact (dt_current_host_group)] ****************************************************************************************************
+ok: [localhost]
+
+TASK [update/correct host group setting if not correct] *******************************************************************************************************
+skipping: [localhost]
+
+PLAY RECAP ****************************************************************************************************************************************************
+localhost                  : ok=11   changed=1    unreachable=0    failed=0    skipped=5    rescued=0    ignored=0
 ```
 
-### Validate the installation in Deployment status
+### Validate the installation
 
-![Deploy](assets/dem/106-Status.jpg)
+Go to **Deployment status** on the left navigation. You should see OneAgent installed on the current host.
 
-Reference: https://www.dynatrace.com/support/help/technology-support/operating-systems/linux/
+![Deploy](assets/adv-observe/deployment-status.png)
 
 ##  Automatic Discovery & Instrumentation
 
-### Start Sample Application
+Like most real world examples, you will find Dynatrace already automatically instrumenting your applications. But for deep code level visibility, you will need to restart those services. 
 
-Run the command below to setup the Sample Application Easytravel.
+### Restart Sample Application
 
-`wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Advanced-Observability/master/setup_easyTravel.sh | bash`
+Run the command below to restart the Sample Application Easytravel.
 
-You can check out status by referring to the logs.
-
-`tail -50f nohup.out`
+`./restart_easyTravel.sh`
 
 ### Explore the Smartscape
 
