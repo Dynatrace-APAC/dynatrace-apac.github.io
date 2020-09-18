@@ -193,11 +193,29 @@ localhost                  : ok=11   changed=1    unreachable=0    failed=0    s
 
       </google-codelab-step>
     
-      <google-codelab-step label="Session Properties" duration="15">
-        <p>In this exercise, we will cover the setting up Session Properties with Request Attributes. These leveraged for deep visibility into all the details of your users&#39; interactions with your application.</p>
+      <google-codelab-step label="Custom Services" duration="15">
+        <p>In this exercise, we will be creating a custom Java service. This is a typical scenerio for 3rd party apps or proprietary software that Dynatrace monitors but doesn&#39;t instrument automatically.</p>
 <h2 is-upgraded>Enable Real time updates for Java</h2>
 <p>Go to <strong>Settings &gt; Server-side service monitoring &gt; Deep Monitoring &gt; Real-time updates</strong>.</p>
 <p class="image-container"><img alt="Deploy" src="img/d7ea31da01bf3f15.png"></p>
+<p>Go to <strong>Settings &gt; Server-side service monitoring &gt; custom service detection</strong></p>
+<p>Click on <strong>Define Java services</strong> and use the following:</p>
+<ul>
+<li>Name - <strong>Credit Card Verification</strong></li>
+<li>Click on <strong>Find entry point</strong></li>
+<li>Select <strong>com.dynatrace.easytravel.business.backend.jar</strong></li>
+<li>Search for <strong>ipc.SocketNativeApplication</strong></li>
+<li>Use selected class</li>
+<li>Select <strong>sendAndReceive</strong> method</li>
+<li>Select <strong>Finish</strong></li>
+<li>Click on <strong>Save</strong></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Session Properties" duration="15">
+        <p>In this exercise, we will cover the setting up Session Properties with Request Attributes. These leveraged for deep visibility into all the details of your users&#39; interactions with your application.</p>
 <h2 is-upgraded>Creating Request Attributes</h2>
 <p>Go to <strong>Settings &gt; Server-side service monitoring &gt; Request Attributes</strong></p>
 <p>Click on <strong>Define a new request attribute</strong> and use the following:</p>
@@ -211,7 +229,7 @@ localhost                  : ok=11   changed=1    unreachable=0    failed=0    s
 <li>Parameter name - <strong>loyalty</strong></li>
 <li>Click on <strong>Save</strong></li>
 </ul>
-<p class="image-container"><img alt="Request-attribute" src="img/940260be93ad6e.gif"></p>
+<p class="image-container"><img alt="Request-attribute" src="img/fe27269440df3e80.gif"></p>
 <p>Click on <strong>Add new data source</strong> within the <strong>same request attribute</strong> and use the following:</p>
 <ul>
 <li>Request attribute source – <strong>Java method parameter(s)</strong></li>

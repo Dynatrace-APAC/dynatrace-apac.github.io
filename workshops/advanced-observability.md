@@ -210,10 +210,10 @@ While waiting for Easy Travel to start, you can explore Dynatrace and using the 
 ![Smartscape](assets/dem/smartscape.png)
 
 <!-- ------------------------ -->
-## Session Properties
+## Custom Services
 Duration: 15
 
-In this exercise, we will cover the setting up Session Properties with Request Attributes. These leveraged for deep visibility into all the details of your users’ interactions with your application. 
+In this exercise, we will be creating a custom Java service. This is a typical scenerio for 3rd party apps or proprietary software that Dynatrace monitors but doesn't instrument automatically. 
 
 ### Enable Real time updates for Java
 
@@ -221,6 +221,25 @@ Go to **Settings > Server-side service monitoring > Deep Monitoring > Real-time 
 
 ![Deploy](assets/adv-observe/real-time-toggle.png)
 
+Go to **Settings > Server-side service monitoring > custom service detection**
+
+Click on **Define Java services** and use the following:
+
+* Name - **Credit Card Verification**
+* Click on **Find entry point**
+* Select **com.dynatrace.easytravel.business.backend.jar**
+* Search for **ipc.SocketNativeApplication**
+* Use selected class
+* Select **sendAndReceive** method
+* Select **Finish**
+* Click on **Save**
+
+
+<!-- ------------------------ -->
+## Session Properties
+Duration: 15
+
+In this exercise, we will cover the setting up Session Properties with Request Attributes. These leveraged for deep visibility into all the details of your users’ interactions with your application. 
 
 ### Creating Request Attributes
 
@@ -237,7 +256,7 @@ Click on **Define a new request attribute** and use the following:
 * Parameter name - **loyalty**
 * Click on **Save**
 
-![Request-attribute](assets/adv-observe/request-attribute-1.gif)
+![Request-attribute](assets/adv-observe/custom-service.gif)
 
 Click on **Add new data source** within the **same request attribute** and use the following:
 
