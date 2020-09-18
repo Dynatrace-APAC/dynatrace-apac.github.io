@@ -234,6 +234,7 @@ Click on **Define Java services** and use the following:
 * Select **Finish**
 * Click on **Save**
 
+![Request-attribute](assets/adv-observe/custom-service.gif)
 
 <!-- ------------------------ -->
 ## Session Properties
@@ -256,7 +257,7 @@ Click on **Define a new request attribute** and use the following:
 * Parameter name - **loyalty**
 * Click on **Save**
 
-![Request-attribute](assets/adv-observe/custom-service.gif)
+![Request-attribute](assets/adv-observe/request-attribute-1.gif)
 
 Click on **Add new data source** within the **same request attribute** and use the following:
 
