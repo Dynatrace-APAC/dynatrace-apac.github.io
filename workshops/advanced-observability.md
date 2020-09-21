@@ -1,7 +1,7 @@
 summary: Advanced Observability with Dynatrace
 id: advanced-observability
-categories: Tech Labs
-tags: dem
+categories: adv-Obs
+tags: adv-Obs
 status: Published 
 authors: Brandon Neo
 Feedback Link: mailto:APAC-SE-Central@dynatrace.com
@@ -234,7 +234,7 @@ Click on **Define Java services** and use the following:
 * Select **Finish**
 * Click on **Save**
 
-![Request-attribute](assets/adv-observe/custom-service.gif)
+![Custom-service](assets/adv-observe/custom-service.gif)
 
 <!-- ------------------------ -->
 ## Session Properties
