@@ -1,22 +1,34 @@
 
 <!doctype html>
+
 <html>
 <head>
-<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
-<meta name="theme-color" content="#4F7DC9">
-<meta charset="UTF-8">
-<title>Advanced Observability with Dynatrace</title>
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
-<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
-<style>
-.success{color:#1e8e3e}.error{color:red} </style>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Advanced Observability with Dynatrace</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
 </head>
 <body>
-<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
-<google-codelab codelab-gaid="UA-175467274-1" id="advanced-observability" title="Advanced Observability with Dynatrace" environment="web" feedback-link="mailto:APAC-SE-Central@dynatrace.com">
-<google-codelab-step label="Introduction" duration="1">
-<p>This repository contains the hands on for the Advanced Observability Workshop.</p>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid="UA-175467274-1"
+                  id="advanced-observability"
+                  title="Advanced Observability with Dynatrace"
+                  environment="web"
+                  feedback-link="mailto:APAC-SE-Central@dynatrace.com">
+    
+      <google-codelab-step label="Introduction" duration="1">
+        <p>This repository contains the hands on for the Advanced Observability Workshop.</p>
 <h2 is-upgraded>Prerequisites</h2>
 <ul>
 <li>Dynatrace SaaS/Managed Account. Get your free SaaS trial <a href="https://www.dynatrace.com/trial/" target="_blank">here</a>.</li>
@@ -27,7 +39,7 @@
 <h2 is-upgraded>Lab Setup</h2>
 <p>The following steps are used for this lab:</p>
 <ul>
-<li>Sample Application <ul>
+<li>Sample Application  <ul>
 <li>Sample App is based on <a href="https://github.com/Dynatrace/easyTravel-Docker" target="_blank">easyTravel Docker</a></li>
 <li>Follow the <a href="https://github.com/Dynatrace-APAC/Workshop-DEM/tree/master/Prerequisite%20Actions" target="_blank">Prerequisite Actions</a> to create the application that will be used throughout this workshop.</li>
 </ul>
@@ -40,9 +52,12 @@
 <li>Learn Session Properties for advanced dashboarding</li>
 <li>Learn Metric Ingestion for automated baselines across all entities</li>
 </ul>
-</google-codelab-step>
-<google-codelab-step label="Automate Agent Rollout" duration="15">
-<p>In this exercise, we will deploy the OneAgent to a Linux instance via Ansible.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Automate Agent Rollout" duration="15">
+        <p>In this exercise, we will deploy the OneAgent to a Linux instance via Ansible.</p>
 <p>Based off our <a href="https://github.com/Dynatrace/Dynatrace-OneAgent-Ansible" target="_blank">Dynatrace Ansible Github</a>, you can rollout Dynatrace Oneagent easily across on Linux and Windows Operating Systems with different available configurations and ensures the OneAgent service maintains a running state. It also provides the tasks to interact with the various OneAgent configuration files.</p>
 <p>Adapting from an <a href="https://github.com/popecruzdt/dt-ansible" target="_blank">Ansible example</a>, we will be installing that on our host. Other Ansible playbooks examples can be seen <a href="https://github.com/popecruzdt/dt-ansible/blob/popecruzdt/dt-oneagent-install-linux.yml" target="_blank">here</a></p>
 <h2 is-upgraded>Installing Ansible</h2>
@@ -98,7 +113,7 @@ python version = 2.7.17 (default, Jul 20 2020, 15:37:01) [GCC 7.5.0]
 -e dt_api_endpoint=https://mou612.managed-sprint.dynalabs.io/e/&lt;DT-ENV&gt;/api/v1/ \
 dt-oneagent-install-linux.yml
 </code></pre>
-<p><strong>Paste</strong> the command into your terminal window and tweak the <strong>dt_api_token</strong> and <strong>dt_api_endpoint</strong> variables. Replace from token you copied earlier. You can get your from within the Dynatrace environment from the browser.</p>
+<p><strong>Paste</strong> the command into your terminal window and tweak the <strong>dt_api_token</strong> and <strong>dt_api_endpoint</strong> variables. Replace  from token you copied earlier. You can get your  from within the Dynatrace environment from the browser.</p>
 <p class="image-container"><img alt="Deploy" src="img/82f926ac9a2f26e6.png"></p>
 <p><strong>OUTPUT EXAMPLE</strong></p>
 <pre><code>PLAY [dynatrace oneagent install on linux] ********************************************************************************************************************
@@ -161,9 +176,12 @@ localhost                  : ok=11   changed=1    unreachable=0    failed=0    s
 <h2 is-upgraded>Validate the installation</h2>
 <p>Go to <strong>Deployment status</strong> on the left navigation. You should see OneAgent installed on the current host.</p>
 <p class="image-container"><img alt="Deploy" src="img/4830f35f058a48c3.png"></p>
-</google-codelab-step>
-<google-codelab-step label="Automatic Discovery &amp; Instrumentation" duration="0">
-<p>Like most real world examples, you will find Dynatrace already automatically instrumenting your applications. But for deep code level visibility, you will need to restart those services.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Automatic Discovery &amp; Instrumentation" duration="0">
+        <p>Like most real world examples, you will find Dynatrace already automatically instrumenting your applications. But for deep code level visibility, you will need to restart those services.</p>
 <h2 is-upgraded>Restart Sample Application</h2>
 <p>Run the command below to restart the Sample Application Easytravel.</p>
 <p><code>./restart_easyTravel.sh</code></p>
@@ -171,9 +189,12 @@ localhost                  : ok=11   changed=1    unreachable=0    failed=0    s
 <p>While waiting for Easy Travel to start, you can explore Dynatrace and using the Smartscape, Dynatrace will automatically discover the processes and dependencies that comprises the Easy Travel application!</p>
 <p><a href="https://www.dynatrace.com/support/help/get-started/4-things-youll-absolutely-love-about-dynatrace/" target="_blank">4 things</a> that you will love about Dynatrace!</p>
 <p class="image-container"><img alt="Smartscape" src="img/868e111ca8bd48bd.png"></p>
-</google-codelab-step>
-<google-codelab-step label="Custom Services" duration="15">
-<p>In this exercise, we will be creating a custom Java service. This is a typical scenerio for 3rd party apps or proprietary software that Dynatrace monitors but doesn&#39;t instrument automatically.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Custom Services" duration="15">
+        <p>In this exercise, we will be creating a custom Java service. This is a typical scenerio for 3rd party apps or proprietary software that Dynatrace monitors but doesn&#39;t instrument automatically.</p>
 <h2 is-upgraded>Enable Real time updates for Java</h2>
 <p>Go to <strong>Settings &gt; Server-side service monitoring &gt; Deep Monitoring &gt; Real-time updates</strong>.</p>
 <p class="image-container"><img alt="Deploy" src="img/d7ea31da01bf3f15.png"></p>
@@ -190,9 +211,12 @@ localhost                  : ok=11   changed=1    unreachable=0    failed=0    s
 <li>Click on <strong>Save</strong></li>
 </ul>
 <p class="image-container"><img alt="Custom-service" src="img/fe27269440df3e80.gif"></p>
-</google-codelab-step>
-<google-codelab-step label="Session Properties" duration="15">
-<p>In this exercise, we will cover the setting up Session Properties with Request Attributes. These leveraged for deep visibility into all the details of your users&#39; interactions with your application.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Session Properties" duration="15">
+        <p>In this exercise, we will cover the setting up Session Properties with Request Attributes. These leveraged for deep visibility into all the details of your users&#39; interactions with your application.</p>
 <h2 is-upgraded>Creating Request Attributes</h2>
 <p>Go to <strong>Settings &gt; Server-side service monitoring &gt; Request Attributes</strong></p>
 <p>Click on <strong>Define a new request attribute</strong> and use the following:</p>
@@ -243,7 +267,7 @@ localhost                  : ok=11   changed=1    unreachable=0    failed=0    s
 <p>Click on <strong>View requests</strong> and validate the key-value pairs of Loyalty Status under the <strong>Request Attribute</strong> tab.</p>
 <p class="image-container"><img alt="Request-attribute" src="img/82c694100abffcef.png"></p>
 <h2 is-upgraded>Define Session Properties</h2>
-<p>Go to <strong>Applications &gt; easyTravel Angular &gt; Settings &gt; Session and user action properties</strong></p>
+<p>Go to <strong>Applications &gt; EasyTravel Website &gt; Settings &gt; Session and user action properties</strong></p>
 <p>Click on <strong>Add property &gt; Custom defined property</strong> and use the following:</p>
 <ul>
 <li>Expression type – <strong>Server side request attribute</strong></li>
@@ -256,11 +280,22 @@ localhost                  : ok=11   changed=1    unreachable=0    failed=0    s
 </ul>
 <p class="image-container"><img alt="Session-properties" src="img/a709e677b47b9fa1.gif"></p>
 <p>Click on <strong>Add property &gt; Custom defined property</strong> and another property with the following:</p>
-<p>Expression type – CSS selector Data type – Double CSS selector – button[name=&#34;payment:pay&#34;] Display name – Revenue Key – revenue Store as session property Cleanup rule - Pay\s\$(.*?).</p>
+<ul>
+<li>Expression type – <strong>CSS selector</strong></li>
+<li>Data type – <strong>Double</strong></li>
+<li>CSS selector – <strong>button[name=&#34;payment:pay&#34;]</strong></li>
+<li>Display name – <strong>Revenue</strong></li>
+<li>Key – <strong>revenue</strong></li>
+<li>Store as session property</li>
+<li>Cleanup rule - <strong>Pay\s\$(.*?).</strong></li>
+</ul>
 <p class="image-container"><img alt="Session-properties" src="img/cec93607fb229579.png"></p>
-</google-codelab-step>
-<google-codelab-step label="Calculated Service Metrics Properties" duration="15">
-<p>In this exercise, we will cover the setting up Calulated Service Metrics with Request Attributes. These leveraged for deep visibility into all the details of your users&#39; interactions with your application.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Calculated Service Metrics Properties" duration="15">
+        <p>In this exercise, we will cover the setting up Calulated Service Metrics with Request Attributes. These leveraged for deep visibility into all the details of your users&#39; interactions with your application.</p>
 <h2 is-upgraded>Creating Request Attributes</h2>
 <p>Go to <strong>Settings &gt; Server-side service monitoring &gt; Request Attributes</strong></p>
 <p>Click on <strong>Define a new request attribute</strong> and use the following:</p>
@@ -290,7 +325,7 @@ localhost                  : ok=11   changed=1    unreachable=0    failed=0    s
 <ul>
 <li>Request attribute source – <strong>Java method parameter(s)</strong></li>
 <li>Click on <strong>Select method sources</strong></li>
-<li>Select <strong>com.dynatrace.easytravel.frontend.data.DataProviderInterface</strong></li>
+<li>Select <strong>customer.frontend</strong></li>
 <li>Search for <strong>DataProviderInterface</strong></li>
 <li>Select <strong>Use the selected class</strong></li>
 <li>Search for <strong>storeBooking</strong></li>
@@ -320,15 +355,21 @@ localhost                  : ok=11   changed=1    unreachable=0    failed=0    s
 </ul>
 <p>You&#39;ll be able to preview the various dimensions across defined services</p>
 <p class="image-container"><img alt="Session-properties" src="img/ab891b22d27f3d.png"></p>
-</google-codelab-step>
-<google-codelab-step label="Dashboards" duration="15">
-<p>Refer to the left navigation bar and go to Dashboards. Dynatrace has now prebuilt dashboard templates such as <strong>Application performance report</strong> and <strong>Real User Monitoring</strong> dashboards.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Dashboards" duration="15">
+        <p>Refer to the left navigation bar and go to Dashboards. Dynatrace has now prebuilt dashboard templates such as <strong>Application performance report</strong> and <strong>Real User Monitoring</strong> dashboards.</p>
 <p class="image-container"><img alt="Dashboards" src="img/86c6cf8398494a26.png"></p>
 <p>Drill down into each of these dashboards and explore the various dashboard widgets for App Owners and Business Users.</p>
 <p class="image-container"><img alt="Session-properties" src="img/c6a7cd4305bfa6a.png"></p>
-</google-codelab-step>
-<google-codelab-step label="Feedback" duration="3">
-<p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Feedback" duration="3">
+        <p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
 <google-codelab-survey survey-id="advanced-observability-1">
 <h4>How was your overall experience with this lab?</h4>
 <paper-radio-group>
@@ -360,12 +401,17 @@ localhost                  : ok=11   changed=1    unreachable=0    failed=0    s
 </google-codelab-survey>
 <aside class="special"><p>💡 For other ideas and suggestions, please <a href="mailto:APAC-SE-Central@dynatrace.com?subject=Kubernetes Workshop - Ideas and Suggestions" target="_blank"><strong>reach out via email</strong></a>.</p>
 </aside>
-</google-codelab-step>
-</google-codelab>
-<script src="../../elements/codelab-elements/native-shim.js"></script>
-<script src="../../elements/codelab-elements/custom-elements.min.js"></script>
-<script src="../../elements/codelab-elements/prettify.js"></script>
-<script src="../../elements/codelab-elements/codelab-elements.js"></script>
-<script src="//support.google.com/inapp/api.js"></script>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="../../elements/codelab-elements/native-shim.js"></script>
+  <script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+  <script src="../../elements/codelab-elements/prettify.js"></script>
+  <script src="../../elements/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
 </body>
 </html>

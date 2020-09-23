@@ -303,7 +303,7 @@ Click on **View requests** and validate the key-value pairs of Loyalty Status un
 
 ### Define Session Properties
 
-Go to **Applications > easyTravel Angular > Settings > Session and user action properties**
+Go to **Applications > EasyTravel Website > Settings > Session and user action properties**
 
 Click on **Add property > Custom defined property** and use the following:
 
@@ -319,13 +319,13 @@ Click on **Add property > Custom defined property** and use the following:
 
 Click on **Add property > Custom defined property** and another property with the following:
 
-Expression type – CSS selector
-Data type – Double
-CSS selector – button[name="payment:pay"]
-Display name – Revenue
-Key – revenue
-Store as session property
-Cleanup rule - Pay\s\$(.*?)\.
+* Expression type – **CSS selector**
+* Data type – **Double**
+* CSS selector – **button[name="payment:pay"]**
+* Display name – **Revenue**
+* Key – **revenue**
+* Store as session property
+* Cleanup rule - **Pay\s\$(.*?)\.**
 
 ![Session-properties](assets/adv-observe/session-prop-2.png)
 
@@ -366,7 +366,7 @@ Click on **Add new data source** within the **same request attribute** and use t
 
 * Request attribute source – **Java method parameter(s)**
 * Click on **Select method sources**
-* Select **com.dynatrace.easytravel.frontend.data.DataProviderInterface**
+* Select **customer.frontend**
 * Search for **DataProviderInterface**
 * Select **Use the selected class**
 * Search for **storeBooking**
