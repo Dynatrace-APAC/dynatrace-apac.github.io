@@ -1,0 +1,26 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "../../elements",
+  "mainga": "UA-49880327-14",
+  "updated": "2020-09-23T14:45:19+10:00",
+  "id": "automate-feedback-1",
+  "duration": 49,
+  "title": "Automate Feedback - Session 1",
+  "authors": "Brandon Neo",
+  "summary": "Automate Feedback Session 1",
+  "source": "ANZ-automate-feedback-1.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "automate-feedback"
+  ],
+  "tags": [
+    "anz"
+  ],
+  "feedback": "mailto:d1-apac@dynatrace.com",
+  "ga": "UA-175467274-1",
+  "url": "automate-feedback-1"
+}

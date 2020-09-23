@@ -1,0 +1,26 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "../../elements",
+  "mainga": "UA-49880327-14",
+  "updated": "2020-09-23T14:44:56+10:00",
+  "id": "automate-delivery-1",
+  "duration": 49,
+  "title": "Automate Delivery - Session 1",
+  "authors": "Brandon Neo",
+  "summary": "Automate Delivery Session 1",
+  "source": "ANZ-automate-delivery-1.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "automate-delivery"
+  ],
+  "tags": [
+    "anz"
+  ],
+  "feedback": "mailto:d1-apac@dynatrace.com",
+  "ga": "UA-175467274-1",
+  "url": "automate-delivery-1"
+}

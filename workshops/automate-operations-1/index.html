@@ -1,0 +1,116 @@
+
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+<meta name="theme-color" content="#4F7DC9">
+<meta charset="UTF-8">
+<title>Automate Operations - Session 1</title>
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+<style>
+.success{color:#1e8e3e}.error{color:red} </style>
+</head>
+<body>
+<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+<google-codelab codelab-gaid="UA-175467274-1" id="automate-operations-1" title="Automate Operations - Session 1" environment="web" feedback-link="mailto:d1-apac@dynatrace.com">
+<google-codelab-step label="Introduction" duration="1">
+<p>The labs contains the steps for Automate Operations: Integration of Load Test Tools with Dynatrace Session 1 training.</p>
+<p>You will get access to a EC2 instance that has been provided for the purposes of this training.</p>
+<h2 is-upgraded>Prerequisites</h2>
+<ul>
+<li>Dynatrace SaaS/Managed Account. Get your free SaaS trial <a href="https://www.dynatrace.com/trial/" target="_blank">here</a>.</li>
+<li>Chrome Browser</li>
+</ul>
+<h2 class="checklist" is-upgraded>What You&#39;ll Learn</h2>
+<ul class="checklist">
+<li>Integrate JMeter with Dynatrace.<br></li>
+<li>Push events in Dynatrace and create request-attributes <ul class="checklist">
+<li>Dev/Test team can isolate the requests invoked during the load-tests.</li>
+</ul>
+</li>
+</ul>
+<aside class="warning"><p>As different teams might have their own proprietary test-beds/suits, so we will demo stimulating requests using curl commands too.</p>
+</aside>
+</google-codelab-step>
+<google-codelab-step label="Understanding Dynatrace Integration" duration="5">
+<p>By integrating Dynatrace into your existing load testing process, you can stop broken builds in your delivery pipeline earlier.</p>
+<p class="image-container"><img alt="Integration-overview" src="img/a200780e37252c5c.png"></p>
+<h2 is-upgraded>Tag tests with HTTP headers</h2>
+<p>While executing a load test from your load testing tool of choice (JMeter, Neotys, LoadRunner, etc) each simulated HTTP request can be tagged with additional HTTP headers that contain test-transaction information (for example, script name, test step name, and virtual user ID). Dynatrace can analyze incoming HTTP headers and extract such contextual information from the header values and tag the captured requests with request attributes. Request attributes enable you to filter your monitoring data based on defined tags.</p>
+<p class="image-container"><img alt="HTTP-Headers" src="img/d33610534a82ad28.png"></p>
+<p><strong>Full integration and approach is documentated [here]</strong>(https://www.dynatrace.com/support/help/setup-and-configuration/integrations/third-party-integrations/test-automation-frameworks/dynatrace-and-load-testing-tools-integration/)</p>
+</google-codelab-step>
+<google-codelab-step label="Defining Request Attribute" duration="10">
+<p>You can use any (or multiple) HTTP headers or HTTP parameters to pass context information. The extraction rules can be configured via <strong>Settings &gt; Server-side service monitoring &gt; Request attributes.</strong></p>
+<p>The header x-dynatrace-test is used in the following examples with the following set of key/value pairs for the header:</p>
+<p><strong>VU</strong>	| Virtual User ID of the unique user who sent the request. <strong>SI</strong>	| Source ID identifies the product that triggered the request (JMeter, LoadRunner, Neotys, or other) <strong>TSN</strong> | Test Step Name is a logical test step within your load testing script (for example, Login or Add to cart. <strong>LSN</strong>	| Load Script Name - name of the load testing script. This groups a set of test steps that make up a multi-step transaction (for example, an online purchase). <strong>LTN</strong> | The Load Test Name uniquely identifies a test execution (for example, 6h Load Test – June 25) <strong>PC</strong>	| Page Context provides information about the document that is loaded in the currently processed page.</p>
+<p class="image-container"><img alt="Request-Attribute" src="img/8f27a5c6186f6ee2.png"></p>
+<p class="image-container"><img alt="Request-Attribute" src="img/5b3b26bdfaf85bbf.png"></p>
+</google-codelab-step>
+<google-codelab-step label="Request Tag-based Analysis" duration="20">
+<h2 is-upgraded>Creating Tags</h2>
+<p>Tagging is a powerful mechanism. However, to reap its benefits, tagging should be used carefully and in a meaningful way. To guide you towards this end, we provide you with specific recommendations and best practices, which are described below. With auto-tagging based on metadata, tags can be generated automatically and assigned to monitored entities with the specific metadata values that Dynatrace detects automatically.</p>
+<p><a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/tags-and-metadata/" target="_blank">Best Practices for Tagging</a></p>
+<h2 is-upgraded>Naming Rules</h2>
+<p>Dynatrace automatically provides names, but they don&#39;t enable you to quickly identify where an application or service belongs to. To achieve this, it&#39;s recommended that you use service naming rules and process group naming rules. This can be done in Dynatrace using metadata imported from the monitored applications.</p>
+<p>You can use Dynatrace Naming Rules to differentiate requests</p>
+<p class="image-container"><img alt="Request-tag" src="img/391a32cda8165e59.png"></p>
+<p>Documentation <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/tags-and-metadata/setup/how-to-define-tags/" target="_blank">here</a></p>
+<h2 is-upgraded>Annotate Dynatrace with Events</h2>
+<p>The Events API delivers details about all uncorrelated events that Dynatrace collects within your environment. Information returned for each event includes attributes about the event source, the entity where the event was collected, and other event-specific details.</p>
+<p>PUSH endpoint enables third-party systems such as CI platforms (Jenkins, Bamboo, Electric Cloud, etc.) to provide additional details for Dynatrace automated root cause analysis.</p>
+<p class="image-container"><img alt="Event-API" src="img/cdadb18f529c4819.png"></p>
+<p>Documentation <a href="https://www.dynatrace.com/support/help/dynatrace-api/environment-api/events/push-deployment-events-from-jenkins/" target="_blank">here</a></p>
+<h2 is-upgraded>Compare and Analyze events</h2>
+<p>There are different ways to analyze the data. Your approach should be based on the type of performance analysis you want to do (for example, crashes, resource and performance hotspots, or scalability issues).</p>
+<p class="image-container"><img alt="Event-API" src="img/5e3be8fb6768f848.png"></p>
+<p>Documentation <a href="https://www.dynatrace.com/support/help/shortlink/load-testing-process#compare--analyze" target="_blank">here</a></p>
+</google-codelab-step>
+<google-codelab-step label="Automate with Curl" duration="10">
+<p>The steps that we ran through could be automated with by initiating HTTP requests through curl.</p>
+<p class="image-container"><img alt="Event-API" src="img/7020aef261c1e7d3.png"></p>
+</google-codelab-step>
+<google-codelab-step label="Feedback" duration="3">
+<p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
+<google-codelab-survey survey-id="automate-operations-1-1">
+<h4>How was your overall experience with this lab?</h4>
+<paper-radio-group>
+<paper-radio-button>Excellent</paper-radio-button>
+<paper-radio-button>Good</paper-radio-button>
+<paper-radio-button>Average</paper-radio-button>
+<paper-radio-button>Fair</paper-radio-button>
+<paper-radio-button>Poor</paper-radio-button>
+</paper-radio-group>
+</google-codelab-survey>
+<google-codelab-survey survey-id="automate-operations-1-2">
+<h4>What did you benefit most from this lab?</h4>
+<paper-radio-group>
+<paper-radio-button>Using OneAgent Operator to deploy in Kubernetes</paper-radio-button>
+<paper-radio-button>Setting up Kubernetes integation</paper-radio-button>
+<paper-radio-button>Enabling early access feature flags</paper-radio-button>
+<paper-radio-button>Learning Kubernetes View in Dynatrace</paper-radio-button>
+</paper-radio-group>
+</google-codelab-survey>
+<google-codelab-survey survey-id="automate-operations-1-3">
+<h4>How likely are you to recommend this lab to a friend or colleague?</h4>
+<paper-radio-group>
+<paper-radio-button>Very Likely</paper-radio-button>
+<paper-radio-button>Moderately Likely</paper-radio-button>
+<paper-radio-button>Neither Likely nor unlikely</paper-radio-button>
+<paper-radio-button>Moderately Unlikely</paper-radio-button>
+<paper-radio-button>Very Unlikely</paper-radio-button>
+</paper-radio-group>
+</google-codelab-survey>
+<aside class="special"><p>💡 For other ideas and suggestions, please <a href="mailto:APAC-SE-Central@dynatrace.com?subject=Automate Feedback 1 - Ideas and Suggestions" target="_blank"><strong>reach out via email</strong></a>.</p>
+</aside>
+</google-codelab-step>
+</google-codelab>
+<script src="../../elements/codelab-elements/native-shim.js"></script>
+<script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+<script src="../../elements/codelab-elements/prettify.js"></script>
+<script src="../../elements/codelab-elements/codelab-elements.js"></script>
+<script src="//support.google.com/inapp/api.js"></script>
+</body>
+</html>
