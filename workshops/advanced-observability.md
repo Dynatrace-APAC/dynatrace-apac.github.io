@@ -321,7 +321,7 @@ Click on **Add property > Custom defined property** and another property with th
 
 * Expression type – **CSS selector**
 * Data type – **Double**
-* CSS selector – **button[name="payment:pay"]**
+* CSS selector – `button[name="payment:pay"]`
 * Display name – **Revenue**
 * Key – **revenue**
 * Store as session property
