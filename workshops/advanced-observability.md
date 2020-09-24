@@ -325,7 +325,7 @@ Click on **Add property > Custom defined property** and another property with th
 * Display name – **Revenue**
 * Key – **revenue**
 * Store as session property
-* Cleanup rule - **Pay\s\$(.*?)\.**
+* Cleanup rule - `Pay\s\$(.*?)\.`
 
 ![Session-properties](assets/adv-observe/session-prop-2.png)
 
