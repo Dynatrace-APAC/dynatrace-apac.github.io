@@ -211,7 +211,7 @@ While waiting for Easy Travel to start, you can explore Dynatrace and using the 
 
 <!-- ------------------------ -->
 ## Custom Services
-Duration: 15
+Duration: 10
 
 In this exercise, we will be creating a custom Java service. This is a typical scenerio for 3rd party apps or proprietary software that Dynatrace monitors but doesn't instrument automatically. 
 
@@ -237,8 +237,8 @@ Click on **Define Java services** and use the following:
 ![Custom-service](assets/adv-observe/custom-service.gif)
 
 <!-- ------------------------ -->
-## Request Attribute
-Duration: 15
+## Request Attributes
+Duration: 10
 
 In this exercise, we will cover the setting up Request Attributes. These leveraged for deep visibility into all the details of your users’ interactions with your application. 
 
@@ -272,7 +272,7 @@ Click on **View requests** and validate the key-value pairs of Loyalty Status un
 
 <!-- ------------------------ -->
 ## Calculated Service Metrics Properties
-Duration: 15
+Duration: 10
 
 In this exercise, we will cover the setting up **Calulated Service Metrics** with Request Attributes. These leveraged for deep visibility into all the details of your users’ interactions with your application. 
 
