@@ -237,29 +237,16 @@ Click on **Define Java services** and use the following:
 ![Custom-service](assets/adv-observe/custom-service.gif)
 
 <!-- ------------------------ -->
-## Session Properties
+## Request Attribute
 Duration: 15
 
-In this exercise, we will cover the setting up Session Properties with Request Attributes. These leveraged for deep visibility into all the details of your users’ interactions with your application. 
+In this exercise, we will cover the setting up Request Attributes. These leveraged for deep visibility into all the details of your users’ interactions with your application. 
 
 ### Creating Request Attributes
 
 Go to **Settings > Server-side service monitoring > Request Attributes**
 
 Click on **Define a new request attribute** and use the following:
-
-* Name – **Loyalty status**
-* Data type – Text (remains unchanged)
-* First value (remains unchanged)
-* Leave text as-is (remains unchanged)
-* Request attribute source - **Web request URL query parameter**
-* Select **Capture on server side** on Drop down menu
-* Parameter name - **loyalty**
-* Click on **Save**
-
-![Request-attribute](assets/adv-observe/request-attribute-1.gif)
-
-Click on **Add new data source** within the **same request attribute** and use the following:
 
 * Request attribute source – **Java method parameter(s)**
 * Click on **Select method sources**
@@ -272,26 +259,8 @@ Click on **Add new data source** within the **same request attribute** and use t
 
 ![Request-attribute](assets/adv-observe/request-attribute-2.gif)
 
-Click on **Add new data source** within the **same request attribute** and use the following:
-
-* Request attribute source – **Java method parameter(s)**
-* Click on **Select method sources**
-* Select **business.backend**
-* Search for **AuthenticationService**
-* Select **Use the selected class**
-* Search for **getLoyaltyStatus**
-* Choose **Return value** on Capture Drop down 
-* Click on **Save**
-
-![Request-attribute](assets/adv-observe/request-attribute-3.gif)
-
-Ensure that right data sources are in below order and click on **save** on the top right.
-
-1. Authentication Service
-2. Booking Service
-3. URL query parameter
-
-![Request-attribute](assets/adv-observe/request-attribute.png)
+NEGATIVE
+: Note that examples of **Request Attributes** have also been created for you and we are doing these for the purposes of running through the request attribute creation process.
 
 ### Validate of Loyalty Status Request Attribute
 
@@ -301,87 +270,14 @@ Click on **View requests** and validate the key-value pairs of Loyalty Status un
 
 ![Request-attribute](assets/adv-observe/request-attribute-values.png)
 
-### Define Session Properties
-
-Go to **Applications > EasyTravel Website > Settings > Session and user action properties**
-
-Click on **Add property > Custom defined property** and use the following:
-
-* Expression type – **Server side request attribute**
-* RA name – **Loyalty status**
-* Display name – **Loyalty status**
-* Key – **loyalty_status**
-* Toggle on **Store as session property**
-* Aggregation type – Last Value
-* Click on **Save propery**
-
-![Session-properties](assets/adv-observe/session-prop-1.gif)
-
-Click on **Add property > Custom defined property** and another property with the following:
-
-* Expression type – **CSS selector**
-* Data type – **Double**
-* CSS selector – `button[name="payment:pay"]`
-* Display name – **Revenue**
-* Key – **revenue**
-* Store as session property
-* Cleanup rule - `Pay\s\$(.*?)\.`
-
-![Session-properties](assets/adv-observe/session-prop-2.png)
-
 <!-- ------------------------ -->
 ## Calculated Service Metrics Properties
 Duration: 15
 
-In this exercise, we will cover the setting up Calulated Service Metrics with Request Attributes. These leveraged for deep visibility into all the details of your users’ interactions with your application. 
+In this exercise, we will cover the setting up **Calulated Service Metrics** with Request Attributes. These leveraged for deep visibility into all the details of your users’ interactions with your application. 
 
-### Creating Request Attributes
-
-Go to **Settings > Server-side service monitoring > Request Attributes**
-
-Click on **Define a new request attribute** and use the following:
-
-* Name – **Revenue**
-* Data type – **Double** 
-* **Sum of numeric values**
-* Leave text as-is (remains unchanged)
-* **Check** the Allow this attribute to access unmasked personal data
-* Request attribute source - **Web request URL query parameter**
-* Select **Capture on both client and server side** on Drop down menu
-* Parameter name - **amount**
-* Click on **Save**
-
-Click on **Add new data source** within the **same request attribute** and use the following:
-
-* Request attribute source – **Java method parameter(s)**
-* Click on **Select method sources**
-* Select **business.backend**
-* Search for **BookingService**
-* Select **Use the selected class**
-* Search for **storeBooking**
-* Choose **4:java.lang.Double** on Capture Drop down 
-* Click on **Save**
-
-Click on **Add new data source** within the **same request attribute** and use the following:
-
-* Request attribute source – **Java method parameter(s)**
-* Click on **Select method sources**
-* Select **customer.frontend**
-* Search for **DataProviderInterface**
-* Select **Use the selected class**
-* Search for **storeBooking**
-* Choose **4:java.lang.Double** on Capture Drop down 
-* Click on **Save**
-
-![Session-properties](assets/adv-observe/request-attribute-list.png)
-
-### Validate of Loyalty Status Request Attribute
-
-Go to **Transactions and services** and filter on **BookingService**. 
-
-Click on **View requests** and validate the key-value pairs of Loyalty Status under the **Request Attribute** tab. 
-
-![Request-attribute](assets/adv-observe/request-attribute-values.png)
+NEGATIVE
+: Note that examples of **Request Attributes** have also been created for you and we are doing these for the purposes of running through the request attribute creation process.
 
 ### Define Calculated Service Metric
 

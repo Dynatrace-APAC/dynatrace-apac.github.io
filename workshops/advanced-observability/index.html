@@ -215,23 +215,11 @@ localhost                  : ok=11   changed=1    unreachable=0    failed=0    s
 
       </google-codelab-step>
     
-      <google-codelab-step label="Session Properties" duration="15">
-        <p>In this exercise, we will cover the setting up Session Properties with Request Attributes. These leveraged for deep visibility into all the details of your users&#39; interactions with your application.</p>
+      <google-codelab-step label="Request Attribute" duration="15">
+        <p>In this exercise, we will cover the setting up Request Attributes. These leveraged for deep visibility into all the details of your users&#39; interactions with your application.</p>
 <h2 is-upgraded>Creating Request Attributes</h2>
 <p>Go to <strong>Settings &gt; Server-side service monitoring &gt; Request Attributes</strong></p>
 <p>Click on <strong>Define a new request attribute</strong> and use the following:</p>
-<ul>
-<li>Name – <strong>Loyalty status</strong></li>
-<li>Data type – Text (remains unchanged)</li>
-<li>First value (remains unchanged)</li>
-<li>Leave text as-is (remains unchanged)</li>
-<li>Request attribute source - <strong>Web request URL query parameter</strong></li>
-<li>Select <strong>Capture on server side</strong> on Drop down menu</li>
-<li>Parameter name - <strong>loyalty</strong></li>
-<li>Click on <strong>Save</strong></li>
-</ul>
-<p class="image-container"><img alt="Request-attribute" src="img/940260be93ad6e.gif"></p>
-<p>Click on <strong>Add new data source</strong> within the <strong>same request attribute</strong> and use the following:</p>
 <ul>
 <li>Request attribute source – <strong>Java method parameter(s)</strong></li>
 <li>Click on <strong>Select method sources</strong></li>
@@ -243,100 +231,20 @@ localhost                  : ok=11   changed=1    unreachable=0    failed=0    s
 <li>Click on <strong>Save</strong></li>
 </ul>
 <p class="image-container"><img alt="Request-attribute" src="img/408920b64892f607.gif"></p>
-<p>Click on <strong>Add new data source</strong> within the <strong>same request attribute</strong> and use the following:</p>
-<ul>
-<li>Request attribute source – <strong>Java method parameter(s)</strong></li>
-<li>Click on <strong>Select method sources</strong></li>
-<li>Select <strong>business.backend</strong></li>
-<li>Search for <strong>AuthenticationService</strong></li>
-<li>Select <strong>Use the selected class</strong></li>
-<li>Search for <strong>getLoyaltyStatus</strong></li>
-<li>Choose <strong>Return value</strong> on Capture Drop down</li>
-<li>Click on <strong>Save</strong></li>
-</ul>
-<p class="image-container"><img alt="Request-attribute" src="img/d3abf422239420a2.gif"></p>
-<p>Ensure that right data sources are in below order and click on <strong>save</strong> on the top right.</p>
-<ol type="1">
-<li>Authentication Service</li>
-<li>Booking Service</li>
-<li>URL query parameter</li>
-</ol>
-<p class="image-container"><img alt="Request-attribute" src="img/7f8cd3f6fe958e2d.png"></p>
+<aside class="warning"><p>Note that examples of <strong>Request Attributes</strong> have also been created for you and we are doing these for the purposes of running through the request attribute creation process.</p>
+</aside>
 <h2 is-upgraded>Validate of Loyalty Status Request Attribute</h2>
 <p>Go to <strong>Transactions and services</strong> and filter on <strong>AuthenticationService</strong>.</p>
 <p>Click on <strong>View requests</strong> and validate the key-value pairs of Loyalty Status under the <strong>Request Attribute</strong> tab.</p>
 <p class="image-container"><img alt="Request-attribute" src="img/82c694100abffcef.png"></p>
-<h2 is-upgraded>Define Session Properties</h2>
-<p>Go to <strong>Applications &gt; EasyTravel Website &gt; Settings &gt; Session and user action properties</strong></p>
-<p>Click on <strong>Add property &gt; Custom defined property</strong> and use the following:</p>
-<ul>
-<li>Expression type – <strong>Server side request attribute</strong></li>
-<li>RA name – <strong>Loyalty status</strong></li>
-<li>Display name – <strong>Loyalty status</strong></li>
-<li>Key – <strong>loyalty_status</strong></li>
-<li>Toggle on <strong>Store as session property</strong></li>
-<li>Aggregation type – Last Value</li>
-<li>Click on <strong>Save propery</strong></li>
-</ul>
-<p class="image-container"><img alt="Session-properties" src="img/a709e677b47b9fa1.gif"></p>
-<p>Click on <strong>Add property &gt; Custom defined property</strong> and another property with the following:</p>
-<ul>
-<li>Expression type – <strong>CSS selector</strong></li>
-<li>Data type – <strong>Double</strong></li>
-<li>CSS selector – <code>button[name=&#34;payment:pay&#34;]</code></li>
-<li>Display name – <strong>Revenue</strong></li>
-<li>Key – <strong>revenue</strong></li>
-<li>Store as session property</li>
-<li>Cleanup rule - <code>Pay\s\$(.*?)\.</code></li>
-</ul>
-<p class="image-container"><img alt="Session-properties" src="img/cec93607fb229579.png"></p>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="Calculated Service Metrics Properties" duration="15">
-        <p>In this exercise, we will cover the setting up Calulated Service Metrics with Request Attributes. These leveraged for deep visibility into all the details of your users&#39; interactions with your application.</p>
-<h2 is-upgraded>Creating Request Attributes</h2>
-<p>Go to <strong>Settings &gt; Server-side service monitoring &gt; Request Attributes</strong></p>
-<p>Click on <strong>Define a new request attribute</strong> and use the following:</p>
-<ul>
-<li>Name – <strong>Revenue</strong></li>
-<li>Data type – <strong>Double</strong></li>
-<li><strong>Sum of numeric values</strong></li>
-<li>Leave text as-is (remains unchanged)</li>
-<li><strong>Check</strong> the Allow this attribute to access unmasked personal data</li>
-<li>Request attribute source - <strong>Web request URL query parameter</strong></li>
-<li>Select <strong>Capture on both client and server side</strong> on Drop down menu</li>
-<li>Parameter name - <strong>amount</strong></li>
-<li>Click on <strong>Save</strong></li>
-</ul>
-<p>Click on <strong>Add new data source</strong> within the <strong>same request attribute</strong> and use the following:</p>
-<ul>
-<li>Request attribute source – <strong>Java method parameter(s)</strong></li>
-<li>Click on <strong>Select method sources</strong></li>
-<li>Select <strong>business.backend</strong></li>
-<li>Search for <strong>BookingService</strong></li>
-<li>Select <strong>Use the selected class</strong></li>
-<li>Search for <strong>storeBooking</strong></li>
-<li>Choose <strong>4:java.lang.Double</strong> on Capture Drop down</li>
-<li>Click on <strong>Save</strong></li>
-</ul>
-<p>Click on <strong>Add new data source</strong> within the <strong>same request attribute</strong> and use the following:</p>
-<ul>
-<li>Request attribute source – <strong>Java method parameter(s)</strong></li>
-<li>Click on <strong>Select method sources</strong></li>
-<li>Select <strong>customer.frontend</strong></li>
-<li>Search for <strong>DataProviderInterface</strong></li>
-<li>Select <strong>Use the selected class</strong></li>
-<li>Search for <strong>storeBooking</strong></li>
-<li>Choose <strong>4:java.lang.Double</strong> on Capture Drop down</li>
-<li>Click on <strong>Save</strong></li>
-</ul>
-<p class="image-container"><img alt="Session-properties" src="img/6b8c1a22ccab2aef.png"></p>
-<h2 is-upgraded>Validate of Loyalty Status Request Attribute</h2>
-<p>Go to <strong>Transactions and services</strong> and filter on <strong>BookingService</strong>.</p>
-<p>Click on <strong>View requests</strong> and validate the key-value pairs of Loyalty Status under the <strong>Request Attribute</strong> tab.</p>
-<p class="image-container"><img alt="Request-attribute" src="img/82c694100abffcef.png"></p>
+        <p>In this exercise, we will cover the setting up <strong>Calulated Service Metrics</strong> with Request Attributes. These leveraged for deep visibility into all the details of your users&#39; interactions with your application.</p>
+<aside class="warning"><p>Note that examples of <strong>Request Attributes</strong> have also been created for you and we are doing these for the purposes of running through the request attribute creation process.</p>
+</aside>
 <h2 is-upgraded>Define Calculated Service Metric</h2>
 <p>Go to <strong>Settings &gt; Server-side service monitoring &gt; Calculated service metrics</strong></p>
 <p>Click on <strong>Create new metric</strong> and use the following:</p>
