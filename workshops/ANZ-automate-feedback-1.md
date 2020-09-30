@@ -12,18 +12,41 @@ Analytics Account: UA-175467274-1
 ## Introduction 
 Duration: 1
 
-The labs contains the steps for Automate Feedback: Integration of Load Test Tools with Dynatrace Session 1 training.
-
-You will get access to a EC2 instance that has been provided for the purposes of this training.
+This lab is the first lab of the Automate Feedback track, AIOps Enablement Series for ANZ Bank.
 
 ### Prerequisites
-- Dynatrace SaaS/Managed Account. Get your free SaaS trial [here](https://www.dynatrace.com/trial/).
-- Chrome Browser 
+The script to install all the pre-requisites in order to run a hands-on session for AIOps. A simple Bash script will set-up a fully functional Single Node Dynatrace installed and required dockers installed. This script can be used to run the commands on a **LINUX/UBUNTU Server 18.04 LTS & 20.04 LTS**. Inspired by [Keptn-in-a-box](https://github.com/keptn-sandbox/keptn-in-a-box)
 
-### What You’ll Learn 
-- Integrate JMeter with Dynatrace.  
-- Push events in Dynatrace and create request-attributes 
-  - Dev/Test team can isolate the requests invoked during the load-tests.
+🥜 **Features in a Nutshell**
+- Update the ubuntu repository 
+- Installation of Docker (for building own Docker images) 
+- Installation of Microkubernetes 
+- Set up of useful BASH Aliases for working with the command line 
+- Installation of Dynatrace ActiveGate and configuration of Cluster and Workload monitoring 
+- Enabling own Docker Registry for the Cluster Installation of Dynatrace OneAgent. 
+- Create a user account and copy the standard user (ubuntu on this case) with his own home directory (a replica) and allowing SSH connections with text password. 
+- Useful for spinning an army of workshop clusters. 
+- Download apache-jmeter which can be used in order to showcase Jenkins/Dynatrace integration. 
+- Download proprietary Jenkins docker image created for such workshop. 
+- Download proprietary Sample Bank Application Docker created for bank organizations. 
+- Download standard ansible-tower which could be used for workshop. 
+- Download the Dockerfile/repositories required to run the workshops.
+
+📚 **More about the script**
+
+Script has boolean flags which can act as control flags in order to enable/disable the features. Currently, the available features would have multiple dockers installed, however, moving forward more features can be added - for example, micro-k8s can be added to control and spin these dockers or a keptn on top of k8s. The repository mainly contains the following file: 
+- install-workshop-tech-stack.sh 
+- install-prerequisites.sh
+
+### Setup 
+Run the script in the available machine
+
+1. Log in into your Ubuntu image
+2. Clone the repo and navigate to the directory 
+  - `git clone https://github.com/nikhilgoenkatech/ACMD1Workshops.git ; cd ACMD1Workshops`
+3. Execute the file with sudo rights. 
+  - `sudo bash -c './install-workshop-tech-stack.sh &'`
+4. For inspecting the installation on realtime type: `less +F /tmp/install.log`
 
 Negative
 : As different teams might have their own proprietary test-beds/suits, so we will demo stimulating requests using curl commands too.
@@ -43,7 +66,7 @@ While executing a load test from your load testing tool of choice (JMeter, Neoty
 
 ![HTTP-Headers](assets/ANZ-aiops/adding-http-headers.png)
 
-**Full integration and approach is documentated [here]**(https://www.dynatrace.com/support/help/setup-and-configuration/integrations/third-party-integrations/test-automation-frameworks/dynatrace-and-load-testing-tools-integration/)
+**Full integration and approach is documentated**  [here](https://www.dynatrace.com/support/help/setup-and-configuration/integrations/third-party-integrations/test-automation-frameworks/dynatrace-and-load-testing-tools-integration/)
 
 <!-- ------------------------ -->
 ## Defining Request Attribute
@@ -54,16 +77,20 @@ The extraction rules can be configured via **Settings > Server-side service moni
 
 The header x-dynatrace-test is used in the following examples with the following set of key/value pairs for the header:
 
-**VU**	| Virtual User ID of the unique user who sent the request.
-**SI**	| Source ID identifies the product that triggered the request (JMeter, LoadRunner, Neotys, or other)
-**TSN** | Test Step Name is a logical test step within your load testing script (for example, Login or Add to cart.
-**LSN**	| Load Script Name - name of the load testing script. This groups a set of test steps that make up a multi-step transaction (for example, an online purchase).
-**LTN** | The Load Test Name uniquely identifies a test execution (for example, 6h Load Test – June 25)
-**PC**	| Page Context provides information about the document that is loaded in the currently processed page.
+|    |           |
+|----|-----------|
+| **Code**  |**Description**   |
+| **VU**  |   Virtual User ID of the unique user who sent the request.      |
+| **SI**  |   Source ID identifies the product that triggered the request (JMeter, LoadRunner, Neotys, or other)     |
+| **TSN**   |   Test Step Name is a logical test step within your load testing script (for example, Login or Add to cart.     |
+| **LSN** |   Load Script Name - name of the load testing script. This groups a set of test steps that make up a multi-step transaction (for example, an online purchase).      |
+| **LTN**  |   The Load Test Name uniquely identifies a test execution (for example, 6h Load Test – June 25)     |
+| **PC**  |   Page Context provides information about the document that is loaded in the currently processed page.     |
 
-![Request-Attribute](assets/ANZ-aiops/request-attribute-1.png)
 
-![Request-Attribute](assets/ANZ-aiops/request-attribute-2.png)
+![Request-Attribute](assets/ANZ-aiops/Request_attribute_setting_1.png)
+
+![Request-Attribute](assets/ANZ-aiops/Request_attribute_setting_2.png)
 
 <!-- ------------------------ -->
 ## Request Tag-based Analysis
@@ -81,7 +108,7 @@ Dynatrace automatically provides names, but they don’t enable you to quickly i
 
 You can use Dynatrace Naming Rules to differentiate requests
 
-![Request-tag](assets/ANZ-aiops/request-tag.png)
+![Request-tag](assets/ANZ-aiops/Service_Tag_1.png)
 
 Documentation [here](https://www.dynatrace.com/support/help/how-to-use-dynatrace/tags-and-metadata/setup/how-to-define-tags/)
 
@@ -91,7 +118,7 @@ The Events API delivers details about all uncorrelated events that Dynatrace col
 
 PUSH endpoint enables third-party systems such as CI platforms (Jenkins, Bamboo, Electric Cloud, etc.) to provide additional details for Dynatrace automated root cause analysis.
 
-![Event-API](assets/ANZ-aiops/event-api.png)
+![Event-API](assets/ANZ-aiops/Event_Info_1.png)
 
 Documentation [here](https://www.dynatrace.com/support/help/dynatrace-api/environment-api/events/push-deployment-events-from-jenkins/)
 
@@ -129,10 +156,10 @@ We hope you enjoyed this lab and found it useful. We would love your feedback!
 
 <form>
   <name>What did you benefit most from this lab?</name>
-  <input value="Using OneAgent Operator to deploy in Kubernetes" />
-  <input value="Setting up Kubernetes integation" />
-  <input value="Enabling early access feature flags" />
-  <input value="Learning Kubernetes View in Dynatrace" />
+  <input value="Defining Load Testing Request Attribute" />
+  <input value="Annotate Dynatrace with Events from Load Testing" />
+  <input value="Automating with Curl" />
+  <input value="Compare and Analyze events" />
 </form>
 
 <form>

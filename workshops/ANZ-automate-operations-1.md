@@ -8,12 +8,8 @@ Feedback Link: mailto:d1-apac@dynatrace.com
 Analytics Account: UA-175467274-1
 
 # Automate Operations - Session 1
-<!-- ------------------------ -->
-## Introduction 
-Duration: 1
 
 The labs contains the steps for Automate Operations: Integration of Load Test Tools with Dynatrace Session 1 training.
-
 You will get access to a EC2 instance that has been provided for the purposes of this training.
 
 ### Prerequisites
