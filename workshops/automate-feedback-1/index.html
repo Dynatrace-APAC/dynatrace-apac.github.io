@@ -28,46 +28,9 @@
                   feedback-link="mailto:d1-apac@dynatrace.com">
     
       <google-codelab-step label="Introduction" duration="1">
-        <p>This lab is the first lab of the Automate Feedback track, AIOps Enablement Series for ANZ Bank.</p>
-<h2 is-upgraded>Prerequisites</h2>
-<p>The script to install all the pre-requisites in order to run a hands-on session for AIOps. A simple Bash script will set-up a fully functional Single Node Dynatrace installed and required dockers installed. This script can be used to run the commands on a <strong>LINUX/UBUNTU Server 18.04 LTS &amp; 20.04 LTS</strong>. Inspired by <a href="https://github.com/keptn-sandbox/keptn-in-a-box" target="_blank">Keptn-in-a-box</a></p>
-<p>🥜 <strong>Features in a Nutshell</strong></p>
-<ul>
-<li>Update the ubuntu repository</li>
-<li>Installation of Docker (for building own Docker images)</li>
-<li>Installation of Microkubernetes</li>
-<li>Set up of useful BASH Aliases for working with the command line</li>
-<li>Installation of Dynatrace ActiveGate and configuration of Cluster and Workload monitoring</li>
-<li>Enabling own Docker Registry for the Cluster Installation of Dynatrace OneAgent.</li>
-<li>Create a user account and copy the standard user (ubuntu on this case) with his own home directory (a replica) and allowing SSH connections with text password.</li>
-<li>Useful for spinning an army of workshop clusters.</li>
-<li>Download apache-jmeter which can be used in order to showcase Jenkins/Dynatrace integration.</li>
-<li>Download proprietary Jenkins docker image created for such workshop.</li>
-<li>Download proprietary Sample Bank Application Docker created for bank organizations.</li>
-<li>Download standard ansible-tower which could be used for workshop.</li>
-<li>Download the Dockerfile/repositories required to run the workshops.</li>
-</ul>
-<p>📚 <strong>More about the script</strong></p>
-<p>Script has boolean flags which can act as control flags in order to enable/disable the features. Currently, the available features would have multiple dockers installed, however, moving forward more features can be added - for example, micro-k8s can be added to control and spin these dockers or a keptn on top of k8s. The repository mainly contains the following file:</p>
-<ul>
-<li>install-workshop-tech-stack.sh</li>
-<li>install-prerequisites.sh</li>
-</ul>
-<h2 is-upgraded>Setup</h2>
-<p>Run the script in the available machine</p>
-<ol type="1">
-<li>Log in into your Ubuntu image</li>
-<li>Clone the repo and navigate to the directory  <ul>
-<li><code>git clone https://github.com/nikhilgoenkatech/ACMD1Workshops.git ; cd ACMD1Workshops</code></li>
-</ul>
-</li>
-<li>Execute the file with sudo rights.  <ul>
-<li><code>sudo bash -c &#39;./install-workshop-tech-stack.sh &amp;&#39;</code></li>
-</ul>
-</li>
-<li>For inspecting the installation on realtime type: <code>less +F /tmp/install.log</code></li>
-</ol>
-<aside class="warning"><p>As different teams might have their own proprietary test-beds/suits, so we will demo stimulating requests using curl commands too.</p>
+        <p>This lab is the first session of the AIOps Enablement Series for ANZ Bank. This track focuses on the Automate Feedback, which relates to how you could integate Dynatrace with load testing tools to create <strong>Performance as a service</strong>.</p>
+<p class="image-container"><img alt="overview" src="img/2985c92b0ca80830.png"></p>
+<aside class="warning"><p>The content for the labs are for reference purposes only. Full instructions and details will be provided within the actual labs.</p>
 </aside>
 
 
@@ -79,7 +42,8 @@
 <h2 is-upgraded>Tag tests with HTTP headers</h2>
 <p>While executing a load test from your load testing tool of choice (JMeter, Neotys, LoadRunner, etc) each simulated HTTP request can be tagged with additional HTTP headers that contain test-transaction information (for example, script name, test step name, and virtual user ID). Dynatrace can analyze incoming HTTP headers and extract such contextual information from the header values and tag the captured requests with request attributes. Request attributes enable you to filter your monitoring data based on defined tags.</p>
 <p class="image-container"><img alt="HTTP-Headers" src="img/d33610534a82ad28.png"></p>
-<p><strong>Full integration and approach is documentated</strong><a href="https://www.dynatrace.com/support/help/setup-and-configuration/integrations/third-party-integrations/test-automation-frameworks/dynatrace-and-load-testing-tools-integration/" target="_blank">here</a></p>
+<aside class="special"><p>Documented steps can be found here <a href="https://www.dynatrace.com/support/help/setup-and-configuration/integrations/third-party-integrations/test-automation-frameworks/dynatrace-and-load-testing-tools-integration/" target="_blank">here</a></p>
+</aside>
 
 
       </google-codelab-step>
@@ -120,28 +84,32 @@
       <google-codelab-step label="Request Tag-based Analysis" duration="20">
         <h2 is-upgraded>Creating Tags</h2>
 <p>Tagging is a powerful mechanism. However, to reap its benefits, tagging should be used carefully and in a meaningful way. To guide you towards this end, we provide you with specific recommendations and best practices, which are described below. With auto-tagging based on metadata, tags can be generated automatically and assigned to monitored entities with the specific metadata values that Dynatrace detects automatically.</p>
-<p><a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/tags-and-metadata/" target="_blank">Best Practices for Tagging</a></p>
+<aside class="special"><p>Documentation for <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/tags-and-metadata/" target="_blank">Best Practices for Tagging</a></p>
+</aside>
 <h2 is-upgraded>Naming Rules</h2>
 <p>Dynatrace automatically provides names, but they don&#39;t enable you to quickly identify where an application or service belongs to. To achieve this, it&#39;s recommended that you use service naming rules and process group naming rules. This can be done in Dynatrace using metadata imported from the monitored applications.</p>
 <p>You can use Dynatrace Naming Rules to differentiate requests</p>
 <p class="image-container"><img alt="Request-tag" src="img/ff0117ba8083ff4.png"></p>
-<p>Documentation <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/tags-and-metadata/setup/how-to-define-tags/" target="_blank">here</a></p>
+<aside class="special"><p>Documented steps can be found <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/tags-and-metadata/setup/how-to-define-tags/" target="_blank">here</a></p>
+</aside>
 <h2 is-upgraded>Annotate Dynatrace with Events</h2>
 <p>The Events API delivers details about all uncorrelated events that Dynatrace collects within your environment. Information returned for each event includes attributes about the event source, the entity where the event was collected, and other event-specific details.</p>
 <p>PUSH endpoint enables third-party systems such as CI platforms (Jenkins, Bamboo, Electric Cloud, etc.) to provide additional details for Dynatrace automated root cause analysis.</p>
 <p class="image-container"><img alt="Event-API" src="img/cd23cee741014f5d.png"></p>
-<p>Documentation <a href="https://www.dynatrace.com/support/help/dynatrace-api/environment-api/events/push-deployment-events-from-jenkins/" target="_blank">here</a></p>
+<aside class="special"><p>Documented steps can be found <a href="https://www.dynatrace.com/support/help/dynatrace-api/environment-api/events/push-deployment-events-from-jenkins/" target="_blank">here</a></p>
+</aside>
 <h2 is-upgraded>Compare and Analyze events</h2>
 <p>There are different ways to analyze the data. Your approach should be based on the type of performance analysis you want to do (for example, crashes, resource and performance hotspots, or scalability issues).</p>
 <p class="image-container"><img alt="Event-API" src="img/5e3be8fb6768f848.png"></p>
-<p>Documentation <a href="https://www.dynatrace.com/support/help/shortlink/load-testing-process#compare--analyze" target="_blank">here</a></p>
+<aside class="special"><p>Documented steps can be found <a href="https://www.dynatrace.com/support/help/shortlink/load-testing-process#compare--analyze" target="_blank">here</a></p>
+</aside>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="Automate with Curl" duration="10">
         <p>The steps that we ran through could be automated with by initiating HTTP requests through curl.</p>
-<p class="image-container"><img alt="Event-API" src="img/7020aef261c1e7d3.png"></p>
+<p class="image-container"><img alt="Event-API" src="img/3b7787b9704a3fab.png"></p>
 
 
       </google-codelab-step>

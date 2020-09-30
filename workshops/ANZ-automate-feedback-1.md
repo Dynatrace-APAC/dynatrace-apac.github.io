@@ -12,44 +12,12 @@ Analytics Account: UA-175467274-1
 ## Introduction 
 Duration: 1
 
-This lab is the first lab of the Automate Feedback track, AIOps Enablement Series for ANZ Bank.
+This lab is the first session of the AIOps Enablement Series for ANZ Bank. This track focuses on the Automate Feedback, which relates to how you could integate Dynatrace with load testing tools to create **Performance as a service**.
 
-### Prerequisites
-The script to install all the pre-requisites in order to run a hands-on session for AIOps. A simple Bash script will set-up a fully functional Single Node Dynatrace installed and required dockers installed. This script can be used to run the commands on a **LINUX/UBUNTU Server 18.04 LTS & 20.04 LTS**. Inspired by [Keptn-in-a-box](https://github.com/keptn-sandbox/keptn-in-a-box)
-
-🥜 **Features in a Nutshell**
-- Update the ubuntu repository 
-- Installation of Docker (for building own Docker images) 
-- Installation of Microkubernetes 
-- Set up of useful BASH Aliases for working with the command line 
-- Installation of Dynatrace ActiveGate and configuration of Cluster and Workload monitoring 
-- Enabling own Docker Registry for the Cluster Installation of Dynatrace OneAgent. 
-- Create a user account and copy the standard user (ubuntu on this case) with his own home directory (a replica) and allowing SSH connections with text password. 
-- Useful for spinning an army of workshop clusters. 
-- Download apache-jmeter which can be used in order to showcase Jenkins/Dynatrace integration. 
-- Download proprietary Jenkins docker image created for such workshop. 
-- Download proprietary Sample Bank Application Docker created for bank organizations. 
-- Download standard ansible-tower which could be used for workshop. 
-- Download the Dockerfile/repositories required to run the workshops.
-
-📚 **More about the script**
-
-Script has boolean flags which can act as control flags in order to enable/disable the features. Currently, the available features would have multiple dockers installed, however, moving forward more features can be added - for example, micro-k8s can be added to control and spin these dockers or a keptn on top of k8s. The repository mainly contains the following file: 
-- install-workshop-tech-stack.sh 
-- install-prerequisites.sh
-
-### Setup 
-Run the script in the available machine
-
-1. Log in into your Ubuntu image
-2. Clone the repo and navigate to the directory 
-  - `git clone https://github.com/nikhilgoenkatech/ACMD1Workshops.git ; cd ACMD1Workshops`
-3. Execute the file with sudo rights. 
-  - `sudo bash -c './install-workshop-tech-stack.sh &'`
-4. For inspecting the installation on realtime type: `less +F /tmp/install.log`
+![overview](assets/ANZ-aiops/overview.png)
 
 Negative
-: As different teams might have their own proprietary test-beds/suits, so we will demo stimulating requests using curl commands too.
+: The content for the labs are for reference purposes only. Full instructions and details will be provided within the actual labs.
 
 <!-- ------------------------ -->
 ## Understanding Dynatrace Integration
@@ -66,7 +34,8 @@ While executing a load test from your load testing tool of choice (JMeter, Neoty
 
 ![HTTP-Headers](assets/ANZ-aiops/adding-http-headers.png)
 
-**Full integration and approach is documentated**  [here](https://www.dynatrace.com/support/help/setup-and-configuration/integrations/third-party-integrations/test-automation-frameworks/dynatrace-and-load-testing-tools-integration/)
+Positive
+: Documented steps can be found here [here](https://www.dynatrace.com/support/help/setup-and-configuration/integrations/third-party-integrations/test-automation-frameworks/dynatrace-and-load-testing-tools-integration/)
 
 <!-- ------------------------ -->
 ## Defining Request Attribute
@@ -100,7 +69,8 @@ Duration: 20
 
 Tagging is a powerful mechanism. However, to reap its benefits, tagging should be used carefully and in a meaningful way. To guide you towards this end, we provide you with specific recommendations and best practices, which are described below. With auto-tagging based on metadata, tags can be generated automatically and assigned to monitored entities with the specific metadata values that Dynatrace detects automatically.
 
-[Best Practices for Tagging](https://www.dynatrace.com/support/help/how-to-use-dynatrace/tags-and-metadata/) 
+Positive
+: Documentation for [Best Practices for Tagging](https://www.dynatrace.com/support/help/how-to-use-dynatrace/tags-and-metadata/) 
 
 ### Naming Rules
 
@@ -110,7 +80,8 @@ You can use Dynatrace Naming Rules to differentiate requests
 
 ![Request-tag](assets/ANZ-aiops/Service_Tag_1.png)
 
-Documentation [here](https://www.dynatrace.com/support/help/how-to-use-dynatrace/tags-and-metadata/setup/how-to-define-tags/)
+Positive
+: Documented steps can be found [here](https://www.dynatrace.com/support/help/how-to-use-dynatrace/tags-and-metadata/setup/how-to-define-tags/)
 
 ### Annotate Dynatrace with Events 
 
@@ -120,7 +91,8 @@ PUSH endpoint enables third-party systems such as CI platforms (Jenkins, Bamboo,
 
 ![Event-API](assets/ANZ-aiops/Event_Info_1.png)
 
-Documentation [here](https://www.dynatrace.com/support/help/dynatrace-api/environment-api/events/push-deployment-events-from-jenkins/)
+Positive
+: Documented steps can be found [here](https://www.dynatrace.com/support/help/dynatrace-api/environment-api/events/push-deployment-events-from-jenkins/)
 
 ### Compare and Analyze events
 
@@ -128,7 +100,8 @@ There are different ways to analyze the data. Your approach should be based on t
 
 ![Event-API](assets/ANZ-aiops/compare-analyze.png)
 
-Documentation [here] (https://www.dynatrace.com/support/help/shortlink/load-testing-process#compare--analyze)
+Positive
+: Documented steps can be found [here](https://www.dynatrace.com/support/help/shortlink/load-testing-process#compare--analyze)
 
 <!-- ------------------------ -->
 ## Automate with Curl
@@ -136,7 +109,7 @@ Duration: 10
 
 The steps that we ran through could be automated with by initiating HTTP requests through curl.
 
-![Event-API](assets/ANZ-aiops/automate-with-curl.png)
+![Event-API](assets/ANZ-aiops/python-code.png)
 
 
 <!-- ------------------------ -->
