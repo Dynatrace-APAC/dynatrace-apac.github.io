@@ -17,7 +17,43 @@ This lab is the first session of the AIOps Enablement Series for ANZ Bank. This 
 ![overview](assets/ANZ-aiops/overview.png)
 
 <!-- ------------------------ -->
-## Install OneAgent
+## Useful Commands ✅ 
+
+Positive
+: To start the docker with sample application:
+   `docker run -d --name SampleBankApp -p 4000:3000 nikhilgoenka/sample-bank-app`
+  * This would start the docker on port localhost:4000 with docker name as **SampleBankApp**
+   
+Positive
+: To start the jenkins docker:
+   `docker run -d --network mynetwork --name Jenkins-Dynatrace -p 8020:8080  -v /var/jenkins:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock nikhilgoenka/jenkins-dynatrace-workshop`
+   * -d runs the docker in daemon mode.
+   * -p 8020:8080 - By default, jenkins docker would be running on 8080. Specifying **-p 8020:8080** binds the 8080 in docker to localhost on 8020. So, you can forward/listen requests from docker using `localhost:8020`.
+   * -v Bind mounts a volume.
+    By default, jenkins docker is maintaining the pipeline/data information in /var/jenkins_home. 
+    Specifying **-v /var/jenkins:/var/jenkins_home** would mount the localhost:/var/jenkins directory so that the pipeline data is not lost once pipeline is re-started.
+    Specifying **-v /var/run/docker.sock:/var/run/docker.sock** will allow the jekins docker to leverage the dockerd running on localhost. This would be required since we are starting the
+    sample-app dockers while running the pipeline.
+
+Positive
+: To run the ansible-tower docker:
+   `docker run -d --name ansible-tower -p 8090:443 ybalt/ansible-tower`
+   This would start the docker on port **localhost:8090** with docker name as **ansible-tower**
+
+**Other useful commands:**
+* To **view the downloaded images** on localhost: `docker images`
+* To **remove a particular image**: `docker rmi <IMAGE-NAME>`
+* To **stop a docker**: `docker stop <CONTAINER-ID>`
+* To **remove a docker**: `docker rm <CONTAINER-ID>`
+* To **run a docker in interactive bash**: `docker run -it <CONTAINER> /bin/bash`
+* To **delete all the unused images**: `docker system prune -a -f`
+* To **pull a particular image**: `docker pull <docker-image>`
+* Jenkins pipeline:
+   Command: `https://github.com/nikhilgoenkatech/JenkinsBankApp`
+
+
+<!-- ------------------------ -->
+## OneAgent Installation
 Duration: 10
 
 In this exercise, we will deploy the OneAgent to a Linux instance and let the OneAgent discover what is running in that instance.
@@ -96,63 +132,122 @@ $
 ## Restart Docker
 Duration: 10
 
+### Exploring Dynatrace
 
-![Request-Attribute](assets/ANZ-aiops/Request_attribute_setting_1.png)
+Login to your Dynatrace environment and explore around **Smartscape**, **Host View**. 
 
-![Request-Attribute](assets/ANZ-aiops/Request_attribute_setting_2.png)
+Go to **Host > EC2-instance > SampleOnlineBankProduction (Process)**
+
+You will discover that Dynatrace automatically monitors your host metrics, processes but **services** are missing.
+
+![No-Service](assets/ANZ-aiops/No-service.png)
+
+### Restarting SampleBankApp
+
+For Dynatrace to get Services (code level visibility), you will need to restart the Application services. Since the application is containerized, the easiest way to do that is to restart the docker containers.
+
+To **list all the docker containers**, run `docker ps -a`
+
+Run the following command to restart `docker restart SampleBankApp` to **restart the Sample Banking App**
+
+To check and **verify that SampleBankApp container has restarted**, run `docker ps -a` again
+
+![Docker-restart](assets/ANZ-aiops/Docker-restart-command.png)
+
+### Automatic Service Detection
+
+As OneAgent automatically monitors your host, changes are reflected in real-time. Back in your Process screen, you will find the process updated with services.
+
+![Service-Detected](assets/ANZ-aiops/Service-Node.js.png)
 
 <!-- ------------------------ -->
 ## Access Sample Banking Application
 Duration: 10
 
-### Creating Tags
+Within your Host View, dropdown the **Properties and Tags** and you will get a list of various metadata associated with the host created. Locate the **Public IP Address** and copy its value.
 
-Tagging is a powerful mechanism. However, to reap its benefits, tagging should be used carefully and in a meaningful way. To guide you towards this end, we provide you with specific recommendations and best practices, which are described below. With auto-tagging based on metadata, tags can be generated automatically and assigned to monitored entities with the specific metadata values that Dynatrace detects automatically.
+Open up your **web browser** and access the sample app with `<IP address>:4000/login`
 
-Positive
-: Documentation for [Best Practices for Tagging](https://www.dynatrace.com/support/help/how-to-use-dynatrace/tags-and-metadata/) 
+![Service-Detected](assets/ANZ-aiops/LoginApp.png)
 
-### Naming Rules
+### Login to Sample Bank App
 
-Dynatrace automatically provides names, but they don’t enable you to quickly identify where an application or service belongs to. To achieve this, it's recommended that you use service naming rules and process group naming rules. This can be done in Dynatrace using metadata imported from the monitored applications.
+Access the banking App with these below credentials
 
-You can use Dynatrace Naming Rules to differentiate requests
-
-![Request-tag](assets/ANZ-aiops/Service_Tag_1.png)
-
-Positive
-: Documented steps can be found [here](https://www.dynatrace.com/support/help/how-to-use-dynatrace/tags-and-metadata/setup/how-to-define-tags/)
-
-### Annotate Dynatrace with Events 
-
-The Events API delivers details about all uncorrelated events that Dynatrace collects within your environment. Information returned for each event includes attributes about the event source, the entity where the event was collected, and other event-specific details.
-
-PUSH endpoint enables third-party systems such as CI platforms (Jenkins, Bamboo, Electric Cloud, etc.) to provide additional details for Dynatrace automated root cause analysis.
-
-![Event-API](assets/ANZ-aiops/Event_Info_1.png)
-
-Positive
-: Documented steps can be found [here](https://www.dynatrace.com/support/help/dynatrace-api/environment-api/events/push-deployment-events-from-jenkins/)
-
-### Compare and Analyze events
-
-There are different ways to analyze the data. Your approach should be based on the type of performance analysis you want to do (for example, crashes, resource and performance hotspots, or scalability issues). 
-
-![Event-API](assets/ANZ-aiops/compare-analyze.png)
-
-Positive
-: Documented steps can be found [here](https://www.dynatrace.com/support/help/shortlink/load-testing-process#compare--analyze)
+ETC
 
 <!-- ------------------------ -->
-## Automate with Curl
+## JMeter Performance Testing
+Duration: 20
+
+For the purposes of the lab, we will be demo with the Jmeter thick client. The same capabilites will be triggered and used within the labs using CLI. 
+
+![Jmeter-HTTP-Header](assets/ANZ-aiops/JMeter-1.png)
+
+![Jmeter-HTTP-Header](assets/ANZ-aiops/JMeter-2.png)
+
+![Jmeter-HTTP-Request](assets/ANZ-aiops/JMeter-HTTP-Request.png)
+
+<!-- ------------------------ -->
+## Defining Request Attribute
 Duration: 10
 
-The steps that we ran through could be automated with by initiating HTTP requests through curl.
+You can use any (or multiple) HTTP headers or HTTP parameters to pass context information. 
+The extraction rules can be configured via **Settings > Server-side service monitoring > Request attributes.**
 
-![Event-API](assets/ANZ-aiops/python-code.png)
+The header x-dynatrace-test is used in the following examples with the following set of key/value pairs for the header:
+
+|    |           |
+|----|-----------|
+| **Code**  |**Description**   |
+| **VU**  |   Virtual User ID of the unique user who sent the request.      |
+| **SI**  |   Source ID identifies the product that triggered the request (JMeter, LoadRunner, Neotys, or other)     |
+| **TSN**   |   Test Step Name is a logical test step within your load testing script (for example, Login or Add to cart.     |
+| **LSN** |   Load Script Name - name of the load testing script. This groups a set of test steps that make up a multi-step transaction (for example, an online purchase).      |
+| **LTN**  |   The Load Test Name uniquely identifies a test execution (for example, 6h Load Test – June 25)     |
+| **PC**  |   Page Context provides information about the document that is loaded in the currently processed page.     |
+
+
+### Setup Request Attributes
+
+![Request-Attribute](assets/ANZ-aiops/Request_attribute_setting_1.png)
+
+![Request-Attribute](assets/ANZ-aiops/Request_attribute_setting_2.png)
+
+### Simulate load from JMeter 
+Using the .JMX load from the local folder, access the simulate the requests with the local .JMX file
+
+To **run load test using JMeter**, the following format is used:
+
+   **jmeter -n -t [jmx file] -l [results file]**
+   *  -n indicates nonGUI mode
+   *  -t JMX test plan that you plan to run
+   *  -l logfile where the execution would be logged.
+
+To run the **Test-Plan available in /home/ubuntu/directory**, execute the below command:
+
+```bash
+./jmeter -n -t /home/ubuntu/ACMD1Workshops/additional_resources/app_docker/scripts/Smoke-test-Jmeter.jmx -l output.log`
+```
+
+![Request-Attribute](assets/ANZ-aiops/Load_test_location.png)
+
+### Exploring Dynatrace 
+
+Once you have triggered your load, you can also see the load test events appearing within your **event section** in your **host view**.
+
+![Request-Attribute](assets/ANZ-aiops/Event_Info_1.png)
+
+<!-- ------------------------ -->
+## Trigger load with Python Script
+Duration: 10
+
+As Dynatrace's platform allows event information to be ingested, you can also send events in via a Python script.
+
 
 
 <!-- ------------------------ -->
+
 
 ## Feedback
 Duration: 3
