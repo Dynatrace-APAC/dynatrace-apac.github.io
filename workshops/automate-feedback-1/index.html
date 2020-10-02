@@ -1,55 +1,37 @@
 
 <!doctype html>
-
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-  <meta name="theme-color" content="#4F7DC9">
-  <meta charset="UTF-8">
-  <title>Automate Feedback - Session 1</title>
-  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
-  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
-  <style>
-    .success {
-      color: #1e8e3e;
-    }
-    .error {
-      color: red;
-    }
-  </style>
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+<meta name="theme-color" content="#4F7DC9">
+<meta charset="UTF-8">
+<title>Automate Feedback - Session 1</title>
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+<style>
+.success{color:#1e8e3e}.error{color:red} </style>
 </head>
 <body>
-  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
-  <google-codelab codelab-gaid="UA-175467274-1"
-                  id="automate-feedback-1"
-                  title="Automate Feedback - Session 1"
-                  environment="web"
-                  feedback-link="mailto:d1-apac@dynatrace.com">
-    
-      <google-codelab-step label="Introduction" duration="1">
-        <p>This lab is the first session of the AIOps Enablement Series for ANZ Bank. This track focuses on the Automate Feedback, which relates to how you could integate Dynatrace with load testing tools to create <strong>Performance as a service</strong>.</p>
+<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+<google-codelab codelab-gaid="UA-175467274-1" id="automate-feedback-1" title="Automate Feedback - Session 1" environment="web" feedback-link="mailto:d1-apac@dynatrace.com">
+<google-codelab-step label="Introduction" duration="1">
+<p>This lab is the first session of the AIOps Enablement Series for ANZ Bank. This track focuses on the Automate Feedback, which relates to how you could integate Dynatrace with load testing tools to create <strong>Performance as a service</strong>.</p>
 <p class="image-container"><img alt="overview" src="img/2985c92b0ca80830.png"></p>
 <aside class="warning"><p>The content for the labs are for reference purposes only. Full instructions and details will be provided within the actual labs.</p>
 </aside>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Understanding Dynatrace Integration" duration="5">
-        <p>By integrating Dynatrace into your existing load testing process, you can stop broken builds in your delivery pipeline earlier.</p>
+</google-codelab-step>
+<google-codelab-step label="Understanding Dynatrace Integration" duration="5">
+<p>By integrating Dynatrace into your existing load testing process, you can stop broken builds in your delivery pipeline earlier.</p>
 <p class="image-container"><img alt="Integration-overview" src="img/a200780e37252c5c.png"></p>
 <h2 is-upgraded>Tag tests with HTTP headers</h2>
 <p>While executing a load test from your load testing tool of choice (JMeter, Neotys, LoadRunner, etc) each simulated HTTP request can be tagged with additional HTTP headers that contain test-transaction information (for example, script name, test step name, and virtual user ID). Dynatrace can analyze incoming HTTP headers and extract such contextual information from the header values and tag the captured requests with request attributes. Request attributes enable you to filter your monitoring data based on defined tags.</p>
 <p class="image-container"><img alt="HTTP-Headers" src="img/d33610534a82ad28.png"></p>
 <aside class="special"><p>Documented steps can be found here <a href="https://www.dynatrace.com/support/help/setup-and-configuration/integrations/third-party-integrations/test-automation-frameworks/dynatrace-and-load-testing-tools-integration/" target="_blank">here</a></p>
 </aside>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Defining Request Attribute" duration="10">
-        <p>You can use any (or multiple) HTTP headers or HTTP parameters to pass context information. The extraction rules can be configured via <strong>Settings &gt; Server-side service monitoring &gt; Request attributes.</strong></p>
+</google-codelab-step>
+<google-codelab-step label="Defining Request Attribute" duration="10">
+<p>You can use any (or multiple) HTTP headers or HTTP parameters to pass context information. The extraction rules can be configured via <strong>Settings &gt; Server-side service monitoring &gt; Request attributes.</strong></p>
 <p>The header x-dynatrace-test is used in the following examples with the following set of key/value pairs for the header:</p>
 <table>
 <tr></tr>
@@ -77,12 +59,9 @@
 </table>
 <p class="image-container"><img alt="Request-Attribute" src="img/1553d97d083be2c1.png"></p>
 <p class="image-container"><img alt="Request-Attribute" src="img/5a061a8851274f8c.png"></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Request Tag-based Analysis" duration="20">
-        <h2 is-upgraded>Creating Tags</h2>
+</google-codelab-step>
+<google-codelab-step label="Request Tag-based Analysis" duration="20">
+<h2 is-upgraded>Creating Tags</h2>
 <p>Tagging is a powerful mechanism. However, to reap its benefits, tagging should be used carefully and in a meaningful way. To guide you towards this end, we provide you with specific recommendations and best practices, which are described below. With auto-tagging based on metadata, tags can be generated automatically and assigned to monitored entities with the specific metadata values that Dynatrace detects automatically.</p>
 <aside class="special"><p>Documentation for <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/tags-and-metadata/" target="_blank">Best Practices for Tagging</a></p>
 </aside>
@@ -103,19 +82,13 @@
 <p class="image-container"><img alt="Event-API" src="img/5e3be8fb6768f848.png"></p>
 <aside class="special"><p>Documented steps can be found <a href="https://www.dynatrace.com/support/help/shortlink/load-testing-process#compare--analyze" target="_blank">here</a></p>
 </aside>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Automate with Curl" duration="10">
-        <p>The steps that we ran through could be automated with by initiating HTTP requests through curl.</p>
+</google-codelab-step>
+<google-codelab-step label="Automate with Curl" duration="10">
+<p>The steps that we ran through could be automated with by initiating HTTP requests through curl.</p>
 <p class="image-container"><img alt="Event-API" src="img/3b7787b9704a3fab.png"></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Feedback" duration="3">
-        <p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
+</google-codelab-step>
+<google-codelab-step label="Feedback" duration="3">
+<p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
 <google-codelab-survey survey-id="automate-feedback-1-1">
 <h4>How was your overall experience with this lab?</h4>
 <paper-radio-group>
@@ -147,17 +120,12 @@
 </google-codelab-survey>
 <aside class="special"><p>💡 For other ideas and suggestions, please <a href="mailto:d1-apac@dynatrace.com?subject=Automate Feedback 1 - Ideas and Suggestions" target="_blank"><strong>reach out via email</strong></a>.</p>
 </aside>
-
-
-      </google-codelab-step>
-    
-  </google-codelab>
-
-  <script src="../../elements/codelab-elements/native-shim.js"></script>
-  <script src="../../elements/codelab-elements/custom-elements.min.js"></script>
-  <script src="../../elements/codelab-elements/prettify.js"></script>
-  <script src="../../elements/codelab-elements/codelab-elements.js"></script>
-  <script src="//support.google.com/inapp/api.js"></script>
-
+</google-codelab-step>
+</google-codelab>
+<script src="../../elements/codelab-elements/native-shim.js"></script>
+<script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+<script src="../../elements/codelab-elements/prettify.js"></script>
+<script src="../../elements/codelab-elements/codelab-elements.js"></script>
+<script src="//support.google.com/inapp/api.js"></script>
 </body>
 </html>
