@@ -16,45 +16,85 @@ This lab is the first session of the AIOps Enablement Series for ANZ Bank. This 
 
 ![overview](assets/ANZ-aiops/overview.png)
 
-Negative
-: The content for the labs are for reference purposes only. Full instructions and details will be provided within the actual labs.
-
 <!-- ------------------------ -->
-## Understanding Dynatrace Integration
-Duration: 5
-
-By integrating Dynatrace into your existing load testing process, you can stop broken builds in your delivery pipeline earlier.
-
-![Integration-overview](assets/ANZ-aiops/integration-overview.png)
-
-
-### Tag tests with HTTP headers 
-
-While executing a load test from your load testing tool of choice (JMeter, Neotys, LoadRunner, etc) each simulated HTTP request can be tagged with additional HTTP headers that contain test-transaction information (for example, script name, test step name, and virtual user ID). Dynatrace can analyze incoming HTTP headers and extract such contextual information from the header values and tag the captured requests with request attributes. Request attributes enable you to filter your monitoring data based on defined tags.
-
-![HTTP-Headers](assets/ANZ-aiops/adding-http-headers.png)
-
-Positive
-: Documented steps can be found here [here](https://www.dynatrace.com/support/help/setup-and-configuration/integrations/third-party-integrations/test-automation-frameworks/dynatrace-and-load-testing-tools-integration/)
-
-<!-- ------------------------ -->
-## Defining Request Attribute
+## Install OneAgent
 Duration: 10
 
-You can use any (or multiple) HTTP headers or HTTP parameters to pass context information. 
-The extraction rules can be configured via **Settings > Server-side service monitoring > Request attributes.**
+In this exercise, we will deploy the OneAgent to a Linux instance and let the OneAgent discover what is running in that instance.
 
-The header x-dynatrace-test is used in the following examples with the following set of key/value pairs for the header:
+### Download the OneAgent
 
-|    |           |
-|----|-----------|
-| **Code**  |**Description**   |
-| **VU**  |   Virtual User ID of the unique user who sent the request.      |
-| **SI**  |   Source ID identifies the product that triggered the request (JMeter, LoadRunner, Neotys, or other)     |
-| **TSN**   |   Test Step Name is a logical test step within your load testing script (for example, Login or Add to cart.     |
-| **LSN** |   Load Script Name - name of the load testing script. This groups a set of test steps that make up a multi-step transaction (for example, an online purchase).      |
-| **LTN**  |   The Load Test Name uniquely identifies a test execution (for example, 6h Load Test – June 25)     |
-| **PC**  |   Page Context provides information about the document that is loaded in the currently processed page.     |
+Use PuTTy (Windows) or Terminal (Mac), ssh into the instance (IP address using the your PEM Key)
+
+Open your browser and access the Dynatrace URL.
+
+Select Deploy Dynatrace from the navigation menu.
+
+![Deploy](assets/dem/101-DeployDynatrace.jpg)
+
+Click the Start installation button and select Linux.
+
+![Deploy](assets/dem/102-StartInstallation.jpg)
+
+![Deploy](assets/dem/103-Linux.jpg)
+
+
+Choose the installer type from the drop-down list (we'll use the default x86/64). 
+Use the Linux shell script installer on any Linux system that's supported by Dynatrace, regardless of the packaging system your distribution depends on.
+
+**Copy** the command provided in the "Use this command on the target host" text field. **Paste** the command into your terminal window and execute it.
+
+![Deploy](assets/dem/104-Download.jpg)
+
+Example: 
+
+```bash
+$  wget  -O Dynatrace-OneAgent-Linux-1.171.252.sh <follow screen shot above>
+--2019-08-07 10:17:45--  https://<URL>
+Resolving <URL>... <IP>
+Connecting to <URL> | <IP>|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 139134801 (133M) [application/octet-stream]
+Saving to: ‘Dynatrace-OneAgent-Linux-1.171.252.sh’
+
+100%[======================================>] 139,134,801 84.3MB/s   in 1.6s
+
+2019-08-07 10:17:47 (84.3 MB/s) - ‘Dynatrace-OneAgent-Linux-1.171.252.sh’ saved [139134801/139134801]
+
+$
+```
+
+### Execute the installation script
+
+(Optional) Once the download is complete, you can verify the signature by copying the command from the "Verify signature" text field, then pasting the command into your terminal window and executing it. Make sure your system is up to date, especially SSL and related certificate libraries.
+
+**Copy** the command that's provided in the text box "And run the installer with root rights" text field.
+
+![Deploy](assets/dem/105-Install.jpg)
+
+**Paste** the command into your terminal window and execute it. You’ll need to make the script executable before you can run it.
+
+**Note that you’ll need root access.**  You can use sudo to run the installation script. To do this, type the following command into the directory where you downloaded the installation script.
+
+Example:
+
+```bash
+$ sudo /bin/sh Dynatrace-OneAgent-Linux-1.171.252.sh
+10:21:42 Checking root privileges...
+10:21:42 OK
+10:21:42 Installation started ...
+...
+10:22:14 Starting agents...
+10:22:14 oneagent service started
+10:22:14 Checking if agent is connected to the server...
+10:22:16 Dynatrace OneAgent has successfully connected to Dynatrace Cluster Node. After completing Dynatrace OneAgent installation on this machine, please return to your browser to complete the remainder of the installation.
+$
+
+```
+
+<!-- ------------------------ -->
+## Restart Docker
+Duration: 10
 
 
 ![Request-Attribute](assets/ANZ-aiops/Request_attribute_setting_1.png)
@@ -62,8 +102,8 @@ The header x-dynatrace-test is used in the following examples with the following
 ![Request-Attribute](assets/ANZ-aiops/Request_attribute_setting_2.png)
 
 <!-- ------------------------ -->
-## Request Tag-based Analysis
-Duration: 20
+## Access Sample Banking Application
+Duration: 10
 
 ### Creating Tags
 

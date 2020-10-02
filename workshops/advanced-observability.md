@@ -24,8 +24,7 @@ This repository contains the hands on for the Advanced Observability Workshop.
 ### Lab Setup
 The following steps are used for this lab:
 - Sample Application 
-    * Sample App is based on [easyTravel Docker](https://github.com/Dynatrace/easyTravel-Docker)
-    * Follow the [Prerequisite Actions](https://github.com/Dynatrace-APAC/Workshop-DEM/tree/master/Prerequisite%20Actions) to create the application that will be used throughout this workshop.
+    * Sample App is based on [easyTravel](https://community.dynatrace.com/community/display/DL/easyTravel)
 
 ### What You’ll Learn
 - Install OneAgent using Ansible CLI 
