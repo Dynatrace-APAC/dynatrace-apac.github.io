@@ -184,7 +184,6 @@ Access the banking App with the **either** of the below credentials
 
 <!-- ------------------------ -->
 ## JMeter Performance Testing
-Duration: 20
 
 For the purposes of the lab, we will be demo with the **Jmeter thick client**. The same capabilites will be triggered and used within the labs using CLI. 
 
