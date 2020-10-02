@@ -139,14 +139,22 @@ $
 <p>Open up your <strong>web browser</strong> and access the sample app with <code>&lt;IP address&gt;:4000/login</code></p>
 <p class="image-container"><img alt="Service-Detected" src="img/cdc5fa95d770a4d0.png"></p>
 <h2 is-upgraded>Login to Sample Bank App</h2>
-<p>Access the banking App with these below credentials</p>
-<p>ETC</p>
+<p>Access the banking App with the <strong>either</strong> of the below credentials</p>
+<ul>
+<li>Username: <strong>guestuser1@mybank.com</strong></li>
+<li>Password: <strong>GuestUser12@</strong></li>
+</ul>
+<p><strong>OR</strong></p>
+<ul>
+<li>Username: <strong>guestuser2@mybank.com</strong></li>
+<li>Password: <strong>GuestUser12@</strong></li>
+</ul>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="JMeter Performance Testing" duration="20">
-        <p>For the purposes of the lab, we will be demo with the Jmeter thick client. The same capabilites will be triggered and used within the labs using CLI.</p>
+        <p>For the purposes of the lab, we will be demo with the <strong>Jmeter thick client</strong>. The same capabilites will be triggered and used within the labs using CLI.</p>
 <p class="image-container"><img alt="Jmeter-HTTP-Header" src="img/2ed6b95427e5de10.png"></p>
 <p class="image-container"><img alt="Jmeter-HTTP-Header" src="img/a004382db035678f.png"></p>
 <p class="image-container"><img alt="Jmeter-HTTP-Request" src="img/4f542aca6e435dd7.png"></p>
@@ -154,7 +162,7 @@ $
 
       </google-codelab-step>
     
-      <google-codelab-step label="Defining Request Attribute" duration="10">
+      <google-codelab-step label="Defining Request Attributes" duration="10">
         <p>You can use any (or multiple) HTTP headers or HTTP parameters to pass context information. The extraction rules can be configured via <strong>Settings &gt; Server-side service monitoring &gt; Request attributes.</strong></p>
 <p>The header x-dynatrace-test is used in the following examples with the following set of key/value pairs for the header:</p>
 <table>
@@ -182,11 +190,30 @@ $
 </td></tr>
 </table>
 <h2 is-upgraded>Setup Request Attributes</h2>
+<p>Go to <strong>Settings &gt; Server-side service monitoring &gt; Request Attributes</strong></p>
+<p>Click on <strong>Define a new request attribute</strong> and use the following:</p>
+<ul>
+<li>Request attribute name – <strong>LoadTestID</strong></li>
+<li>Request attribute source – <strong>HTTP Request Header</strong></li>
+<li>Parameter name - <code>x-dynatrace-test</code></li>
+<li><strong>Expand out</strong> Further restrict or process captured parameters (optional)</li>
+<li>Preprocess parameter by extracting substring <strong>between</strong> (dropdown) and  <code>LoadTestID=;</code> in field</li>
+<li>Click on <strong>Save</strong></li>
+</ul>
 <p class="image-container"><img alt="Request-Attribute" src="img/42a5a62c1244ccd8.png"></p>
+<p>Click on <strong>Define a new request attribute</strong> and use the following:</p>
+<ul>
+<li>Request attribute name – <strong>LoadTestName</strong></li>
+<li>Request attribute source – <strong>HTTP Request header</strong></li>
+<li>Parameter name - <code>x-dynatrace-test</code></li>
+<li><strong>Expand out</strong> Further restrict or process captured parameters (optional)</li>
+<li>Preprocess parameter by extracting substring <strong>after</strong> (dropdown) and  <code>;RequestName=</code> in field</li>
+<li>Click on <strong>Save</strong></li>
+</ul>
 <p class="image-container"><img alt="Request-Attribute" src="img/8db29e18246f7ee4.png"></p>
 <h2 is-upgraded>Simulate load from JMeter</h2>
 <p>Using the .JMX load from the local folder, access the simulate the requests with the local .JMX file</p>
-<p>To <strong>run load test using JMeter</strong>, run the following command:</p>
+<p>To <strong>run load test using JMeter</strong>, the following format is used:</p>
 <p><strong>jmeter -n -t [jmx file] -l [results file]</strong></p>
 <ul>
 <li>-n indicates nonGUI mode</li>
@@ -194,15 +221,24 @@ $
 <li>-l logfile where the execution would be logged.</li>
 </ul>
 <p>To run the <strong>Test-Plan available in /home/ubuntu/directory</strong>, execute the below command:</p>
-<pre><code>   ./jmeter -n -t /home/ubuntu/ACMD1Workshops/additional_resources/app_docker/scripts/Smoke-test-Jmeter.jmx -l output.log`
+<pre><code>./jmeter -n -t /home/ubuntu/ACMD1Workshops/additional_resources/app_docker/scripts/Smoke-test-Jmeter.jmx -l output.log
 </code></pre>
 <p class="image-container"><img alt="Request-Attribute" src="img/ab58682c31246402.png"></p>
+<h2 is-upgraded>Exploring Dynatrace</h2>
+<p>Once you have triggered your load, you can also see the load test events appearing within your <strong>event section</strong> in your <strong>host view</strong>.</p>
+<p class="image-container"><img alt="Request-Attribute" src="img/966a02ccba9a7842.png"></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="Defining Request Attribute" duration="10">
-        
+      <google-codelab-step label="Trigger load with Python Script" duration="10">
+        <p>Dynatrace&#39;s platform allows event information to be ingested via various means. If you are using a load test tool like jMeter, the jmx script above should apply for most. Alternatively, you can also send events in via a Python script. Below is an example of using that.</p>
+<p class="image-container"><img alt="Request-Attribute" src="img/d47c827bd9a9815f.png"></p>
+<p>Run the command below to trigger the script</p>
+<pre><code>cd /home/ubuntu/ACMD1Workshops/additional_resources/app_docker/scripts/
+./smoke-test.py 
+</code></pre>
+
 
       </google-codelab-step>
     

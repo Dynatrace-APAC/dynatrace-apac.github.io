@@ -172,15 +172,21 @@ Open up your **web browser** and access the sample app with `<IP address>:4000/l
 
 ### Login to Sample Bank App
 
-Access the banking App with these below credentials
+Access the banking App with the **either** of the below credentials
 
-ETC
+* Username: **guestuser1@mybank.com**
+* Password: **GuestUser12@**
+
+**OR**
+
+* Username: **guestuser2@mybank.com**
+* Password: **GuestUser12@**
 
 <!-- ------------------------ -->
 ## JMeter Performance Testing
 Duration: 20
 
-For the purposes of the lab, we will be demo with the Jmeter thick client. The same capabilites will be triggered and used within the labs using CLI. 
+For the purposes of the lab, we will be demo with the **Jmeter thick client**. The same capabilites will be triggered and used within the labs using CLI. 
 
 ![Jmeter-HTTP-Header](assets/ANZ-aiops/JMeter-1.png)
 
@@ -189,7 +195,7 @@ For the purposes of the lab, we will be demo with the Jmeter thick client. The s
 ![Jmeter-HTTP-Request](assets/ANZ-aiops/JMeter-HTTP-Request.png)
 
 <!-- ------------------------ -->
-## Defining Request Attribute
+## Defining Request Attributes
 Duration: 10
 
 You can use any (or multiple) HTTP headers or HTTP parameters to pass context information. 
@@ -210,7 +216,27 @@ The header x-dynatrace-test is used in the following examples with the following
 
 ### Setup Request Attributes
 
+Go to **Settings > Server-side service monitoring > Request Attributes**
+
+Click on **Define a new request attribute** and use the following:
+
+* Request attribute name – **LoadTestID**
+* Request attribute source – **HTTP Request Header**
+* Parameter name - `x-dynatrace-test`
+* **Expand out** Further restrict or process captured parameters (optional)
+* Preprocess parameter by extracting substring **between** (dropdown) and  `LoadTestID=;` in field
+* Click on **Save**
+
 ![Request-Attribute](assets/ANZ-aiops/Request_attribute_setting_1.png)
+
+Click on **Define a new request attribute** and use the following:
+
+* Request attribute name – **LoadTestName**
+* Request attribute source – **HTTP Request header**
+* Parameter name - `x-dynatrace-test`
+* **Expand out** Further restrict or process captured parameters (optional)
+* Preprocess parameter by extracting substring **after** (dropdown) and  `;RequestName=` in field
+* Click on **Save**
 
 ![Request-Attribute](assets/ANZ-aiops/Request_attribute_setting_2.png)
 
@@ -227,7 +253,7 @@ To **run load test using JMeter**, the following format is used:
 To run the **Test-Plan available in /home/ubuntu/directory**, execute the below command:
 
 ```bash
-./jmeter -n -t /home/ubuntu/ACMD1Workshops/additional_resources/app_docker/scripts/Smoke-test-Jmeter.jmx -l output.log`
+./jmeter -n -t /home/ubuntu/ACMD1Workshops/additional_resources/app_docker/scripts/Smoke-test-Jmeter.jmx -l output.log
 ```
 
 ![Request-Attribute](assets/ANZ-aiops/Load_test_location.png)
@@ -242,9 +268,16 @@ Once you have triggered your load, you can also see the load test events appeari
 ## Trigger load with Python Script
 Duration: 10
 
-As Dynatrace's platform allows event information to be ingested, you can also send events in via a Python script.
+Dynatrace's platform allows event information to be ingested via various means. If you are using a load test tool like jMeter, the jmx script above should apply for most. Alternatively, you can also send events in via a Python script. Below is an example of using that.
 
+![Request-Attribute](assets/ANZ-aiops/Python-script-load-test.png)
 
+Run the command below to trigger the script
+
+```bash
+cd /home/ubuntu/ACMD1Workshops/additional_resources/app_docker/scripts/
+./smoke-test.py 
+```
 
 <!-- ------------------------ -->
 
