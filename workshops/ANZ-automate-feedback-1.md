@@ -14,7 +14,7 @@ Duration: 1
 
 This lab is the first session of the AIOps Enablement Series for ANZ Bank. This track focuses on the Automate Feedback, which relates to how you could integate Dynatrace with load testing tools to create **Performance as a service**.
 
-![overview](assets/ANZ-aiops/overview.png)
+![overview](assets/ANZ-aiops/overview-1.png)
 
 <!-- ------------------------ -->
 ## Useful Commands ✅ 
