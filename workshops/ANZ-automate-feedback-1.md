@@ -245,8 +245,6 @@ cd /home/ubuntu/apache-jmeter-5.2.1/bin
 ./jmeter -n -t /home/ubuntu/ACMD1Workshop/additional_resources/app_docker/scripts/Smoke-test-Jmeter.jmx -l output.log
 ```
 
-![Request-Attribute](assets/ANZ-aiops/Load_test_location.png)
-
 ### Exploring Dynatrace 
 
 Once you have triggered your load, you can also see **login requests** appearing within your **node-bank2** service.
