@@ -24,23 +24,8 @@ Positive
    `docker run -d --name SampleBankApp -p 4000:3000 nikhilgoenka/sample-bank-app`
   * This would start the docker on port localhost:4000 with docker name as **SampleBankApp**
    
-Positive
-: To start the jenkins docker:
-   `docker run -d --network mynetwork --name Jenkins-Dynatrace -p 8020:8080  -v /var/jenkins:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock nikhilgoenka/jenkins-dynatrace-workshop`
-   * -d runs the docker in daemon mode.
-   * -p 8020:8080 - By default, jenkins docker would be running on 8080. Specifying **-p 8020:8080** binds the 8080 in docker to localhost on 8020. So, you can forward/listen requests from docker using `localhost:8020`.
-   * -v Bind mounts a volume.
-    By default, jenkins docker is maintaining the pipeline/data information in /var/jenkins_home. 
-    Specifying **-v /var/jenkins:/var/jenkins_home** would mount the localhost:/var/jenkins directory so that the pipeline data is not lost once pipeline is re-started.
-    Specifying **-v /var/run/docker.sock:/var/run/docker.sock** will allow the jekins docker to leverage the dockerd running on localhost. This would be required since we are starting the
-    sample-app dockers while running the pipeline.
-
-Positive
-: To run the ansible-tower docker:
-   `docker run -d --name ansible-tower -p 8090:443 ybalt/ansible-tower`
-   This would start the docker on port **localhost:8090** with docker name as **ansible-tower**
-
 **Other useful commands:**
+* To **view all docker containers**: `docker ps -a`
 * To **view the downloaded images** on localhost: `docker images`
 * To **remove a particular image**: `docker rmi <IMAGE-NAME>`
 * To **stop a docker**: `docker stop <CONTAINER-ID>`
@@ -154,12 +139,6 @@ To check and **verify that SampleBankApp container has restarted**, run `docker 
 
 ![Docker-restart](assets/ANZ-aiops/Docker-restart-command.png)
 
-### Automatic Service Detection
-
-As OneAgent automatically monitors your host, changes are reflected in real-time. Back in your Process screen, you will find the process updated with services.
-
-![Service-Detected](assets/ANZ-aiops/Service-Node.js.png)
-
 <!-- ------------------------ -->
 ## Access Sample Banking Application
 Duration: 10
@@ -181,6 +160,12 @@ Access the banking App with the **either** of the below credentials
 
 * Username: **guestuser2@mybank.com**
 * Password: **GuestUser12@**
+
+### Automatic Service Detection
+
+As OneAgent automatically monitors your host, changes are reflected in real-time. Back in your Process screen, you will find the process updated with services.
+
+![Service-Detected](assets/ANZ-aiops/Service-Node.js.png)
 
 <!-- ------------------------ -->
 ## JMeter Performance Testing
@@ -252,7 +237,7 @@ To **run load test using JMeter**, the following format is used:
 To run the **Test-Plan available in /home/ubuntu/directory**, execute the below command:
 
 ```bash
-./jmeter -n -t /home/ubuntu/ACMD1Workshops/additional_resources/app_docker/scripts/Smoke-test-Jmeter.jmx -l output.log
+./jmeter -n -t /home/ubuntu/ACMD1Workshop/additional_resources/app_docker/scripts/Smoke-test-Jmeter.jmx -l output.log
 ```
 
 ![Request-Attribute](assets/ANZ-aiops/Load_test_location.png)
@@ -274,7 +259,7 @@ Dynatrace's platform allows event information to be ingested via various means. 
 Run the command below to trigger the script
 
 ```bash
-cd /home/ubuntu/ACMD1Workshops/additional_resources/app_docker/scripts/
+cd /home/ubuntu/ACMD1Workshop/additional_resources/app_docker/scripts/
 ./smoke-test.py 
 ```
 
@@ -298,7 +283,7 @@ We hope you enjoyed this lab and found it useful. We would love your feedback!
   <name>What did you benefit most from this lab?</name>
   <input value="Defining Load Testing Request Attribute" />
   <input value="Annotate Dynatrace with Events from Load Testing" />
-  <input value="Automating with Curl" />
+  <input value="Automating Load Test with Pythons" />
   <input value="Compare and Analyze events" />
 </form>
 

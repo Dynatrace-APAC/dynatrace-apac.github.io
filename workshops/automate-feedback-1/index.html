@@ -40,17 +40,9 @@
 <li>This would start the docker on port localhost:4000 with docker name as <strong>SampleBankApp</strong></li>
 </ul>
 </aside>
-<aside class="special"><p>To start the jenkins docker: <code>docker run -d --network mynetwork --name Jenkins-Dynatrace -p 8020:8080  -v /var/jenkins:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock nikhilgoenka/jenkins-dynatrace-workshop</code></p>
-<ul>
-<li>-d runs the docker in daemon mode.</li>
-<li>-p 8020:8080 - By default, jenkins docker would be running on 8080. Specifying <strong>-p 8020:8080</strong> binds the 8080 in docker to localhost on 8020. So, you can forward/listen requests from docker using <code>localhost:8020</code>.</li>
-<li>-v Bind mounts a volume. By default, jenkins docker is maintaining the pipeline/data information in /var/jenkins_home. Specifying <strong>-v /var/jenkins:/var/jenkins_home</strong> would mount the localhost:/var/jenkins directory so that the pipeline data is not lost once pipeline is re-started. Specifying <strong>-v /var/run/docker.sock:/var/run/docker.sock</strong> will allow the jekins docker to leverage the dockerd running on localhost. This would be required since we are starting the sample-app dockers while running the pipeline.</li>
-</ul>
-</aside>
-<aside class="special"><p>To run the ansible-tower docker: <code>docker run -d --name ansible-tower -p 8090:443 ybalt/ansible-tower</code> This would start the docker on port <strong>localhost:8090</strong> with docker name as <strong>ansible-tower</strong></p>
-</aside>
 <p><strong>Other useful commands:</strong></p>
 <ul>
+<li>To <strong>view all docker containers</strong>: <code>docker ps -a</code></li>
 <li>To <strong>view the downloaded images</strong> on localhost: <code>docker images</code></li>
 <li>To <strong>remove a particular image</strong>: <code>docker rmi &lt;IMAGE-NAME&gt;</code></li>
 <li>To <strong>stop a docker</strong>: <code>docker stop &lt;CONTAINER-ID&gt;</code></li>
@@ -127,9 +119,6 @@ $
 <p>Run the following command to restart <code>docker restart SampleBankApp</code> to <strong>restart the Sample Banking App</strong></p>
 <p>To check and <strong>verify that SampleBankApp container has restarted</strong>, run <code>docker ps -a</code> again</p>
 <p class="image-container"><img alt="Docker-restart" src="img/54d436b72ce522f4.png"></p>
-<h2 is-upgraded>Automatic Service Detection</h2>
-<p>As OneAgent automatically monitors your host, changes are reflected in real-time. Back in your Process screen, you will find the process updated with services.</p>
-<p class="image-container"><img alt="Service-Detected" src="img/e3959fe57a7ff801.png"></p>
 
 
       </google-codelab-step>
@@ -149,6 +138,9 @@ $
 <li>Username: <strong>guestuser2@mybank.com</strong></li>
 <li>Password: <strong>GuestUser12@</strong></li>
 </ul>
+<h2 is-upgraded>Automatic Service Detection</h2>
+<p>As OneAgent automatically monitors your host, changes are reflected in real-time. Back in your Process screen, you will find the process updated with services.</p>
+<p class="image-container"><img alt="Service-Detected" src="img/e3959fe57a7ff801.png"></p>
 
 
       </google-codelab-step>
@@ -221,7 +213,7 @@ $
 <li>-l logfile where the execution would be logged.</li>
 </ul>
 <p>To run the <strong>Test-Plan available in /home/ubuntu/directory</strong>, execute the below command:</p>
-<pre><code>./jmeter -n -t /home/ubuntu/ACMD1Workshops/additional_resources/app_docker/scripts/Smoke-test-Jmeter.jmx -l output.log
+<pre><code>./jmeter -n -t /home/ubuntu/ACMD1Workshop/additional_resources/app_docker/scripts/Smoke-test-Jmeter.jmx -l output.log
 </code></pre>
 <p class="image-container"><img alt="Request-Attribute" src="img/ab58682c31246402.png"></p>
 <h2 is-upgraded>Exploring Dynatrace</h2>
@@ -235,7 +227,7 @@ $
         <p>Dynatrace&#39;s platform allows event information to be ingested via various means. If you are using a load test tool like jMeter, the jmx script above should apply for most. Alternatively, you can also send events in via a Python script. Below is an example of using that.</p>
 <p class="image-container"><img alt="Request-Attribute" src="img/d47c827bd9a9815f.png"></p>
 <p>Run the command below to trigger the script</p>
-<pre><code>cd /home/ubuntu/ACMD1Workshops/additional_resources/app_docker/scripts/
+<pre><code>cd /home/ubuntu/ACMD1Workshop/additional_resources/app_docker/scripts/
 ./smoke-test.py 
 </code></pre>
 
@@ -259,7 +251,7 @@ $
 <paper-radio-group>
 <paper-radio-button>Defining Load Testing Request Attribute</paper-radio-button>
 <paper-radio-button>Annotate Dynatrace with Events from Load Testing</paper-radio-button>
-<paper-radio-button>Automating with Curl</paper-radio-button>
+<paper-radio-button>Automating Load Test with Pythons</paper-radio-button>
 <paper-radio-button>Compare and Analyze events</paper-radio-button>
 </paper-radio-group>
 </google-codelab-survey>
