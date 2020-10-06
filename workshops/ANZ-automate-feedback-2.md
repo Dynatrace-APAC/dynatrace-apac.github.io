@@ -12,68 +12,46 @@ Analytics Account: UA-175467274-1
 ## Introduction 
 Duration: 1
 
-The labs contains the steps for Automate Feedback: Integration of Load Test Tools with Dynatrace Session 2 training.
+This lab is the second session of the AIOps Enablement Series for ANZ Bank. This track focuses on the Automate Feedback, which relates to how you could integate Dynatrace with load testing tools to create **Performance as a service**.
 
-You will get access to a EC2 instance that has been provided for the purposes of this training.
+![overview](assets/ANZ-aiops/overview-1.png)
 
 ### Prerequisites
 - Dynatrace SaaS/Managed Account. Get your free SaaS trial [here](https://www.dynatrace.com/trial/).
 - Chrome Browser 
 
 ### What You’ll Learn 
-- Integrate JMeter with Dynatrace.  
-- Push events in Dynatrace and create request-attributes 
-  - Dev/Test team can isolate the requests invoked during the load-tests.
-
-Negative
-: As different teams might have their own proprietary test-beds/suits, so we will demo stimulating requests using curl commands too.
+- Creating Manual Tags in Dynatrace to define unique entity
+- Load test web requests renaming
+- Compare features to differentiate load test / actual requests
+- Mark Load test requests as Key Requests
+- Create dashboards for load-requests basic tiles
+  - Response time
+  - Failure rates
+  - Database performance
+ 
 
 <!-- ------------------------ -->
-## Understanding Dynatrace Integration
+## Tag-based Analysis of Requests
 Duration: 5
 
 By integrating Dynatrace into your existing load testing process, you can stop broken builds in your delivery pipeline earlier.
 
-![Integration-overview](assets/ANZ-aiops/integration-overview.png)
-
-
-### Tag tests with HTTP headers 
-
-While executing a load test from your load testing tool of choice (JMeter, Neotys, LoadRunner, etc) each simulated HTTP request can be tagged with additional HTTP headers that contain test-transaction information (for example, script name, test step name, and virtual user ID). Dynatrace can analyze incoming HTTP headers and extract such contextual information from the header values and tag the captured requests with request attributes. Request attributes enable you to filter your monitoring data based on defined tags.
-
-![HTTP-Headers](assets/ANZ-aiops/adding-http-headers.png)
-
-**Full integration and approach is documentated [here]**(https://www.dynatrace.com/support/help/setup-and-configuration/integrations/third-party-integrations/test-automation-frameworks/dynatrace-and-load-testing-tools-integration/)
-
-<!-- ------------------------ -->
-## Defining Request Attribute
-Duration: 10
-
-You can use any (or multiple) HTTP headers or HTTP parameters to pass context information. 
-The extraction rules can be configured via **Settings > Server-side service monitoring > Request attributes.**
-
-The header x-dynatrace-test is used in the following examples with the following set of key/value pairs for the header:
-
-**VU**	| Virtual User ID of the unique user who sent the request.
-**SI**	| Source ID identifies the product that triggered the request (JMeter, LoadRunner, Neotys, or other)
-**TSN** | Test Step Name is a logical test step within your load testing script (for example, Login or Add to cart.
-**LSN**	| Load Script Name - name of the load testing script. This groups a set of test steps that make up a multi-step transaction (for example, an online purchase).
-**LTN** | The Load Test Name uniquely identifies a test execution (for example, 6h Load Test – June 25)
-**PC**	| Page Context provides information about the document that is loaded in the currently processed page.
-
-![Request-Attribute](assets/ANZ-aiops/request-attribute-1.png)
-
-![Request-Attribute](assets/ANZ-aiops/request-attribute-2.png)
-
-<!-- ------------------------ -->
-## Request Tag-based Analysis
-Duration: 20
-
-### Creating Tags
+### Defining a Unique Entity
 
 Tagging is a powerful mechanism. However, to reap its benefits, tagging should be used carefully and in a meaningful way. To guide you towards this end, we provide you with specific recommendations and best practices, which are described below. With auto-tagging based on metadata, tags can be generated automatically and assigned to monitored entities with the specific metadata values that Dynatrace detects automatically.
 
 [Best Practices for Tagging](https://www.dynatrace.com/support/help/how-to-use-dynatrace/tags-and-metadata/) 
+
+### Pushing Events to defined tag
+
+
+
+**Full integration and approach is documentated [here]**(https://www.dynatrace.com/support/help/setup-and-configuration/integrations/third-party-integrations/test-automation-frameworks/dynatrace-and-load-testing-tools-integration/)
+
+<!-- ------------------------ -->
+## Renaming Load Test Requests
+Duration: 20
 
 ### Naming Rules
 
@@ -84,6 +62,10 @@ You can use Dynatrace Naming Rules to differentiate requests
 ![Request-tag](assets/ANZ-aiops/request-tag.png)
 
 Documentation [here](https://www.dynatrace.com/support/help/how-to-use-dynatrace/tags-and-metadata/setup/how-to-define-tags/)
+
+<!-- ------------------------ -->
+## Analyzing Dynatrace Events 
+Duration: 10
 
 ### Annotate Dynatrace with Events 
 
@@ -103,14 +85,13 @@ There are different ways to analyze the data. Your approach should be based on t
 
 Documentation [here] (https://www.dynatrace.com/support/help/shortlink/load-testing-process#compare--analyze)
 
+### Marking Load Test Key Requests
+
 <!-- ------------------------ -->
-## Automate with Curl
+## Creating Dashboards for Load Tests
 Duration: 10
 
-The steps that we ran through could be automated with by initiating HTTP requests through curl.
-
-![Event-API](assets/ANZ-aiops/automate-with-curl.png)
-
+### Selecting load-test requests tiles
 
 <!-- ------------------------ -->
 

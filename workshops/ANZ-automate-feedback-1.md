@@ -16,6 +16,13 @@ This lab is the first session of the AIOps Enablement Series for ANZ Bank. This 
 
 ![overview](assets/ANZ-aiops/overview-1.png)
 
+### What You’ll Learn
+- Installing Dynatrace OneAgent 
+- jMeter Performance Testing
+- Creating Load Test Request Attributes
+- Trigger load with Python Script
+
+
 <!-- ------------------------ -->
 ## Useful Commands ✅ 
 
@@ -172,7 +179,7 @@ As OneAgent automatically monitors your host, changes are reflected in real-time
 <!-- ------------------------ -->
 ## JMeter Performance Testing
 
-For the purposes of the lab, we will be demo with the **Jmeter thick client**. The same capabilites will be triggered and used within the labs using CLI. 
+For the purposes of the lab, we will demo with the **Jmeter thick client**. The same capabilites will be triggered and used within the labs using CLI via SSH.
 
 ![Jmeter-HTTP-Header](assets/ANZ-aiops/JMeter-1.png)
 
