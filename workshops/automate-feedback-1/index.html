@@ -110,9 +110,9 @@ $
       <google-codelab-step label="Restart Docker" duration="10">
         <h2 is-upgraded>Exploring Dynatrace</h2>
 <p>Login to your Dynatrace environment and explore around <strong>Smartscape</strong>, <strong>Host View</strong>.</p>
-<p>Go to <strong>Host &gt; EC2-instance &gt; SampleOnlineBankProduction (Process)</strong></p>
+<p>Go to <strong>Host &gt; ec2-instance &gt; SampleOnlineBankProduction (Process)</strong></p>
 <p>You will discover that Dynatrace automatically monitors your host metrics, processes but <strong>services</strong> are missing.</p>
-<p class="image-container"><img alt="No-Service" src="img/f644584fc4261a08.png"></p>
+<p class="image-container"><img alt="No-Service" src="img/5fd06fdf107430f3.png"></p>
 <h2 is-upgraded>Restarting SampleBankApp</h2>
 <p>For Dynatrace to get Services (code level visibility), you will need to restart the Application services. Since the application is containerized, the easiest way to do that is to restart the docker containers.</p>
 <p>To <strong>list all the docker containers</strong>, run <code>docker ps -a</code></p>
@@ -125,6 +125,7 @@ $
     
       <google-codelab-step label="Access Sample Banking Application" duration="10">
         <p>Within your Host View, dropdown the <strong>Properties and Tags</strong> and you will get a list of various metadata associated with the host created. Locate the <strong>Public IP Address</strong> and copy its value.</p>
+<p class="image-container"><img alt="Host-properties" src="img/4033f126cef6b4a8.png"></p>
 <p>Open up your <strong>web browser</strong> and access the sample app with <code>&lt;IP address&gt;:4000/login</code></p>
 <p class="image-container"><img alt="Service-Detected" src="img/cdc5fa95d770a4d0.png"></p>
 <h2 is-upgraded>Login to Sample Bank App</h2>
@@ -140,7 +141,7 @@ $
 </ul>
 <h2 is-upgraded>Automatic Service Detection</h2>
 <p>As OneAgent automatically monitors your host, changes are reflected in real-time. Back in your Process screen, you will find the process updated with services.</p>
-<p class="image-container"><img alt="Service-Detected" src="img/e3959fe57a7ff801.png"></p>
+<p class="image-container"><img alt="Service-Detected" src="img/d1346588501c48a0.png"></p>
 
 
       </google-codelab-step>
@@ -186,16 +187,18 @@ $
 <p>Click on <strong>Define a new request attribute</strong> and use the following:</p>
 <ul>
 <li>Request attribute name – <strong>LoadTestID</strong></li>
+<li>Click on <strong>Add new data source</strong></li>
 <li>Request attribute source – <strong>HTTP Request Header</strong></li>
 <li>Parameter name - <code>x-dynatrace-test</code></li>
 <li><strong>Expand out</strong> Further restrict or process captured parameters (optional)</li>
-<li>Preprocess parameter by extracting substring <strong>between</strong> (dropdown) and  <code>LoadTestID=;</code> in field</li>
+<li>Preprocess parameter by extracting substring <strong>between</strong> (dropdown) and  <code>LoadTestID=</code> in <strong>1st field</strong> and <code>;</code> in <strong>2nd field</strong></li>
 <li>Click on <strong>Save</strong></li>
 </ul>
 <p class="image-container"><img alt="Request-Attribute" src="img/42a5a62c1244ccd8.png"></p>
 <p>Click on <strong>Define a new request attribute</strong> and use the following:</p>
 <ul>
 <li>Request attribute name – <strong>LoadTestName</strong></li>
+<li>Click on <strong>Add new data source</strong></li>
 <li>Request attribute source – <strong>HTTP Request header</strong></li>
 <li>Parameter name - <code>x-dynatrace-test</code></li>
 <li><strong>Expand out</strong> Further restrict or process captured parameters (optional)</li>
@@ -212,24 +215,25 @@ $
 <li>-t JMX test plan that you plan to run</li>
 <li>-l logfile where the execution would be logged.</li>
 </ul>
-<p>To run the <strong>Test-Plan available in /home/ubuntu/directory</strong>, execute the below command:</p>
-<pre><code>./jmeter -n -t /home/ubuntu/ACMD1Workshop/additional_resources/app_docker/scripts/Smoke-test-Jmeter.jmx -l output.log
+<p>To run the <strong>Test-Plan</strong> available in <strong>/home/ubuntu/apache-jmeter-5.2.1/bin</strong>, execute the below command:</p>
+<pre><code>cd /home/ubuntu/apache-jmeter-5.2.1/bin
+./jmeter -n -t /home/ubuntu/ACMD1Workshop/additional_resources/app_docker/scripts/Smoke-test-Jmeter.jmx -l output.log
 </code></pre>
 <p class="image-container"><img alt="Request-Attribute" src="img/ab58682c31246402.png"></p>
 <h2 is-upgraded>Exploring Dynatrace</h2>
-<p>Once you have triggered your load, you can also see the load test events appearing within your <strong>event section</strong> in your <strong>host view</strong>.</p>
-<p class="image-container"><img alt="Request-Attribute" src="img/966a02ccba9a7842.png"></p>
+<p>Once you have triggered your load, you can also see <strong>login requests</strong> appearing within your <strong>node-bank2</strong> service.</p>
+<p class="image-container"><img alt="Login-requests" src="img/d78d5f635e2860b5.png"></p>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="Trigger load with Python Script" duration="10">
         <p>Dynatrace&#39;s platform allows event information to be ingested via various means. If you are using a load test tool like jMeter, the jmx script above should apply for most. Alternatively, you can also send events in via a Python script. Below is an example of using that.</p>
-<p class="image-container"><img alt="Request-Attribute" src="img/d47c827bd9a9815f.png"></p>
 <p>Run the command below to trigger the script</p>
 <pre><code>cd /home/ubuntu/ACMD1Workshop/additional_resources/app_docker/scripts/
-./smoke-test.py 
+python3 smoke-test.py 
 </code></pre>
+<p class="image-container"><img alt="Load-test" src="img/d47c827bd9a9815f.png"></p>
 
 
       </google-codelab-step>

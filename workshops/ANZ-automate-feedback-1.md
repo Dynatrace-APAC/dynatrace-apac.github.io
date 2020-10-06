@@ -121,11 +121,11 @@ Duration: 10
 
 Login to your Dynatrace environment and explore around **Smartscape**, **Host View**. 
 
-Go to **Host > EC2-instance > SampleOnlineBankProduction (Process)**
+Go to **Host > ec2-instance > SampleOnlineBankProduction (Process)**
 
 You will discover that Dynatrace automatically monitors your host metrics, processes but **services** are missing.
 
-![No-Service](assets/ANZ-aiops/No-service.png)
+![No-Service](assets/ANZ-aiops/No-service-1.png)
 
 ### Restarting SampleBankApp
 
@@ -144,6 +144,8 @@ To check and **verify that SampleBankApp container has restarted**, run `docker 
 Duration: 10
 
 Within your Host View, dropdown the **Properties and Tags** and you will get a list of various metadata associated with the host created. Locate the **Public IP Address** and copy its value.
+
+![Host-properties](assets/ANZ-aiops/host-properties.png)
 
 Open up your **web browser** and access the sample app with `<IP address>:4000/login`
 
@@ -165,7 +167,7 @@ Access the banking App with the **either** of the below credentials
 
 As OneAgent automatically monitors your host, changes are reflected in real-time. Back in your Process screen, you will find the process updated with services.
 
-![Service-Detected](assets/ANZ-aiops/Service-Node.js.png)
+![Service-Detected](assets/ANZ-aiops/Service-Node-1.png)
 
 <!-- ------------------------ -->
 ## JMeter Performance Testing
@@ -205,10 +207,11 @@ Go to **Settings > Server-side service monitoring > Request Attributes**
 Click on **Define a new request attribute** and use the following:
 
 * Request attribute name – **LoadTestID**
+* Click on **Add new data source**
 * Request attribute source – **HTTP Request Header**
 * Parameter name - `x-dynatrace-test`
 * **Expand out** Further restrict or process captured parameters (optional)
-* Preprocess parameter by extracting substring **between** (dropdown) and  `LoadTestID=;` in field
+* Preprocess parameter by extracting substring **between** (dropdown) and  `LoadTestID=` in **1st field** and `;` in **2nd field**
 * Click on **Save**
 
 ![Request-Attribute](assets/ANZ-aiops/Request_attribute_setting_1.png)
@@ -216,6 +219,7 @@ Click on **Define a new request attribute** and use the following:
 Click on **Define a new request attribute** and use the following:
 
 * Request attribute name – **LoadTestName**
+* Click on **Add new data source**
 * Request attribute source – **HTTP Request header**
 * Parameter name - `x-dynatrace-test`
 * **Expand out** Further restrict or process captured parameters (optional)
@@ -234,9 +238,10 @@ To **run load test using JMeter**, the following format is used:
    *  -t JMX test plan that you plan to run
    *  -l logfile where the execution would be logged.
 
-To run the **Test-Plan available in /home/ubuntu/directory**, execute the below command:
+To run the **Test-Plan** available in **/home/ubuntu/apache-jmeter-5.2.1/bin**, execute the below command:
 
 ```bash
+cd /home/ubuntu/apache-jmeter-5.2.1/bin
 ./jmeter -n -t /home/ubuntu/ACMD1Workshop/additional_resources/app_docker/scripts/Smoke-test-Jmeter.jmx -l output.log
 ```
 
@@ -244,9 +249,9 @@ To run the **Test-Plan available in /home/ubuntu/directory**, execute the below 
 
 ### Exploring Dynatrace 
 
-Once you have triggered your load, you can also see the load test events appearing within your **event section** in your **host view**.
+Once you have triggered your load, you can also see **login requests** appearing within your **node-bank2** service.
 
-![Request-Attribute](assets/ANZ-aiops/Event_Info_1.png)
+![Login-requests](assets/ANZ-aiops/login-requests.png)
 
 <!-- ------------------------ -->
 ## Trigger load with Python Script
@@ -254,14 +259,14 @@ Duration: 10
 
 Dynatrace's platform allows event information to be ingested via various means. If you are using a load test tool like jMeter, the jmx script above should apply for most. Alternatively, you can also send events in via a Python script. Below is an example of using that.
 
-![Request-Attribute](assets/ANZ-aiops/Python-script-load-test.png)
-
 Run the command below to trigger the script
 
 ```bash
 cd /home/ubuntu/ACMD1Workshop/additional_resources/app_docker/scripts/
-./smoke-test.py 
+python3 smoke-test.py 
 ```
+
+![Load-test](assets/ANZ-aiops/Python-script-load-test.png)
 
 <!-- ------------------------ -->
 
