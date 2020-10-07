@@ -26,8 +26,8 @@ This lab is the second session of the AIOps Enablement Series for ANZ Bank. This
   - Failure rates
   - Database performance
 
- <!-- ------------------------ -->
- ## Useful Commands ✅ 
+<!-- ------------------------ -->
+## Useful Commands ✅ 
 
 Positive
 : To start the docker with sample application:
