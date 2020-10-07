@@ -18,7 +18,7 @@ This lab is the first session of the AIOps Enablement Series for ANZ Bank. This 
 
 ### What You’ll Learn
 - Installing Dynatrace OneAgent 
-- jMeter Performance Testing
+- JMeter Performance Testing
 - Creating Load Test Request Attributes
 - Trigger load with Python Script
 
@@ -40,9 +40,6 @@ Positive
 * To **run a docker in interactive bash**: `docker run -it <CONTAINER> /bin/bash`
 * To **delete all the unused images**: `docker system prune -a -f`
 * To **pull a particular image**: `docker pull <docker-image>`
-* Jenkins pipeline:
-   Command: `https://github.com/nikhilgoenkatech/JenkinsBankApp`
-
 
 <!-- ------------------------ -->
 ## OneAgent Installation

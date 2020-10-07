@@ -1,48 +1,33 @@
 
 <!doctype html>
-
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-  <meta name="theme-color" content="#4F7DC9">
-  <meta charset="UTF-8">
-  <title>Automate Feedback - Session 1</title>
-  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
-  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
-  <style>
-    .success {
-      color: #1e8e3e;
-    }
-    .error {
-      color: red;
-    }
-  </style>
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+<meta name="theme-color" content="#4F7DC9">
+<meta charset="UTF-8">
+<title>Automate Feedback - Session 1</title>
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+<style>
+.success{color:#1e8e3e}.error{color:red} </style>
 </head>
 <body>
-  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
-  <google-codelab codelab-gaid="UA-175467274-1"
-                  id="automate-feedback-1"
-                  title="Automate Feedback - Session 1"
-                  environment="web"
-                  feedback-link="mailto:d1-apac@dynatrace.com">
-    
-      <google-codelab-step label="Introduction" duration="1">
-        <p>This lab is the first session of the AIOps Enablement Series for ANZ Bank. This track focuses on the Automate Feedback, which relates to how you could integate Dynatrace with load testing tools to create <strong>Performance as a service</strong>.</p>
+<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+<google-codelab codelab-gaid="UA-175467274-1" id="automate-feedback-1" title="Automate Feedback - Session 1" environment="web" feedback-link="mailto:d1-apac@dynatrace.com">
+<google-codelab-step label="Introduction" duration="1">
+<p>This lab is the first session of the AIOps Enablement Series for ANZ Bank. This track focuses on the Automate Feedback, which relates to how you could integate Dynatrace with load testing tools to create <strong>Performance as a service</strong>.</p>
 <p class="image-container"><img alt="overview" src="img/a019fa754830be15.png"></p>
 <h2 class="checklist" is-upgraded>What You&#39;ll Learn</h2>
 <ul class="checklist">
 <li>Installing Dynatrace OneAgent</li>
-<li>jMeter Performance Testing</li>
+<li>JMeter Performance Testing</li>
 <li>Creating Load Test Request Attributes</li>
 <li>Trigger load with Python Script</li>
 </ul>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Useful Commands ✅" duration="0">
-        <aside class="special"><p>To start the docker with sample application: <code>docker run -d --name SampleBankApp -p 4000:3000 nikhilgoenka/sample-bank-app</code></p>
+</google-codelab-step>
+<google-codelab-step label="Useful Commands ✅" duration="0">
+<aside class="special"><p>To start the docker with sample application: <code>docker run -d --name SampleBankApp -p 4000:3000 nikhilgoenka/sample-bank-app</code></p>
 <ul>
 <li>This would start the docker on port localhost:4000 with docker name as <strong>SampleBankApp</strong></li>
 </ul>
@@ -57,14 +42,10 @@
 <li>To <strong>run a docker in interactive bash</strong>: <code>docker run -it &lt;CONTAINER&gt; /bin/bash</code></li>
 <li>To <strong>delete all the unused images</strong>: <code>docker system prune -a -f</code></li>
 <li>To <strong>pull a particular image</strong>: <code>docker pull &lt;docker-image&gt;</code></li>
-<li>Jenkins pipeline: Command: <code>https://github.com/nikhilgoenkatech/JenkinsBankApp</code></li>
 </ul>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="OneAgent Installation" duration="10">
-        <p>In this exercise, we will deploy the OneAgent to a Linux instance and let the OneAgent discover what is running in that instance.</p>
+</google-codelab-step>
+<google-codelab-step label="OneAgent Installation" duration="10">
+<p>In this exercise, we will deploy the OneAgent to a Linux instance and let the OneAgent discover what is running in that instance.</p>
 <h2 is-upgraded>Download the OneAgent</h2>
 <p>Use PuTTy (Windows) or Terminal (Mac), ssh into the instance (IP address using the your PEM Key)</p>
 <p>Open your browser and access the Dynatrace URL.</p>
@@ -96,7 +77,7 @@ $
 <p><strong>Copy</strong> the command that&#39;s provided in the text box &#34;And run the installer with root rights&#34; text field.</p>
 <p class="image-container"><img alt="Deploy" src="img/ecdf25fe7a756e0c.jpg"></p>
 <p><strong>Paste</strong> the command into your terminal window and execute it. You&#39;ll need to make the script executable before you can run it.</p>
-<p><strong>Note that you&#39;ll need root access.</strong>  You can use sudo to run the installation script. To do this, type the following command into the directory where you downloaded the installation script.</p>
+<p><strong>Note that you&#39;ll need root access.</strong> You can use sudo to run the installation script. To do this, type the following command into the directory where you downloaded the installation script.</p>
 <p>Example:</p>
 <pre><code>$ sudo /bin/sh Dynatrace-OneAgent-Linux-1.171.252.sh
 10:21:42 Checking root privileges...
@@ -110,12 +91,9 @@ $
 $
 
 </code></pre>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Restart Docker" duration="10">
-        <h2 is-upgraded>Exploring Dynatrace</h2>
+</google-codelab-step>
+<google-codelab-step label="Restart Docker" duration="10">
+<h2 is-upgraded>Exploring Dynatrace</h2>
 <p>Login to your Dynatrace environment and explore around <strong>Smartscape</strong>, <strong>Host View</strong>.</p>
 <p>Go to <strong>Host &gt; ec2-instance &gt; SampleOnlineBankProduction (Process)</strong></p>
 <p>You will discover that Dynatrace automatically monitors your host metrics, processes but <strong>services</strong> are missing.</p>
@@ -126,12 +104,9 @@ $
 <p>Run the following command to restart <code>docker restart SampleBankApp</code> to <strong>restart the Sample Banking App</strong></p>
 <p>To check and <strong>verify that SampleBankApp container has restarted</strong>, run <code>docker ps -a</code> again</p>
 <p class="image-container"><img alt="Docker-restart" src="img/54d436b72ce522f4.png"></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Access Sample Banking Application" duration="10">
-        <p>Within your Host View, dropdown the <strong>Properties and Tags</strong> and you will get a list of various metadata associated with the host created. Locate the <strong>Public IP Address</strong> and copy its value.</p>
+</google-codelab-step>
+<google-codelab-step label="Access Sample Banking Application" duration="10">
+<p>Within your Host View, dropdown the <strong>Properties and Tags</strong> and you will get a list of various metadata associated with the host created. Locate the <strong>Public IP Address</strong> and copy its value.</p>
 <p class="image-container"><img alt="Host-properties" src="img/4033f126cef6b4a8.png"></p>
 <p>Open up your <strong>web browser</strong> and access the sample app with <code>&lt;IP address&gt;:4000/login</code></p>
 <p class="image-container"><img alt="Service-Detected" src="img/cdc5fa95d770a4d0.png"></p>
@@ -149,21 +124,15 @@ $
 <h2 is-upgraded>Automatic Service Detection</h2>
 <p>As OneAgent automatically monitors your host, changes are reflected in real-time. Back in your Process screen, you will find the process updated with services.</p>
 <p class="image-container"><img alt="Service-Detected" src="img/d1346588501c48a0.png"></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="JMeter Performance Testing" duration="0">
-        <p>For the purposes of the lab, we will demo with the <strong>Jmeter thick client</strong>. The same capabilites will be triggered and used within the labs using CLI via SSH.</p>
+</google-codelab-step>
+<google-codelab-step label="JMeter Performance Testing" duration="0">
+<p>For the purposes of the lab, we will demo with the <strong>Jmeter thick client</strong>. The same capabilites will be triggered and used within the labs using CLI via SSH.</p>
 <p class="image-container"><img alt="Jmeter-HTTP-Header" src="img/2ed6b95427e5de10.png"></p>
 <p class="image-container"><img alt="Jmeter-HTTP-Header" src="img/a004382db035678f.png"></p>
 <p class="image-container"><img alt="Jmeter-HTTP-Request" src="img/4f542aca6e435dd7.png"></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Defining Request Attributes" duration="10">
-        <p>You can use any (or multiple) HTTP headers or HTTP parameters to pass context information. The extraction rules can be configured via <strong>Settings &gt; Server-side service monitoring &gt; Request attributes.</strong></p>
+</google-codelab-step>
+<google-codelab-step label="Defining Request Attributes" duration="10">
+<p>You can use any (or multiple) HTTP headers or HTTP parameters to pass context information. The extraction rules can be configured via <strong>Settings &gt; Server-side service monitoring &gt; Request attributes.</strong></p>
 <p>The header x-dynatrace-test is used in the following examples with the following set of key/value pairs for the header:</p>
 <table>
 <tr></tr>
@@ -198,7 +167,7 @@ $
 <li>Request attribute source – <strong>HTTP Request Header</strong></li>
 <li>Parameter name - <code>x-dynatrace-test</code></li>
 <li><strong>Expand out</strong> Further restrict or process captured parameters (optional)</li>
-<li>Preprocess parameter by extracting substring <strong>between</strong> (dropdown) and  <code>LoadTestID=</code> in <strong>1st field</strong> and <code>;</code> in <strong>2nd field</strong></li>
+<li>Preprocess parameter by extracting substring <strong>between</strong> (dropdown) and <code>LoadTestID=</code> in <strong>1st field</strong> and <code>;</code> in <strong>2nd field</strong></li>
 <li>Click on <strong>Save</strong></li>
 </ul>
 <p class="image-container"><img alt="Request-Attribute" src="img/42a5a62c1244ccd8.png"></p>
@@ -209,7 +178,7 @@ $
 <li>Request attribute source – <strong>HTTP Request header</strong></li>
 <li>Parameter name - <code>x-dynatrace-test</code></li>
 <li><strong>Expand out</strong> Further restrict or process captured parameters (optional)</li>
-<li>Preprocess parameter by extracting substring <strong>after</strong> (dropdown) and  <code>;RequestName=</code> in field</li>
+<li>Preprocess parameter by extracting substring <strong>after</strong> (dropdown) and <code>;RequestName=</code> in field</li>
 <li>Click on <strong>Save</strong></li>
 </ul>
 <p class="image-container"><img alt="Request-Attribute" src="img/8db29e18246f7ee4.png"></p>
@@ -229,23 +198,17 @@ $
 <h2 is-upgraded>Exploring Dynatrace</h2>
 <p>Once you have triggered your load, you can also see <strong>login requests</strong> appearing within your <strong>node-bank2</strong> service.</p>
 <p class="image-container"><img alt="Login-requests" src="img/d78d5f635e2860b5.png"></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Trigger load with Python Script" duration="10">
-        <p>Dynatrace&#39;s platform allows event information to be ingested via various means. If you are using a load test tool like jMeter, the jmx script above should apply for most. Alternatively, you can also send events in via a Python script. Below is an example of using that.</p>
+</google-codelab-step>
+<google-codelab-step label="Trigger load with Python Script" duration="10">
+<p>Dynatrace&#39;s platform allows event information to be ingested via various means. If you are using a load test tool like jMeter, the jmx script above should apply for most. Alternatively, you can also send events in via a Python script. Below is an example of using that.</p>
 <p>Run the command below to trigger the script</p>
 <pre><code>cd /home/ubuntu/ACMD1Workshop/additional_resources/app_docker/scripts/
 python3 smoke-test.py 
 </code></pre>
 <p class="image-container"><img alt="Load-test" src="img/d47c827bd9a9815f.png"></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Feedback" duration="3">
-        <p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
+</google-codelab-step>
+<google-codelab-step label="Feedback" duration="3">
+<p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
 <google-codelab-survey survey-id="automate-feedback-1-1">
 <h4>How was your overall experience with this lab?</h4>
 <paper-radio-group>
@@ -277,17 +240,12 @@ python3 smoke-test.py
 </google-codelab-survey>
 <aside class="special"><p>💡 For other ideas and suggestions, please <a href="mailto:d1-apac@dynatrace.com?subject=Automate Feedback 1 - Ideas and Suggestions" target="_blank"><strong>reach out via email</strong></a>.</p>
 </aside>
-
-
-      </google-codelab-step>
-    
-  </google-codelab>
-
-  <script src="../../elements/codelab-elements/native-shim.js"></script>
-  <script src="../../elements/codelab-elements/custom-elements.min.js"></script>
-  <script src="../../elements/codelab-elements/prettify.js"></script>
-  <script src="../../elements/codelab-elements/codelab-elements.js"></script>
-  <script src="//support.google.com/inapp/api.js"></script>
-
+</google-codelab-step>
+</google-codelab>
+<script src="../../elements/codelab-elements/native-shim.js"></script>
+<script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+<script src="../../elements/codelab-elements/prettify.js"></script>
+<script src="../../elements/codelab-elements/codelab-elements.js"></script>
+<script src="//support.google.com/inapp/api.js"></script>
 </body>
 </html>

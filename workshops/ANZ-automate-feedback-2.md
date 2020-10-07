@@ -16,10 +16,6 @@ This lab is the second session of the AIOps Enablement Series for ANZ Bank. This
 
 ![overview](assets/ANZ-aiops/overview-1.png)
 
-### Prerequisites
-- Dynatrace SaaS/Managed Account. Get your free SaaS trial [here](https://www.dynatrace.com/trial/).
-- Chrome Browser 
-
 ### What You’ll Learn 
 - Creating Manual Tags in Dynatrace to define unique entity
 - Load test web requests renaming
@@ -29,7 +25,24 @@ This lab is the second session of the AIOps Enablement Series for ANZ Bank. This
   - Response time
   - Failure rates
   - Database performance
- 
+
+ <!-- ------------------------ -->
+ ## Useful Commands ✅ 
+
+Positive
+: To start the docker with sample application:
+   `docker run -d --name SampleBankApp -p 4000:3000 nikhilgoenka/sample-bank-app`
+  * This would start the docker on port localhost:4000 with docker name as **SampleBankApp**
+   
+**Other useful commands:**
+* To **view all docker containers**: `docker ps -a`
+* To **view the downloaded images** on localhost: `docker images`
+* To **remove a particular image**: `docker rmi <IMAGE-NAME>`
+* To **stop a docker**: `docker stop <CONTAINER-ID>`
+* To **remove a docker**: `docker rm <CONTAINER-ID>`
+* To **run a docker in interactive bash**: `docker run -it <CONTAINER> /bin/bash`
+* To **delete all the unused images**: `docker system prune -a -f`
+* To **pull a particular image**: `docker pull <docker-image>`
 
 <!-- ------------------------ -->
 ## Tag-based Analysis of Requests
@@ -39,15 +52,17 @@ By integrating Dynatrace into your existing load testing process, you can stop b
 
 ### Defining a Unique Entity
 
-Tagging is a powerful mechanism. However, to reap its benefits, tagging should be used carefully and in a meaningful way. To guide you towards this end, we provide you with specific recommendations and best practices, which are described below. With auto-tagging based on metadata, tags can be generated automatically and assigned to monitored entities with the specific metadata values that Dynatrace detects automatically.
+Tagging is a powerful mechanism. However, to reap its benefits, tagging should be used carefully and in a meaningful way. To guide you towards this end, we provide you with specific recommendations and [best practices](https://www.dynatrace.com/support/help/how-to-use-dynatrace/tags-and-metadata/). With auto-tagging based on metadata, tags can be generated automatically and assigned to monitored entities with the specific metadata values that Dynatrace detects automatically.
 
-[Best Practices for Tagging](https://www.dynatrace.com/support/help/how-to-use-dynatrace/tags-and-metadata/) 
+Go to **Host > ec2-instance > node-bank2**
+
+Dropdown **Properties and tags** and click on **Add tag**
+
+Tag the service "PLACEHOLDER"
 
 ### Pushing Events to defined tag
 
-
-
-**Full integration and approach is documentated [here]**(https://www.dynatrace.com/support/help/setup-and-configuration/integrations/third-party-integrations/test-automation-frameworks/dynatrace-and-load-testing-tools-integration/)
+Full integration and approach is documentated **[here]**(https://www.dynatrace.com/support/help/setup-and-configuration/integrations/third-party-integrations/test-automation-frameworks/dynatrace-and-load-testing-tools-integration/)
 
 <!-- ------------------------ -->
 ## Renaming Load Test Requests
