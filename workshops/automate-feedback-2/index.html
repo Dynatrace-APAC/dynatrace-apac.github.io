@@ -1,22 +1,34 @@
 
 <!doctype html>
+
 <html>
 <head>
-<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
-<meta name="theme-color" content="#4F7DC9">
-<meta charset="UTF-8">
-<title>Automate Feedback - Session 2</title>
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
-<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
-<style>
-.success{color:#1e8e3e}.error{color:red} </style>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Automate Feedback - Session 2</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
 </head>
 <body>
-<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
-<google-codelab codelab-gaid="UA-175467274-1" id="automate-feedback-2" title="Automate Feedback - Session 2" environment="web" feedback-link="mailto:d1-apac@dynatrace.com">
-<google-codelab-step label="Introduction" duration="1">
-<p>This lab is the second session of the AIOps Enablement Series for ANZ Bank. This track focuses on the Automate Feedback, which relates to how you could integate Dynatrace with load testing tools to create <strong>Performance as a service</strong>.</p>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid="UA-175467274-1"
+                  id="automate-feedback-2"
+                  title="Automate Feedback - Session 2"
+                  environment="web"
+                  feedback-link="mailto:d1-apac@dynatrace.com">
+    
+      <google-codelab-step label="Introduction" duration="1">
+        <p>This lab is the second session of the AIOps Enablement Series for ANZ Bank. This track focuses on the Automate Feedback, which relates to how you could integate Dynatrace with load testing tools to create <strong>Performance as a service</strong>.</p>
 <p class="image-container"><img alt="overview" src="img/a019fa754830be15.png"></p>
 <h2 class="checklist" is-upgraded>What You&#39;ll Learn</h2>
 <ul class="checklist">
@@ -24,16 +36,19 @@
 <li>Load test web requests renaming</li>
 <li>Compare features to differentiate load test / actual requests</li>
 <li>Mark Load test requests as Key Requests</li>
-<li>Create dashboards for load-requests basic tiles <ul class="checklist">
+<li>Create dashboards for load-requests basic tiles  <ul class="checklist">
 <li>Response time</li>
 <li>Failure rates</li>
 <li>Database performance</li>
 </ul>
 </li>
 </ul>
-</google-codelab-step>
-<google-codelab-step label="Useful Commands ✅" duration="0">
-<aside class="special"><p>To start the docker with sample application: <code>docker run -d --name SampleBankApp -p 4000:3000 nikhilgoenka/sample-bank-app</code></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Useful Commands ✅" duration="0">
+        <aside class="special"><p>To start the docker with sample application: <code>docker run -d --name SampleBankApp -p 4000:3000 nikhilgoenka/sample-bank-app</code></p>
 <ul>
 <li>This would start the docker on port localhost:4000 with docker name as <strong>SampleBankApp</strong></li>
 </ul>
@@ -49,41 +64,136 @@
 <li>To <strong>delete all the unused images</strong>: <code>docker system prune -a -f</code></li>
 <li>To <strong>pull a particular image</strong>: <code>docker pull &lt;docker-image&gt;</code></li>
 </ul>
-</google-codelab-step>
-<google-codelab-step label="Tag-based Analysis of Requests" duration="5">
-<p>By integrating Dynatrace into your existing load testing process, you can stop broken builds in your delivery pipeline earlier.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Prerequisites" duration="0">
+        <p>This lab is the second session of the AIOps Enablement Series for ANZ Bank. Please refer back to previous steps below to setup your environment.</p>
+<ul>
+<li><a href="../../workshops/automate-feedback-1/index.html?index=..%2F..anz#2" target="_blank">Installing OneAgent</a></li>
+<li><a href="../../workshops/automate-feedback-1/index.html?index=..%2F..anz#6" target="_blank">Defining Request Attributes</a></li>
+</ul>
+<h2 is-upgraded>Resuming ⏯ from your Session 1</h2>
+<p>As part of the training, you might have just restarted your ec2-instance. If so, follow the steps below:</p>
+<aside class="special"><p>To <strong>start the Docker service</strong> with this command - <code>service docker start</code></p>
+</aside>
+<aside class="special"><p>TO <strong>start the SampleBankApp</strong> with this command - <code>docker start SampleBankApp</code></p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Tag-based Analysis of Requests" duration="15">
+        <p>By integrating Dynatrace into your existing load testing process, you can stop broken builds in your delivery pipeline earlier. Tagging is a powerful mechanism and should be used carefully and in a meaningful way. To guide you towards this end, we provide you with specific recommendations and <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/tags-and-metadata/" target="_blank">best practices</a>.</p>
 <h2 is-upgraded>Defining a Unique Entity</h2>
-<p>Tagging is a powerful mechanism. However, to reap its benefits, tagging should be used carefully and in a meaningful way. To guide you towards this end, we provide you with specific recommendations and <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/tags-and-metadata/" target="_blank">best practices</a>. With auto-tagging based on metadata, tags can be generated automatically and assigned to monitored entities with the specific metadata values that Dynatrace detects automatically.</p>
-<p>Go to <strong>Host &gt; ec2-instance &gt; node-bank2</strong></p>
-<p>Dropdown <strong>Properties and tags</strong> and click on <strong>Add tag</strong></p>
-<p>Tag the service &#34;PLACEHOLDER&#34;</p>
-<h2 is-upgraded>Pushing Events to defined tag</h2>
-<p>Full integration and approach is documentated <strong>[here]</strong>(https://www.dynatrace.com/support/help/setup-and-configuration/integrations/third-party-integrations/test-automation-frameworks/dynatrace-and-load-testing-tools-integration/)</p>
-</google-codelab-step>
-<google-codelab-step label="Renaming Load Test Requests" duration="20">
-<h2 is-upgraded>Naming Rules</h2>
+<p class="image-container"><img alt="Docker-start" src="img/37ee1288dfaf4203.png"></p>
+<p>In Dynatrace, on the left menu bar, go to <strong>Transactions and services &gt; node-bank2</strong> and follow the steps below:</p>
+<ul>
+<li>Dropdown <strong>Properties and tags</strong></li>
+<li>Click on <strong>Add tag</strong></li>
+<li>Name the new Tag <code>My_service</code></li>
+</ul>
+<p class="image-container"><img alt="Docker-start" src="img/d5eb269e16d5c057.png"></p>
+<p>Official Dynatrace documentation could be found <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/tags-and-metadata/setup/how-to-define-tags/" target="_blank">here</a></p>
+<h2 is-upgraded>Trigger Load with Python script</h2>
+<p>As per the last lab we have written a Python script to automate the load tests for JMeter. We will now edit it to <strong>push events</strong> into Dynatrace. Within the shell terminal, run the following command to edit the Python script.</p>
+<pre><code>cd /home/ubuntu/ACM1Workshop/additional_resources/app_docker/scripts/
+vim smoke-test.py
+</code></pre>
+<p>Within the text editor, scroll to the bottom. <strong>Uncomment</strong> the script so as to match the below.</p>
+<pre><code>   #Inform dynatrace the next set of requests are part of this load-test
+   eventdetail = &#34;STARTING LOADTEST&#34;
+   push_event(logger, eventdetail, job_name)
+   #Generate the load
+   load_test(port, no_of_requests, logger, test_hostname)
+
+   #Inform dynatrace about completion of load-test
+   eventdetail = &#34;STOPPING LOADTEST&#34;
+   push_event(logger, eventdetail, job_name)
+
+   logging.shutdown()
+</code></pre>
+<p><strong>Screenshot of edited script</strong><img alt="Commenting-Python" src="img/5342ff1d2f01c294.png"></p>
+<h2 is-upgraded>Replacing Dynatrace Variables</h2>
+<p>Within the middle section of the script, append the values of <strong>DT_TENANT</strong> and <strong>DT_TOKEN</strong></p>
+<p>To get your <strong>DT_TENANT</strong>, go to the Web Browser and extract the URL path as per below.</p>
+<p><strong>EXAMPLE URL</strong> https://mou612.managed-sprint.dynalabs.io/e/<strong>DT-TENANT</strong>/</p>
+<p class="image-container"><img alt="Deploy" src="img/82f926ac9a2f26e6.png"></p>
+<p>To get your <strong>DT_TOKEN</strong>, go to <strong>Settings &gt; Integration &gt; Dynatrace API &gt; Generate Token</strong> and follow the below:</p>
+<ul>
+<li>Create a token with <strong>LoadTest</strong></li>
+<li>Toggle <strong>Data ingest, eg: metrics and events</strong></li>
+<li>Click on <strong>Generate</strong></li>
+<li>Clck on <strong>Copy</strong></li>
+</ul>
+<p class="image-container"><img alt="Token" src="img/c1dee5ca61355bbb.png"></p>
+<p>Back in your shell terminal, replace the <strong>DT_TENANT</strong> and <strong>DT_TOKEN</strong>. Your script should look like the below.</p>
+<p class="image-container"><img alt="Commenting-Python" src="img/332a2c6e075236a1.png"></p>
+<p><strong>Save the text editing session</strong> with command <code>:wq</code></p>
+<p>Run the script with command <code>python3 smoke-test.py</code></p>
+<h2 is-upgraded>Check Load Test Events</h2>
+<p>The script will append load test events within Dynatrace which will add additional insights for our DAVIS AI to use.</p>
+<p>Note the <strong>Start events</strong> and <strong>Stop events</strong></p>
+<p class="image-container"><img alt="Start-events" src="img/f98d01359d6f177b.png"></p>
+<p class="image-container"><img alt="Stop-events" src="img/cd926dcc08f65be2.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Configuring Loadtest Requests" duration="15">
+        <h2 is-upgraded>Mark Requests as Key Requests</h2>
+<p>In Dynatrace, on the left menu bar, go to <strong>Transactions and services &gt; node-bank2</strong></p>
+<p>Click on <strong>View dynamic requests</strong> and use <strong>/api/users</strong> within the filter bar</p>
+<p>Note that the Top requests has now been filtered with /api/users</p>
+<p class="image-container"><img alt="Mark Requests" src="img/3c26efe06ab0ef84.png"></p>
+<p>Click on the <strong>...</strong> button on the top right and choose <strong>Mark as key request</strong></p>
+<p class="image-container"><img alt="Mark Requests" src="img/88136326291cfa18.png"></p>
+<p>Notice that the /api/users has been marked as a key request.</p>
+<p class="image-container"><img alt="Mark Requests" src="img/20fd04e440ae2c37.png"></p>
+<h2 is-upgraded>Web Requests Naming Rules</h2>
 <p>Dynatrace automatically provides names, but they don&#39;t enable you to quickly identify where an application or service belongs to. To achieve this, it&#39;s recommended that you use service naming rules and process group naming rules. This can be done in Dynatrace using metadata imported from the monitored applications.</p>
 <p>You can use Dynatrace Naming Rules to differentiate requests</p>
-<p class="image-container"><img alt="Request-tag" src="img/391a32cda8165e59.png"></p>
-<p>Documentation <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/tags-and-metadata/setup/how-to-define-tags/" target="_blank">here</a></p>
-</google-codelab-step>
-<google-codelab-step label="Analyzing Dynatrace Events" duration="10">
-<h2 is-upgraded>Annotate Dynatrace with Events</h2>
-<p>The Events API delivers details about all uncorrelated events that Dynatrace collects within your environment. Information returned for each event includes attributes about the event source, the entity where the event was collected, and other event-specific details.</p>
-<p>PUSH endpoint enables third-party systems such as CI platforms (Jenkins, Bamboo, Electric Cloud, etc.) to provide additional details for Dynatrace automated root cause analysis.</p>
-<p class="image-container"><img alt="Event-API" src="img/cdadb18f529c4819.png"></p>
-<p>Documentation <a href="https://www.dynatrace.com/support/help/dynatrace-api/environment-api/events/push-deployment-events-from-jenkins/" target="_blank">here</a></p>
-<h2 is-upgraded>Compare and Analyze events</h2>
-<p>There are different ways to analyze the data. Your approach should be based on the type of performance analysis you want to do (for example, crashes, resource and performance hotspots, or scalability issues).</p>
+<p class="image-container"><img alt="Mark Requests" src="img/bb40d0c11a1e3319.png"></p>
+<ul>
+<li>Click on <strong>Web Request naming rules</strong></li>
+<li>Click on <strong>Add rule</strong> undesr Request naming rules</li>
+<li>Use <code>Load-Request:{RequestAttribute:RequestName}</code> under Naming Pattern</li>
+<li>Choose <strong>Request attribute</strong><code>RequestName</code><strong>exists</strong> under Condition(s)</li>
+<li>Click on <strong>Save</strong></li>
+</ul>
+<p class="image-container"><img alt="Mark Requests" src="img/90b71f91ea192888.png"></p>
+<p>With the naming rule now applied, you would see a newly created request.</p>
+<p class="image-container"><img alt="Mark Requests" src="img/e801b1bced7cd21b.png"></p>
+<h2 is-upgraded>Populate requests</h2>
+<p>Within the SSH Terminal, run the Python script command again <code>python3 smoke-test.py</code> to populate requests.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Compare and Analyze events" duration="15">
+        <p>There are many different ways to analyze the data. Your approach should be based on the type of performance analysis you want to do (for example, crashes, resource and performance hotspots, or scalability issues).</p>
 <p class="image-container"><img alt="Event-API" src="img/5e3be8fb6768f848.png"></p>
-<p>Documentation <a href="https://www.dynatrace.com/support/help/shortlink/load-testing-process#compare--analyze" target="_blank">here</a></p>
-<h2 is-upgraded>Marking Load Test Key Requests</h2>
-</google-codelab-step>
-<google-codelab-step label="Creating Dashboards for Load Tests" duration="10">
-<h2 is-upgraded>Selecting load-test requests tiles</h2>
-</google-codelab-step>
-<google-codelab-step label="Feedback" duration="3">
-<p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
+<p>Official Dynatrace Documentation <a href="https://www.dynatrace.com/support/help/shortlink/load-testing-process#compare--analyze" target="_blank">here</a></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Creating Dashboards for Load Tests" duration="10">
+        <p>Dynatrace provides versatile dashboarding and charting mechanisms. You can create dashboards to reflect load test performance.</p>
+<p class="image-container"><img alt="Dashboards" src="img/28dfd67ff01bc1c.png"></p>
+<h2 is-upgraded>Creating custom charts</h2>
+<p>In Dynatrace, on the left menu bar, go to <strong>Create custom chart</strong></p>
+<p>Choose and chart <strong>Client side response time</strong> and <strong>Server side response time</strong> metrics</p>
+<p class="image-container"><img alt="Dashboards" src="img/ac0844dba4ce3329.png"></p>
+<p>You can filter on <strong>LoadTestID</strong> and chart only requests with that attribute.</p>
+<p class="image-container"><img alt="Dashboards" src="img/fb3f8dd122144cd3.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Feedback" duration="3">
+        <p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
 <google-codelab-survey survey-id="automate-feedback-2-1">
 <h4>How was your overall experience with this lab?</h4>
 <paper-radio-group>
@@ -97,10 +207,10 @@
 <google-codelab-survey survey-id="automate-feedback-2-2">
 <h4>What did you benefit most from this lab?</h4>
 <paper-radio-group>
-<paper-radio-button>Using OneAgent Operator to deploy in Kubernetes</paper-radio-button>
-<paper-radio-button>Setting up Kubernetes integation</paper-radio-button>
-<paper-radio-button>Enabling early access feature flags</paper-radio-button>
-<paper-radio-button>Learning Kubernetes View in Dynatrace</paper-radio-button>
+<paper-radio-button>Tag-based Analysis of Requests</paper-radio-button>
+<paper-radio-button>Configuring Load Test Requests</paper-radio-button>
+<paper-radio-button>Comparing and Analyzing Requests</paper-radio-button>
+<paper-radio-button>Creating Dashboardings</paper-radio-button>
 </paper-radio-group>
 </google-codelab-survey>
 <google-codelab-survey survey-id="automate-feedback-2-3">
@@ -115,12 +225,17 @@
 </google-codelab-survey>
 <aside class="special"><p>💡 For other ideas and suggestions, please <a href="mailto:APAC-SE-Central@dynatrace.com?subject=Automate Feedback 1 - Ideas and Suggestions" target="_blank"><strong>reach out via email</strong></a>.</p>
 </aside>
-</google-codelab-step>
-</google-codelab>
-<script src="../../elements/codelab-elements/native-shim.js"></script>
-<script src="../../elements/codelab-elements/custom-elements.min.js"></script>
-<script src="../../elements/codelab-elements/prettify.js"></script>
-<script src="../../elements/codelab-elements/codelab-elements.js"></script>
-<script src="//support.google.com/inapp/api.js"></script>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="../../elements/codelab-elements/native-shim.js"></script>
+  <script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+  <script src="../../elements/codelab-elements/prettify.js"></script>
+  <script src="../../elements/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
 </body>
 </html>

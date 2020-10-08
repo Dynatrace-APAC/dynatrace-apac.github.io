@@ -14,7 +14,7 @@ Duration: 1
 
 This lab is the first session of the AIOps Enablement Series for ANZ Bank. This track focuses on the Automate Feedback, which relates to how you could integate Dynatrace with load testing tools to create **Performance as a service**.
 
-![overview](assets/ANZ-aiops/overview-1.png)
+![overview](assets/ANZ-aiops/feedback1/overview-1.png)
 
 ### What You’ll Learn
 - Installing Dynatrace OneAgent 
@@ -129,7 +129,7 @@ Go to **Host > ec2-instance > SampleOnlineBankProduction (Process)**
 
 You will discover that Dynatrace automatically monitors your host metrics, processes but **services** are missing.
 
-![No-Service](assets/ANZ-aiops/No-service-1.png)
+![No-Service](assets/ANZ-aiops/feedback1/No-service-1.png)
 
 ### Restarting SampleBankApp
 
@@ -141,7 +141,7 @@ Run the following command to restart `docker restart SampleBankApp` to **restart
 
 To check and **verify that SampleBankApp container has restarted**, run `docker ps -a` again
 
-![Docker-restart](assets/ANZ-aiops/Docker-restart-command.png)
+![Docker-restart](assets/ANZ-aiops/feedback1/Docker-restart-command.png)
 
 <!-- ------------------------ -->
 ## Access Sample Banking Application
@@ -149,11 +149,11 @@ Duration: 10
 
 Within your Host View, dropdown the **Properties and Tags** and you will get a list of various metadata associated with the host created. Locate the **Public IP Address** and copy its value.
 
-![Host-properties](assets/ANZ-aiops/host-properties.png)
+![Host-properties](assets/ANZ-aiops/feedback1/host-properties.png)
 
 Open up your **web browser** and access the sample app with `<IP address>:4000/login`
 
-![Service-Detected](assets/ANZ-aiops/LoginApp.png)
+![Service-Detected](assets/ANZ-aiops/feedback1/LoginApp.png)
 
 ### Login to Sample Bank App
 
@@ -171,18 +171,18 @@ Access the banking App with the **either** of the below credentials
 
 As OneAgent automatically monitors your host, changes are reflected in real-time. Back in your Process screen, you will find the process updated with services.
 
-![Service-Detected](assets/ANZ-aiops/Service-Node-1.png)
+![Service-Detected](assets/ANZ-aiops/feedback1/Service-Node-1.png)
 
 <!-- ------------------------ -->
 ## JMeter Performance Testing
 
 For the purposes of the lab, we will demo with the **Jmeter thick client**. The same capabilites will be triggered and used within the labs using CLI via SSH.
 
-![Jmeter-HTTP-Header](assets/ANZ-aiops/JMeter-1.png)
+![Jmeter-HTTP-Header](assets/ANZ-aiops/feedback1/JMeter-1.png)
 
-![Jmeter-HTTP-Header](assets/ANZ-aiops/JMeter-2.png)
+![Jmeter-HTTP-Header](assets/ANZ-aiops/feedback1/JMeter-2.png)
 
-![Jmeter-HTTP-Request](assets/ANZ-aiops/JMeter-HTTP-Request.png)
+![Jmeter-HTTP-Request](assets/ANZ-aiops/feedback1/JMeter-HTTP-Request.png)
 
 <!-- ------------------------ -->
 ## Defining Request Attributes
@@ -218,7 +218,7 @@ Click on **Define a new request attribute** and use the following:
 * Preprocess parameter by extracting substring **between** (dropdown) and  `LoadTestID=` in **1st field** and `;` in **2nd field**
 * Click on **Save**
 
-![Request-Attribute](assets/ANZ-aiops/Request_attribute_setting_1.png)
+![Request-Attribute](assets/ANZ-aiops/feedback1/Request_attribute_setting_1.png)
 
 Click on **Define a new request attribute** and use the following:
 
@@ -230,7 +230,7 @@ Click on **Define a new request attribute** and use the following:
 * Preprocess parameter by extracting substring **after** (dropdown) and  `;RequestName=` in field
 * Click on **Save**
 
-![Request-Attribute](assets/ANZ-aiops/Request_attribute_setting_2.png)
+![Request-Attribute](assets/ANZ-aiops/feedback1/Request_attribute_setting_2.png)
 
 ### Simulate load from JMeter 
 Using the .JMX load from the local folder, access the simulate the requests with the local .JMX file
@@ -253,7 +253,7 @@ cd /home/ubuntu/apache-jmeter-5.2.1/bin
 
 Once you have triggered your load, you can also see **login requests** appearing within your **node-bank2** service.
 
-![Login-requests](assets/ANZ-aiops/login-requests.png)
+![Login-requests](assets/ANZ-aiops/feedback1/login-requests.png)
 
 <!-- ------------------------ -->
 ## Trigger load with Python Script
@@ -268,7 +268,7 @@ cd /home/ubuntu/ACMD1Workshop/additional_resources/app_docker/scripts/
 python3 smoke-test.py 
 ```
 
-![Load-test](assets/ANZ-aiops/Python-script-load-test.png)
+![Load-test](assets/ANZ-aiops/feedback1/Python-script-load-test.png)
 
 <!-- ------------------------ -->
 
