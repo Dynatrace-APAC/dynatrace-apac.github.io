@@ -3,24 +3,24 @@
   "format": "html",
   "prefix": "../../elements",
   "mainga": "UA-49880327-14",
-  "updated": "2020-10-12T19:44:20+11:00",
-  "id": "istio",
-  "duration": 54,
-  "title": "Dynatrace with Istio",
+  "updated": "2020-10-12T19:36:34+11:00",
+  "id": "azure",
+  "duration": 64,
+  "title": "Dynatrace with Azure",
   "authors": "Brandon Neo",
-  "summary": "Istio Hands-On",
-  "source": "istio.md",
+  "summary": "Azure Hands-On",
+  "source": "azure.md",
   "theme": "",
   "status": [
     "published"
   ],
   "category": [
-    "istio"
+    "azure"
   ],
   "tags": [
     "bootcamp"
   ],
   "feedback": "mailto:APAC-SE-Central@dynatrace.com",
   "ga": "UA-175467274-1",
-  "url": "istio"
+  "url": "azure"
 }

@@ -1,31 +1,43 @@
 
 <!doctype html>
+
 <html>
 <head>
-<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
-<meta name="theme-color" content="#4F7DC9">
-<meta charset="UTF-8">
-<title>Dynatrace with Istio</title>
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
-<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
-<style>
-.success{color:#1e8e3e}.error{color:red} </style>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Dynatrace with Istio</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
 </head>
 <body>
-<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
-<google-codelab codelab-gaid="UA-175467274-1" id="istio" title="Dynatrace with Istio" environment="web" feedback-link="mailto:APAC-SE-Central@dynatrace.com">
-<google-codelab-step label="Introduction" duration="1">
-<p>This repository contains labs for the Istio Hands-On Session. We will be using Google Kubernetes Engine (GKE) for this hands-on but for China participants, please attempt to use Microk8s on AWS. You can use <a href="https://github.com/keptn-sandbox/keptn-in-a-box" target="_blank">Keptn in a box</a> to easily spin up a Istio based K8s instance</p>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid="UA-175467274-1"
+                  id="istio"
+                  title="Dynatrace with Istio"
+                  environment="web"
+                  feedback-link="mailto:APAC-SE-Central@dynatrace.com">
+    
+      <google-codelab-step label="Introduction" duration="1">
+        <p>This repository contains labs for the Istio Hands-On Session. We will be using Google Kubernetes Engine (GKE) for this hands-on but for China participants, please attempt to use Microk8s on AWS. You can use <a href="https://github.com/keptn-sandbox/keptn-in-a-box" target="_blank">Keptn in a box</a> to easily spin up a Istio based K8s instance</p>
 <h2 is-upgraded>Prerequisites</h2>
 <ul>
-<li>Google Cloud account with access to GKE. Use <strong>ANY</strong> of the following: <ul>
+<li>Google Cloud account with access to GKE. Use <strong>ANY</strong> of the following:  <ul>
 <li>Corporate account via #team-gotc on Slack (eg. brandon.neo@dynatrace.com on <strong>ACM Workshops APAC</strong> project)</li>
 <li>Free trial access <a href="https://cloud.google.com/free/" target="_blank">here</a>.</li>
 </ul>
 </li>
 <li>Chrome Browser with <a href="https://chrome.google.com/webstore/detail/modify-header-value-http/cbdibdfhahmknbkkojljfncpnhmacdek" target="_blank">browser extension</a></li>
-<li>Enable Envoy Tracing in your Dynatrace Environment <ul>
+<li>Enable Envoy Tracing in your Dynatrace Environment  <ul>
 <li><strong>Settings &gt; Monitored Technologies &gt; Envoy</strong></li>
 </ul>
 </li>
@@ -36,9 +48,12 @@
 <li>Learn Kiali and its difference with Dynatrace</li>
 <li>Setting up GKE on Istio</li>
 </ul>
-</google-codelab-step>
-<google-codelab-step label="Setting up your Google Kubernetes Environment (GKE)" duration="10">
-<h2 is-upgraded>Login to Google Cloud Platform Account</h2>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Setting up your Google Kubernetes Environment (GKE)" duration="10">
+        <h2 is-upgraded>Login to Google Cloud Platform Account</h2>
 <p>Either login to your corporate account or signup with Google Cloud Platform free <a href="https://cloud.google.com/free/" target="_blank">here</a></p>
 <p>You can login to your GCP console <a href="https://console.cloud.google.com/home/" target="_blank">here</a>.</p>
 <p class="image-container"><img alt="GCP-Homepage" src="img/1f9711d41bd92133.png"></p>
@@ -82,18 +97,24 @@
 <h2 is-upgraded>Setup GKE Cluster</h2>
 <p>Back in your GCP account, launch a <strong>Cloudshell session</strong> Navigate to the directory <strong>2-CreateCluster</strong> Execute the script <strong>setupenv.sh</strong> and confirm that your credentials are correct</p>
 <p class="image-container"><img alt="CreateCluster" src="img/b1749465419d5761.png"></p>
-</google-codelab-step>
-<google-codelab-step label="Istio Setup" duration="5">
-<h2 is-upgraded>Istio Installation</h2>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Istio Setup" duration="5">
+        <h2 is-upgraded>Istio Installation</h2>
 <p>Navigate to the directory <strong>3-DeployIstio</strong>, where there will be two scripts: Execute the script <strong>./1-deployIstio.sh</strong></p>
 <p class="image-container"><img alt="DeployIstio" src="img/f50eda87c7a15560.png"></p>
 <p>After the script runs, you will be presented with a URL to the <strong>Kiali web interface</strong> along with the username and password: <img alt="DeployIstio" src="img/619c8a43f2e21d24.png"></p>
 <h2 is-upgraded>Define Istio Namespace</h2>
 <p>Now that we have Istio and Kiali installed, we need to tell it which namespaces can use it.<br> We do this by adding the following label to any namespace where we plan to use Istio: <code>istio-enabled=enabled</code> In our case we are going to label the default namespace by running the script <strong>./2-labelNamespace.sh</strong></p>
 <p class="image-container"><img alt="DeployIstio" src="img/acd82dbb2ce697af.png"></p>
-</google-codelab-step>
-<google-codelab-step label="Traffic Routing" duration="15">
-<h2 is-upgraded>Traffic Routing Setup</h2>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Traffic Routing" duration="15">
+        <h2 is-upgraded>Traffic Routing Setup</h2>
 <p>First let&#39;s deploy our application: Navigate to the folder <strong>4-TrafficRouting</strong> and execute the script <strong>./1-trafficroutingapplication.sh</strong> This will deploy our sample application and output the URL where the application can be accessed via a browser This is plain Kubernetes, nothing Istio related is deployed yet</p>
 <p class="image-container"><img alt="TrafficRouting" src="img/6d337338b75a2663.png"></p>
 <p>Once the deployment complete, navigate to the output URL to view the application:</p>
@@ -114,12 +135,15 @@
 <p class="image-container"><img alt="SampleApp" src="img/a42d6baaa763127.png"></p>
 <p>You will also see this in the console via kubectl</p>
 <p class="image-container"><img alt="SampleApp" src="img/a0d4f05101820de.png"></p>
-<p>In the UI we should now see the traffic weighting take affect and we should see the actual person image ~10% of the time and the placeholder image <strong>~90% of the time</strong> We can also see in the in the command line via cURL. In the folder <strong>4-TrafficRouting</strong>, execute the command <code>./curlOutput.sh</code></p>
+<p>In the UI we should now see the traffic weighting take affect and we should see the actual person image ~10% of the time and the placeholder image <strong>~90% of the time</strong> We can also see in the in the command line via cURL.  In the folder <strong>4-TrafficRouting</strong>, execute the command <code>./curlOutput.sh</code></p>
 <p class="image-container"><img alt="SampleApp" src="img/402475013686c712.png"></p>
 <p>Run the script <strong>./2-cleanUp.sh</strong> to remove the application and make sure you deleted the VirtualService and DestinationRules</p>
-</google-codelab-step>
-<google-codelab-step label="Ingress" duration="5">
-<p>First let&#39;s deploy our application, navigate to the folder <strong>5-Ingress</strong> and execute the script <code>./1-ingressapplication.sh</code></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Ingress" duration="5">
+        <p>First let&#39;s deploy our application, navigate to the folder <strong>5-Ingress</strong> and execute the script <code>./1-ingressapplication.sh</code></p>
 <p>When the script completes you will end up with URL for the application</p>
 <p>There is NO Istio specific configuration for this application (yet)</p>
 <h2 is-upgraded>Blue Green versions of Fleet Manager</h2>
@@ -143,9 +167,12 @@
 <p class="image-container"><img alt="SampleApp" src="img/82e0f245f0b13e0e.png"></p>
 <p>Run the script ./cleanUp.sh to remove the Gateway Service, Virtual Service and Destination Rules The application will remain deployed</p>
 <p class="image-container"><img alt="SampleApp" src="img/5c3fa0e6a03471d6.png"></p>
-</google-codelab-step>
-<google-codelab-step label="Dark Releases" duration="15">
-<p>What are Dark Releases?</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Dark Releases" duration="15">
+        <p>What are Dark Releases?</p>
 <ul>
 <li>Deploying a &#34;dormant&#34; version of an application/service</li>
 <li>Control the exposed use base</li>
@@ -162,9 +189,12 @@
 <p class="image-container"><img alt="Dark-Releases" src="img/e18b6557b9becdb1.png"></p>
 <p>We can determine what traffic is canary and which is not in Dynatrace with a Request Attribute:</p>
 <p class="image-container"><img alt="Dark-Releases" src="img/7d959e7b8b020f8f.png"></p>
-</google-codelab-step>
-<google-codelab-step label="Feedback" duration="3">
-<p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Feedback" duration="3">
+        <p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
 <google-codelab-survey survey-id="istio-1">
 <h4>How was your overall experience with this lab?</h4>
 <paper-radio-group>
@@ -196,12 +226,17 @@
 </google-codelab-survey>
 <aside class="special"><p>💡 For other ideas and suggestions, please <a href="mailto:APAC-SE-Central@dynatrace.com?subject=Kubernetes Workshop - Ideas and Suggestions" target="_blank"><strong>reach out via email</strong></a>.</p>
 </aside>
-</google-codelab-step>
-</google-codelab>
-<script src="../../elements/codelab-elements/native-shim.js"></script>
-<script src="../../elements/codelab-elements/custom-elements.min.js"></script>
-<script src="../../elements/codelab-elements/prettify.js"></script>
-<script src="../../elements/codelab-elements/codelab-elements.js"></script>
-<script src="//support.google.com/inapp/api.js"></script>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="../../elements/codelab-elements/native-shim.js"></script>
+  <script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+  <script src="../../elements/codelab-elements/prettify.js"></script>
+  <script src="../../elements/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
 </body>
 </html>

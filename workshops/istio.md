@@ -67,7 +67,7 @@ Run the following command to download from our Github Repo
 
 The above will create a folder call **istio-handson**. This will contain the scripts we will use for the remainder of the workshop 
 
-![GKE-Cloud-shell](assets/istio/cloud-shell.png)
+![GKE-Cloud-shell](assets/bootcamp/istio/cloud-shell.png)
 
 ### Dynatrace Tokens
 
@@ -86,13 +86,13 @@ Go in **Settings -> Integration -> Dynatrace API**
 - Enter a name for your token (e.g. GKE)
 - Don't forget to click on the Save button
 
-![Token](assets/istio/dt-api-token.png)
+![Token](assets/bootcamp/istio/dt-api-token.png)
 
 Go in **Settings -> Integration -> Platform as a Service**
 - Either copy the existing InstallerDownload token or click on Generate Token
 - Enter a name for your token (e.g. GKE), click Save
 
-![Token](assets/istio/dt-paas-token.png)
+![Token](assets/bootcamp/istio/dt-paas-token.png)
 
 ### Creating Credentials
 
@@ -103,7 +103,7 @@ This will ask for your Dynatrace Tenant/Environment information as well as your 
 These values can be obtained from your Dynatrace tenant (see previous instructions)
 Once you have entered the values and confirmed they are correct, we can move on to creating our cluster
 
-![Crendentials](assets/istio/1-credentials.png)
+![Crendentials](assets/bootcamp/istio/1-credentials.png)
 
 Positive
 :This step will take about 10 minutes to complete
@@ -114,7 +114,7 @@ Back in your GCP account, launch a **Cloudshell session**
 Navigate to the directory **2-CreateCluster**
 Execute the script **setupenv.sh** and confirm that your credentials are correct
 
-![CreateCluster](assets/istio/2-CreateCluster.png)
+![CreateCluster](assets/bootcamp/istio/2-CreateCluster.png)
 
 <!-- ------------------------ -->
 ## Istio Setup
@@ -125,10 +125,10 @@ Duration: 5
 Navigate to the directory **3-DeployIstio**, where there will be two scripts:
 Execute the script **./1-deployIstio.sh**
 
-![DeployIstio](assets/istio/3-DeployIstio.png)
+![DeployIstio](assets/bootcamp/istio/3-DeployIstio.png)
 
 After the script runs, you will be presented with a URL to the **Kiali web interface** along with the username and password:
-![DeployIstio](assets/istio/3-DeployIstio-Done.png)
+![DeployIstio](assets/bootcamp/istio/3-DeployIstio-Done.png)
 
 ### Define Istio Namespace
 
@@ -137,7 +137,7 @@ We do this by adding the following label to any namespace where we plan to use I
 `istio-enabled=enabled`
 In our case we are going to label the default namespace by running the script **./2-labelNamespace.sh**
 
-![DeployIstio](assets/istio/3-DeployIstio-Define.png)
+![DeployIstio](assets/bootcamp/istio/3-DeployIstio-Define.png)
 
 <!-- ------------------------ -->
 ## Traffic Routing
@@ -150,49 +150,49 @@ Navigate to the folder **4-TrafficRouting** and execute the script **./1-traffic
 This will deploy our sample application and output the URL where the application can be accessed via a browser
 This is plain Kubernetes, nothing Istio related is deployed yet
 
-![TrafficRouting](assets/istio/traffic-routing.png)
+![TrafficRouting](assets/bootcamp/istio/traffic-routing.png)
 
 Once the deployment complete, navigate to the output URL to view the application:
 
-![SampleApp](assets/istio/fleet-manager.png)
+![SampleApp](assets/bootcamp/istio/fleet-manager.png)
 
 ### Explore Sample App Fleet
 
 Clicking the different truck names on the left you will notice that the driver picture changes to either a placeholder photo or a real photo
 
-![SampleApp](assets/istio/fleet-manager-2.png)
+![SampleApp](assets/bootcamp/istio/fleet-manager-2.png)
 
 If you take a look at the running pods, you will see that we have two different pods running the staff service
 
-![SampleApp](assets/istio/traffic-routing-2.png)
+![SampleApp](assets/bootcamp/istio/traffic-routing-2.png)
 
 Explore Service Flow in Dynatrace and you should see the below
 
-![SampleApp](assets/istio/service-flow.png)
+![SampleApp](assets/bootcamp/istio/service-flow.png)
 
 ### Explore Kiali
 
 In the Kiali UI, navigate to the Graph view and find the “fleetman-staff-service” and “Show Details”
 
-![SampleApp](assets/istio/kiali-1.png)
+![SampleApp](assets/bootcamp/istio/kiali-1.png)
 
 Select Actions and **Create Weighted Routing**
 Set the **“Risky”** service to 10% Traffic Weight
 
-![SampleApp](assets/istio/kiali-2.png)
+![SampleApp](assets/bootcamp/istio/kiali-2.png)
 
 You will now see that a **Virtual Service** and **Destination Rule** was create and we can view the YAML
 
-![SampleApp](assets/istio/kiali-3.png)
+![SampleApp](assets/bootcamp/istio/kiali-3.png)
 
 You will also see this in the console via kubectl
 
-![SampleApp](assets/istio/kiali-4.png)
+![SampleApp](assets/bootcamp/istio/kiali-4.png)
 
 In the UI we should now see the traffic weighting take affect and we should see the actual person image ~10% of the time and the placeholder image **~90% of the time**
 We can also see in the in the command line via cURL.  In the folder **4-TrafficRouting**, execute the command `./curlOutput.sh`
 
-![SampleApp](assets/istio/kiali-5.png)
+![SampleApp](assets/bootcamp/istio/kiali-5.png)
 
 Run the script **./2-cleanUp.sh** to remove the application and make sure you deleted the VirtualService and DestinationRules
 
@@ -211,46 +211,46 @@ There is NO Istio specific configuration for this application (yet)
 
 You will notice if you refresh the page a few times, there are two different versions of the application:
 
-![SampleApp](assets/istio/fleet-manager-3.png)
+![SampleApp](assets/bootcamp/istio/fleet-manager-3.png)
 
 Since there is no Istio involved, traffic is currently weighted at **50/50**
 We can also see this via cURL, by running the script `./curlOutput.sh` in the folder **5-Ingress**
 
-![SampleApp](assets/istio/ingress-1.png)
+![SampleApp](assets/bootcamp/istio/ingress-1.png)
 
 ### Explore Kiali
 
 Now let’s create a traffic weighting so 90% of the traffic goes to the stable version and 10% of the traffic goes to the experimental version in Kiali
 
-![SampleApp](assets/istio/kiali-6.png)
+![SampleApp](assets/bootcamp/istio/kiali-6.png)
 
-![SampleApp](assets/istio/kiali-7.png)
+![SampleApp](assets/bootcamp/istio/kiali-7.png)
 
 However, when running the cURL script again, we still see a ~50/50 traffic weighting?
 
-![SampleApp](assets/istio/ingress-2.png)
+![SampleApp](assets/bootcamp/istio/ingress-2.png)
 
 Istio already provides us with an Ingress Service, we just need to configure it:
 
-![SampleApp](assets/istio/ingress-3.png)
+![SampleApp](assets/bootcamp/istio/ingress-3.png)
 
 Run the script `./2-createIstioGateway.sh` in the folder **5-Ingress** which will create our Gateway, Virtual Service and Destination Rules. This will also output the URL for accessing the application through the Gateway
 
-![SampleApp](assets/istio/ingress-4.png)
+![SampleApp](assets/bootcamp/istio/ingress-4.png)
 
 We should now see that we are getting about a 90/10 traffic weighting in the browser
 If we check Kiali we will also see the Gateway Service created, along with the Virtual Service and Destination Rules
 
-![SampleApp](assets/istio/kiali-8.png)
+![SampleApp](assets/bootcamp/istio/kiali-8.png)
 
 We should also be able to see this in Dynatrace's Service Flow
 
-![SampleApp](assets/istio/service-flow-2.png)
+![SampleApp](assets/bootcamp/istio/service-flow-2.png)
 
 Run the script ./cleanUp.sh to remove the Gateway Service, Virtual Service and Destination Rules
 The application will remain deployed
 
-![SampleApp](assets/istio/ingress-5.png)
+![SampleApp](assets/bootcamp/istio/ingress-5.png)
 
 <!-- ------------------------ -->
 ## Dark Releases
@@ -270,19 +270,19 @@ Navigate to the folder **6-DarkReleases** and execute the script `./1-createRout
 
 When you out the application in the output URL, the application should appear WITHOUT the red banner
 
-![Dark-Releases](assets/istio/dark-release-1.png)
+![Dark-Releases](assets/bootcamp/istio/dark-release-1.png)
 
 If we take a look at the yaml file with the routing rules we see how the traffic is routing:
 
-![Dark-Releases](assets/istio/dark-release-2.png)
+![Dark-Releases](assets/bootcamp/istio/dark-release-2.png)
 
 If we access the application with the **HTTP Header my-header:canary**,we should see the experimental version, with the red banner displayed. We can add this header via a browser extension:
 
-![Dark-Releases](assets/istio/dark-release-3.png)
+![Dark-Releases](assets/bootcamp/istio/dark-release-3.png)
 
 We can determine what traffic is canary and which is not in Dynatrace with a Request Attribute:
 
-![Dark-Releases](assets/istio/dark-release-4.png)
+![Dark-Releases](assets/bootcamp/istio/dark-release-4.png)
 
 <!-- ------------------------ -->
 

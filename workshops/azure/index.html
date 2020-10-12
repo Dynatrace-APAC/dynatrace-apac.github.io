@@ -1,0 +1,211 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Dynatrace with Azure</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid="UA-175467274-1"
+                  id="azure"
+                  title="Dynatrace with Azure"
+                  environment="web"
+                  feedback-link="mailto:APAC-SE-Central@dynatrace.com">
+    
+      <google-codelab-step label="Introduction" duration="1">
+        <p>This repository contains labs for the Azure Hands-On Session.</p>
+<h2 is-upgraded>Prerequisites</h2>
+<ul>
+<li>Azure Portal Account access. Use <strong>ANY</strong> of the following:  <ul>
+<li>Access via Microsoft Visual Studio Subscription</li>
+<li>Access via Sales-Engineering/APAC Subscription (via GOTC)</li>
+<li>Access from <a href="https://azure.microsoft.com/en-gb/offers/ms-azr-0044p/" target="_blank">Free Trial</a></li>
+</ul>
+</li>
+</ul>
+<h2 class="checklist" is-upgraded>What You&#39;ll Learn</h2>
+<ul class="checklist">
+<li>How to deploy Web App on Azure</li>
+<li>Learn how to use deploy Dynatrace with Azure with <strong>Site Extensions</strong></li>
+<li>How to deploy Azure Function</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Deploy Weather Service Web App" duration="15">
+        <h2 is-upgraded>Clone Repo to Azure Cloud shell</h2>
+<p>Login to <a href="https://portal.azure.com/" target="_blank">Azure Portal</a> with your designated email.</p>
+<p>Click on <strong>Cloud Shell icon</strong> on the top navigation bar.</p>
+<p class="image-container"><img alt="Azure" src="img/8eb85b0e0e56d522.png"></p>
+<p>Within the Cloudshell terminal, type in the below.</p>
+<pre><code>git clone https://github.com/Nodnarboen/AzureWebService.git
+cd AzureWebService/weather-service
+</code></pre>
+<p>The above command will download the git from the repo into your Cloud bastion host. This is setup based on your <strong>Storage Account</strong> location.</p>
+<h2 is-upgraded>Deploy Weather Service WebApp</h2>
+<p>Negative :Depending on your cloud shell location, you may change the <strong>$location</strong> value within the <strong>publish.p1</strong> to fit your region. Full list of regions are <a href="https://azure.microsoft.com/en-au/global-infrastructure/geographies/#geographies" target="_blank">here</a></p>
+<pre><code>$resourceGroupName=$args[0]
+$webappname=$args[1]
+$location=&#34;Australia East&#34;
+</code></pre>
+<p>Replace the <strong>firstname-lastname</strong> from the below command and adapt that to your own.</p>
+<p><code>./publish.ps1 firstname-lastname-dynatrace firstname-lastname-weather-service</code></p>
+<p><strong>Example</strong></p>
+<p><strong>./publish.ps1 brandon-neo-dynatrace brandon-neo-weather-service</strong></p>
+<p>Enter <strong>Y</strong> when prompted to deploy the content of the Weather Service app (<strong>AzureWebService/weather-service/weather-service-app.zip</strong>)</p>
+<p class="image-container"><img alt="Azure-shell" src="img/4619adda03124b6.png"></p>
+<h2 is-upgraded>Verify Resource Group creation</h2>
+<p>Now that your app has been deployed, verify that the resource group has been deployed as well.</p>
+<p class="image-container"><img alt="Azure-shell" src="img/9ea37a9e5f15e7a5.gif"></p>
+<p>Append <code>/weather/current/Linz</code> to your URL from your <strong>firstname-lastname-weather-service</strong> App Service</p>
+<p><strong>Example</strong></p>
+<p><strong>https://brandon-neo-weather-service.azurewebsites.net/weather/current/Linz</strong></p>
+<p>You should get a page reflecting JSON results.</p>
+<p class="image-container"><img alt="Azure-shell" src="img/bd62d0219cf2e9db.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Deploy Weather Express Web App" duration="15">
+        <h2 is-upgraded>Deploy Weather Express WebApp</h2>
+<p>Navigate to weather-express folder with <code>cd ../weather-express</code> command</p>
+<aside class="warning"><p>Similar to the previous step, you may change the <strong>$location</strong> value within the <strong>publish.p1</strong> to fit your region. Full list of regions are <a href="https://azure.microsoft.com/en-au/global-infrastructure/geographies/#geographies" target="_blank">here</a></p>
+</aside>
+<pre><code>$resourceGroupName=$args[0]
+$webappname=$args[1]
+$location=&#34;Australia East&#34;
+</code></pre>
+<p>Replace the <strong>firstname-lastname</strong> from the below command and adapt that to your own.</p>
+<p><code>./publish.ps1 firstname-lastname-dynatrace firstname-lastname-weather-express</code></p>
+<p><strong>Example</strong></p>
+<p><strong>./publish.ps1 brandon-neo-dynatrace brandon-neo-weather-express</strong></p>
+<p>Enter <strong>Y</strong> when prompted to deploy the content of the Weather Service app (<strong>AzureWebService/weather-service/weather-express-app.zip</strong>)</p>
+<h2 is-upgraded>Verify Resource Group creation</h2>
+<p>Similar to the <strong>Weather Service App</strong> verfication, check on the <strong>Weather Express App</strong> App Service URL. Is it working?</p>
+<h2 is-upgraded>Debugging</h2>
+<p>Within the <strong>Weather Express</strong> App Service, go to the <strong>Advanced Tools</strong> under Deployment Tools.</p>
+<p>Within the Kudu page, dropdown Debug Console to <strong>CMD</strong> and go to <code>site/LogFiles/Application</code></p>
+<p>Edit <code>logging-errors.txt</code> and you can find the error message with the problem</p>
+<p class="image-container"><img alt="Azure-shell" src="img/77b0525961319c98.gif"></p>
+<h2 is-upgraded>Resolution and Verification</h2>
+<p>Go to <strong>App Service Editor (Preview)</strong> and under <code>WWWROOT/config/main.js</code>, resolve the following based on the GIF</p>
+<ul>
+<li>Removing &#34;-&#34; at the last line</li>
+<li>Renaming your Uri to your <strong>firstname-lastname</strong>-weather-service.azurewebsites.net/weather</li>
+</ul>
+<p class="image-container"><img alt="Azure-shell" src="img/b2d831b189daf544.gif"></p>
+<p>Once you have resolved the issue, you should be able to access your <strong>Weather Express Portal</strong></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Instrumenting Web Apps" duration="15">
+        <h2 is-upgraded>Leveraging Site Extensions</h2>
+<p>Deployment the OneAgents cross both <strong>Weather Express App</strong> and <strong>Weather Service Apps</strong></p>
+<p class="image-container"><img alt="Azure-shell" src="img/50d4c8ecec689ee1.gif"></p>
+<p>Full Documentation <a href="https://www.dynatrace.com/support/help/technology-support/cloud-platforms/microsoft-azure-services/oneagent-integration/integrate-oneagent-on-azure-app-service/" target="_blank">here</a></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Function setup" duration="15">
+        <h2 is-upgraded>Creating Function App</h2>
+<p>Create a Azure App based on the following:</p>
+<ul>
+<li>Create a resource</li>
+<li>Search for <strong>Function App</strong></li>
+<li>Click on <strong>Create</strong></li>
+<li>Chooce your Resource Group - <strong>Firstname-Lastname-dynatrace</strong> (eg. Brandon-Neo-dynatrace )</li>
+<li>Name your Function App - <strong>Firstname-Lastname-dynatrace-function</strong> (eg. Brandon-Neo-dynatrace-function )</li>
+<li>Runtime Stack - <strong>.NET Core</strong></li>
+<li>Version - <strong>3.1</strong></li>
+<li>Region - <strong>Your Choosen Region</strong> (eg. Australia East)</li>
+<li><strong>Next</strong></li>
+<li>Operating Systems - <strong>Windows</strong></li>
+<li>Plan type - <strong>App service plan</strong></li>
+<li>Windows Plan - <strong>Firstname-Lastname-weather-express</strong> (eg. Brandon-Neo-weather-express )</li>
+<li><strong>Next</strong></li>
+<li><strong>No</strong> to AppInsights</li>
+<li><strong>Create</strong></li>
+<li>Once created, <strong>Go to Resource</strong></li>
+</ul>
+<p class="image-container"><img alt="Azure-shell" src="img/55c27988a0874f26.gif"></p>
+<h2 is-upgraded>Adding A Function</h2>
+<p>Create a Azure Function based on the following:</p>
+<ul>
+<li>Select <strong>Function</strong> on the left Nav, Click on <strong>+ Add</strong></li>
+<li>Choose <strong>HTTP trigger</strong></li>
+<li>Authorization type - Anonymous</li>
+<li>Code + Test</li>
+<li>Test/Run, Run</li>
+</ul>
+<p class="image-container"><img alt="Azure-shell" src="img/82f3a982e1ab537a.gif"></p>
+<h2 is-upgraded>Leveraging Site Extensions</h2>
+<p>Deploy and instrument the Function App with Site Extension</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Feedback" duration="3">
+        <p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
+<google-codelab-survey survey-id="azure-1">
+<h4>How was your overall experience with this lab?</h4>
+<paper-radio-group>
+<paper-radio-button>Excellent</paper-radio-button>
+<paper-radio-button>Good</paper-radio-button>
+<paper-radio-button>Average</paper-radio-button>
+<paper-radio-button>Fair</paper-radio-button>
+<paper-radio-button>Poor</paper-radio-button>
+</paper-radio-group>
+</google-codelab-survey>
+<google-codelab-survey survey-id="azure-2">
+<h4>What did you benefit most from this lab?</h4>
+<paper-radio-group>
+<paper-radio-button>Using OneAgent Operator to deploy in Kubernetes</paper-radio-button>
+<paper-radio-button>Setting up Kubernetes integation</paper-radio-button>
+<paper-radio-button>Enabling early access feature flags</paper-radio-button>
+<paper-radio-button>Learning Kubernetes View in Dynatrace</paper-radio-button>
+</paper-radio-group>
+</google-codelab-survey>
+<google-codelab-survey survey-id="azure-3">
+<h4>How likely are you to recommend this lab to a friend or colleague?</h4>
+<paper-radio-group>
+<paper-radio-button>Very Likely</paper-radio-button>
+<paper-radio-button>Moderately Likely</paper-radio-button>
+<paper-radio-button>Neither Likely nor unlikely</paper-radio-button>
+<paper-radio-button>Moderately Unlikely</paper-radio-button>
+<paper-radio-button>Very Unlikely</paper-radio-button>
+</paper-radio-group>
+</google-codelab-survey>
+<aside class="special"><p>💡 For other ideas and suggestions, please <a href="mailto:APAC-SE-Central@dynatrace.com?subject=Kubernetes Workshop - Ideas and Suggestions" target="_blank"><strong>reach out via email</strong></a>.</p>
+</aside>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="../../elements/codelab-elements/native-shim.js"></script>
+  <script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+  <script src="../../elements/codelab-elements/prettify.js"></script>
+  <script src="../../elements/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>
