@@ -1,34 +1,22 @@
 
 <!doctype html>
-
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-  <meta name="theme-color" content="#4F7DC9">
-  <meta charset="UTF-8">
-  <title>Automate Feedback - Session 2</title>
-  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
-  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
-  <style>
-    .success {
-      color: #1e8e3e;
-    }
-    .error {
-      color: red;
-    }
-  </style>
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+<meta name="theme-color" content="#4F7DC9">
+<meta charset="UTF-8">
+<title>Automate Feedback - Session 2</title>
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+<style>
+.success{color:#1e8e3e}.error{color:red} </style>
 </head>
 <body>
-  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
-  <google-codelab codelab-gaid="UA-175467274-1"
-                  id="automate-feedback-2"
-                  title="Automate Feedback - Session 2"
-                  environment="web"
-                  feedback-link="mailto:d1-apac@dynatrace.com">
-    
-      <google-codelab-step label="Introduction" duration="1">
-        <p>This lab is the second session of the AIOps Enablement Series for ANZ Bank. This track focuses on the Automate Feedback, which relates to how you could integate Dynatrace with load testing tools to create <strong>Performance as a service</strong>.</p>
+<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+<google-codelab codelab-gaid="UA-175467274-1" id="automate-feedback-2" title="Automate Feedback - Session 2" environment="web" feedback-link="mailto:d1-apac@dynatrace.com">
+<google-codelab-step label="Introduction" duration="1">
+<p>This lab is the second session of the AIOps Enablement Series for ANZ Bank. This track focuses on the Automate Feedback, which relates to how you could integate Dynatrace with load testing tools to create <strong>Performance as a service</strong>.</p>
 <p class="image-container"><img alt="overview" src="img/a019fa754830be15.png"></p>
 <h2 class="checklist" is-upgraded>What You&#39;ll Learn</h2>
 <ul class="checklist">
@@ -36,19 +24,16 @@
 <li>Load test web requests renaming</li>
 <li>Compare features to differentiate load test / actual requests</li>
 <li>Mark Load test requests as Key Requests</li>
-<li>Create dashboards for load-requests basic tiles  <ul class="checklist">
+<li>Create dashboards for load-requests basic tiles <ul class="checklist">
 <li>Response time</li>
 <li>Failure rates</li>
 <li>Database performance</li>
 </ul>
 </li>
 </ul>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Useful Commands ✅" duration="0">
-        <aside class="special"><p>To start the docker with sample application: <code>docker run -d --name SampleBankApp -p 4000:3000 nikhilgoenka/sample-bank-app</code></p>
+</google-codelab-step>
+<google-codelab-step label="Useful Commands ✅" duration="0">
+<aside class="special"><p>To start the docker with sample application: <code>docker run -d --name SampleBankApp -p 4000:3000 nikhilgoenka/sample-bank-app</code></p>
 <ul>
 <li>This would start the docker on port localhost:4000 with docker name as <strong>SampleBankApp</strong></li>
 </ul>
@@ -64,12 +49,9 @@
 <li>To <strong>delete all the unused images</strong>: <code>docker system prune -a -f</code></li>
 <li>To <strong>pull a particular image</strong>: <code>docker pull &lt;docker-image&gt;</code></li>
 </ul>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Prerequisites" duration="0">
-        <p>This lab is the second session of the AIOps Enablement Series for ANZ Bank. Please refer back to previous steps below to setup your environment.</p>
+</google-codelab-step>
+<google-codelab-step label="Prerequisites" duration="0">
+<p>This lab is the second session of the AIOps Enablement Series for ANZ Bank. Please refer back to previous steps below to setup your environment.</p>
 <ul>
 <li><a href="../../workshops/automate-feedback-1/index.html?index=..%2F..anz#2" target="_blank">Installing OneAgent</a></li>
 <li><a href="../../workshops/automate-feedback-1/index.html?index=..%2F..anz#6" target="_blank">Defining Request Attributes</a></li>
@@ -80,12 +62,9 @@
 </aside>
 <aside class="special"><p>TO <strong>start the SampleBankApp</strong> with this command - <code>docker start SampleBankApp</code></p>
 </aside>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Tag-based Analysis of Requests" duration="15">
-        <p>By integrating Dynatrace into your existing load testing process, you can stop broken builds in your delivery pipeline earlier. Tagging is a powerful mechanism and should be used carefully and in a meaningful way. To guide you towards this end, we provide you with specific recommendations and <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/tags-and-metadata/" target="_blank">best practices</a>.</p>
+</google-codelab-step>
+<google-codelab-step label="Tag-based Analysis of Requests" duration="15">
+<p>By integrating Dynatrace into your existing load testing process, you can stop broken builds in your delivery pipeline earlier. Tagging is a powerful mechanism and should be used carefully and in a meaningful way. To guide you towards this end, we provide you with specific recommendations and <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/tags-and-metadata/" target="_blank">best practices</a>.</p>
 <h2 is-upgraded>Defining a Unique Entity</h2>
 <p class="image-container"><img alt="Docker-start" src="img/37ee1288dfaf4203.png"></p>
 <p>In Dynatrace, on the left menu bar, go to <strong>Transactions and services &gt; node-bank2</strong> and follow the steps below:</p>
@@ -137,12 +116,9 @@ vim smoke-test.py
 <p>Note the <strong>Start events</strong> and <strong>Stop events</strong></p>
 <p class="image-container"><img alt="Start-events" src="img/f98d01359d6f177b.png"></p>
 <p class="image-container"><img alt="Stop-events" src="img/cd926dcc08f65be2.png"></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Configuring Loadtest Requests" duration="15">
-        <h2 is-upgraded>Mark Requests as Key Requests</h2>
+</google-codelab-step>
+<google-codelab-step label="Configuring Loadtest Requests" duration="15">
+<h2 is-upgraded>Mark Requests as Key Requests</h2>
 <p>In Dynatrace, on the left menu bar, go to <strong>Transactions and services &gt; node-bank2</strong></p>
 <p>Click on <strong>View dynamic requests</strong> and use <strong>/api/users</strong> within the filter bar</p>
 <p>Note that the Top requests has now been filtered with /api/users</p>
@@ -167,20 +143,14 @@ vim smoke-test.py
 <p class="image-container"><img alt="Mark Requests" src="img/e801b1bced7cd21b.png"></p>
 <h2 is-upgraded>Populate requests</h2>
 <p>Within the SSH Terminal, run the Python script command again <code>python3 smoke-test.py</code> to populate requests.</p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Compare and Analyze events" duration="15">
-        <p>There are many different ways to analyze the data. Your approach should be based on the type of performance analysis you want to do (for example, crashes, resource and performance hotspots, or scalability issues).</p>
+</google-codelab-step>
+<google-codelab-step label="Compare and Analyze events" duration="15">
+<p>There are many different ways to analyze the data. Your approach should be based on the type of performance analysis you want to do (for example, crashes, resource and performance hotspots, or scalability issues).</p>
 <p class="image-container"><img alt="Event-API" src="img/5e3be8fb6768f848.png"></p>
 <p>Official Dynatrace Documentation <a href="https://www.dynatrace.com/support/help/shortlink/load-testing-process#compare--analyze" target="_blank">here</a></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Creating Dashboards for Load Tests" duration="10">
-        <p>Dynatrace provides versatile dashboarding and charting mechanisms. You can create dashboards to reflect load test performance.</p>
+</google-codelab-step>
+<google-codelab-step label="Creating Dashboards for Load Tests" duration="10">
+<p>Dynatrace provides versatile dashboarding and charting mechanisms. You can create dashboards to reflect load test performance.</p>
 <p class="image-container"><img alt="Dashboards" src="img/28dfd67ff01bc1c.png"></p>
 <h2 is-upgraded>Creating custom charts</h2>
 <p>In Dynatrace, on the left menu bar, go to <strong>Create custom chart</strong></p>
@@ -188,12 +158,9 @@ vim smoke-test.py
 <p class="image-container"><img alt="Dashboards" src="img/ac0844dba4ce3329.png"></p>
 <p>You can filter on <strong>LoadTestID</strong> and chart only requests with that attribute.</p>
 <p class="image-container"><img alt="Dashboards" src="img/fb3f8dd122144cd3.png"></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Feedback" duration="3">
-        <p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
+</google-codelab-step>
+<google-codelab-step label="Feedback" duration="3">
+<p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
 <google-codelab-survey survey-id="automate-feedback-2-1">
 <h4>How was your overall experience with this lab?</h4>
 <paper-radio-group>
@@ -225,17 +192,12 @@ vim smoke-test.py
 </google-codelab-survey>
 <aside class="special"><p>💡 For other ideas and suggestions, please <a href="mailto:APAC-SE-Central@dynatrace.com?subject=Automate Feedback 1 - Ideas and Suggestions" target="_blank"><strong>reach out via email</strong></a>.</p>
 </aside>
-
-
-      </google-codelab-step>
-    
-  </google-codelab>
-
-  <script src="../../elements/codelab-elements/native-shim.js"></script>
-  <script src="../../elements/codelab-elements/custom-elements.min.js"></script>
-  <script src="../../elements/codelab-elements/prettify.js"></script>
-  <script src="../../elements/codelab-elements/codelab-elements.js"></script>
-  <script src="//support.google.com/inapp/api.js"></script>
-
+</google-codelab-step>
+</google-codelab>
+<script src="../../elements/codelab-elements/native-shim.js"></script>
+<script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+<script src="../../elements/codelab-elements/prettify.js"></script>
+<script src="../../elements/codelab-elements/codelab-elements.js"></script>
+<script src="//support.google.com/inapp/api.js"></script>
 </body>
 </html>
