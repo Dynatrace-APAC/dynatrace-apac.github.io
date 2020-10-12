@@ -192,6 +192,8 @@ Create a Azure Function based on the following:
 
 Deploy and instrument the Function App with Site Extension
 
+![Azure-shell](assets/bootcamp/azure/azure-function-pp.png)
+
 <!-- ------------------------ -->
 
 ## Feedback
@@ -209,19 +211,10 @@ We hope you enjoyed this lab and found it useful. We would love your feedback!
 
 <form>
   <name>What did you benefit most from this lab?</name>
-  <input value="Using OneAgent Operator to deploy in Kubernetes" />
-  <input value="Setting up Kubernetes integation" />
-  <input value="Enabling early access feature flags" />
-  <input value="Learning Kubernetes View in Dynatrace" />
-</form>
-
-<form>
-  <name>How likely are you to recommend this lab to a friend or colleague?</name>
-  <input value="Very Likely" />
-  <input value="Moderately Likely" />
-  <input value="Neither Likely nor unlikely" />
-  <input value="Moderately Unlikely" />
-  <input value="Very Unlikely" />
+  <input value="How to deploy Azure Web Apps" />
+  <input value="How to instrument Web Apps" />
+  <input value="How to Debug instrumenting Web Apps" />
+  <input value="How to deploy and instrument Azure Function" />
 </form>
 
 Positive
