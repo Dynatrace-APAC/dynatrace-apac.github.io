@@ -63,7 +63,7 @@ We will start setting up our GKE Cluster
 
 Run the following command to download from our Github Repo
 
-`https://github.com/dynatrace-acm/istio-handson`
+`git clone https://github.com/Nodnarboen/istio-handson.git`
 
 The above will create a folder call **istio-handson**. This will contain the scripts we will use for the remainder of the workshop 
 
@@ -73,13 +73,12 @@ The above will create a folder call **istio-handson**. This will contain the scr
 
 In order to proceed further we need to make note of our Dynatrace Tenant/Environment and API/PaaS Tokens
 
-For the Tenant ID, you can find it in the first part of your URL 
-https://<TENANT_ID>.managed-dev.dynalabs.io
-For example, for https://abc123.managed-dev.dynalabs.io, Tenant ID=abc123
-
 The Environment ID - You can find this value in the second half of your URL
-https://<TENANT_ID>.managed-dev.dynalabs.io/e/<ENVIRONMENT_ID>
-For example, for https://abc1234.managed-dev.dynalabs.io/e/1234-5678, Environment ID=1234-5678 
+
+https://mou612.managed-dev.dynalabs.io/e/<ENVIRONMENT_ID>
+
+**EXAMPLE**
+https://mou612.managed-dev.dynalabs.io/e/1234-5678, **Environment ID=1234-5678**
 
 Go in **Settings -> Integration -> Dynatrace API**
 - Click on Generate Token
@@ -106,7 +105,7 @@ Once you have entered the values and confirmed they are correct, we can move on 
 ![Crendentials](assets/bootcamp/istio/1-credentials.png)
 
 Positive
-:This step will take about 10 minutes to complete
+: This step will take about 10 minutes to complete
 
 ### Setup GKE Cluster
 
@@ -115,6 +114,13 @@ Navigate to the directory **2-CreateCluster**
 Execute the script **setupenv.sh** and confirm that your credentials are correct
 
 ![CreateCluster](assets/bootcamp/istio/2-CreateCluster.png)
+
+### Install OneAgent Operator via Helm
+
+Go to **Deploy Dynatrace > Start Installation > Kubernetes** and follow the instructions on screen
+
+Negative
+: For GKE environments, remember to enable Toggle for **Enable Volume Storage.**
 
 <!-- ------------------------ -->
 ## Istio Setup
