@@ -3,24 +3,25 @@
   "format": "html",
   "prefix": "../../elements",
   "mainga": "UA-49880327-14",
-  "updated": "2020-10-15T13:53:12+11:00",
-  "id": "istio",
-  "duration": 54,
-  "title": "Dynatrace with Istio",
-  "authors": "Brandon Neo",
-  "summary": "Istio Hands-On",
-  "source": "istio.md",
+  "updated": "2020-10-17T19:43:48+11:00",
+  "id": "usql",
+  "duration": 15,
+  "title": "Advanced USQL",
+  "authors": "Myrvin Yap",
+  "summary": "How to use USQL in your POCs",
+  "source": "usql.md",
   "theme": "",
   "status": [
     "published"
   ],
   "category": [
-    "istio"
+    "dem",
+    "bizops"
   ],
   "tags": [
     "bootcamp"
   ],
   "feedback": "mailto:APAC-SE-Central@dynatrace.com",
   "ga": "UA-175467274-1",
-  "url": "istio"
+  "url": "usql"
 }

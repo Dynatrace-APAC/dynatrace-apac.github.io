@@ -97,9 +97,12 @@ Go in **Settings -> Integration -> Platform as a Service**
 
 We now need to store a local copy of our Dynatrace Tenant and API info for use when creating our cluster
 
-Navigate to the directory **1-Credentials** and execute the script `defineCredentials.sh`
+Navigate to the directory **1-Credentials** and execute the script `defineCredentials.sh`.
+
 This will ask for your Dynatrace Tenant/Environment information as well as your API and PaaS tokens
+
 These values can be obtained from your Dynatrace tenant (see previous instructions)
+
 Once you have entered the values and confirmed they are correct, we can move on to creating our cluster
 
 ![Crendentials](assets/bootcamp/istio/1-credentials.png)
@@ -110,7 +113,9 @@ Positive
 ### Setup GKE Cluster
 
 Back in your GCP account, launch a **Cloudshell session**
+
 Navigate to the directory **2-CreateCluster**
+
 Execute the script **setupenv.sh** and confirm that your credentials are correct
 
 ![CreateCluster](assets/bootcamp/istio/2-CreateCluster.png)
@@ -129,16 +134,19 @@ Duration: 5
 ### Istio Installation
 
 Navigate to the directory **3-DeployIstio**, where there will be two scripts:
+
 Execute the script **./1-deployIstio.sh**
 
 ![DeployIstio](assets/bootcamp/istio/3-DeployIstio.png)
 
 After the script runs, you will be presented with a URL to the **Kiali web interface** along with the username and password:
+
 ![DeployIstio](assets/bootcamp/istio/3-DeployIstio-Done.png)
 
 ### Define Istio Namespace
 
 Now that we have Istio and Kiali installed, we need to tell it which namespaces can use it.  
+
 We do this by adding the following label to any namespace where we plan to use Istio:
 `istio-enabled=enabled`
 In our case we are going to label the default namespace by running the script **./2-labelNamespace.sh**
@@ -152,8 +160,11 @@ Duration: 15
 ### Traffic Routing Setup
 
 First let’s deploy our application:
+
 Navigate to the folder **4-TrafficRouting** and execute the script **./1-trafficroutingapplication.sh**
+
 This will deploy our sample application and output the URL where the application can be accessed via a browser
+
 This is plain Kubernetes, nothing Istio related is deployed yet
 
 ![TrafficRouting](assets/bootcamp/istio/traffic-routing.png)
@@ -178,11 +189,14 @@ Explore Service Flow in Dynatrace and you should see the below
 
 ### Explore Kiali
 
-In the Kiali UI, navigate to the Graph view and find the “fleetman-staff-service” and “Show Details”
+In the Kiali UI, navigate to the **Graph view** on the left navigation menu.
+
+Find **fleetman-staff-service**, **right-click** and select **Show Details**
 
 ![SampleApp](assets/bootcamp/istio/kiali-1.png)
 
-Select Actions and **Create Weighted Routing**
+Near the top right, Select **Actions** and **Create Weighted Routing**
+
 Set the **“Risky”** service to 10% Traffic Weight
 
 ![SampleApp](assets/bootcamp/istio/kiali-2.png)
@@ -196,6 +210,7 @@ You will also see this in the console via kubectl
 ![SampleApp](assets/bootcamp/istio/kiali-4.png)
 
 In the UI we should now see the traffic weighting take affect and we should see the actual person image ~10% of the time and the placeholder image **~90% of the time**
+
 We can also see in the in the command line via cURL.  In the folder **4-TrafficRouting**, execute the command `./curlOutput.sh`
 
 ![SampleApp](assets/bootcamp/istio/kiali-5.png)
@@ -240,11 +255,14 @@ Istio already provides us with an Ingress Service, we just need to configure it:
 
 ![SampleApp](assets/bootcamp/istio/ingress-3.png)
 
-Run the script `./2-createIstioGateway.sh` in the folder **5-Ingress** which will create our Gateway, Virtual Service and Destination Rules. This will also output the URL for accessing the application through the Gateway
+Run the script `./2-createIstioGateway.sh` in the folder **5-Ingress** which will create our Gateway, Virtual Service and Destination Rules. 
+
+This will also output the URL for accessing the application through the Gateway
 
 ![SampleApp](assets/bootcamp/istio/ingress-4.png)
 
 We should now see that we are getting about a 90/10 traffic weighting in the browser
+
 If we check Kiali we will also see the Gateway Service created, along with the Virtual Service and Destination Rules
 
 ![SampleApp](assets/bootcamp/istio/kiali-8.png)
@@ -282,7 +300,9 @@ If we take a look at the yaml file with the routing rules we see how the traffic
 
 ![Dark-Releases](assets/bootcamp/istio/dark-release-2.png)
 
-If we access the application with the **HTTP Header my-header:canary**,we should see the experimental version, with the red banner displayed. We can add this header via a browser extension:
+If we access the application with the **HTTP Header my-header:canary**,we should see the experimental version, with the red banner displayed. 
+
+We can add this header via a browser extension:
 
 ![Dark-Releases](assets/bootcamp/istio/dark-release-3.png)
 
