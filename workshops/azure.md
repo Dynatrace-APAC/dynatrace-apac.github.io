@@ -37,6 +37,10 @@ Click on **Cloud Shell icon** on the top navigation bar.
 
 ![Azure](assets/bootcamp/azure/azure-shell.png)
 
+Make sure that you have selected **PowerShell** in the left drop-down within Cloud shell.
+
+![Azure](assets/bootcamp/azure/power-shell.png)
+
 Within the Cloudshell terminal, type in the below.
 
 ```bash
