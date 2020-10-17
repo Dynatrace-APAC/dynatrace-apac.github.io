@@ -16,48 +16,192 @@
 <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
 <google-codelab codelab-gaid="UA-175467274-1" id="usql" title="Advanced USQL" environment="web" feedback-link="mailto:APAC-SE-Central@dynatrace.com">
 <google-codelab-step label="Introduction" duration="0">
-<p> This repository contains the exercises for the Advanced USQL session. </p>
-<h2 is-upgraded>Prerequisites </h2>
+<p>This repository contains the exercises for the Advanced USQL session.</p>
+<h2 is-upgraded>Prerequisites</h2>
 <ul>
-<li>Access to http://demo.live.dynatrace.com </li>
-<li>Microsoft Excel <h2 class="checklist" is-upgraded>What You&#39;ll Learn </h2>
+<li>Access to <a href="https://demo.live.dynatrace.com" target="_blank">Demo Environment</a></li>
+<li>Microsoft Excel</li>
+</ul>
+<h2 class="checklist" is-upgraded>What You&#39;ll Learn</h2>
+<ul class="checklist">
+<li>Intricacies/Gotchas of USQL</li>
+<li>USQL Tips and tricks in the field</li>
+<li>Extracting and manupulating the data in Excel</li>
+<li>Some advanced USQL for BizOps use cases</li>
+</ul>
+</google-codelab-step>
+<google-codelab-step label="Intricacies/Gotchas of USQL" duration="0">
+<h2 is-upgraded>Warm up</h2>
+<p>What does each of the query do?</p>
+<p>Go ahead to run this in <a href="https://demo.live.dynatrace.com" target="_blank">Demo Environment</a> -&gt; User sessions</p>
+<p><strong>Query 1</strong></p>
+<pre><code>select distinct hour(usersession.starttime), count(*)
+from usersession
+order by count(*) DESC
+</code></pre>
+<p><strong>Query 2</strong></p>
+<pre><code>select distinct hour(usersession.starttime), count(useraction.name)
+from usersession
+order by count(useraction.name) DESC
+</code></pre>
+<p><strong>Query 3</strong></p>
+<pre><code>select distinct hour(usersession.starttime), count(useraction.name)
+from useraction
+order by count(useraction.name) DESC
+</code></pre>
+<h2 is-upgraded>Challenge</h2>
+<ul>
+<li>What does each of the query do?</li>
+<li>What are we actually querying for?</li>
+</ul>
+<aside class="warning"><p><strong>Hint</strong>: Focus on the table name, and condition <code>useraction.name like &#34;%rest%&#34;</code></p>
+</aside>
+<p><strong>Query 1</strong></p>
+<pre><code>SELECT useraction.name as &#34;Page Name&#34;, COUNT(*) as &#34;Page Views&#34;, COUNT(DISTINCT usersession.internalUserId) AS &#34;Unique Page Views&#34;, AVG(useraction.duration) As &#34;Average Session&#34; FROM usersession WHERE useraction.name like &#34;%rest%&#34; GROUP BY useraction.name
+</code></pre>
+<p><strong>Case in point:</strong><code>select useraction.name from usersession LIMIT 10</code></p>
+<p><strong>Query 2</strong></p>
+<pre><code>SELECT useraction.name as &#34;Page Name&#34;, COUNT(*) as &#34;Page Views&#34;, COUNT(DISTINCT usersession.internalUserId) AS &#34;Unique Page Views&#34;, AVG(useraction.duration) As &#34;Average Session&#34; FROM useraction WHERE useraction.name like &#34;%rest%&#34; GROUP BY useraction.name
+</code></pre>
+</google-codelab-step>
+<google-codelab-step label="Hands on exercise" duration="15">
+<h2 is-upgraded>Setting up the query</h2>
+<ul>
+<li>Access: <a href="https://mou612.managed-sprint.dynalabs.io" target="_blank">Bootcamp Managed Cluster</a><ul>
+<li>userid: <code>usql</code></li>
+<li>password: will be supplied</li>
+</ul>
 </li>
-<li>Intricacies/Gotchas of USQL </li>
-<li>USQL Tips and tricks in the field </li>
-<li>Extracting and manupulating the data in Excel </li>
-<li>Some advanced USQL for BizOps use cases Intricacies/Gotchas of USQL <h2 is-upgraded>Warm up </h2>
-What does each of the query do? Go ahead to run this in http://demo.live.dynatrace.com -&gt; User sessions <strong>Query 1</strong><code>select distinct hour(usersession.starttime), count(*) from usersession order by count(*) DESC</code><strong>Query 2</strong><code>select distinct hour(usersession.starttime), count(useraction.name) from usersession order by count(useraction.name) DESC</code><strong>Query 3</strong><code>select distinct hour(usersession.starttime), count(useraction.name) from useraction order by count(useraction.name) DESC</code><h2 is-upgraded>Challenge </h2>
-</li>
-<li>What does each of the query do? </li>
-<li>What are we actually querying for? <strong>Hint</strong>: Focus on the table name, and condition <code>useraction.name like &#34;%rest%&#34;</code><strong>Query 1</strong><code>SELECT useraction.name as &#34;Page Name&#34;, COUNT(*) as &#34;Page Views&#34;, COUNT(DISTINCT usersession.internalUserId) AS &#34;Unique Page Views&#34;, AVG(useraction.duration) As &#34;Average Session&#34; FROM usersession WHERE useraction.name like &#34;%rest%&#34; GROUP BY useraction.name</code><strong>Case in point:</strong><code>select useraction.name from usersession LIMIT 10</code><strong>Query 2</strong><code>SELECT useraction.name as &#34;Page Name&#34;, COUNT(*) as &#34;Page Views&#34;, COUNT(DISTINCT usersession.internalUserId) AS &#34;Unique Page Views&#34;, AVG(useraction.duration) As &#34;Average Session&#34; FROM useraction WHERE useraction.name like &#34;%rest%&#34; GROUP BY useraction.name</code>Hands on exercise <h2 is-upgraded>Setting up the query </h2>
+<li>Launch <strong>API V1</strong></li>
+</ul>
+<p class="image-container"><img alt="API" src="img/491c6fda4994c405.png"></p>
+<ul>
+<li>Authenticate <ul>
+<li>Token: will be supplied</li>
+</ul>
 </li>
 </ul>
+<p class="image-container"><img alt="API" src="img/e59a6ab35b15cee4.png"></p>
+<ul>
+<li>Go to <strong>User Sessions</strong></li>
+<li>Expand <strong>/userSessionQueryLanguage/tree</strong> (DO NOT USE TABLE)</li>
+<li>Click <strong>try it out</strong></li>
+<li>Enter in your query</li>
+</ul>
+<pre><code>select useraction.name from usersession
+</code></pre>
+<p class="image-container"><img alt="API" src="img/c18d53c5c2a4cee0.png"></p>
+<ul>
+<li>Execute</li>
+<li>Copy Request URL</li>
+</ul>
+<p class="image-container"><img alt="API" src="img/18cf47e365e5d967.png"></p>
+<h2 is-upgraded>Using Excel to slice and dice the data</h2>
+<ul>
+<li>Open new spreadsheet, select <strong>Data</strong> and then <strong>select From Web</strong></li>
+</ul>
+<p class="image-container"><img alt="Excel" src="img/dfd2ed6cf1131572.png"></p>
+<ul>
+<li>Insert <strong>Request URL w/ token</strong> as a query parameter (use &amp;pageSize=[N] to expand result set)</li>
+</ul>
+<p><code>&amp;pageSize=50000&amp;api-token=[YourToken]</code></p>
+<p><strong>Example:</strong></p>
+<p>https://mou612.managed-sprint.dynalabs.io/e/4d5310f8-91e7-46f2-b2d5-2ceb0979f2bd/api/v1/userSessionQueryLanguage/tree?query=select%20useraction.name%20from%20usersession&amp;addDeepLinkFields=false&amp;explain=false&amp;pageSize=50000&amp;api-token=<strong>[YourToken]</strong></p>
+<p class="image-container"><img alt="Excel" src="img/11494cc7d7d31321.png"></p>
+<ul>
+<li>Click <strong>OK</strong></li>
+<li>Select <strong>List (next to values)</strong></li>
+</ul>
+<p class="image-container"><img alt="Excel" src="img/52bf8d90e584af5a.png"></p>
+<ul>
+<li>Select <strong>List</strong> again</li>
+</ul>
+<p class="image-container"><img alt="Excel" src="img/39b30e33815141c1.png"></p>
+<ul>
+<li>Select To Table Convert (Delimiter None)</li>
+</ul>
+<p class="image-container"><img alt="Excel" src="img/59db27f04f32267a.png"></p>
+<ul>
+<li>Click <strong>expand icon</strong> in Value header</li>
+<li>Extract values (Delimiter – comma)</li>
+</ul>
+<p class="image-container"><img alt="Excel" src="img/ef5aec9a684ca1d0.png"></p>
+<ul>
+<li>Click <strong>Close &amp; Load</strong></li>
+</ul>
+<p class="image-container"><img alt="Excel" src="img/7e0fea17bcae7ddb.png"></p>
+<ul>
+<li>Highlight Column A and Insert-&gt;Pivot Table</li>
+</ul>
+<p class="image-container"><img alt="Excel" src="img/42025c4bfd8b2da1.png"></p>
+<p class="image-container"><img alt="Excel" src="img/73555b8852791f84.png"></p>
+<ul>
+<li>Select box for Column 1 and drag Column 1 to Values</li>
+</ul>
+<p class="image-container"><img alt="Excel" src="img/35617be6cb4e7a3d.png"></p>
+<ul>
+<li>Select a value in Column B and sort Largest to Smallest. Resize Column A as neccessary</li>
+</ul>
+<p class="image-container"><img alt="Excel" src="img/a293f3c6eb1f7ffb.png"></p>
+<p><strong>Final Result</strong></p>
+<p class="image-container"><img alt="Excel" src="img/9b5829b497989c74.png"></p>
 <ol type="1">
-<li>Access: </li>
-<li>Launch API V1 <img alt="API" src="img/491c6fda4994c405.png"></li>
-<li>Authenticate <img alt="API" src="img/e59a6ab35b15cee4.png"></li>
-<li>Go to User Sessions </li>
-<li>Expand /userSessionQueryLanguage/tree (DO NOT USE TABLE) </li>
-<li>Click try it out </li>
-<li>Enter in your query <code>select useraction.name from usersession</code><img alt="API" src="img/c18d53c5c2a4cee0.png"></li>
-<li>Execute </li>
-<li>Copy Request URL <img alt="API" src="img/18cf47e365e5d967.png"><h2 is-upgraded>Using Excel to slice and dice the data </h2>
-</li>
-<li>Open new spreadsheet, select Data and then select From Web <img alt="Excel" src="img/dfd2ed6cf1131572.png"></li>
-<li>Insert Request URL w/ token as a query parameter (use &amp;pageSize=[N] to expand result set) <code>&amp;pageSize=50000&amp;api-token=[YourToken]</code> Example: <code>https://&lt;URL&gt;/e/&lt;envid&gt;/api/v1/userSessionQueryLanguage/tree?query=select%20useraction.name%20from%20usersession&amp;addDeepLinkFields=false&amp;explain=false&amp;pageSize=50000&amp;api-token=[YourToken]</code><img alt="Excel" src="img/11494cc7d7d31321.png"></li>
-<li>Click OK </li>
-<li>Select List (next to values) <img alt="Excel" src="img/52bf8d90e584af5a.png"></li>
-<li>Select List again <img alt="Excel" src="img/39b30e33815141c1.png"></li>
-<li>Select To Table Convert (Delimiter None) <img alt="Excel" src="img/59db27f04f32267a.png"></li>
-<li>Click expand icon in Value header </li>
-<li>Extract values (Delimiter – comma) <img alt="Excel" src="img/ef5aec9a684ca1d0.png"></li>
-<li>Click Close &amp; Load <img alt="Excel" src="img/7e0fea17bcae7ddb.png"></li>
-<li>Highlight Column A and Insert-&gt;Pivot Table <img alt="Excel" src="img/42025c4bfd8b2da1.png"><img alt="Excel" src="img/73555b8852791f84.png"></li>
-<li>Select box for Column 1 and drag Column 1 to Values <img alt="Excel" src="img/35617be6cb4e7a3d.png"></li>
-<li>Select a value in Column B and sort Largest to Smallest. Resize Column A as neccessary <img alt="Excel" src="img/a293f3c6eb1f7ffb.png"> Final Result <img alt="Excel" src="img/9b5829b497989c74.png"></li>
-<li>Save spreadsheet Advanced USQL for BizOps use cases <h2 is-upgraded>FUNNEL Query </h2>
-<code>Bash<br>SELECT FUNNEL(useraction.name=&#34;Loading of page /easytravel/home&#34; AS &#34;Home&#34;, <br>useraction.name = &#34;/easytravel/rest/login&#34; AS &#34;LOGIN&#34;,<br>useraction.name = &#34;/easytravel/rest/locations&#34; AS &#34;Search&#34;, <br>useraction.matchingConversionGoals = &#34;Credit card validated&#34; AS &#34;Payment&#34;) <br>FROM usersession<br></code><img alt="Adv" src="img/f52b6fe0278c95a4.png"><h2 is-upgraded>FILTER Query </h2>
-<strong>Use Case:</strong> I want all the user sessions &amp; avg(duration) that hit validate credit card and the avg duration for all user actions is longer than 2 seconds. Query <code>Bash<br>SELECT usersession.usersessionid, avg(useraction.duration)<br>FROM usersession<br>WHERE useraction.application=&#39;www.angular.easytravel.com&#39;<br>AND useraction.duration&gt;2000<br>AND useraction.name=&#34;/easytravel/rest/validate-creditcard&#34;<br>GROUP BY usersession.usersessionid</code><br> Result: If <strong>any one</strong> of user action in the session has duration&gt;2 seconds So if we pull from <code>useraction</code> table, will it give us what we want? <code>Bash<br>SELECT usersession.usersessionid, avg(useraction.duration)<br>FROM useraction<br>WHERE useraction.application=&#39;www.angular.easytravel.com&#39;<br>AND useraction.duration&gt;2000<br>AND useraction.name=&#34;/easytravel/rest/validate-creditcard&#34;<br>GROUP BY usersession.usersessionid</code><br> Looks better. <img alt="Adv" src="img/1b50da6a94e36fcd.png"> But am I getting the result that I want? Take any Usersession ID... <code>SELECT usersession.usersessionid FROM usersession WHERE usersession.usersessionid=&lt;anyid&gt;</code><img alt="Adv" src="img/79453cbf08e754e2.png"> What is the average user action duration here? (i.e. SUM(useraction duration) divide by total number of user actions) What I really want: average user action &gt;2 sec for <strong>every</strong> usersession. <strong>Solution</strong> If avg of <strong>all</strong> user actions duration&gt;2 seconds <code>Bash<br>SELECT usersession.usersessionid, avg(useraction.duration) FILTER&gt;2000<br>FROM usersession<br>WHERE useraction.application=&#39;www.angular.easytravel.com&#39;<br>AND useraction.name=&#34;/easytravel/rest/validate-creditcard&#34;<br>GROUP BY usersession.usersessionid<br></code><img alt="Adv" src="img/18f77f33d981aeaa.png"> Take any Usersession ID... <code>SELECT usersession.usersessionid FROM usersession WHERE usersession.usersessionid=&lt;anyid&gt;</code><img alt="Adv" src="img/8d176024eced570d.png"> (9.46+0.133+0.145+1.35+0.602+0.727+0.27+3.33)/8 = 2.0002 GOAL! Feedback <google-codelab-survey survey-id="usql-1">
+<li>Save spreadsheet</li>
+</ol>
+</google-codelab-step>
+<google-codelab-step label="Advanced USQL for BizOps use cases" duration="0">
+<h2 is-upgraded>FUNNEL Query</h2>
+<pre><code>SELECT FUNNEL(useraction.name=&#34;Loading of page /easytravel/home&#34; AS &#34;Home&#34;, 
+useraction.name = &#34;/easytravel/rest/login&#34; AS &#34;LOGIN&#34;,
+useraction.name = &#34;/easytravel/rest/locations&#34; AS &#34;Search&#34;, 
+useraction.matchingConversionGoals = &#34;Credit card validated&#34; AS &#34;Payment&#34;) 
+FROM usersession
+</code></pre>
+<p class="image-container"><img alt="Adv" src="img/f52b6fe0278c95a4.png"></p>
+<h2 is-upgraded>FILTER Query</h2>
+<p><strong>Use Case:</strong> I want all the user sessions &amp; avg(duration) that hit validate credit card and the avg duration for all user actions is longer than 2 seconds.</p>
+<p>Query</p>
+<pre><code>SELECT usersession.usersessionid, avg(useraction.duration)
+FROM usersession
+WHERE useraction.application=&#39;www.angular.easytravel.com&#39;
+AND useraction.duration&gt;2000
+AND useraction.name=&#34;/easytravel/rest/validate-creditcard&#34;
+GROUP BY usersession.usersessionid
+</code></pre>
+<p>Result: If <strong>any one</strong> of user action in the session has duration&gt;2 seconds</p>
+<p>So if we pull from <code>useraction</code> table, will it give us what we want?</p>
+<pre><code>SELECT usersession.usersessionid, avg(useraction.duration)
+FROM useraction
+WHERE useraction.application=&#39;www.angular.easytravel.com&#39;
+AND useraction.duration&gt;2000
+AND useraction.name=&#34;/easytravel/rest/validate-creditcard&#34;
+GROUP BY usersession.usersessionid
+</code></pre>
+<p>Looks better.</p>
+<p class="image-container"><img alt="Adv" src="img/1b50da6a94e36fcd.png"></p>
+<p>But am I getting the result that I want? Take any Usersession ID...</p>
+<p><code>SELECT usersession.usersessionid FROM usersession WHERE usersession.usersessionid=&lt;anyid&gt;</code></p>
+<p class="image-container"><img alt="Adv" src="img/79453cbf08e754e2.png"></p>
+<p>What is the average user action duration here? (i.e. SUM(useraction duration) divide by total number of user actions)</p>
+<p>What I really want: average user action &gt;2 sec for <strong>every</strong> usersession.</p>
+<p><strong>Solution</strong></p>
+<p>If avg of <strong>all</strong> user actions duration&gt;2 seconds</p>
+<pre><code>SELECT usersession.usersessionid, avg(useraction.duration) FILTER&gt;2000
+FROM usersession
+WHERE useraction.application=&#39;www.angular.easytravel.com&#39;
+AND useraction.name=&#34;/easytravel/rest/validate-creditcard&#34;
+GROUP BY usersession.usersessionid
+</code></pre>
+<p class="image-container"><img alt="Adv" src="img/18f77f33d981aeaa.png"></p>
+<p>Take any <strong>Usersession ID</strong>...</p>
+<p><code>SELECT usersession.usersessionid FROM usersession WHERE usersession.usersessionid=&lt;anyid&gt;</code></p>
+<p class="image-container"><img alt="Adv" src="img/8d176024eced570d.png"></p>
+<p>(9.46+0.133+0.145+1.35+0.602+0.727+0.27+3.33)/8 = 2.0002</p>
+<p>GOAL! </p>
+</google-codelab-step>
+<google-codelab-step label="Feedback" duration="3">
+<p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
+<google-codelab-survey survey-id="usql-1">
 <h4>How was your overall experience with this lab?</h4>
 <paper-radio-group>
 <paper-radio-button>Excellent</paper-radio-button>
@@ -74,9 +218,8 @@ What does each of the query do? Go ahead to run this in http://demo.live.dynatra
 <paper-radio-button>Hands on exercise</paper-radio-button>
 </paper-radio-group>
 </google-codelab-survey>
-Positive </li>
-</ol>
-<p>💡 For other ideas and suggestions, please <a href="mailto:APAC-SE-Central@dynatrace.com?subject=Kubernetes Workshop - Ideas and Suggestions" target="_blank"><strong>reach out via email</strong></a>.</p>
+<aside class="special"><p>💡 For other ideas and suggestions, please <a href="mailto:APAC-SE-Central@dynatrace.com?subject=AdvancedUSQL" target="_blank"><strong>reach out via email</strong></a>.</p>
+</aside>
 </google-codelab-step>
 </google-codelab>
 <script src="../../elements/codelab-elements/native-shim.js"></script>

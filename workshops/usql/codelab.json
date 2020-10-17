@@ -3,13 +3,13 @@
   "format": "html",
   "prefix": "../../elements",
   "mainga": "UA-49880327-14",
-  "updated": "2020-10-17T19:43:48+11:00",
+  "updated": "2020-10-17T21:20:37+11:00",
   "id": "usql",
-  "duration": 15,
+  "duration": 18,
   "title": "Advanced USQL",
   "authors": "Myrvin Yap",
   "summary": "How to use USQL in your POCs",
-  "source": "usql.md",
+  "source": "azure1.md",
   "theme": "",
   "status": [
     "published"
