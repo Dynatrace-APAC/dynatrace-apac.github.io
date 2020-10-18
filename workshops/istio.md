@@ -12,7 +12,7 @@ Analytics Account: UA-175467274-1
 ## Introduction 
 Duration: 1
 
-This repository contains labs for the Istio Hands-On Session. We will be using Google Kubernetes Engine (GKE) for this hands-on but for China participants, please attempt to use Microk8s on AWS. You can use [Keptn in a box](https://github.com/keptn-sandbox/keptn-in-a-box) to easily spin up a Istio based K8s instance 
+This repository contains labs for the Istio Hands-On Session. We will be using Google Kubernetes Engine (GKE) for this hands-on but for China participants, you will be using a Microk8s on AWS. You can use [Keptn in a box](https://github.com/keptn-sandbox/keptn-in-a-box) to easily spin up a Istio based K8s instance 
 
 ### Prerequisites
 - Google Cloud account with access to GKE. Use **ANY** of the following:
@@ -23,13 +23,17 @@ This repository contains labs for the Istio Hands-On Session. We will be using G
    - **Settings > Monitored Technologies > Envoy**
 
 ### What You’ll Learn 
-- How to leverage Istio in Dynatrace
+- Understand Istio / Envoy principles
 - Learn Kiali and its difference with Dynatrace
-- Setting up GKE on Istio
+- Deployment strategies and weightage distribution
+- How to instrument Envoy in Dynatrace
 
 <!-- ------------------------ -->
-## Setting up your Google Kubernetes Environment (GKE)
+## Setting up your GKE
 Duration: 10
+
+Negative
+: For 🌏 **China participants**, log into to your designated EC2 instances. You already have a Microk8s instance running so you will only need to follow along later. **Skip to the next step.**
 
 ### Login to Google Cloud Platform Account
 
@@ -69,60 +73,86 @@ The above will create a folder call **istio-handson**. This will contain the scr
 
 ![GKE-Cloud-shell](assets/bootcamp/istio/cloud-shell.png)
 
-### Dynatrace Tokens
+### Setup your GKE Cluster
 
-In order to proceed further we need to make note of our Dynatrace Tenant/Environment and API/PaaS Tokens
+Run the command to create the cluster
 
-The Environment ID - You can find this value in the second half of your URL
-
-https://mou612.managed-dev.dynalabs.io/e/<ENVIRONMENT_ID>
-
-**EXAMPLE**
-https://mou612.managed-dev.dynalabs.io/e/1234-5678, **Environment ID=1234-5678**
-
-Go in **Settings -> Integration -> Dynatrace API**
-- Click on Generate Token
-- Enter a name for your token (e.g. GKE)
-- Don't forget to click on the Save button
-
-![Token](assets/bootcamp/istio/dt-api-token.png)
-
-Go in **Settings -> Integration -> Platform as a Service**
-- Either copy the existing InstallerDownload token or click on Generate Token
-- Enter a name for your token (e.g. GKE), click Save
-
-![Token](assets/bootcamp/istio/dt-paas-token.png)
-
-### Creating Credentials
-
-We now need to store a local copy of our Dynatrace Tenant and API info for use when creating our cluster
-
-Navigate to the directory **1-Credentials** and execute the script `defineCredentials.sh`.
-
-This will ask for your Dynatrace Tenant/Environment information as well as your API and PaaS tokens
-
-These values can be obtained from your Dynatrace tenant (see previous instructions)
-
-Once you have entered the values and confirmed they are correct, we can move on to creating our cluster
-
-![Crendentials](assets/bootcamp/istio/1-credentials.png)
+`cd istio-handson/1-CreateCluster; ./setupenv.sh`
 
 Positive
-: This step will take about 10 minutes to complete
+: This step will take about a couple of minutes 
 
-### Setup GKE Cluster
-
-Back in your GCP account, launch a **Cloudshell session**
-
-Navigate to the directory **2-CreateCluster**
-
-Execute the script **setupenv.sh** and confirm that your credentials are correct
-
-![CreateCluster](assets/bootcamp/istio/2-CreateCluster.png)
-
-### Install OneAgent Operator via Helm
+<!-- ------------------------ -->
+## Installing OneAgent Operator via Helm
+Duration: 10
 
 Go to **Deploy Dynatrace > Start Installation > Kubernetes** and follow the instructions on screen
+
+### Dynatrace Tokens
+
+In order to install OneAgent via Operator, we need to create the API and PaaS Tokens
+
+### Get API and PaaS Tokens in Dynatrace
+Follow the steps on screen to create your API and PaaS tokens. 
+You will find the API token automatically configured with the necessary permissions. 
+Once created, select the **newly created tokens** from both of the **drop-down fields**.
+Other commands will also be pre-populated with the necessary steps.
+
+![k8s-setup](assets/k8s/api-paas-ui.gif)
+
+### Add the OneAgent Helm Repo
+Follow the setup steps and run the following commands. 
+
+```bash
+helm repo add dynatrace https://raw.githubusercontent.com/Dynatrace/helm-charts/master/repos/stable
+kubectl create namespace dynatrace
+```
+### Create a and apply values.yaml
+
+Run the below command to create new file called **values.yaml**
+
+`nano values.yaml`
+
+Copy and paste in content in your Dyntrace tenant and save the file with **Ctrl-X** followed by **Y** and **Enter** 
+
+**EXAMPLE**
+
+```yaml
+platform: "kubernetes"
+
+oneagent:
+  name: "oneagent"
+  apiUrl: "https://mou612.managed-sprint.dynalabs.io/e/<ENVIRONMENT ID>/api"
+  args:
+    - --set-app-log-content-access=true
+  skipCertCheck: false
+  enableIstio: true
+
+secret:
+  apiToken: "<API KEY>"
+  paasToken: "<PAAS KEY>"
+```
+Copy the next command to **apply the values.yaml** and **deploy OneAgent on Kubernetes**.
+
+```bash
+helm install dynatrace-oneagent-operator \
+dynatrace/dynatrace-oneagent-operator -n\
+dynatrace --values values.yaml
+```
+If successful, you should get a positive output with **STATUS: deployed** as per below.
+
+```bash
+NAME: dynatrace-oneagent-operator
+LAST DEPLOYED: Thu Aug 13 01:25:26 2020
+NAMESPACE: dynatrace
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+Thank you for installing dynatrace-oneagent-operator.
+
+Your release is named dynatrace-oneagent-operator.
+```
 
 Negative
 : For GKE environments, remember to enable Toggle for **Enable Volume Storage.**
@@ -133,7 +163,7 @@ Duration: 5
 
 ### Istio Installation
 
-Navigate to the directory **3-DeployIstio**, where there will be two scripts:
+Navigate to the directory **2-DeployIstio**, where there will be two scripts:
 
 Execute the script **./1-deployIstio.sh**
 
@@ -155,13 +185,13 @@ In our case we are going to label the default namespace by running the script **
 
 <!-- ------------------------ -->
 ## Traffic Routing
-Duration: 15
+Duration: 20
 
 ### Traffic Routing Setup
 
 First let’s deploy our application:
 
-Navigate to the folder **4-TrafficRouting** and execute the script **./1-trafficroutingapplication.sh**
+Navigate to the folder **3-TrafficRouting** and execute the script **./1-trafficroutingapplication.sh**
 
 This will deploy our sample application and output the URL where the application can be accessed via a browser
 
@@ -211,7 +241,7 @@ You will also see this in the console via kubectl
 
 In the UI we should now see the traffic weighting take affect and we should see the actual person image ~10% of the time and the placeholder image **~90% of the time**
 
-We can also see in the in the command line via cURL.  In the folder **4-TrafficRouting**, execute the command `./curlOutput.sh`
+We can also see in the in the command line via cURL.  In the folder **3-TrafficRouting**, execute the command `./curlOutput.sh`
 
 ![SampleApp](assets/bootcamp/istio/kiali-5.png)
 
@@ -219,9 +249,9 @@ Run the script **./2-cleanUp.sh** to remove the application and make sure you de
 
 <!-- ------------------------ -->
 ## Ingress
-Duration: 5
+Duration: 20
 
-First let’s deploy our application, navigate to the folder **5-Ingress** and execute the script 
+First let’s deploy our application, navigate to the folder **4-Ingress** and execute the script 
 `./1-ingressapplication.sh`
 
 When the script completes you will end up with URL for the application
@@ -235,7 +265,7 @@ You will notice if you refresh the page a few times, there are two different ver
 ![SampleApp](assets/bootcamp/istio/fleet-manager-3.png)
 
 Since there is no Istio involved, traffic is currently weighted at **50/50**
-We can also see this via cURL, by running the script `./curlOutput.sh` in the folder **5-Ingress**
+We can also see this via cURL, by running the script `./curlOutput.sh` in the folder **4-Ingress**
 
 ![SampleApp](assets/bootcamp/istio/ingress-1.png)
 
@@ -255,7 +285,7 @@ Istio already provides us with an Ingress Service, we just need to configure it:
 
 ![SampleApp](assets/bootcamp/istio/ingress-3.png)
 
-Run the script `./2-createIstioGateway.sh` in the folder **5-Ingress** which will create our Gateway, Virtual Service and Destination Rules. 
+Run the script `./2-createIstioGateway.sh` in the folder **4-Ingress** which will create our Gateway, Virtual Service and Destination Rules. 
 
 This will also output the URL for accessing the application through the Gateway
 
@@ -290,7 +320,7 @@ What are Dark Releases?
 
 Let’s deploy our Dark Release configuration:
 
-Navigate to the folder **6-DarkReleases** and execute the script `./1-createRoutingRules.sh`
+Navigate to the folder **5-DarkReleases** and execute the script `./1-createRoutingRules.sh`
 
 When you out the application in the output URL, the application should appear WITHOUT the red banner
 

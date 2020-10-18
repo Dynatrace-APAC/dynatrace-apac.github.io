@@ -1,37 +1,25 @@
 
 <!doctype html>
-
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-  <meta name="theme-color" content="#4F7DC9">
-  <meta charset="UTF-8">
-  <title>Dynatrace with Azure</title>
-  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
-  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
-  <style>
-    .success {
-      color: #1e8e3e;
-    }
-    .error {
-      color: red;
-    }
-  </style>
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+<meta name="theme-color" content="#4F7DC9">
+<meta charset="UTF-8">
+<title>Dynatrace with Azure</title>
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+<style>
+.success{color:#1e8e3e}.error{color:red} </style>
 </head>
 <body>
-  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
-  <google-codelab codelab-gaid="UA-175467274-1"
-                  id="azure"
-                  title="Dynatrace with Azure"
-                  environment="web"
-                  feedback-link="mailto:APAC-SE-Central@dynatrace.com">
-    
-      <google-codelab-step label="Introduction" duration="1">
-        <p>This repository contains labs for the Azure Hands-On Session.</p>
+<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+<google-codelab codelab-gaid="UA-175467274-1" id="azure" title="Dynatrace with Azure" environment="web" feedback-link="mailto:APAC-SE-Central@dynatrace.com">
+<google-codelab-step label="Introduction" duration="1">
+<p>This repository contains labs for the Azure Hands-On Session.</p>
 <h2 is-upgraded>Prerequisites</h2>
 <ul>
-<li>Azure Portal Account access. Use <strong>ANY</strong> of the following:  <ul>
+<li>Azure Portal Account access. Use <strong>ANY</strong> of the following: <ul>
 <li>Access via Microsoft Visual Studio Subscription</li>
 <li>Access via Sales-Engineering/APAC Subscription (via GOTC)</li>
 <li>Access from <a href="https://azure.microsoft.com/en-gb/offers/ms-azr-0044p/" target="_blank">Free Trial</a></li>
@@ -44,12 +32,9 @@
 <li>Learn how to use deploy Dynatrace with Azure with <strong>Site Extensions</strong></li>
 <li>How to deploy Azure Function</li>
 </ul>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Deploy Weather Service Web App" duration="15">
-        <h2 is-upgraded>Clone Repo to Azure Cloud shell</h2>
+</google-codelab-step>
+<google-codelab-step label="Deploy Weather Service Web App" duration="15">
+<h2 is-upgraded>Clone Repo to Azure Cloud shell</h2>
 <p>Login to <a href="https://portal.azure.com/" target="_blank">Azure Portal</a> with your designated email.</p>
 <p>Click on <strong>Cloud Shell icon</strong> on the top navigation bar.</p>
 <p class="image-container"><img alt="Azure" src="img/8eb85b0e0e56d522.png"></p>
@@ -80,12 +65,9 @@ $location=&#34;Australia East&#34;
 <p><strong>https://brandon-neo-weather-service.azurewebsites.net/weather/current/Linz</strong></p>
 <p>You should get a page reflecting JSON results.</p>
 <p class="image-container"><img alt="Azure-shell" src="img/bd62d0219cf2e9db.png"></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Deploy Weather Express Web App" duration="15">
-        <h2 is-upgraded>Deploy Weather Express WebApp</h2>
+</google-codelab-step>
+<google-codelab-step label="Deploy Weather Express Web App" duration="15">
+<h2 is-upgraded>Deploy Weather Express WebApp</h2>
 <p>Navigate to weather-express folder with <code>cd ../weather-express</code> command</p>
 <aside class="warning"><p>Similar to the previous step, you may change the <strong>$location</strong> value within the <strong>publish.p1</strong> to fit your region. Full list of regions are <a href="https://azure.microsoft.com/en-au/global-infrastructure/geographies/#geographies" target="_blank">here</a></p>
 </aside>
@@ -113,21 +95,15 @@ $location=&#34;Australia East&#34;
 </ul>
 <p class="image-container"><img alt="Azure-shell" src="img/b2d831b189daf544.gif"></p>
 <p>Once you have resolved the issue, you should be able to access your <strong>Weather Express Portal</strong></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Instrumenting Web Apps" duration="15">
-        <h2 is-upgraded>Leveraging Site Extensions</h2>
+</google-codelab-step>
+<google-codelab-step label="Instrumenting Web Apps" duration="15">
+<h2 is-upgraded>Leveraging Site Extensions</h2>
 <p>Deployment the OneAgents cross both <strong>Weather Express App</strong> and <strong>Weather Service Apps</strong></p>
 <p class="image-container"><img alt="Azure-shell" src="img/50d4c8ecec689ee1.gif"></p>
 <p>Full Documentation <a href="https://www.dynatrace.com/support/help/technology-support/cloud-platforms/microsoft-azure-services/oneagent-integration/integrate-oneagent-on-azure-app-service/" target="_blank">here</a></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Function setup" duration="15">
-        <h2 is-upgraded>Creating Function App</h2>
+</google-codelab-step>
+<google-codelab-step label="Function setup" duration="15">
+<h2 is-upgraded>Creating Function App</h2>
 <p>Create a Azure App based on the following:</p>
 <ul>
 <li>Create a resource</li>
@@ -161,12 +137,9 @@ $location=&#34;Australia East&#34;
 <h2 is-upgraded>Leveraging Site Extensions</h2>
 <p>Deploy and instrument the Function App with Site Extension</p>
 <p class="image-container"><img alt="Azure-shell" src="img/5bdf148350ea77b5.png"></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Feedback" duration="3">
-        <p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
+</google-codelab-step>
+<google-codelab-step label="Feedback" duration="3">
+<p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
 <google-codelab-survey survey-id="azure-1">
 <h4>How was your overall experience with this lab?</h4>
 <paper-radio-group>
@@ -188,17 +161,12 @@ $location=&#34;Australia East&#34;
 </google-codelab-survey>
 <aside class="special"><p>💡 For other ideas and suggestions, please <a href="mailto:APAC-SE-Central@dynatrace.com?subject=Kubernetes Workshop - Ideas and Suggestions" target="_blank"><strong>reach out via email</strong></a>.</p>
 </aside>
-
-
-      </google-codelab-step>
-    
-  </google-codelab>
-
-  <script src="../../elements/codelab-elements/native-shim.js"></script>
-  <script src="../../elements/codelab-elements/custom-elements.min.js"></script>
-  <script src="../../elements/codelab-elements/prettify.js"></script>
-  <script src="../../elements/codelab-elements/codelab-elements.js"></script>
-  <script src="//support.google.com/inapp/api.js"></script>
-
+</google-codelab-step>
+</google-codelab>
+<script src="../../elements/codelab-elements/native-shim.js"></script>
+<script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+<script src="../../elements/codelab-elements/prettify.js"></script>
+<script src="../../elements/codelab-elements/codelab-elements.js"></script>
+<script src="//support.google.com/inapp/api.js"></script>
 </body>
 </html>
