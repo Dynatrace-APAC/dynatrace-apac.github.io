@@ -175,7 +175,8 @@ Duration: 5
 $ vi /etc/telegraf/telegraf.conf
 ```
 Search for `dynatrace`
-```
+
+```bash
 ###############################################################################
 #                            OUTPUT PLUGINS                                   #
 ###############################################################################
@@ -185,6 +186,7 @@ Search for `dynatrace`
 ```
 ### Starting Telegraf
 - Navigate to `/opt/telegraf/usr/bin` and execute `./telegraf`
+
 ```bash
 $ cd /opt/telegraf/usr/bin
 $ ./telegraf
@@ -197,10 +199,8 @@ $ ./telegraf
 2020-10-19T09:05:40Z I! Tags enabled: host=ip-172-31-9-86
 2020-10-19T09:05:40Z I! [agent] Config: Interval:10s, Quiet:false, Hostname:"ip-172-31-9-86", Flush Interval:10s
 2020-10-19T09:05:40Z I! [outputs.dynatrace] Dynatrace URL is empty, defaulting to OneAgent metrics interface
-
 ```
-
-### Exploring the metric
+### Exploring the Metrics
 Navigate to the metrics Explorer and search for `telegraf`
 
 ![MINT3](assets/bootcamp/mint/mint-3-01.png)
@@ -226,7 +226,7 @@ Let's **explore** the metrics we ingested via the API!
 <!-- ------------------------ -->
 ## Detect - Hands-on #5: Setting up alerts
 
-- Go to Settings -> Anomaly detection -> Custom events for alerting
+Go to **Settings -> Anomaly detection -> Custom events for alerting**
 
 ![MINT5](assets/bootcamp/mint/mint-5-01.png)
 

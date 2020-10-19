@@ -1,22 +1,34 @@
 
 <!doctype html>
+
 <html>
 <head>
-<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
-<meta name="theme-color" content="#4F7DC9">
-<meta charset="UTF-8">
-<title>Metric Ingestion</title>
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
-<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
-<style>
-.success{color:#1e8e3e}.error{color:red} </style>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Metric Ingestion</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
 </head>
 <body>
-<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
-<google-codelab codelab-gaid="" id="mint" title="Metric Ingestion" environment="web" feedback-link="mailto:APAC-SE-Central@dynatrace.com">
-<google-codelab-step label="Introduction" duration="0">
-<p>This repository contains the exercises for the Metric Ingestion.</p>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="mint"
+                  title="Metric Ingestion"
+                  environment="web"
+                  feedback-link="mailto:APAC-SE-Central@dynatrace.com">
+    
+      <google-codelab-step label="Introduction" duration="0">
+        <p>This repository contains the exercises for the Metric Ingestion.</p>
 <h2 is-upgraded>Prerequisites</h2>
 <ul>
 <li>A cloud compute instance from GCP/Azure/AWS/Alicloud/Tencent Cloud</li>
@@ -28,9 +40,12 @@
 <li>How to slice and dice the metric via the new Explorer</li>
 <li>Setting alerts and monitoring strategy</li>
 </ul>
-</google-codelab-step>
-<google-codelab-step label="Ingest - Hands-on #1: Command line" duration="10">
-<h2 is-upgraded>dynatrace_ingest command line</h2>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Ingest - Hands-on #1: Command line" duration="10">
+        <h2 is-upgraded>dynatrace_ingest command line</h2>
 <ul>
 <li>SSH into yesterday&#39;s DevOps EC2 instance or use any cloud compute instance of your choice<ul>
 <li>ssh dynatrace@1-2-3-4.nip.io</li>
@@ -62,11 +77,14 @@ When metrics are ommitted, dynatrace_ingest expects them to be passed via standa
 <h2 is-upgraded>Exploring the metric</h2>
 <p>If we If we go to the new metrics Explorer we can find our metrics</p>
 <p class="image-container"><img alt="MINT1" src="img/2a271d6af86ccdc2.png"></p>
-</google-codelab-step>
-<google-codelab-step label="Ingest - Hands-on #2: API" duration="5">
-<h2 is-upgraded>Setting up the script</h2>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Ingest - Hands-on #2: API" duration="5">
+        <h2 is-upgraded>Setting up the script</h2>
 <ul>
-<li>Edit the file <code>playstore.py</code> and input the Token and Tenant URL <ul>
+<li>Edit the file <code>playstore.py</code> and input the Token and Tenant URL  <ul>
 <li>YOUR_DT_API_URL = <strong>Copy from your own browser</strong></li>
 </ul>
 </li>
@@ -88,20 +106,23 @@ $ nano playstore.py
 <ul>
 <li>Deploy cronjob <code>bash<br>$ (echo &#34;* * * * 2 python3 /home/dynatrace/Workshop-mint/playstore.py &gt; /tmp/playstore.log&#34;) | crontab -</code><br> - Validate cronjob running <code>bash<br>$ cat /tmp/playstore.log<br>business.store.rank,store=playstore,appid=at.smartlab.tshop,searchterm=&#34;pos&#34; 19<br>business.store.rank,store=playstore,appid=at.smartlab.tshop,searchterm=&#34;point of sale&#34; 10<br>business.store.rank,store=playstore,appid=at.smartlab.tshop,searchterm=&#34;kasse&#34; 3<br>business.store.rank,store=playstore,appid=at.smartlab.tshop,searchterm=&#34;restaurant pos&#34; 23<br>business.store.rank,store=playstore,appid=at.smartlab.tshop,searchterm=&#34;invoice print&#34; 50<br>business.store.rank,store=playstore,appid=at.smartlab.tshop,searchterm=&#34;cashier&#34; 25<br>business.store.rank,store=playstore,appid=at.smartlab.tshop,searchterm=&#34;Cash Register&#34; 16<br>{&#34;linesOk&#34;:7,&#34;linesInvalid&#34;:0,&#34;error&#34;:null} <br></code></li>
 </ul>
-<p>If you look into the script <code>playstore.py</code>, it activates <code>/api/v2/metrics/ingest</code> and uses the same &#34;schema-less&#34; format and collects information from the query parameter of <code>https://play.google.com/store/search?q=</code> and spilts it according to the various <code>searchterm</code></p>
+<p>If you look into the script <code>playstore.py</code>, it activates <code>/api/v2/metrics/ingest</code> and uses the same &#34;schema-less&#34; format and collects information from the query parameter of  <code>https://play.google.com/store/search?q=</code> and spilts it according to the various <code>searchterm</code></p>
 <p><strong>Data ingestion format</strong></p>
 <p><code>business.store.rank,store=playstore,appid=&#34; + YOUR_APP_ID + &#34;,searchterm=\&#34;&#34; + kw + &#34;\&#34; &#34; + str(checkAppPosition(YOUR_APP_ID, kw)) + &#34;\n&#34;</code></p>
-</google-codelab-step>
-<google-codelab-step label="Ingest - Hands-on #3: Telegraf (OPTIONAL)" duration="5">
-<h2 is-upgraded>Where to get telegraf from</h2>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Ingest - Hands-on #3: Telegraf (OPTIONAL)" duration="5">
+        <h2 is-upgraded>Where to get telegraf from</h2>
 <ul>
-<li>Github URL: https://github.com/influxdata/telegraf <ul>
+<li>Github URL: https://github.com/influxdata/telegraf  <ul>
 <li>Installation</li>
 <li>how to use</li>
 <li>Full documentation</li>
 </ul>
 </li>
-<li>4 distinct plugin types: <ul>
+<li>4 distinct plugin types:  <ul>
 <li>Input Plugins collect metrics from the system, services, or 3rd party APIs</li>
 <li>Processor Plugins transform, decorate, and/or filter metrics</li>
 <li>Aggregator Plugins create aggregate metrics (e.g. mean, min, max, quantiles, etc.)</li>
@@ -127,7 +148,83 @@ $ nano playstore.py
 </code></pre>
 <h2 is-upgraded>Starting Telegraf</h2>
 <ul>
-<li>Navigate to <code>/opt/telegraf/usr/bin</code> and execute <code>./telegrafbash<br>$ cd /opt/telegraf/usr/bin<br>$ ./telegraf<br>2020-10-19T09:05:40Z I! Starting Telegraf<br>2020-10-19T09:05:40Z I! Using config file: /etc/telegraf/telegraf.conf<br>2020-10-19T09:05:40Z I! Loaded inputs: cpu disk diskio kernel mem processes swap system<br>2020-10-19T09:05:40Z I! Loaded aggregators:<br>2020-10-19T09:05:40Z I! Loaded processors:<br>2020-10-19T09:05:40Z I! Loaded outputs: dynatrace<br>2020-10-19T09:05:40Z I! Tags enabled: host=ip-172-31-9-86<br>2020-10-19T09:05:40Z I! [agent] Config: Interval:10s, Quiet:false, Hostname:&#34;ip-172-31-9-86&#34;, Flush Interval:10s<br>2020-10-19T09:05:40Z I! [outputs.dynatrace] Dynatrace URL is empty, defaulting to OneAgent metrics interface</code><br> ### Exploring the metric Navigate to the metrics Explorer and search for <code>telegraf</code><img alt="MINT3" src="img/5e1c04f2015292af.png"> ## Explore - Hands-on #4: The new Metric Explorer Full documentation can be found <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/dashboards-and-charts/explorer" target="_blank">here</a> An <strong>example</strong> of how to query, filter, etc. <img alt="MINT4" src="img/fb34855576fe1f7a.png"> Let&#39;s <strong>explore</strong> the metrics we ingested via the API! <img alt="MINT4" src="img/2734be1fbe87dc40.png"> ### Important to know - Default query provides rollup of 120 data points in specified time frame, using metric‘s default time aggregation - Rollup is allways performed, even if not explicitly applied - Default query &#34;groups&#34; all dimensions, using metric&#39;s default space aggregation ## Detect - Hands-on #5: Setting up alerts - Go to Settings -&gt; Anomaly detection -&gt; Custom events for alerting <img alt="MINT5" src="img/9d4324f710a9e237.png"> - Search for the metric you want to alert, for example <code>business.store.rank</code><img alt="MINT5" src="img/288fa06ffad86104.png"> - Abilty to select dimensions/filter is powerful! <img alt="MINT5" src="img/1dd61e16acc43b2b.png"> - Set the Monitoring stratgy <code>Static</code> or <code>Auto-adaptive baseline</code><img alt="MINT5" src="img/628bc56ae1ff7da0.png"> - Complete the event descrption and click on <code>create</code><img alt="MINT5" src="img/4ca388c21dbf041d.png"> ## Advanced hands on (OPTIONAL) ### Associate a metric to any entitiy in Dynatrace - Use service as an example: <code>simplenodeservice</code> - Use bookstore ### Trigger an incident - Test ## Feedback Duration: 3 We hope you enjoyed this lab and found it useful. We would love your feedback! <google-codelab-survey survey-id="mint-1">
+<li>Navigate to <code>/opt/telegraf/usr/bin</code> and execute <code>./telegraf</code></li>
+</ul>
+<pre><code>$ cd /opt/telegraf/usr/bin
+$ ./telegraf
+2020-10-19T09:05:40Z I! Starting Telegraf
+2020-10-19T09:05:40Z I! Using config file: /etc/telegraf/telegraf.conf
+2020-10-19T09:05:40Z I! Loaded inputs: cpu disk diskio kernel mem processes swap system
+2020-10-19T09:05:40Z I! Loaded aggregators:
+2020-10-19T09:05:40Z I! Loaded processors:
+2020-10-19T09:05:40Z I! Loaded outputs: dynatrace
+2020-10-19T09:05:40Z I! Tags enabled: host=ip-172-31-9-86
+2020-10-19T09:05:40Z I! [agent] Config: Interval:10s, Quiet:false, Hostname:&#34;ip-172-31-9-86&#34;, Flush Interval:10s
+2020-10-19T09:05:40Z I! [outputs.dynatrace] Dynatrace URL is empty, defaulting to OneAgent metrics interface
+</code></pre>
+<h2 is-upgraded>Exploring the Metrics</h2>
+<p>Navigate to the metrics Explorer and search for <code>telegraf</code></p>
+<p class="image-container"><img alt="MINT3" src="img/5e1c04f2015292af.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Explore - Hands-on #4: The new Metric Explorer" duration="0">
+        <p>Full documentation can be found <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/dashboards-and-charts/explorer" target="_blank">here</a></p>
+<p>An <strong>example</strong> of how to query, filter, etc.</p>
+<p class="image-container"><img alt="MINT4" src="img/fb34855576fe1f7a.png"></p>
+<p>Let&#39;s <strong>explore</strong> the metrics we ingested via the API!</p>
+<p class="image-container"><img alt="MINT4" src="img/2734be1fbe87dc40.png"></p>
+<h2 is-upgraded>Important to know</h2>
+<ul>
+<li>Default query provides rollup of 120 data points in specified time frame, using metric‘s default time aggregation</li>
+<li>Rollup is allways performed, even if not explicitly applied</li>
+<li>Default query &#34;groups&#34; all dimensions, using metric&#39;s default space aggregation</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Detect - Hands-on #5: Setting up alerts" duration="0">
+        <p>Go to <strong>Settings -&gt; Anomaly detection -&gt; Custom events for alerting</strong></p>
+<p class="image-container"><img alt="MINT5" src="img/9d4324f710a9e237.png"></p>
+<ul>
+<li>Search for the metric you want to alert, for example <code>business.store.rank</code></li>
+</ul>
+<p class="image-container"><img alt="MINT5" src="img/288fa06ffad86104.png"></p>
+<ul>
+<li>Abilty to select dimensions/filter is powerful!</li>
+</ul>
+<p class="image-container"><img alt="MINT5" src="img/1dd61e16acc43b2b.png"></p>
+<ul>
+<li>Set the Monitoring stratgy <code>Static</code> or <code>Auto-adaptive baseline</code></li>
+</ul>
+<p class="image-container"><img alt="MINT5" src="img/628bc56ae1ff7da0.png"></p>
+<ul>
+<li>Complete the event descrption and click on <code>create</code></li>
+</ul>
+<p class="image-container"><img alt="MINT5" src="img/4ca388c21dbf041d.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Advanced hands on (OPTIONAL)" duration="0">
+        <h2 is-upgraded>Associate a metric to any entitiy in Dynatrace</h2>
+<ul>
+<li>Use service as an example: <code>simplenodeservice</code></li>
+<li>Use bookstore</li>
+</ul>
+<h2 is-upgraded>Trigger an incident</h2>
+<ul>
+<li>Test</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Feedback" duration="3">
+        <p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
+<google-codelab-survey survey-id="mint-1">
 <h4>How was your overall experience with this lab?</h4>
 <paper-radio-group>
 <paper-radio-button>Excellent</paper-radio-button>
@@ -147,14 +244,19 @@ $ nano playstore.py
 <paper-radio-button>Creating alerts and setting monitoring strategy</paper-radio-button>
 </paper-radio-group>
 </google-codelab-survey>
-Positive : 💡 For other ideas and suggestions, please <a href="mailto:APAC-SE-Central@dynatrace.com?subject=MINT" target="_blank"><strong>reach out via email</strong></a>.</li>
-</ul>
-</google-codelab-step>
-</google-codelab>
-<script src="../../elements/codelab-elements/native-shim.js"></script>
-<script src="../../elements/codelab-elements/custom-elements.min.js"></script>
-<script src="../../elements/codelab-elements/prettify.js"></script>
-<script src="../../elements/codelab-elements/codelab-elements.js"></script>
-<script src="//support.google.com/inapp/api.js"></script>
+<aside class="special"><p>💡 For other ideas and suggestions, please <a href="mailto:APAC-SE-Central@dynatrace.com?subject=MINT" target="_blank"><strong>reach out via email</strong></a>.</p>
+</aside>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="../../elements/codelab-elements/native-shim.js"></script>
+  <script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+  <script src="../../elements/codelab-elements/prettify.js"></script>
+  <script src="../../elements/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
 </body>
 </html>
