@@ -1,0 +1,160 @@
+
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+<meta name="theme-color" content="#4F7DC9">
+<meta charset="UTF-8">
+<title>Metric Ingestion</title>
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+<style>
+.success{color:#1e8e3e}.error{color:red} </style>
+</head>
+<body>
+<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+<google-codelab codelab-gaid="" id="mint" title="Metric Ingestion" environment="web" feedback-link="mailto:APAC-SE-Central@dynatrace.com">
+<google-codelab-step label="Introduction" duration="0">
+<p>This repository contains the exercises for the Metric Ingestion.</p>
+<h2 is-upgraded>Prerequisites</h2>
+<ul>
+<li>A cloud compute instance from GCP/Azure/AWS/Alicloud/Tencent Cloud</li>
+<li>PuTTy/Terminal/web-based terminal from the cloud providers</li>
+</ul>
+<h2 class="checklist" is-upgraded>What You&#39;ll Learn</h2>
+<ul class="checklist">
+<li>How to use the new metric ingestion interface via command line, API, telegraf</li>
+<li>How to slice and dice the metric via the new Explorer</li>
+<li>Setting alerts and monitoring strategy</li>
+</ul>
+</google-codelab-step>
+<google-codelab-step label="Ingest - Hands-on #1: Command line" duration="10">
+<h2 is-upgraded>dynatrace_ingest command line</h2>
+<ul>
+<li>SSH into yesterday&#39;s DevOps EC2 instance or use any cloud compute instance of your choice<ul>
+<li>ssh dynatrace@1-2-3-4.nip.io</li>
+<li>password: secr3t</li>
+</ul>
+</li>
+<li>As part of agent 1.201 there is a new command tool available called dynatrace_ingest located in the following directory: <code>/opt/dynatrace/oneagent/agent/tools</code>. This provides the capability to PIPE in metrics.</li>
+<li>Execute the <code>dynatrace_ingest</code> command:<pre><code>$ /opt/dynatrace/oneagent/agent/tools/dynatrace_ingest -v
+</code></pre>
+You will get a response: <code>dynatrace_ingest disabled in tenant configuration, will not validate metrics.</code><ul>
+<li>Login to <a href="https://mou612.managed-sprint.dynalabs.io" target="_blank">Bootcamp Managed Cluster</a></li>
+<li>userid: your email address</li>
+<li>Enable OneAgent: Settings &gt; Monitored technologies &gt; Supported technologies&gt; Dynatrace OneAgent StatsD, Pipe, HTTP Metric API <img alt="MINT1" src="img/82bc5473ba0cfe8d.png"></li>
+<li>You will see additional Dynatrace processes started <img alt="MINT1" src="img/24ebbcaa953943.png"></li>
+<li>Execute the <code>dynatrace_ingest</code> help command: <code>bash<br>$ /opt/dynatrace/oneagent/agent/tools/dynatrace_ingest -h<br></code></li>
+</ul>
+</li>
+</ul>
+<p>And you will now see a response like this:</p>
+<pre><code>Usage: dynatrace_ingest [Options] [Metrics]
+When metrics are ommitted, dynatrace_ingest expects them to be passed via standard input. Each line is treated as one metric ...
+...
+</code></pre>
+<h2 is-upgraded>Ingesting your first set of metrics</h2>
+<ul>
+<li>Clone the repo + setup the environment: <code>bash<br>$ git clone https://github.com/Dynatrace-APAC/Workshop-mint.git<br>$ cd Workshop-mint<br>$ ./setupEnvironment.sh<br>Hit:1 http://ap-southeast-1.ec2.archive.ubuntu.com/ubuntu focal InRelease<br>Get:2 http://ap-southeast-1.ec2.archive.ubuntu.com/ubuntu focal-updates InRelease [111 kB]<br>Get:3 http://ap-southeast-1.ec2.archive.ubuntu.com/ubuntu focal-backports InRelease [98.3 kB]<br>...<br>./telegraf-1.16.0/var/log/<br>./telegraf-1.16.0/var/log/telegraf/<br>$</code><br> If you look into the <code>setupEnvironment.sh</code>, you will see that the script does 3 things 1. Install <code>sysstat</code> 2. Install <code>telegraf</code> 3. Setup the <code>telegraf.conf</code> file - Execute the script <code>cpuUsagePerCore.shbash<br>$ cd ~/Workshop-mint<br>$ ./cpuUsagePerCore.sh<br>Sending metric: host.cpu.usr,core=coreall 3.05<br>Sending metric succedded<br>Sending metric: host.cpu.idle,core=coreall 96.45<br>Sending metric succedded<br>Sending metric: host.cpu.usr,core=core0 0.00<br>Sending metric succedded<br>Sending metric: host.cpu.idle,core=core0 100.00<br>Sending metric succedded<br>Sending metric: host.cpu.usr,core=core1 6.06<br>Sending metric succedded<br>Sending metric: host.cpu.idle,core=core1 92.93<br>Sending metric succedded<br>...<br></code></li>
+</ul>
+<p>If you look into the script <code>cpuUsagePerCore.sh</code>, it loops through the command <code>mpstat</code> and piping the output to <code>/opt/dynatrace/oneagent/agent/tools/dynatrace_ingest -v</code>. We create two metrics <code>host.cpu.usr</code> and <code>host.cpu.idle</code> each split by the individual cpu core.</p>
+<h2 is-upgraded>Exploring the metric</h2>
+<p>If we If we go to the new metrics Explorer we can find our metrics</p>
+<p class="image-container"><img alt="MINT1" src="img/2a271d6af86ccdc2.png"></p>
+</google-codelab-step>
+<google-codelab-step label="Ingest - Hands-on #2: API" duration="5">
+<h2 is-upgraded>Setting up the script</h2>
+<ul>
+<li>Edit the file <code>playstore.py</code> and input the Token and Tenant URL <ul>
+<li>YOUR_DT_API_URL = <strong>Copy from your own browser</strong></li>
+</ul>
+</li>
+</ul>
+<p><strong>Example</strong><code>https://mou612.managed-sprint.dynalabs.io/e/8325964d-f0ea-4c20-824b-6969f1ba11cc</code></p>
+<ul>
+<li>YOUR_DT_API_TOKEN = <strong>Copy from Dynatrace-&gt;Settings-&gt;DynatraceAPI</strong></li>
+</ul>
+<pre><code>$ cd ~/Workshop-mint
+$ vi playstore.py
+or
+$ nano playstore.py
+</code></pre>
+<p class="image-container"><img alt="MINT1" src="img/2a271d6af86ccdc2.png"></p>
+<ul>
+<li>Save the file</li>
+</ul>
+<h2 is-upgraded>Deploying script and validating</h2>
+<ul>
+<li>Deploy cronjob <code>bash<br>$ (echo &#34;* * * * 2 python3 /home/dynatrace/Workshop-mint/playstore.py &gt; /tmp/playstore.log&#34;) | crontab -</code><br> - Validate cronjob running <code>bash<br>$ cat /tmp/playstore.log<br>business.store.rank,store=playstore,appid=at.smartlab.tshop,searchterm=&#34;pos&#34; 19<br>business.store.rank,store=playstore,appid=at.smartlab.tshop,searchterm=&#34;point of sale&#34; 10<br>business.store.rank,store=playstore,appid=at.smartlab.tshop,searchterm=&#34;kasse&#34; 3<br>business.store.rank,store=playstore,appid=at.smartlab.tshop,searchterm=&#34;restaurant pos&#34; 23<br>business.store.rank,store=playstore,appid=at.smartlab.tshop,searchterm=&#34;invoice print&#34; 50<br>business.store.rank,store=playstore,appid=at.smartlab.tshop,searchterm=&#34;cashier&#34; 25<br>business.store.rank,store=playstore,appid=at.smartlab.tshop,searchterm=&#34;Cash Register&#34; 16<br>{&#34;linesOk&#34;:7,&#34;linesInvalid&#34;:0,&#34;error&#34;:null} <br></code></li>
+</ul>
+<p>If you look into the script <code>playstore.py</code>, it activates <code>/api/v2/metrics/ingest</code> and uses the same &#34;schema-less&#34; format and collects information from the query parameter of <code>https://play.google.com/store/search?q=</code> and spilts it according to the various <code>searchterm</code></p>
+<p><strong>Data ingestion format</strong></p>
+<p><code>business.store.rank,store=playstore,appid=&#34; + YOUR_APP_ID + &#34;,searchterm=\&#34;&#34; + kw + &#34;\&#34; &#34; + str(checkAppPosition(YOUR_APP_ID, kw)) + &#34;\n&#34;</code></p>
+</google-codelab-step>
+<google-codelab-step label="Ingest - Hands-on #3: Telegraf (OPTIONAL)" duration="5">
+<h2 is-upgraded>Where to get telegraf from</h2>
+<ul>
+<li>Github URL: https://github.com/influxdata/telegraf <ul>
+<li>Installation</li>
+<li>how to use</li>
+<li>Full documentation</li>
+</ul>
+</li>
+<li>4 distinct plugin types: <ul>
+<li>Input Plugins collect metrics from the system, services, or 3rd party APIs</li>
+<li>Processor Plugins transform, decorate, and/or filter metrics</li>
+<li>Aggregator Plugins create aggregate metrics (e.g. mean, min, max, quantiles, etc.)</li>
+<li>Output Plugins write metrics to various destinations</li>
+<li>Dynatrace <a href="https://github.com/influxdata/telegraf/tree/master/plugins/outputs/dynatrace" target="_blank">output plugin</a></li>
+</ul>
+</li>
+</ul>
+<h2 is-upgraded>Setup</h2>
+<ul>
+<li>Part of the setupEnvironment.sh script already downloaded and installed Telegraf, you will find it in <code>/opt/telegraf</code></li>
+<li>The configuration file was already modified to add the Dynatrace output</li>
+</ul>
+<pre><code>$ vi /etc/telegraf/telegraf.conf
+</code></pre>
+<p>Search for <code>dynatrace</code></p>
+<pre><code>###############################################################################
+#                            OUTPUT PLUGINS                                   #
+###############################################################################
+# Configuration for sending metrics to InfluxDB
+[[outputs.dynatrace]]
+   prefix = &#34;telegraf.&#34;
+</code></pre>
+<h2 is-upgraded>Starting Telegraf</h2>
+<ul>
+<li>Navigate to <code>/opt/telegraf/usr/bin</code> and execute <code>./telegrafbash<br>$ cd /opt/telegraf/usr/bin<br>$ ./telegraf<br>2020-10-19T09:05:40Z I! Starting Telegraf<br>2020-10-19T09:05:40Z I! Using config file: /etc/telegraf/telegraf.conf<br>2020-10-19T09:05:40Z I! Loaded inputs: cpu disk diskio kernel mem processes swap system<br>2020-10-19T09:05:40Z I! Loaded aggregators:<br>2020-10-19T09:05:40Z I! Loaded processors:<br>2020-10-19T09:05:40Z I! Loaded outputs: dynatrace<br>2020-10-19T09:05:40Z I! Tags enabled: host=ip-172-31-9-86<br>2020-10-19T09:05:40Z I! [agent] Config: Interval:10s, Quiet:false, Hostname:&#34;ip-172-31-9-86&#34;, Flush Interval:10s<br>2020-10-19T09:05:40Z I! [outputs.dynatrace] Dynatrace URL is empty, defaulting to OneAgent metrics interface</code><br> ### Exploring the metric Navigate to the metrics Explorer and search for <code>telegraf</code><img alt="MINT3" src="img/5e1c04f2015292af.png"> ## Explore - Hands-on #4: The new Metric Explorer Full documentation can be found <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/dashboards-and-charts/explorer" target="_blank">here</a> An <strong>example</strong> of how to query, filter, etc. <img alt="MINT4" src="img/fb34855576fe1f7a.png"> Let&#39;s <strong>explore</strong> the metrics we ingested via the API! <img alt="MINT4" src="img/2734be1fbe87dc40.png"> ### Important to know - Default query provides rollup of 120 data points in specified time frame, using metric‘s default time aggregation - Rollup is allways performed, even if not explicitly applied - Default query &#34;groups&#34; all dimensions, using metric&#39;s default space aggregation ## Detect - Hands-on #5: Setting up alerts - Go to Settings -&gt; Anomaly detection -&gt; Custom events for alerting <img alt="MINT5" src="img/9d4324f710a9e237.png"> - Search for the metric you want to alert, for example <code>business.store.rank</code><img alt="MINT5" src="img/288fa06ffad86104.png"> - Abilty to select dimensions/filter is powerful! <img alt="MINT5" src="img/1dd61e16acc43b2b.png"> - Set the Monitoring stratgy <code>Static</code> or <code>Auto-adaptive baseline</code><img alt="MINT5" src="img/628bc56ae1ff7da0.png"> - Complete the event descrption and click on <code>create</code><img alt="MINT5" src="img/4ca388c21dbf041d.png"> ## Advanced hands on (OPTIONAL) ### Associate a metric to any entitiy in Dynatrace - Use service as an example: <code>simplenodeservice</code> - Use bookstore ### Trigger an incident - Test ## Feedback Duration: 3 We hope you enjoyed this lab and found it useful. We would love your feedback! <google-codelab-survey survey-id="mint-1">
+<h4>How was your overall experience with this lab?</h4>
+<paper-radio-group>
+<paper-radio-button>Excellent</paper-radio-button>
+<paper-radio-button>Good</paper-radio-button>
+<paper-radio-button>Average</paper-radio-button>
+<paper-radio-button>Fair</paper-radio-button>
+<paper-radio-button>Poor</paper-radio-button>
+</paper-radio-group>
+</google-codelab-survey>
+<google-codelab-survey survey-id="mint-2">
+<h4>What did you benefit most from this lab?</h4>
+<paper-radio-group>
+<paper-radio-button>Ingesting the metric via command line</paper-radio-button>
+<paper-radio-button>Ingesting the metric via API</paper-radio-button>
+<paper-radio-button>Ingesting the metric via Telegraf</paper-radio-button>
+<paper-radio-button>Exploring metrics</paper-radio-button>
+<paper-radio-button>Creating alerts and setting monitoring strategy</paper-radio-button>
+</paper-radio-group>
+</google-codelab-survey>
+Positive : 💡 For other ideas and suggestions, please <a href="mailto:APAC-SE-Central@dynatrace.com?subject=MINT" target="_blank"><strong>reach out via email</strong></a>.</li>
+</ul>
+</google-codelab-step>
+</google-codelab>
+<script src="../../elements/codelab-elements/native-shim.js"></script>
+<script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+<script src="../../elements/codelab-elements/prettify.js"></script>
+<script src="../../elements/codelab-elements/codelab-elements.js"></script>
+<script src="//support.google.com/inapp/api.js"></script>
+</body>
+</html>

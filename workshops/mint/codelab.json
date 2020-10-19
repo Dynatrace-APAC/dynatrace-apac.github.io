@@ -1,0 +1,23 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "../../elements",
+  "mainga": "UA-49880327-14",
+  "updated": "2020-10-19T21:27:43+11:00",
+  "id": "mint",
+  "duration": 20,
+  "title": "Metric Ingestion",
+  "authors": "Myrvin Yap",
+  "summary": "The new Metric Ingestion Interface",
+  "source": "mint.md",
+  "theme": "",
+  "status": null,
+  "category": [
+    "infra"
+  ],
+  "tags": [
+    "bootcamp"
+  ],
+  "feedback": "mailto:APAC-SE-Central@dynatrace.com",
+  "url": "mint"
+}
