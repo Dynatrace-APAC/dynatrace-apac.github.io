@@ -32,15 +32,15 @@ Duration: 10
 - As part of agent 1.201 there is a new command tool available called dynatrace_ingest located in the following directory: `/opt/dynatrace/oneagent/agent/tools`. This provides the capability to PIPE in metrics.
 
 - Execute the `dynatrace_ingest` command:
+
 ```bash
 $ /opt/dynatrace/oneagent/agent/tools/dynatrace_ingest -v
+$ dynatrace_ingest disabled in tenant configuration, will not validate metrics.
 ```
-You will get a response: `dynatrace_ingest disabled in tenant configuration, will not validate metrics.`
 
 - Login to [Bootcamp Managed Cluster](https://mou612.managed-sprint.dynalabs.io)
-  - userid: your email address
 
-- Enable OneAgent: Settings > Monitored technologies > Supported technologies> Dynatrace OneAgent StatsD, Pipe, HTTP Metric API
+- Enable OneAgent: Settings-Monitored technologies-Supported technologies-Dynatrace OneAgent StatsD, Pipe, HTTP Metric API
 
 ![MINT1](assets/bootcamp/mint/mint-1-01.png)
 
@@ -49,19 +49,18 @@ You will get a response: `dynatrace_ingest disabled in tenant configuration, wil
 ![MINT1](assets/bootcamp/mint/mint-1-02.png)
 
 - Execute the `dynatrace_ingest` help command:
+
 ```bash
 $ /opt/dynatrace/oneagent/agent/tools/dynatrace_ingest -h
-```
-And you will now see a response like this:
-```bash
 Usage: dynatrace_ingest [Options] [Metrics]
 When metrics are ommitted, dynatrace_ingest expects them to be passed via standard input. Each line is treated as one metric ...
-...
 ```
 
 ### Ingesting your first set of metrics
 - Clone the repo + setup the environment:
+
 ```bash
+$ cd ~
 $ git clone https://github.com/Dynatrace-APAC/Workshop-mint.git
 $ cd Workshop-mint
 $ ./setupEnvironment.sh
@@ -73,12 +72,14 @@ Get:3 http://ap-southeast-1.ec2.archive.ubuntu.com/ubuntu focal-backports InRele
 ./telegraf-1.16.0/var/log/telegraf/
 $
 ```
-If you look into the `setupEnvironment.sh`, you will see that the script does 3 things
-1. Install `sysstat`
-2. Install `telegraf`
-3. Setup the `telegraf.conf ` file
+
+- If you look into the `setupEnvironment.sh`, you will see that the script does 3 things
+  - Install `sysstat`
+  - Install `telegraf`
+  - Setup the `telegraf.conf ` file
 
 - Execute the script `cpuUsagePerCore.sh`
+
 ```bash
 $ cd ~/Workshop-mint
 $ ./cpuUsagePerCore.sh
@@ -96,6 +97,7 @@ Sending metric: host.cpu.idle,core=core1 92.93
 Sending metric succedded
 ...
 ```
+
 If you look into the script `cpuUsagePerCore.sh`, it loops through the command `mpstat` and piping the output to `/opt/dynatrace/oneagent/agent/tools/dynatrace_ingest -v`.
 We create two metrics `host.cpu.usr` and `host.cpu.idle` each split by the individual cpu core.
 
@@ -109,12 +111,15 @@ If we If we go to the new metrics Explorer we can find our metrics
 Duration: 5
 
 ### Setting up the script
+- To use the Dynatrace API, ensure that you have **APIv2 -> Ingest metric** enabled.
+
+![MINT2](assets/bootcamp/mint/mint-2-01.png)
+
 - Edit the file `playstore.py` and input the Token and Tenant URL
   - YOUR_DT_API_URL = **Copy from your own browser**
   
-  **Example**
-  `https://mou612.managed-sprint.dynalabs.io/e/8325964d-f0ea-4c20-824b-6969f1ba11cc`
-  - YOUR_DT_API_TOKEN = **Copy from Dynatrace->Settings->DynatraceAPI**
+  **Example** -- `https://mou612.managed-sprint.dynalabs.io/e/8325964d-f0ea-4c20-824b-6969f1ba11cc`
+  - YOUR_DT_API_TOKEN = **Copy from Settings > Integration > Dynatrace API**
 
 ```bash
 $ cd ~/Workshop-mint
@@ -123,16 +128,18 @@ or
 $ nano playstore.py
 ```
 
-![MINT1](assets/bootcamp/mint/mint-1-03.png)
+![MINT2](assets/bootcamp/mint/mint-2-02.png)
 
 - Save the file
 
 ### Deploying script and validating
 - Deploy cronjob
+
 ```bash
 $ (echo "* * * * 2 python3 /home/dynatrace/Workshop-mint/playstore.py > /tmp/playstore.log") | crontab -
 ```
 - Validate cronjob running
+
 ```bash
 $ cat /tmp/playstore.log
 business.store.rank,store=playstore,appid=at.smartlab.tshop,searchterm="pos" 19
@@ -145,6 +152,7 @@ business.store.rank,store=playstore,appid=at.smartlab.tshop,searchterm="Cash Reg
 
 {"linesOk":7,"linesInvalid":0,"error":null} 
 ```
+
 If you look into the script `playstore.py`, it activates `/api/v2/metrics/ingest` and uses the same "schema-less" format and collects information from the query parameter of  `https://play.google.com/store/search?q=` and spilts it according to the various `searchterm`
 
 **Data ingestion format**
@@ -156,7 +164,7 @@ If you look into the script `playstore.py`, it activates `/api/v2/metrics/ingest
 Duration: 5
 
 ### Where to get telegraf from
-- Github URL: https://github.com/influxdata/telegraf
+- Github URL [https://github.com/influxdata/telegraf](https://github.com/influxdata/telegraf)
   - Installation
   - how to use
   - Full documentation
@@ -175,8 +183,7 @@ Duration: 5
 $ vi /etc/telegraf/telegraf.conf
 ```
 Search for `dynatrace`
-
-```bash
+```
 ###############################################################################
 #                            OUTPUT PLUGINS                                   #
 ###############################################################################
@@ -184,6 +191,7 @@ Search for `dynatrace`
 [[outputs.dynatrace]]
    prefix = "telegraf."
 ```
+
 ### Starting Telegraf
 - Navigate to `/opt/telegraf/usr/bin` and execute `./telegraf`
 
@@ -199,8 +207,10 @@ $ ./telegraf
 2020-10-19T09:05:40Z I! Tags enabled: host=ip-172-31-9-86
 2020-10-19T09:05:40Z I! [agent] Config: Interval:10s, Quiet:false, Hostname:"ip-172-31-9-86", Flush Interval:10s
 2020-10-19T09:05:40Z I! [outputs.dynatrace] Dynatrace URL is empty, defaulting to OneAgent metrics interface
+
 ```
-### Exploring the Metrics
+
+### Exploring the metric
 Navigate to the metrics Explorer and search for `telegraf`
 
 ![MINT3](assets/bootcamp/mint/mint-3-01.png)
@@ -226,7 +236,7 @@ Let's **explore** the metrics we ingested via the API!
 <!-- ------------------------ -->
 ## Detect - Hands-on #5: Setting up alerts
 
-Go to **Settings -> Anomaly detection -> Custom events for alerting**
+- Go to Settings -> Anomaly detection -> Custom events for alerting
 
 ![MINT5](assets/bootcamp/mint/mint-5-01.png)
 
@@ -246,15 +256,56 @@ Go to **Settings -> Anomaly detection -> Custom events for alerting**
 
 ![MINT5](assets/bootcamp/mint/mint-5-05.png)
 
+- Wait for the metric to breach the threshold (either above or below the value) and you will see a problem card created!
+
 <!-- ------------------------ -->
 ## Advanced hands on (OPTIONAL)
 
 ### Associate a metric to any entitiy in Dynatrace
-- Use service as an example: `simplenodeservice`
-- Use bookstore
+- We will use the `business.store.rank` metric and associate it with `simplenodeservice`
+  - Extract the service ID for `simplenodeservice`
 
-### Trigger an incident
-- Test
+Negative
+: **Tip**: One quick way is to go to Transactions & Services > SimpleNodeJsService, look at the URL bar, and copy the **SERVICE-xxxxx**
+
+![MINT6](assets/bootcamp/mint/mint-6-01.png)
+
+  - Edit the file `playstore.py`
+
+```bash
+$ cd ~/Workshop-mint
+$ vi playstore.py
+or
+$ nano playstore.py
+```
+
+  - Look for the line `metricStr += "business.store.rank,store=playstore` (line 37)
+  - insert `dt.entity.service=`**(service entityid)**
+
+**Example**
+
+```bash
+metricStr += "business.store.rank,dt.entity.service=SERVICE-CA0D426F9644803D,store=playstore
+```
+
+- Validate that you have input the right service in the Explorer
+
+![MINT6](assets/bootcamp/mint/mint-6-02.png)
+
+### Trigger a Problem Card
+- Follow `Detect - Hands-on #5` to setup an alert
+- Set a threshold that will trigger an alert
+- Under `Event description`, `Severity`, select `Error`
+
+![MINT6](assets/bootcamp/mint/mint-6-03.png)
+
+- Watch how the error event is triggered under the service in "Transactions & Services" -> "SimpleNodeService" -> Events
+
+### See the correlation in a problem card
+- Adjust the Anomaly Detection in SimpleNodeService
+- Trigger v2 of the SimpleNodeService
+- Trigger an alert in `business.store.rank` with a low threshold setting
+- Watch the problem card
 
 <!-- ------------------------ -->
 
