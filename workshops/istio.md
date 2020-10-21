@@ -316,7 +316,7 @@ What are Dark Releases?
 - Control the exposed use base
 - Based on Feature Flags, IP Address, Header, URL, etc…
 
-### Deploy Dark Releases
+### Deploy Dark Releases (Optional)
 
 Let’s deploy our Dark Release configuration:
 
@@ -330,11 +330,19 @@ If we take a look at the yaml file with the routing rules we see how the traffic
 
 ![Dark-Releases](assets/bootcamp/istio/dark-release-2.png)
 
-If we access the application with the **HTTP Header my-header:canary**,we should see the experimental version, with the red banner displayed. 
+If we access the application with the **HTTP Header my-header:canary**, we should see the experimental version, with the red banner displayed. 
 
 We can add this header via a browser extension:
 
 ![Dark-Releases](assets/bootcamp/istio/dark-release-3.png)
+
+- Selection **Open options page**
+- Click on **+** Under Add
+- Type * for URL
+- Type **my-header** for Header Name
+- Type **canary** for Header Value
+
+![Dark-Releases](assets/bootcamp/istio/chrome-extension.png)
 
 We can determine what traffic is canary and which is not in Dynatrace with a Request Attribute:
 
