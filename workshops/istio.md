@@ -307,7 +307,7 @@ The application will remain deployed
 ![SampleApp](assets/bootcamp/istio/ingress-5.png)
 
 <!-- ------------------------ -->
-## Dark Releases
+## Dark Releases (Optional)
 Duration: 15
 
 What are Dark Releases? 
@@ -316,7 +316,7 @@ What are Dark Releases?
 - Control the exposed use base
 - Based on Feature Flags, IP Address, Header, URL, etc…
 
-### Deploy Dark Releases (Optional)
+### Deploy Dark Releases 
 
 Let’s deploy our Dark Release configuration:
 
