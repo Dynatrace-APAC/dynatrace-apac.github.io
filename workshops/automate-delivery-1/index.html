@@ -1,22 +1,34 @@
 
 <!doctype html>
+
 <html>
 <head>
-<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
-<meta name="theme-color" content="#4F7DC9">
-<meta charset="UTF-8">
-<title>Automate Delivery - Session 1</title>
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
-<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
-<style>
-.success{color:#1e8e3e}.error{color:red} </style>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Automate Delivery - Session 1</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
 </head>
 <body>
-<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
-<google-codelab codelab-gaid="UA-175467274-1" id="automate-delivery-1" title="Automate Delivery - Session 1" environment="web" feedback-link="mailto:d1-apac@dynatrace.com">
-<google-codelab-step label="Introduction" duration="1">
-<p>The labs contains the steps for Automate Delivery: Integration of Load Test Tools with Dynatrace Session 1 training.</p>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid="UA-175467274-1"
+                  id="automate-delivery-1"
+                  title="Automate Delivery - Session 1"
+                  environment="web"
+                  feedback-link="mailto:d1-apac@dynatrace.com">
+    
+      <google-codelab-step label="Introduction" duration="1">
+        <p>The labs contains the steps for Automate Delivery: Integration of Load Test Tools with Dynatrace Session 1 training.</p>
 <p>You will get access to a EC2 instance that has been provided for the purposes of this training.</p>
 <h2 is-upgraded>Prerequisites</h2>
 <ul>
@@ -26,54 +38,192 @@
 <h2 class="checklist" is-upgraded>What You&#39;ll Learn</h2>
 <ul class="checklist">
 <li>Integrate JMeter with Dynatrace.<br></li>
-<li>Push events in Dynatrace and create request-attributes <ul class="checklist">
+<li>Push events in Dynatrace and create request-attributes  <ul class="checklist">
 <li>Dev/Test team can isolate the requests invoked during the load-tests.</li>
 </ul>
 </li>
 </ul>
 <aside class="warning"><p>As different teams might have their own proprietary test-beds/suits, so we will demo stimulating requests using curl commands too.</p>
 </aside>
-</google-codelab-step>
-<google-codelab-step label="Understanding Dynatrace Integration" duration="5">
-<p>By integrating Dynatrace into your existing load testing process, you can stop broken builds in your delivery pipeline earlier.</p>
-<p class="image-container"><img alt="Integration-overview" src="img/a200780e37252c5c.png"></p>
-<h2 is-upgraded>Tag tests with HTTP headers</h2>
-<p>While executing a load test from your load testing tool of choice (JMeter, Neotys, LoadRunner, etc) each simulated HTTP request can be tagged with additional HTTP headers that contain test-transaction information (for example, script name, test step name, and virtual user ID). Dynatrace can analyze incoming HTTP headers and extract such contextual information from the header values and tag the captured requests with request attributes. Request attributes enable you to filter your monitoring data based on defined tags.</p>
-<p class="image-container"><img alt="HTTP-Headers" src="img/d33610534a82ad28.png"></p>
-<p><strong>Full integration and approach is documentated [here]</strong>(https://www.dynatrace.com/support/help/setup-and-configuration/integrations/third-party-integrations/test-automation-frameworks/dynatrace-and-load-testing-tools-integration/)</p>
-</google-codelab-step>
-<google-codelab-step label="Defining Request Attribute" duration="10">
-<p>You can use any (or multiple) HTTP headers or HTTP parameters to pass context information. The extraction rules can be configured via <strong>Settings &gt; Server-side service monitoring &gt; Request attributes.</strong></p>
-<p>The header x-dynatrace-test is used in the following examples with the following set of key/value pairs for the header:</p>
-<p><strong>VU</strong>	| Virtual User ID of the unique user who sent the request. <strong>SI</strong>	| Source ID identifies the product that triggered the request (JMeter, LoadRunner, Neotys, or other) <strong>TSN</strong> | Test Step Name is a logical test step within your load testing script (for example, Login or Add to cart. <strong>LSN</strong>	| Load Script Name - name of the load testing script. This groups a set of test steps that make up a multi-step transaction (for example, an online purchase). <strong>LTN</strong> | The Load Test Name uniquely identifies a test execution (for example, 6h Load Test – June 25) <strong>PC</strong>	| Page Context provides information about the document that is loaded in the currently processed page.</p>
-<p class="image-container"><img alt="Request-Attribute" src="img/8f27a5c6186f6ee2.png"></p>
-<p class="image-container"><img alt="Request-Attribute" src="img/5b3b26bdfaf85bbf.png"></p>
-</google-codelab-step>
-<google-codelab-step label="Request Tag-based Analysis" duration="20">
-<h2 is-upgraded>Creating Tags</h2>
-<p>Tagging is a powerful mechanism. However, to reap its benefits, tagging should be used carefully and in a meaningful way. To guide you towards this end, we provide you with specific recommendations and best practices, which are described below. With auto-tagging based on metadata, tags can be generated automatically and assigned to monitored entities with the specific metadata values that Dynatrace detects automatically.</p>
-<p><a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/tags-and-metadata/" target="_blank">Best Practices for Tagging</a></p>
-<h2 is-upgraded>Naming Rules</h2>
-<p>Dynatrace automatically provides names, but they don&#39;t enable you to quickly identify where an application or service belongs to. To achieve this, it&#39;s recommended that you use service naming rules and process group naming rules. This can be done in Dynatrace using metadata imported from the monitored applications.</p>
-<p>You can use Dynatrace Naming Rules to differentiate requests</p>
-<p class="image-container"><img alt="Request-tag" src="img/391a32cda8165e59.png"></p>
-<p>Documentation <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/tags-and-metadata/setup/how-to-define-tags/" target="_blank">here</a></p>
-<h2 is-upgraded>Annotate Dynatrace with Events</h2>
-<p>The Events API delivers details about all uncorrelated events that Dynatrace collects within your environment. Information returned for each event includes attributes about the event source, the entity where the event was collected, and other event-specific details.</p>
-<p>PUSH endpoint enables third-party systems such as CI platforms (Jenkins, Bamboo, Electric Cloud, etc.) to provide additional details for Dynatrace automated root cause analysis.</p>
-<p class="image-container"><img alt="Event-API" src="img/cdadb18f529c4819.png"></p>
-<p>Documentation <a href="https://www.dynatrace.com/support/help/dynatrace-api/environment-api/events/push-deployment-events-from-jenkins/" target="_blank">here</a></p>
-<h2 is-upgraded>Compare and Analyze events</h2>
-<p>There are different ways to analyze the data. Your approach should be based on the type of performance analysis you want to do (for example, crashes, resource and performance hotspots, or scalability issues).</p>
-<p class="image-container"><img alt="Event-API" src="img/5e3be8fb6768f848.png"></p>
-<p>Documentation <a href="https://www.dynatrace.com/support/help/shortlink/load-testing-process#compare--analyze" target="_blank">here</a></p>
-</google-codelab-step>
-<google-codelab-step label="Automate with Curl" duration="10">
-<p>The steps that we ran through could be automated with by initiating HTTP requests through curl.</p>
-<p class="image-container"><img alt="Event-API" src="img/7020aef261c1e7d3.png"></p>
-</google-codelab-step>
-<google-codelab-step label="Feedback" duration="3">
-<p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Useful Commands ✅" duration="0">
+        <aside class="special"><p>To start the docker with sample application: <code>docker run -d --name SampleBankApp -p 4000:3000 nikhilgoenka/sample-bank-app</code></p>
+<ul>
+<li>This would start the docker on port localhost:4000 with docker name as <strong>SampleBankApp</strong></li>
+</ul>
+</aside>
+<aside class="special"><p>To start the jenkins docker: <code>docker run -d --network mynetwork --name Jenkins-Dynatrace -p 8020:8080  -v /var/jenkins:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock nikhilgoenka/jenkins-dynatrace-workshop</code></p>
+<ul>
+<li>-d runs the docker in daemon mode.</li>
+<li>-p 8020:8080 - By default, jenkins docker would be running on 8080. Specifying <strong>-p 8020:8080</strong> binds the 8080 in docker to localhost on 8020. So, you can forward/listen requests from docker using <code>localhost:8020</code>.</li>
+<li>-v Bind mounts a volume. By default, jenkins docker is maintaining the pipeline/data information in /var/jenkins_home. Specifying <strong>-v /var/jenkins:/var/jenkins_home</strong> would mount the localhost:/var/jenkins directory so that the pipeline data is not lost once pipeline is re-started. Specifying <strong>-v /var/run/docker.sock:/var/run/docker.sock</strong> will allow the jekins docker to leverage the dockerd running on localhost. This would be required since we are starting the sample-app dockers while running the pipeline.</li>
+</ul>
+</aside>
+<aside class="special"><p>To run the ansible-tower docker: <code>docker run -d --name ansible-tower -p 8090:443 ybalt/ansible-tower</code> This would start the docker on port <strong>localhost:8090</strong> with docker name as <strong>ansible-tower</strong></p>
+</aside>
+<p><strong>Other useful commands:</strong></p>
+<ul>
+<li>To <strong>view all docker containers</strong>: <code>docker ps -a</code></li>
+<li>To <strong>view the downloaded images</strong> on localhost: <code>docker images</code></li>
+<li>To <strong>remove a particular image</strong>: <code>docker rmi &lt;IMAGE-NAME&gt;</code></li>
+<li>To <strong>stop a docker</strong>: <code>docker stop &lt;CONTAINER-ID&gt;</code></li>
+<li>To <strong>remove a docker</strong>: <code>docker rm &lt;CONTAINER-ID&gt;</code></li>
+<li>To <strong>run a docker in interactive bash</strong>: <code>docker run -it &lt;CONTAINER&gt; /bin/bash</code></li>
+<li>To <strong>delete all the unused images</strong>: <code>docker system prune -a -f</code></li>
+<li>To <strong>pull a particular image</strong>: <code>docker pull &lt;docker-image&gt;</code></li>
+<li>Jenkins pipeline: Command: <code>https://github.com/nikhilgoenkatech/JenkinsBankApp</code></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Preconfiguration Setup" duration="5">
+        <p>Log back into your Dynatrace environment and check if OneAgent is still running.</p>
+<p>On your left navigation, select <strong>Hosts</strong> and you should still see a monitored EC2 host.</p>
+<h2 is-upgraded>Check if OneAgent is running</h2>
+<p>Log back into your Dynatrace environment and check if OneAgent is still running.</p>
+<p>On your left navigation, select <strong>Hosts</strong> and you should still see a monitored EC2 host.</p>
+<h2 is-upgraded>Running Jenkins in Docker</h2>
+<p>The Jenkins docker would already be present in your ubuntu instances and can be seen with &#34;docker images&#34;</p>
+<p class="image-container"><img alt="Jenkins-Docker" src="img/e4a951a49a2d3304.png"></p>
+<p>To run the Jenkins docker, execute <code>docker run -d --network mynetwork --name Jenkins-Dynatrace -p 8020:8080  -v /var/jenkins:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock nikhilgoenka/jenkins-dynatrace-workshop</code></p>
+<h2 is-upgraded>Retrieving Jenkins Password</h2>
+<p>The initial password can be retrieved as <code>cat /var/Jenkins/secrets/initialAdminPassword</code></p>
+<p class="image-container"><img alt="Jenkins-Docker" src="img/30b98ad7c886614f.png"></p>
+<p>With the retrieved password, access the Jenkins URL via your web browser.</p>
+<p>Within your Host View, dropdown the <strong>Properties and Tags</strong> and you will get a list of various metadata associated with the host created. Locate the <strong>Public IP Address</strong> and copy its value.</p>
+<p class="image-container"><img alt="Host-properties" src="img/4033f126cef6b4a8.png"></p>
+<p>Open up your <strong>web browser</strong> and access the Jenkins URL via <code>&lt;IP address&gt;:8020</code></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Setting up Jenkins" duration="15">
+        <h2 is-upgraded>Installing Docker Pipeline Plugin</h2>
+<p>Once you login, you will see the screen as below. Click on &#34;Install suggested plugins&#34; as below:</p>
+<p class="image-container"><img alt="Jenkins-Docker" src="img/1eb6b3cc65a60b8.png"></p>
+<p>Further, add an admin user with username &#34;admin&#34; and password &#34;dynatrace&#34;</p>
+<p class="image-container"><img alt="Jenkins-Docker" src="img/fbcc09e339ae0b38.png"></p>
+<ul>
+<li>Click on <strong>Manage Jenkins</strong> on the left menu</li>
+</ul>
+<p class="image-container"><img alt="Jenkins-Docker" src="img/337890a69e6e1fbf.png"></p>
+<ul>
+<li>Click on <strong>Manage Plugins</strong> as highlighted below:</li>
+</ul>
+<p class="image-container"><img alt="Jenkins-Docker" src="img/577f3802860bbe63.png"></p>
+<ul>
+<li>Now, click on <strong>Available plugins</strong> and input <code>docker</code> in the <strong>search bar</strong></li>
+<li>Select <strong>Docker Pipeline</strong></li>
+<li>Click on <strong>Install without restart</strong></li>
+</ul>
+<p class="image-container"><img alt="Jenkins-Docker" src="img/3149699b70646485.png"></p>
+<h2 is-upgraded>Configure Environment Variables</h2>
+<p>Within Jenkins, click on <strong>Manage Jenkins  &gt; Configure System</strong></p>
+<p class="image-container"><img alt="Jenkins-Docker" src="img/bed0927fb04724b4.png"></p>
+<ul>
+<li>Look for <strong>environment variables</strong> as per image below:</li>
+</ul>
+<p class="image-container"><img alt="Jenkins-Docker" src="img/7d152e54715f223a.png"></p>
+<ul>
+<li>Add the following environment variables:  <ul>
+<li>DT_URL with value https://mou612.managed-sprint.dynalabs.io/e/{environmentid}</li>
+<li>DT_TOKEN</li>
+<li>PUBLIC_IP</li>
+</ul>
+</li>
+</ul>
+<p class="image-container"><img alt="Jenkins-Docker" src="img/1656dd412bf51fa6.png"></p>
+<h2 is-upgraded>Configure Jenkins Pipeline</h2>
+<ul>
+<li>Click on &#34;New Item&#34; on the left side:</li>
+</ul>
+<p class="image-container"><img alt="Jenkins-Docker" src="img/759f1594187b7e1f.png"></p>
+<ul>
+<li>Add a pipeline as per below:  <ul>
+<li>Item name - <code>My Pipeline</code></li>
+<li>Choose <strong>Pipeline</strong></li>
+<li>Click on <strong>OK</strong></li>
+</ul>
+</li>
+</ul>
+<p class="image-container"><img alt="Jenkins-Docker" src="img/b6a0e1d35a643a18.png"></p>
+<ul>
+<li>Use the pipeline definitions as per below:  <ul>
+<li>Definition - Dropdown <strong>Pipeline script from SCM</strong></li>
+<li>SCM - Dropdown <strong>Git</strong></li>
+<li>Repository URL - <code>https://github.com/nikhilgoenkatech/JenkinsBankApp/</code></li>
+<li>Click on <strong>OK</strong></li>
+</ul>
+</li>
+</ul>
+<p class="image-container"><img alt="Jenkins-Docker" src="img/1a48cb9de3601373.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Create Auto Tag rule for Jenkins" duration="10">
+        <h2 is-upgraded>Creating Auto Tags</h2>
+<p>Within Dynatrace, on the left menu go to <strong>Settings &gt; Tags &gt; Automatically applied tags</strong></p>
+<p>Use the following:</p>
+<ul>
+<li>Tag name - <code>JenkinInstance</code></li>
+<li>Optional Tag value - <code>{Ec2Instance:SecurityGroup}</code></li>
+<li>Conditions -  <ul>
+<li>Dropdown <strong>AWS Security Group</strong></li>
+<li>Dropdown <strong>begins with</strong></li>
+<li>ANZ_ACM_Security_Group</li>
+<li><strong>Check</strong> Case sensitive</li>
+</ul>
+</li>
+<li>Click on <strong>Save</strong></li>
+</ul>
+<p class="image-container"><img alt="Jenkins-Docker" src="img/cc8069e547c7930.png"></p>
+<p>Within the Host Properties and tags, <strong>JenkinsInstance tag</strong> will be added</p>
+<p class="image-container"><img alt="Jenkins-Docker" src="img/6e7188775e898354.png"></p>
+<p>Back in Jenkins, click on <strong>Build Now</strong> for the <strong>My-Pipeline</strong></p>
+<p class="image-container"><img alt="Jenkins-Docker" src="img/f6937f5cf394b26e.png"></p>
+<h2 is-upgraded>Creating Tags for Build Stages</h2>
+<p>Use the following:</p>
+<ul>
+<li>Tag name - <code>DockerService</code></li>
+<li>Rule applies to - Dropdown <strong>Services</strong></li>
+<li>Optional Tag value - <code>{ProcessGroup:DetectedName}</code></li>
+<li>Conditions -  <ul>
+<li>Dropdown <strong>Docker container name</strong></li>
+<li>Dropdown <strong>exists</strong></li>
+</ul>
+</li>
+<li>Click on <strong>Save</strong></li>
+</ul>
+<p class="image-container"><img alt="Jenkins-Docker" src="img/a111e23fe15b2375.png"></p>
+<p>Use the following:</p>
+<ul>
+<li>Tag name - <code>Environment</code></li>
+<li>Rule applies to - Dropdown <strong>Services</strong></li>
+<li>Optional Tag value - <code>{ProcessGroup:Environment:ENVIRONMENT}</code></li>
+<li>Conditions -  <ul>
+<li>Dropdown <strong>ENVIRONMENT (Environment)</strong></li>
+<li>Dropdown <strong>exists</strong></li>
+</ul>
+</li>
+<li>Click on <strong>Save</strong></li>
+</ul>
+<p class="image-container"><img alt="Jenkins-Docker" src="img/47f21614fe116fb5.png"></p>
+<h2 is-upgraded>Review changes in Dynatrace</h2>
+<p>You can see the changes reflected in <strong>SampleOnlineBankStaging Process View</strong></p>
+<p class="image-container"><img alt="Jenkins-Docker" src="img/992de5631201ae29.png"></p>
+<p>You also can see the changes reflected in <strong>node-bank2 Service View</strong></p>
+<p class="image-container"><img alt="Jenkins-Docker" src="img/3d18e83c47134632.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Feedback" duration="3">
+        <p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
 <google-codelab-survey survey-id="automate-delivery-1-1">
 <h4>How was your overall experience with this lab?</h4>
 <paper-radio-group>
@@ -105,12 +255,17 @@
 </google-codelab-survey>
 <aside class="special"><p>💡 For other ideas and suggestions, please <a href="mailto:APAC-SE-Central@dynatrace.com?subject=Automate Feedback 1 - Ideas and Suggestions" target="_blank"><strong>reach out via email</strong></a>.</p>
 </aside>
-</google-codelab-step>
-</google-codelab>
-<script src="../../elements/codelab-elements/native-shim.js"></script>
-<script src="../../elements/codelab-elements/custom-elements.min.js"></script>
-<script src="../../elements/codelab-elements/prettify.js"></script>
-<script src="../../elements/codelab-elements/codelab-elements.js"></script>
-<script src="//support.google.com/inapp/api.js"></script>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="../../elements/codelab-elements/native-shim.js"></script>
+  <script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+  <script src="../../elements/codelab-elements/prettify.js"></script>
+  <script src="../../elements/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
 </body>
 </html>

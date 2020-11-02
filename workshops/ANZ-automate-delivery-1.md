@@ -64,91 +64,168 @@ Positive
 * Jenkins pipeline:
    Command: `https://github.com/nikhilgoenkatech/JenkinsBankApp`
 
-
 <!-- ------------------------ -->
-
-<!-- ------------------------ -->
-## Understanding Dynatrace Integration
+## Preconfiguration Setup
 Duration: 5
 
-By integrating Dynatrace into your existing load testing process, you can stop broken builds in your delivery pipeline earlier.
+Log back into your Dynatrace environment and check if OneAgent is still running.
 
-![Integration-overview](assets/ANZ-aiops/integration-overview.png)
+On your left navigation, select **Hosts** and you should still see a monitored EC2 host. 
 
+### Check if OneAgent is running
 
-### Tag tests with HTTP headers 
+Log back into your Dynatrace environment and check if OneAgent is still running.
 
-While executing a load test from your load testing tool of choice (JMeter, Neotys, LoadRunner, etc) each simulated HTTP request can be tagged with additional HTTP headers that contain test-transaction information (for example, script name, test step name, and virtual user ID). Dynatrace can analyze incoming HTTP headers and extract such contextual information from the header values and tag the captured requests with request attributes. Request attributes enable you to filter your monitoring data based on defined tags.
+On your left navigation, select **Hosts** and you should still see a monitored EC2 host. 
 
-![HTTP-Headers](assets/ANZ-aiops/adding-http-headers.png)
+### Running Jenkins in Docker
 
-**Full integration and approach is documentated [here]**(https://www.dynatrace.com/support/help/setup-and-configuration/integrations/third-party-integrations/test-automation-frameworks/dynatrace-and-load-testing-tools-integration/)
+The Jenkins docker would already be present in your ubuntu instances and can be seen with “docker images”
+
+![Jenkins-Docker](assets/ANZ-aiops/delivery1/jenkins-docker.png)
+
+To run the Jenkins docker, execute `docker run -d --network mynetwork --name Jenkins-Dynatrace -p 8020:8080  -v /var/jenkins:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock nikhilgoenka/jenkins-dynatrace-workshop`
+
+### Retrieving Jenkins Password
+
+The initial password can be retrieved as `cat /var/Jenkins/secrets/initialAdminPassword`
+
+![Jenkins-Docker](assets/ANZ-aiops/delivery1/jenkins-password.png)
+
+With the retrieved password, access the Jenkins URL via your web browser. 
+
+Within your Host View, dropdown the **Properties and Tags** and you will get a list of various metadata associated with the host created. Locate the **Public IP Address** and copy its value.
+
+![Host-properties](assets/ANZ-aiops/feedback1/host-properties.png)
+
+Open up your **web browser** and access the Jenkins URL via `<IP address>:8020`
 
 <!-- ------------------------ -->
-## Defining Request Attribute
+## Setting up Jenkins 
+Duration: 15
+
+### Installing Docker Pipeline Plugin
+Once you login, you will see the screen as below. Click on “Install suggested plugins” as below:
+
+![Jenkins-Docker](assets/ANZ-aiops/delivery1/jenkins-plugin-1.png)
+
+Further, add an admin user with username “admin” and password “dynatrace” 
+
+![Jenkins-Docker](assets/ANZ-aiops/delivery1/jenkins-plugin-2.png)
+
+* Click on **Manage Jenkins** on the left menu
+
+![Jenkins-Docker](assets/ANZ-aiops/delivery1/jenkins-pipeline-1.png)
+
+* Click on **Manage Plugins** as highlighted below:
+
+![Jenkins-Docker](assets/ANZ-aiops/delivery1/jenkins-pipeline-2.png)
+
+* Now, click on **Available plugins** and input `docker` in the **search bar**
+* Select **Docker Pipeline**
+* Click on **Install without restart** 
+
+![Jenkins-Docker](assets/ANZ-aiops/delivery1/jenkins-pipeline-3.png)
+
+### Configure Environment Variables
+
+Within Jenkins, click on **Manage Jenkins  > Configure System**
+
+![Jenkins-Docker](assets/ANZ-aiops/delivery1/jenkins-pipeline-4.png)
+
+* Look for **environment variables** as per image below:
+
+![Jenkins-Docker](assets/ANZ-aiops/delivery1/jenkins-plugin-5.png)
+
+* Add the following environment variables:
+  * DT_URL with value https://mou612.managed-sprint.dynalabs.io/e/{environmentid}
+  * DT_TOKEN
+  * PUBLIC_IP
+
+![Jenkins-Docker](assets/ANZ-aiops/delivery1/jenkins-plugin-6.png)
+
+### Configure Jenkins Pipeline
+
+* Click on “New Item” on the left side:
+
+![Jenkins-Docker](assets/ANZ-aiops/delivery1/jenkins-plugin-7.png)
+
+* Add a pipeline as per below:
+  * Item name - `My Pipeline`
+  * Choose **Pipeline**
+  * Click on **OK**
+
+![Jenkins-Docker](assets/ANZ-aiops/delivery1/jenkins-plugin-8.png)
+
+* Use the pipeline definitions as per below:
+  * Definition - Dropdown **Pipeline script from SCM**
+  * SCM - Dropdown **Git**
+  * Repository URL - `https://github.com/nikhilgoenkatech/JenkinsBankApp/`
+  * Click on **OK**
+
+![Jenkins-Docker](assets/ANZ-aiops/delivery1/jenkins-plugin-9.png)
+
+<!-- ------------------------ -->
+## Create Auto Tag rule for Jenkins
 Duration: 10
 
-You can use any (or multiple) HTTP headers or HTTP parameters to pass context information. 
-The extraction rules can be configured via **Settings > Server-side service monitoring > Request attributes.**
+### Creating Auto Tags
 
-The header x-dynatrace-test is used in the following examples with the following set of key/value pairs for the header:
+Within Dynatrace, on the left menu go to **Settings > Tags > Automatically applied tags**
 
-**VU**	| Virtual User ID of the unique user who sent the request.
-**SI**	| Source ID identifies the product that triggered the request (JMeter, LoadRunner, Neotys, or other)
-**TSN** | Test Step Name is a logical test step within your load testing script (for example, Login or Add to cart.
-**LSN**	| Load Script Name - name of the load testing script. This groups a set of test steps that make up a multi-step transaction (for example, an online purchase).
-**LTN** | The Load Test Name uniquely identifies a test execution (for example, 6h Load Test – June 25)
-**PC**	| Page Context provides information about the document that is loaded in the currently processed page.
+Use the following:
+* Tag name - `JenkinInstance`
+* Optional Tag value - `{Ec2Instance:SecurityGroup}`
+* Conditions - 
+  * Dropdown **AWS Security Group** 
+  * Dropdown **begins with** 
+  * ANZ_ACM_Security_Group
+  * **Check** Case sensitive 
+* Click on **Save**
 
-![Request-Attribute](assets/ANZ-aiops/request-attribute-1.png)
+![Jenkins-Docker](assets/ANZ-aiops/delivery1/jenkins-tag-1.png)
 
-![Request-Attribute](assets/ANZ-aiops/request-attribute-2.png)
+Within the Host Properties and tags, **JenkinsInstance tag** will be added
 
-<!-- ------------------------ -->
-## Request Tag-based Analysis
-Duration: 20
+![Jenkins-Docker](assets/ANZ-aiops/delivery1/jenkins-tag-2.png)
 
-### Creating Tags
+Back in Jenkins, click on **Build Now** for the **My-Pipeline**
 
-Tagging is a powerful mechanism. However, to reap its benefits, tagging should be used carefully and in a meaningful way. To guide you towards this end, we provide you with specific recommendations and best practices, which are described below. With auto-tagging based on metadata, tags can be generated automatically and assigned to monitored entities with the specific metadata values that Dynatrace detects automatically.
+![Jenkins-Docker](assets/ANZ-aiops/delivery1/jenkins-tag-3.png)
 
-[Best Practices for Tagging](https://www.dynatrace.com/support/help/how-to-use-dynatrace/tags-and-metadata/) 
+### Creating Tags for Build Stages
 
-### Naming Rules
+Use the following:
+* Tag name - `DockerService`
+* Rule applies to - Dropdown **Services**
+* Optional Tag value - `{ProcessGroup:DetectedName}`
+* Conditions - 
+  * Dropdown **Docker container name** 
+  * Dropdown **exists** 
+* Click on **Save**
 
-Dynatrace automatically provides names, but they don’t enable you to quickly identify where an application or service belongs to. To achieve this, it's recommended that you use service naming rules and process group naming rules. This can be done in Dynatrace using metadata imported from the monitored applications.
+![Jenkins-Docker](assets/ANZ-aiops/delivery1/jenkins-tag-4.png)
 
-You can use Dynatrace Naming Rules to differentiate requests
+Use the following:
+* Tag name - `Environment`
+* Rule applies to - Dropdown **Services**
+* Optional Tag value - `{ProcessGroup:Environment:ENVIRONMENT}`
+* Conditions - 
+  * Dropdown **ENVIRONMENT (Environment)** 
+  * Dropdown **exists** 
+* Click on **Save**
 
-![Request-tag](assets/ANZ-aiops/request-tag.png)
+![Jenkins-Docker](assets/ANZ-aiops/delivery1/jenkins-tag-5.png)
 
-Documentation [here](https://www.dynatrace.com/support/help/how-to-use-dynatrace/tags-and-metadata/setup/how-to-define-tags/)
+### Review changes in Dynatrace
 
-### Annotate Dynatrace with Events 
+You can see the changes reflected in **SampleOnlineBankStaging Process View**
 
-The Events API delivers details about all uncorrelated events that Dynatrace collects within your environment. Information returned for each event includes attributes about the event source, the entity where the event was collected, and other event-specific details.
+![Jenkins-Docker](assets/ANZ-aiops/delivery1/jenkins-tag-6.png)
 
-PUSH endpoint enables third-party systems such as CI platforms (Jenkins, Bamboo, Electric Cloud, etc.) to provide additional details for Dynatrace automated root cause analysis.
+You also can see the changes reflected in **node-bank2 Service View**
 
-![Event-API](assets/ANZ-aiops/event-api.png)
-
-Documentation [here](https://www.dynatrace.com/support/help/dynatrace-api/environment-api/events/push-deployment-events-from-jenkins/)
-
-### Compare and Analyze events
-
-There are different ways to analyze the data. Your approach should be based on the type of performance analysis you want to do (for example, crashes, resource and performance hotspots, or scalability issues). 
-
-![Event-API](assets/ANZ-aiops/compare-analyze.png)
-
-Documentation [here] (https://www.dynatrace.com/support/help/shortlink/load-testing-process#compare--analyze)
-
-<!-- ------------------------ -->
-## Automate with Curl
-Duration: 10
-
-The steps that we ran through could be automated with by initiating HTTP requests through curl.
-
-![Event-API](assets/ANZ-aiops/automate-with-curl.png)
+![Jenkins-Docker](assets/ANZ-aiops/delivery1/jenkins-tag-7.png)
 
 
 <!-- ------------------------ -->
