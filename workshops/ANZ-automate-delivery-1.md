@@ -21,9 +21,10 @@ You will get access to a EC2 instance that has been provided for the purposes of
 - Chrome Browser 
 
 ### What You’ll Learn 
-- Integrate JMeter with Dynatrace.  
-- Push events in Dynatrace and create request-attributes 
-  - Dev/Test team can isolate the requests invoked during the load-tests.
+- Integrate Jenkins with Dynatrace  
+- Setup Docker Pipeline in Jenkins
+- Leveraging Auto tags Rules for pipelines in Dynatrace
+  - Creating tags from Build Stages 
 
 Negative
 : As different teams might have their own proprietary test-beds/suits, so we will demo stimulating requests using curl commands too.
@@ -137,10 +138,25 @@ Within Jenkins, click on **Manage Jenkins  > Configure System**
 
 ![Jenkins-Docker](assets/ANZ-aiops/delivery1/jenkins-plugin-5.png)
 
+![Token](assets/ANZ-aiops/feedback2/api-token.png)
+
 * Add the following environment variables:
   * DT_URL with value https://mou612.managed-sprint.dynalabs.io/e/{environmentid}
   * DT_TOKEN
   * PUBLIC_IP
+
+To get your **DT_TENANT**, go to the Web Browser and extract the URL path as per below. 
+
+![Deploy](assets/adv-observe/dynatrace-env.png)
+
+To get your **DT_TOKEN**, go to **Settings > Integration > Dynatrace API > Generate Token** and follow the below:
+
+- Create a token with **LoadTest**
+- Toggle **Data ingest, eg: metrics and events**
+- Click on **Generate**
+- Clck on **Copy**
+
+To get your **PUBLIC_IP**, get it from the earlier [step](workshops/automate-delivery-1/index.html?index=..%2F..anz#2)  
 
 ![Jenkins-Docker](assets/ANZ-aiops/delivery1/jenkins-plugin-6.png)
 
@@ -189,10 +205,6 @@ Within the Host Properties and tags, **JenkinsInstance tag** will be added
 
 ![Jenkins-Docker](assets/ANZ-aiops/delivery1/jenkins-tag-2.png)
 
-Back in Jenkins, click on **Build Now** for the **My-Pipeline**
-
-![Jenkins-Docker](assets/ANZ-aiops/delivery1/jenkins-tag-3.png)
-
 ### Creating Tags for Build Stages
 
 Use the following:
@@ -216,6 +228,13 @@ Use the following:
 * Click on **Save**
 
 ![Jenkins-Docker](assets/ANZ-aiops/delivery1/jenkins-tag-5.png)
+
+### Build Pipeline in Jenkins
+
+Back in Jenkins, click on **Build Now** for the **My-Pipeline**
+
+![Jenkins-Docker](assets/ANZ-aiops/delivery1/jenkins-tag-3.png)
+
 
 ### Review changes in Dynatrace
 
@@ -245,10 +264,10 @@ We hope you enjoyed this lab and found it useful. We would love your feedback!
 
 <form>
   <name>What did you benefit most from this lab?</name>
-  <input value="Using OneAgent Operator to deploy in Kubernetes" />
-  <input value="Setting up Kubernetes integation" />
-  <input value="Enabling early access feature flags" />
-  <input value="Learning Kubernetes View in Dynatrace" />
+  <input value="Integrate Jenkins with Dynatrace" />
+  <input value="Setup Docker Pipeline in Jenkins" />
+  <input value="Leveraging Auto tags Rules for pipelines in Dynatrace" />
+  <input value="Creating tags from Build Stages" />
 </form>
 
 <form>

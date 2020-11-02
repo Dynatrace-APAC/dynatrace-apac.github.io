@@ -37,9 +37,10 @@
 </ul>
 <h2 class="checklist" is-upgraded>What You&#39;ll Learn</h2>
 <ul class="checklist">
-<li>Integrate JMeter with Dynatrace.<br></li>
-<li>Push events in Dynatrace and create request-attributes  <ul class="checklist">
-<li>Dev/Test team can isolate the requests invoked during the load-tests.</li>
+<li>Integrate Jenkins with Dynatrace<br></li>
+<li>Setup Docker Pipeline in Jenkins</li>
+<li>Leveraging Auto tags Rules for pipelines in Dynatrace  <ul class="checklist">
+<li>Creating tags from Build Stages</li>
 </ul>
 </li>
 </ul>
@@ -128,6 +129,7 @@
 <li>Look for <strong>environment variables</strong> as per image below:</li>
 </ul>
 <p class="image-container"><img alt="Jenkins-Docker" src="img/7d152e54715f223a.png"></p>
+<p class="image-container"><img alt="Token" src="img/c1dee5ca61355bbb.png"></p>
 <ul>
 <li>Add the following environment variables:  <ul>
 <li>DT_URL with value https://mou612.managed-sprint.dynalabs.io/e/{environmentid}</li>
@@ -136,6 +138,16 @@
 </ul>
 </li>
 </ul>
+<p>To get your <strong>DT_TENANT</strong>, go to the Web Browser and extract the URL path as per below.</p>
+<p class="image-container"><img alt="Deploy" src="img/82f926ac9a2f26e6.png"></p>
+<p>To get your <strong>DT_TOKEN</strong>, go to <strong>Settings &gt; Integration &gt; Dynatrace API &gt; Generate Token</strong> and follow the below:</p>
+<ul>
+<li>Create a token with <strong>LoadTest</strong></li>
+<li>Toggle <strong>Data ingest, eg: metrics and events</strong></li>
+<li>Click on <strong>Generate</strong></li>
+<li>Clck on <strong>Copy</strong></li>
+</ul>
+<p>To get your <strong>PUBLIC_IP</strong>, get it from the earlier <a href="workshops/automate-delivery-1/index.html?index=..%2F..anz#2" target="_blank">step</a></p>
 <p class="image-container"><img alt="Jenkins-Docker" src="img/1656dd412bf51fa6.png"></p>
 <h2 is-upgraded>Configure Jenkins Pipeline</h2>
 <ul>
@@ -184,8 +196,6 @@
 <p class="image-container"><img alt="Jenkins-Docker" src="img/cc8069e547c7930.png"></p>
 <p>Within the Host Properties and tags, <strong>JenkinsInstance tag</strong> will be added</p>
 <p class="image-container"><img alt="Jenkins-Docker" src="img/6e7188775e898354.png"></p>
-<p>Back in Jenkins, click on <strong>Build Now</strong> for the <strong>My-Pipeline</strong></p>
-<p class="image-container"><img alt="Jenkins-Docker" src="img/f6937f5cf394b26e.png"></p>
 <h2 is-upgraded>Creating Tags for Build Stages</h2>
 <p>Use the following:</p>
 <ul>
@@ -213,6 +223,9 @@
 <li>Click on <strong>Save</strong></li>
 </ul>
 <p class="image-container"><img alt="Jenkins-Docker" src="img/47f21614fe116fb5.png"></p>
+<h2 is-upgraded>Build Pipeline in Jenkins</h2>
+<p>Back in Jenkins, click on <strong>Build Now</strong> for the <strong>My-Pipeline</strong></p>
+<p class="image-container"><img alt="Jenkins-Docker" src="img/f6937f5cf394b26e.png"></p>
 <h2 is-upgraded>Review changes in Dynatrace</h2>
 <p>You can see the changes reflected in <strong>SampleOnlineBankStaging Process View</strong></p>
 <p class="image-container"><img alt="Jenkins-Docker" src="img/992de5631201ae29.png"></p>
@@ -237,10 +250,10 @@
 <google-codelab-survey survey-id="automate-delivery-1-2">
 <h4>What did you benefit most from this lab?</h4>
 <paper-radio-group>
-<paper-radio-button>Using OneAgent Operator to deploy in Kubernetes</paper-radio-button>
-<paper-radio-button>Setting up Kubernetes integation</paper-radio-button>
-<paper-radio-button>Enabling early access feature flags</paper-radio-button>
-<paper-radio-button>Learning Kubernetes View in Dynatrace</paper-radio-button>
+<paper-radio-button>Integrate Jenkins with Dynatrace</paper-radio-button>
+<paper-radio-button>Setup Docker Pipeline in Jenkins</paper-radio-button>
+<paper-radio-button>Leveraging Auto tags Rules for pipelines in Dynatrace</paper-radio-button>
+<paper-radio-button>Creating tags from Build Stages</paper-radio-button>
 </paper-radio-group>
 </google-codelab-survey>
 <google-codelab-survey survey-id="automate-delivery-1-3">
