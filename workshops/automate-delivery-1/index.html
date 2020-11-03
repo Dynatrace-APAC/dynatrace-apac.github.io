@@ -1,34 +1,22 @@
 
 <!doctype html>
-
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-  <meta name="theme-color" content="#4F7DC9">
-  <meta charset="UTF-8">
-  <title>Automate Delivery - Session 1</title>
-  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
-  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
-  <style>
-    .success {
-      color: #1e8e3e;
-    }
-    .error {
-      color: red;
-    }
-  </style>
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+<meta name="theme-color" content="#4F7DC9">
+<meta charset="UTF-8">
+<title>Automate Delivery - Session 1</title>
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+<style>
+.success{color:#1e8e3e}.error{color:red} </style>
 </head>
 <body>
-  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
-  <google-codelab codelab-gaid="UA-175467274-1"
-                  id="automate-delivery-1"
-                  title="Automate Delivery - Session 1"
-                  environment="web"
-                  feedback-link="mailto:d1-apac@dynatrace.com">
-    
-      <google-codelab-step label="Introduction" duration="1">
-        <p>This lab is the third session of the AIOps Enablement Series for ANZ Bank. This track focuses on the Automate Delivery, which relates to how you could integate Dynatrace with orchestration tools to create <strong>Progressive Delivery</strong>.</p>
+<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+<google-codelab codelab-gaid="UA-175467274-1" id="automate-delivery-1" title="Automate Delivery - Session 1" environment="web" feedback-link="mailto:d1-apac@dynatrace.com">
+<google-codelab-step label="Introduction" duration="1">
+<p>This lab is the third session of the AIOps Enablement Series for ANZ Bank. This track focuses on the Automate Delivery, which relates to how you could integate Dynatrace with orchestration tools to create <strong>Progressive Delivery</strong>.</p>
 <p class="image-container"><img alt="overview" src="img/b24ddf8cb9a2fdf5.png"></p>
 <p>Throughout these labs, we will be using the <strong>deployment approach / strategies</strong> based on the example below.</p>
 <p class="image-container"><img alt="overview" src="img/9a5eb1db9f9c2dcc.png"></p>
@@ -36,24 +24,21 @@
 <ul class="checklist">
 <li>Integrate Jenkins with Dynatrace<br></li>
 <li>Setup Docker Pipeline in Jenkins</li>
-<li>Leveraging Auto tags Rules for pipelines in Dynatrace  <ul class="checklist">
+<li>Leveraging Auto tags Rules for pipelines in Dynatrace <ul class="checklist">
 <li>Creating tags from Build Stages</li>
 </ul>
 </li>
 </ul>
 <aside class="warning"><p>As different teams might have their own proprietary test-beds/suits, so we will demo stimulating requests using curl commands too.</p>
 </aside>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Useful Commands ✅" duration="0">
-        <aside class="special"><p>To start the docker with sample application: <code>docker run -d --name SampleBankApp -p 4000:3000 nikhilgoenka/sample-bank-app</code></p>
+</google-codelab-step>
+<google-codelab-step label="Useful Commands ✅" duration="0">
+<aside class="special"><p>To start the docker with sample application: <code>docker run -d --name SampleBankApp -p 4000:3000 nikhilgoenka/sample-bank-app</code></p>
 <ul>
 <li>This would start the docker on port localhost:4000 with docker name as <strong>SampleBankApp</strong></li>
 </ul>
 </aside>
-<aside class="special"><p>To start the jenkins docker: <code>docker run -d --network mynetwork --name Jenkins-Dynatrace -p 8020:8080  -v /var/jenkins:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock nikhilgoenka/jenkins-dynatrace-workshop</code></p>
+<aside class="special"><p>To start the jenkins docker: <code>docker run -d --network mynetwork --name Jenkins-Dynatrace -p 8020:8080 -v /var/jenkins:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock nikhilgoenka/jenkins-dynatrace-workshop</code></p>
 <ul>
 <li>-d runs the docker in daemon mode.</li>
 <li>-p 8020:8080 - By default, jenkins docker would be running on 8080. Specifying <strong>-p 8020:8080</strong> binds the 8080 in docker to localhost on 8020. So, you can forward/listen requests from docker using <code>localhost:8020</code>.</li>
@@ -74,12 +59,9 @@
 <li>To <strong>pull a particular image</strong>: <code>docker pull &lt;docker-image&gt;</code></li>
 <li>Jenkins pipeline: Command: <code>https://github.com/nikhilgoenkatech/JenkinsBankApp</code></li>
 </ul>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Preconfiguration Setup" duration="5">
-        <p>Log back into your Dynatrace environment and check if OneAgent is still running.</p>
+</google-codelab-step>
+<google-codelab-step label="Preconfiguration Setup" duration="5">
+<p>Log back into your Dynatrace environment and check if OneAgent is still running.</p>
 <p>On your left navigation, select <strong>Hosts</strong> and you should still see a monitored EC2 host.</p>
 <h2 is-upgraded>Check if OneAgent is running</h2>
 <p>Log back into your Dynatrace environment and check if OneAgent is still running.</p>
@@ -87,7 +69,7 @@
 <h2 is-upgraded>Running Jenkins in Docker</h2>
 <p>The Jenkins docker would already be present in your ubuntu instances and can be seen with &#34;docker images&#34;</p>
 <p class="image-container"><img alt="Jenkins-Docker" src="img/e4a951a49a2d3304.png"></p>
-<p>To run the Jenkins docker, execute <code>docker run -d --network mynetwork --name Jenkins-Dynatrace -p 8020:8080  -v /var/jenkins:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock nikhilgoenka/jenkins-dynatrace-workshop</code></p>
+<p>To run the Jenkins docker, execute <code>docker run -d --network mynetwork --name Jenkins-Dynatrace -p 8020:8080 -v /var/jenkins:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock nikhilgoenka/jenkins-dynatrace-workshop</code></p>
 <h2 is-upgraded>Retrieving Jenkins Password</h2>
 <p>The initial password can be retrieved as <code>cat /var/Jenkins/secrets/initialAdminPassword</code></p>
 <p class="image-container"><img alt="Jenkins-Docker" src="img/30b98ad7c886614f.png"></p>
@@ -95,12 +77,9 @@
 <p>Within your Host View, dropdown the <strong>Properties and Tags</strong> and you will get a list of various metadata associated with the host created. Locate the <strong>Public IP Address</strong> and copy its value.</p>
 <p class="image-container"><img alt="Host-properties" src="img/4033f126cef6b4a8.png"></p>
 <p>Open up your <strong>web browser</strong> and access the Jenkins URL via <code>&lt;IP address&gt;:8020</code></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Setting up Jenkins" duration="15">
-        <h2 is-upgraded>Installing Docker Pipeline Plugin</h2>
+</google-codelab-step>
+<google-codelab-step label="Setting up Jenkins" duration="15">
+<h2 is-upgraded>Installing Docker Pipeline Plugin</h2>
 <p>Once you login, you will see the screen as below. Click on &#34;Install suggested plugins&#34; as below:</p>
 <p class="image-container"><img alt="Jenkins-Docker" src="img/1eb6b3cc65a60b8.png"></p>
 <p>Further, add an admin user with username &#34;admin&#34; and password &#34;dynatrace&#34;</p>
@@ -120,7 +99,7 @@
 </ul>
 <p class="image-container"><img alt="Jenkins-Docker" src="img/3149699b70646485.png"></p>
 <h2 is-upgraded>Configure Environment Variables</h2>
-<p>Within Jenkins, click on <strong>Manage Jenkins  &gt; Configure System</strong></p>
+<p>Within Jenkins, click on <strong>Manage Jenkins &gt; Configure System</strong></p>
 <p class="image-container"><img alt="Jenkins-Docker" src="img/bed0927fb04724b4.png"></p>
 <ul>
 <li>Look for <strong>environment variables</strong> as per image below:</li>
@@ -128,7 +107,7 @@
 <p class="image-container"><img alt="Jenkins-Docker" src="img/7d152e54715f223a.png"></p>
 <p class="image-container"><img alt="Token" src="img/c1dee5ca61355bbb.png"></p>
 <ul>
-<li>Add the following environment variables:  <ul>
+<li>Add the following environment variables: <ul>
 <li>DT_URL with value https://mou612.managed-sprint.dynalabs.io/e/{environmentid}</li>
 <li>DT_TOKEN</li>
 <li>PUBLIC_IP</li>
@@ -152,7 +131,7 @@
 </ul>
 <p class="image-container"><img alt="Jenkins-Docker" src="img/759f1594187b7e1f.png"></p>
 <ul>
-<li>Add a pipeline as per below:  <ul>
+<li>Add a pipeline as per below: <ul>
 <li>Item name - <code>My Pipeline</code></li>
 <li>Choose <strong>Pipeline</strong></li>
 <li>Click on <strong>OK</strong></li>
@@ -161,7 +140,7 @@
 </ul>
 <p class="image-container"><img alt="Jenkins-Docker" src="img/b6a0e1d35a643a18.png"></p>
 <ul>
-<li>Use the pipeline definitions as per below:  <ul>
+<li>Use the pipeline definitions as per below: <ul>
 <li>Definition - Dropdown <strong>Pipeline script from SCM</strong></li>
 <li>SCM - Dropdown <strong>Git</strong></li>
 <li>Repository URL - <code>https://github.com/nikhilgoenkatech/JenkinsBankApp/</code></li>
@@ -170,18 +149,15 @@
 </li>
 </ul>
 <p class="image-container"><img alt="Jenkins-Docker" src="img/1a48cb9de3601373.png"></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Create Auto Tag rule for Jenkins" duration="10">
-        <h2 is-upgraded>Creating Auto Tags</h2>
+</google-codelab-step>
+<google-codelab-step label="Create Auto Tag rule for Jenkins" duration="10">
+<h2 is-upgraded>Creating Auto Tags</h2>
 <p>Within Dynatrace, on the left menu go to <strong>Settings &gt; Tags &gt; Automatically applied tags</strong></p>
 <p>Use the following:</p>
 <ul>
 <li>Tag name - <code>JenkinInstance</code></li>
 <li>Optional Tag value - <code>{Ec2Instance:SecurityGroup}</code></li>
-<li>Conditions -  <ul>
+<li>Conditions - <ul>
 <li>Dropdown <strong>AWS Security Group</strong></li>
 <li>Dropdown <strong>begins with</strong></li>
 <li>ANZ_ACM_Security_Group</li>
@@ -199,7 +175,7 @@
 <li>Tag name - <code>DockerService</code></li>
 <li>Rule applies to - Dropdown <strong>Services</strong></li>
 <li>Optional Tag value - <code>{ProcessGroup:DetectedName}</code></li>
-<li>Conditions -  <ul>
+<li>Conditions - <ul>
 <li>Dropdown <strong>Docker container name</strong></li>
 <li>Dropdown <strong>exists</strong></li>
 </ul>
@@ -212,7 +188,7 @@
 <li>Tag name - <code>Environment</code></li>
 <li>Rule applies to - Dropdown <strong>Services</strong></li>
 <li>Optional Tag value - <code>{ProcessGroup:Environment:ENVIRONMENT}</code></li>
-<li>Conditions -  <ul>
+<li>Conditions - <ul>
 <li>Dropdown <strong>ENVIRONMENT (Environment)</strong></li>
 <li>Dropdown <strong>exists</strong></li>
 </ul>
@@ -248,12 +224,9 @@
 <p class="image-container"><img alt="Jenkins-Docker" src="img/992de5631201ae29.png"></p>
 <p>You also can see the changes reflected in <strong>node-bank2 Service View</strong></p>
 <p class="image-container"><img alt="Jenkins-Docker" src="img/3d18e83c47134632.png"></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Feedback" duration="3">
-        <p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
+</google-codelab-step>
+<google-codelab-step label="Feedback" duration="3">
+<p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
 <google-codelab-survey survey-id="automate-delivery-1-1">
 <h4>How was your overall experience with this lab?</h4>
 <paper-radio-group>
@@ -285,17 +258,12 @@
 </google-codelab-survey>
 <aside class="special"><p>💡 For other ideas and suggestions, please <a href="mailto:APAC-SE-Central@dynatrace.com?subject=Automate Feedback 1 - Ideas and Suggestions" target="_blank"><strong>reach out via email</strong></a>.</p>
 </aside>
-
-
-      </google-codelab-step>
-    
-  </google-codelab>
-
-  <script src="../../elements/codelab-elements/native-shim.js"></script>
-  <script src="../../elements/codelab-elements/custom-elements.min.js"></script>
-  <script src="../../elements/codelab-elements/prettify.js"></script>
-  <script src="../../elements/codelab-elements/codelab-elements.js"></script>
-  <script src="//support.google.com/inapp/api.js"></script>
-
+</google-codelab-step>
+</google-codelab>
+<script src="../../elements/codelab-elements/native-shim.js"></script>
+<script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+<script src="../../elements/codelab-elements/prettify.js"></script>
+<script src="../../elements/codelab-elements/codelab-elements.js"></script>
+<script src="//support.google.com/inapp/api.js"></script>
 </body>
 </html>
