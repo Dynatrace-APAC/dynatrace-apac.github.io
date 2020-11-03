@@ -28,13 +28,10 @@
                   feedback-link="mailto:d1-apac@dynatrace.com">
     
       <google-codelab-step label="Introduction" duration="1">
-        <p>The labs contains the steps for Automate Delivery: Integration of Load Test Tools with Dynatrace Session 1 training.</p>
-<p>You will get access to a EC2 instance that has been provided for the purposes of this training.</p>
-<h2 is-upgraded>Prerequisites</h2>
-<ul>
-<li>Dynatrace SaaS/Managed Account. Get your free SaaS trial <a href="https://www.dynatrace.com/trial/" target="_blank">here</a>.</li>
-<li>Chrome Browser</li>
-</ul>
+        <p>This lab is the third session of the AIOps Enablement Series for ANZ Bank. This track focuses on the Automate Delivery, which relates to how you could integate Dynatrace with orchestration tools to create <strong>Progressive Delivery</strong>.</p>
+<p class="image-container"><img alt="overview" src="img/b24ddf8cb9a2fdf5.png"></p>
+<p>Throughout these labs, we will be using the <strong>deployment approach / strategies</strong> based on the example below.</p>
+<p class="image-container"><img alt="overview" src="img/9a5eb1db9f9c2dcc.png"></p>
 <h2 class="checklist" is-upgraded>What You&#39;ll Learn</h2>
 <ul class="checklist">
 <li>Integrate Jenkins with Dynatrace<br></li>
@@ -226,6 +223,26 @@
 <h2 is-upgraded>Build Pipeline in Jenkins</h2>
 <p>Back in Jenkins, click on <strong>Build Now</strong> for the <strong>My-Pipeline</strong></p>
 <p class="image-container"><img alt="Jenkins-Docker" src="img/f6937f5cf394b26e.png"></p>
+<h2 is-upgraded>Understanding the Build Pipeline process</h2>
+<p>Referring to the Jenkins File, the following code handles the <strong>pushing of Jenkins deployment information</strong> into Dynatrace.</p>
+<pre><code>        dir (&#39;dynatrace-scripts&#39;) {
+            // push a deployment event on the host with the tag JenkinsInstance created using automatic tagging rule
+            sh &#39;./pushdeployment.sh HOST CONTEXTLESS JenkinsInstance ANZ_ACM_Security_Group &#39; +
+               &#39;${BUILD_TAG} ${BUILD_NUMBER} ${JOB_NAME} &#39; + 
+               &#39;Jenkins ${JENKINS_URL} ${JOB_URL} ${BUILD_URL} ${GIT_COMMIT}&#39;
+</code></pre>
+<p class="image-container"><img alt="Jenkins-Docker" src="img/93133c371bec5abc.png"></p>
+<p>Referring to the Jenkins File, the following code handles the <strong>pushing of deployment information</strong> into Dynatrace. This step utilizes environment varibles such as <strong>DT_CLUSTER_ID</strong>, <strong>DT_TAGS</strong> and <strong>DT_CUSTOM_PROP</strong></p>
+<pre><code>    stage(&#39;DeployStaging&#39;) {
+        // Lets deploy the previously build container
+        def app = docker.image(&#34;sample-bankapp-service:${BUILD_NUMBER}&#34;)
+        app.run(&#34;--network mynetwork --name SampleOnlineBankStaging -p 3000:3000 &#34; +
+                &#34;-e &#39;DT_CLUSTER_ID=SampleOnlineBankStaging&#39; &#34; + 
+                &#34;-e &#39;DT_TAGS=Environment=Staging Service=Sample-NodeJs-Service&#39; &#34; +
+                &#34;-e &#39;DT_CUSTOM_PROP=ENVIRONMENT=Staging JOB_NAME=${JOB_NAME} &#34; + 
+                    &#34;BUILD_TAG=${BUILD_TAG} BUILD_NUMBER=${BUILD_NUMBER}&#39;&#34;)
+</code></pre>
+<p class="image-container"><img alt="Jenkins-Docker" src="img/1e2887f938d0331a.png"></p>
 <h2 is-upgraded>Review changes in Dynatrace</h2>
 <p>You can see the changes reflected in <strong>SampleOnlineBankStaging Process View</strong></p>
 <p class="image-container"><img alt="Jenkins-Docker" src="img/992de5631201ae29.png"></p>

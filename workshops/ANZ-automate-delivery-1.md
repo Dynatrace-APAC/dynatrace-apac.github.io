@@ -12,13 +12,13 @@ Analytics Account: UA-175467274-1
 ## Introduction 
 Duration: 1
 
-The labs contains the steps for Automate Delivery: Integration of Load Test Tools with Dynatrace Session 1 training.
+This lab is the third session of the AIOps Enablement Series for ANZ Bank. This track focuses on the Automate Delivery, which relates to how you could integate Dynatrace with orchestration tools to create **Progressive Delivery**.
 
-You will get access to a EC2 instance that has been provided for the purposes of this training.
+![overview](assets/ANZ-aiops/delivery1/overview-1.png)
 
-### Prerequisites
-- Dynatrace SaaS/Managed Account. Get your free SaaS trial [here](https://www.dynatrace.com/trial/).
-- Chrome Browser 
+Throughout these labs, we will be using the **deployment approach / strategies** based on the example below.
+
+![overview](assets/ANZ-aiops/delivery1/overview-2.png)
 
 ### What You’ll Learn 
 - Integrate Jenkins with Dynatrace  
@@ -234,6 +234,37 @@ Use the following:
 Back in Jenkins, click on **Build Now** for the **My-Pipeline**
 
 ![Jenkins-Docker](assets/ANZ-aiops/delivery1/jenkins-tag-3.png)
+
+### Understanding the Build Pipeline process
+
+Referring to the Jenkins File, the following code handles the **pushing of Jenkins deployment information** into Dynatrace.
+
+```yaml
+        dir ('dynatrace-scripts') {
+            // push a deployment event on the host with the tag JenkinsInstance created using automatic tagging rule
+            sh './pushdeployment.sh HOST CONTEXTLESS JenkinsInstance ANZ_ACM_Security_Group ' +
+               '${BUILD_TAG} ${BUILD_NUMBER} ${JOB_NAME} ' + 
+               'Jenkins ${JENKINS_URL} ${JOB_URL} ${BUILD_URL} ${GIT_COMMIT}'
+```
+
+![Jenkins-Docker](assets/ANZ-aiops/delivery1/jenkins-build-1.png)
+
+
+Referring to the Jenkins File, the following code handles the **pushing of deployment information** into Dynatrace. 
+This step utilizes environment varibles such as **DT_CLUSTER_ID**, **DT_TAGS** and **DT_CUSTOM_PROP**
+
+```yaml
+    stage('DeployStaging') {
+        // Lets deploy the previously build container
+        def app = docker.image("sample-bankapp-service:${BUILD_NUMBER}")
+        app.run("--network mynetwork --name SampleOnlineBankStaging -p 3000:3000 " +
+                "-e 'DT_CLUSTER_ID=SampleOnlineBankStaging' " + 
+                "-e 'DT_TAGS=Environment=Staging Service=Sample-NodeJs-Service' " +
+                "-e 'DT_CUSTOM_PROP=ENVIRONMENT=Staging JOB_NAME=${JOB_NAME} " + 
+                    "BUILD_TAG=${BUILD_TAG} BUILD_NUMBER=${BUILD_NUMBER}'")
+```
+
+![Jenkins-Docker](assets/ANZ-aiops/delivery1/jenkins-build-2.png)
 
 
 ### Review changes in Dynatrace
