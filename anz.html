@@ -88,8 +88,24 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <paper-tab>Duration</paper-tab>
 </paper-tabs>
 </div>
-</div>
+<paper-dropdown-menu label="Filter by category" class="dropdown-filter" no-label-float noink no-animations>
+<paper-listbox id="categorylist" slot="dropdown-content" class="dropdown-content" on-iron-activate="onCategoryActivate" attr-for-selected="filter">
+<paper-item filter="automate-delivery">automate-delivery</paper-item>
+<paper-item filter="automate-feedback">automate-feedback</paper-item>
+</paper-listbox>
+</paper-dropdown-menu></div>
 <card-sorter id="cards" class="site-width">
+<a href="/workshops/automate-delivery-1/index.html?index=..%2F..anz" on-tap="navigate" class="codelab-card category-automate-delivery" data-category="automate-delivery" data-title="Automate Delivery - Session 1" data-duration="34" data-updated="2020-11-03T12:47:28+11:00" data-tags="anz" data-pin="">
+<div class="description">Automate Delivery - Session 1</div>
+<div class="card-duration">
+<span>34 min </span>
+<span>Updated Nov 3, 2020</span>
+</div>
+<div class="card-footer">
+<div class="category-icon automate-delivery-icon"></div>
+<paper-button class="automate-delivery-bg">Start</paper-button>
+</div>
+</a>
 <a href="/workshops/automate-feedback-1/index.html?index=..%2F..anz" on-tap="navigate" class="codelab-card category-automate-feedback" data-category="automate-feedback" data-title="Automate Feedback - Session 1" data-duration="54" data-updated="2020-10-08T16:58:49+11:00" data-tags="anz" data-pin="">
 <div class="description">Automate Feedback - Session 1</div>
 <div class="card-duration">
