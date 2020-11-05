@@ -25,7 +25,9 @@ This repository contains the hands on for the Dynatrace Digital Experience Manag
 The following steps are used for this lab:
 - Sample Application 
     * Sample App is based on [easyTravel](https://community.dynatrace.com/community/display/DL/easyTravel)
-    * Follow the [Prerequisite Actions](https://github.com/Dynatrace-APAC/Workshop-DEM/tree/master/Prerequisite%20Actions) to create the application that will be used throughout this workshop.
+
+Negative
+: **For Self-paced training**, follow the [Prerequisite Actions](https://github.com/Dynatrace-APAC/Workshop-DEM/tree/master/Prerequisite%20Actions) to create Easytravel application that will be used throughout this workshop.
 
 ### What You’ll Learn
 - Understand Real User Monitoring setup with easyTravel App 
