@@ -89,7 +89,7 @@ To run the Jenkins docker, execute `docker run -d --network mynetwork --name Jen
 
 ### Retrieving Jenkins Password
 
-The initial password can be retrieved as `cat /var/Jenkins/secrets/initialAdminPassword`
+The initial password can be retrieved as `cat /var/jenkins/secrets/initialAdminPassword`
 
 ![Jenkins-Docker](assets/ANZ-aiops/delivery1/jenkins-password.png)
 

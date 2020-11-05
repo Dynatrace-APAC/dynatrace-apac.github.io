@@ -3,13 +3,13 @@
   "format": "html",
   "prefix": "../../elements",
   "mainga": "UA-49880327-14",
-  "updated": "2020-08-14T11:53:02+10:00",
+  "updated": "2020-11-05T11:55:50+11:00",
   "id": "dem",
   "duration": 79,
   "title": "Digital Experience Management with Dynatrace",
   "authors": "Brandon Neo",
   "summary": "Digital Experience Management with Dynatrace",
-  "source": "dem.md",
+  "source": "dem-v2.md",
   "theme": "",
   "status": [
     "published"
