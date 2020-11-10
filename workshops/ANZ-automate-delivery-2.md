@@ -66,8 +66,11 @@ Positive
    Command: `https://github.com/nikhilgoenkatech/JenkinsBankApp`
 
 <!-- ------------------------ -->
-## Preconfiguration Setup
+## Prerequisites / Preconfiguration
 Duration: 10
+
+Negative
+: Note that this lab is part of the larger series of [AIOps Hands On Workshop Series](https://dynatrace-apac.github.io/anz). Please refer also to the last session [Automate Delivery Sesssion 1](https://dynatrace-apac.github.io/workshops/automate-delivery-1/)
 
 Log back into your Dynatrace environment and check if OneAgent is still running.
 
