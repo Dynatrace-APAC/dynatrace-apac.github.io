@@ -1,34 +1,22 @@
 
 <!doctype html>
-
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-  <meta name="theme-color" content="#4F7DC9">
-  <meta charset="UTF-8">
-  <title>Automate Delivery - Session 2</title>
-  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
-  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
-  <style>
-    .success {
-      color: #1e8e3e;
-    }
-    .error {
-      color: red;
-    }
-  </style>
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+<meta name="theme-color" content="#4F7DC9">
+<meta charset="UTF-8">
+<title>Automate Delivery - Session 2</title>
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+<style>
+.success{color:#1e8e3e}.error{color:red} </style>
 </head>
 <body>
-  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
-  <google-codelab codelab-gaid="UA-175467274-1"
-                  id="automate-delivery-2"
-                  title="Automate Delivery - Session 2"
-                  environment="web"
-                  feedback-link="mailto:d1-apac@dynatrace.com">
-    
-      <google-codelab-step label="Introduction" duration="1">
-        <p>This lab is the fourth session of the AIOps Enablement Series for ANZ Bank. This track focuses on the Automate Delivery, which relates to how you could integate Dynatrace with orchestration tools to create <strong>Progressive Delivery</strong>.</p>
+<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+<google-codelab codelab-gaid="UA-175467274-1" id="automate-delivery-2" title="Automate Delivery - Session 2" environment="web" feedback-link="mailto:d1-apac@dynatrace.com">
+<google-codelab-step label="Introduction" duration="1">
+<p>This lab is the fourth session of the AIOps Enablement Series for ANZ Bank. This track focuses on the Automate Delivery, which relates to how you could integate Dynatrace with orchestration tools to create <strong>Progressive Delivery</strong>.</p>
 <p class="image-container"><img alt="overview" src="img/b24ddf8cb9a2fdf5.png"></p>
 <p>Throughout these labs, we will be using the <strong>deployment approach / strategies</strong> based on the example below.</p>
 <p class="image-container"><img alt="overview" src="img/9a5eb1db9f9c2dcc.png"></p>
@@ -36,24 +24,21 @@
 <ul class="checklist">
 <li>Integrate Jenkins with Dynatrace</li>
 <li>Setup Docker Pipeline in Jenkins</li>
-<li>Leveraging Auto tags Rules for pipelines in Dynatrace  <ul class="checklist">
+<li>Leveraging Auto tags Rules for pipelines in Dynatrace <ul class="checklist">
 <li>Creating tags from Build Stages</li>
 </ul>
 </li>
 </ul>
 <aside class="warning"><p>As different teams might have their own proprietary test-beds/suits, so we will demo stimulating requests using curl commands too.</p>
 </aside>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Useful Commands ✅" duration="0">
-        <aside class="special"><p>To start the docker with sample application: <code>docker run -d --name SampleBankApp -p 4000:3000 nikhilgoenka/sample-bank-app</code></p>
+</google-codelab-step>
+<google-codelab-step label="Useful Commands ✅" duration="0">
+<aside class="special"><p>To start the docker with sample application: <code>docker run -d --name SampleBankApp -p 4000:3000 nikhilgoenka/sample-bank-app</code></p>
 <ul>
 <li>This would start the docker on port localhost:4000 with docker name as <strong>SampleBankApp</strong></li>
 </ul>
 </aside>
-<aside class="special"><p>To start the jenkins docker: <code>docker run -d --network mynetwork --name Jenkins-Dynatrace -p 8020:8080  -v /var/jenkins:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock nikhilgoenka/jenkins-dynatrace-workshop</code></p>
+<aside class="special"><p>To start the jenkins docker: <code>docker run -d --network mynetwork --name Jenkins-Dynatrace -p 8020:8080 -v /var/jenkins:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock nikhilgoenka/jenkins-dynatrace-workshop</code></p>
 <ul>
 <li>-d runs the docker in daemon mode.</li>
 <li>-p 8020:8080 - By default, jenkins docker would be running on 8080. Specifying <strong>-p 8020:8080</strong> binds the 8080 in docker to localhost on 8020. So, you can forward/listen requests from docker using <code>localhost:8020</code>.</li>
@@ -74,12 +59,9 @@
 <li>To <strong>pull a particular image</strong>: <code>docker pull &lt;docker-image&gt;</code></li>
 <li>Jenkins pipeline: Command: <code>https://github.com/nikhilgoenkatech/JenkinsBankApp</code></li>
 </ul>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Prerequisites / Preconfiguration" duration="10">
-        <aside class="warning"><p>Note that this lab is part of the larger session - <a href="https://dynatrace-apac.github.io/anz" target="_blank">AIOps Hands On Workshop Series</a>. Please refer also to the last session <a href="https://dynatrace-apac.github.io/workshops/automate-delivery-1/" target="_blank">Automate Delivery Sesssion 1</a></p>
+</google-codelab-step>
+<google-codelab-step label="Prerequisites / Preconfiguration" duration="10">
+<aside class="warning"><p>Note that this lab is part of the larger session - <a href="https://dynatrace-apac.github.io/anz" target="_blank">AIOps Hands On Workshop Series</a>. Please refer also to the last session <a href="https://dynatrace-apac.github.io/workshops/automate-delivery-1/" target="_blank">Automate Delivery Sesssion 1</a></p>
 </aside>
 <p>Log back into your Dynatrace environment and check if OneAgent is still running.</p>
 <p>On your left navigation, select <strong>Hosts</strong> and you should still see a monitored EC2 host.</p>
@@ -91,7 +73,7 @@
 </aside>
 <p>The Jenkins docker would already be present in your ubuntu instances and can be seen with &#34;docker images&#34;</p>
 <p class="image-container"><img alt="Jenkins-Docker" src="img/e4a951a49a2d3304.png"></p>
-<p>To start the Jenkins docker, execute <code>docker run -d --network mynetwork --name Jenkins-Dynatrace -p 8020:8080  -v /var/jenkins:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock nikhilgoenka/jenkins-dynatrace-workshop</code> In our last session, we mounted the docker data in host-volume ‘/var/jenkins&#39;, so our pipeline and other jenkins data would be restored from that directory.</p>
+<p>To start the Jenkins docker, execute <code>docker run -d --network mynetwork --name Jenkins-Dynatrace -p 8020:8080 -v /var/jenkins:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock nikhilgoenka/jenkins-dynatrace-workshop</code> In our last session, we mounted the docker data in host-volume ‘/var/jenkins&#39;, so our pipeline and other jenkins data would be restored from that directory.</p>
 <h2 is-upgraded>Stop/Remove all sample-bank-apps</h2>
 <p>Verify if you have any old docker(s) for sample-bank-app in your environment using <code>docker ps -a</code></p>
 <p>If output of above command shows any docker with name &#34;SampleOnlineBankStaging&#34;; remove them by executing <code>docker stop SampleOnlineBankStaging</code> followed by <code>docker rm SampleOnlineBankStaging</code><img alt="Jenkins-Docker" src="img/d9d7dd29a1baf7e9.png"></p>
@@ -103,7 +85,7 @@
 <p>As AWS instance was restarted, Public IP-address may have changed, so look for the <strong>Properties and Tags</strong> on dynatrace&gt;Hosts and you will get a list of various metadata associated with the host created. Locate the <strong>Public IP Address</strong> and copy its value.</p>
 <p class="image-container"><img alt="Host-properties" src="img/4033f126cef6b4a8.png"></p>
 <p>Further, change the value of environment variable created earlier to reflect the new IP-address, as below:</p>
-<p>Within Jenkins, click on <strong>Manage Jenkins  &gt; Configure System</strong></p>
+<p>Within Jenkins, click on <strong>Manage Jenkins &gt; Configure System</strong></p>
 <p class="image-container"><img alt="Jenkins-Docker" src="img/bed0927fb04724b4.png"></p>
 <ul>
 <li>Look for <strong>environment variables</strong> as per image below:</li>
@@ -113,12 +95,9 @@
 </li>
 </ul>
 <p class="image-container"><img alt="Jenkins-Docker" src="img/1656dd412bf51fa6.png"></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Creating Jenkins Build" duration="20">
-        <p>During the build, we will create a synthethic monitor, so make sure the token that has been imported in Jenkins has appropriate permissions as below. To verify token permission, follow the steps below:</p>
+</google-codelab-step>
+<google-codelab-step label="Creating Jenkins Build" duration="20">
+<p>During the build, we will create a synthethic monitor, so make sure the token that has been imported in Jenkins has appropriate permissions as below. To verify token permission, follow the steps below:</p>
 <ul>
 <li>Go to <strong>Settings &gt; Integration &gt; Dynatrace API &gt; Generate Token</strong></li>
 <li>Select the token that was imported into Jenkins.</li>
@@ -143,12 +122,9 @@
 </aside>
 <p>As one problem would be open, our pipeline would be stalled with Staging not proceeding to Production. So in order to proceed, <strong>manually close the problem</strong> within dynatrace. <img alt="Jenkins-Docker" src="img/dd30efb3b5ae54c7.png"></p>
 <p>From Jenkins, <strong>trigger the build</strong> again. <img alt="Jenkins-Docker" src="img/d2ab19918c81549e.png"></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Decoding steps in each stage" duration="20">
-        <p>In Jenkins, Click on <strong>individual stages &gt; Logs</strong> to view details involved in that step. <img alt="Jenkins-Docker" src="img/ede7be42369fc104.png"></p>
+</google-codelab-step>
+<google-codelab-step label="Decoding steps in each stage" duration="20">
+<p>In Jenkins, Click on <strong>individual stages &gt; Logs</strong> to view details involved in that step. <img alt="Jenkins-Docker" src="img/ede7be42369fc104.png"></p>
 <h2 is-upgraded>Understanding the tags in more detail</h2>
 <p>Referring to the Jenkins File, the following code handles the <strong>pushing of Jenkins deployment information</strong> into Dynatrace.</p>
 <pre><code>dir (&#39;dynatrace-scripts&#39;) {
@@ -214,12 +190,9 @@ sh &#39;./synthetic-monitor.sh Staging &#39;+  &#39;${JOB_NAME} ${BUILD_NUMBER}&
 sh &#39;./create-dashboard.sh Staging &#39;+  &#39;${JOB_NAME} ${BUILD_NUMBER}&#39;
 </code></pre>
 <p class="image-container"><img alt="Jenkins-Docker" src="img/522fffba033f9b6f.png"></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Feedback" duration="3">
-        <p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
+</google-codelab-step>
+<google-codelab-step label="Feedback" duration="3">
+<p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
 <google-codelab-survey survey-id="automate-delivery-2-1">
 <h4>How was your overall experience with this lab?</h4>
 <paper-radio-group>
@@ -252,17 +225,12 @@ sh &#39;./create-dashboard.sh Staging &#39;+  &#39;${JOB_NAME} ${BUILD_NUMBER}&#
 </google-codelab-survey>
 <aside class="special"><p>💡 For other ideas and suggestions, please <a href="mailto:APAC-SE-Central@dynatrace.com?subject=Automate Feedback 1 - Ideas and Suggestions" target="_blank"><strong>reach out via email</strong></a>. root@ip-172-31-33-87:/home/d1pacmworkshop#</p>
 </aside>
-
-
-      </google-codelab-step>
-    
-  </google-codelab>
-
-  <script src="../../elements/codelab-elements/native-shim.js"></script>
-  <script src="../../elements/codelab-elements/custom-elements.min.js"></script>
-  <script src="../../elements/codelab-elements/prettify.js"></script>
-  <script src="../../elements/codelab-elements/codelab-elements.js"></script>
-  <script src="//support.google.com/inapp/api.js"></script>
-
+</google-codelab-step>
+</google-codelab>
+<script src="../../elements/codelab-elements/native-shim.js"></script>
+<script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+<script src="../../elements/codelab-elements/prettify.js"></script>
+<script src="../../elements/codelab-elements/codelab-elements.js"></script>
+<script src="//support.google.com/inapp/api.js"></script>
 </body>
 </html>
