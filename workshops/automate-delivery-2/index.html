@@ -87,6 +87,8 @@
 <p>Log back into your Dynatrace environment and check if OneAgent is still running.</p>
 <p>On your left navigation, select <strong>Hosts</strong> and you should still see a monitored EC2 host.</p>
 <h2 is-upgraded>Running Jenkins in Docker</h2>
+<aside class="warning"><p>Before you start the Jenkins docker, please remove the existing Jenkins-docker as below with this command <code>docker rm Jenkins-Dynatrace</code></p>
+</aside>
 <p>The Jenkins docker would already be present in your ubuntu instances and can be seen with &#34;docker images&#34;</p>
 <p class="image-container"><img alt="Jenkins-Docker" src="img/e4a951a49a2d3304.png"></p>
 <p>To start the Jenkins docker, execute <code>docker run -d --network mynetwork --name Jenkins-Dynatrace -p 8020:8080  -v /var/jenkins:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock nikhilgoenka/jenkins-dynatrace-workshop</code> In our last session, we mounted the docker data in host-volume ‘/var/jenkins&#39;, so our pipeline and other jenkins data would be restored from that directory.</p>
@@ -128,6 +130,8 @@
 <h2 is-upgraded>Simulate SLA/SLO</h2>
 <p>To simulate SLA/SLO, select one of the requests from the sample-bank-app by navigating to <strong>Transaction &amp; Services &gt; node-bank &gt; View dynamic requests</strong> and select timeframe as <strong>Last 7 days</strong>. <img alt="Jenkins-Docker" src="img/813cf19fb687dd66.png"></p>
 <p><strong>Mark the request as key-request</strong> as shown below. <img alt="Jenkins-Docker" src="img/fe3229cf729efb5e.png"></p>
+<aside class="warning"><p>After marking the key-request, access the request within browser at <strong>http://{IP-address}:3000/api/users</strong> so that new requests appear under anomaly detections.</p>
+</aside>
 <p>Now, let us configure the request to have a <em>hypothetical threshold</em> (which will be your SLA/SLO). To do so, navigate to <strong>Transaction &amp; Services &gt; node-bank &gt; Edit &gt; Anomaly detection</strong>. <img alt="Jenkins-Docker" src="img/8f32fcd00a191244.png"></p>
 <p>Set the <strong>threshold to a low value say (eg. 2ms)</strong> so that a problem will be generated. <img alt="Jenkins-Docker" src="img/54b53a6630ed253.png"></p>
 <h2 is-upgraded>Trigger a new Jenkins-build</h2>

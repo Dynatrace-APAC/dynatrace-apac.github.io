@@ -84,6 +84,10 @@ On your left navigation, select **Hosts** and you should still see a monitored E
 
 ### Running Jenkins in Docker
 
+Negative
+: Before you start the Jenkins docker, please remove the existing Jenkins-docker as below with this command
+`docker rm Jenkins-Dynatrace`
+
 The Jenkins docker would already be present in your ubuntu instances and can be seen with “docker images”
 
 ![Jenkins-Docker](assets/ANZ-aiops/delivery1/jenkins-docker.png)
@@ -147,6 +151,9 @@ To simulate SLA/SLO, select one of the requests from the sample-bank-app by navi
 
 **Mark the request as key-request** as shown below.
 ![Jenkins-Docker](assets/ANZ-aiops/delivery2/mark-as-key-requests.png)
+
+Negative
+: After marking the key-request, access the request within browser at **http://{IP-address}:3000/api/users** so that new requests appear under anomaly detections.
 
 Now, let us configure the request to have a *hypothetical threshold* (which will be your SLA/SLO). To do so, navigate to **Transaction & Services > node-bank > Edit > Anomaly detection**.
 ![Jenkins-Docker](assets/ANZ-aiops/delivery2/set-key-request-threshold.png)
