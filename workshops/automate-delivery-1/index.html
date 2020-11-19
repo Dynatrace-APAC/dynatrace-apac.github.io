@@ -21,10 +21,10 @@
 <p>Throughout these labs, we will be using the <strong>deployment approach / strategies</strong> based on the example below.</p>
 <p class="image-container"><img alt="overview" src="img/9a5eb1db9f9c2dcc.png"></p>
 <h2 class="checklist" is-upgraded>What You&#39;ll Learn</h2>
-<ul class="checklist">
+<ul>
 <li>Integrate Jenkins with Dynatrace<br></li>
 <li>Setup Docker Pipeline in Jenkins</li>
-<li>Leveraging Auto tags Rules for pipelines in Dynatrace <ul class="checklist">
+<li>Leveraging Auto tags Rules for pipelines in Dynatrace <ul>
 <li>Creating tags from Build Stages</li>
 </ul>
 </li>
@@ -33,12 +33,12 @@
 </aside>
 </google-codelab-step>
 <google-codelab-step label="Useful Commands ✅" duration="0">
-<aside class="special"><p>To start the docker with sample application: <code>docker run -d --name SampleBankApp -p 4000:3000 nikhilgoenka/sample-bank-app</code></p>
+<aside class="special"><p>To start the docker with sample application: <code>docker run -d --name SampleBankApp -p 4000:3000 nikhilgoenka/sample-bank-app</code> </p>
 <ul>
 <li>This would start the docker on port localhost:4000 with docker name as <strong>SampleBankApp</strong></li>
 </ul>
 </aside>
-<aside class="special"><p>To start the jenkins docker: <code>docker run -d --network mynetwork --name Jenkins-Dynatrace -p 8020:8080 -v /var/jenkins:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock nikhilgoenka/jenkins-dynatrace-workshop</code></p>
+<aside class="special"><p>To start the jenkins docker: <code>docker run -d --network mynetwork --name Jenkins-Dynatrace -p 8020:8080 -v /var/jenkins:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock nikhilgoenka/jenkins-dynatrace-workshop</code> </p>
 <ul>
 <li>-d runs the docker in daemon mode.</li>
 <li>-p 8020:8080 - By default, jenkins docker would be running on 8080. Specifying <strong>-p 8020:8080</strong> binds the 8080 in docker to localhost on 8020. So, you can forward/listen requests from docker using <code>localhost:8020</code>.</li>
@@ -51,12 +51,12 @@
 <ul>
 <li>To <strong>view all docker containers</strong>: <code>docker ps -a</code></li>
 <li>To <strong>view the downloaded images</strong> on localhost: <code>docker images</code></li>
-<li>To <strong>remove a particular image</strong>: <code>docker rmi &lt;IMAGE-NAME&gt;</code></li>
-<li>To <strong>stop a docker</strong>: <code>docker stop &lt;CONTAINER-ID&gt;</code></li>
-<li>To <strong>remove a docker</strong>: <code>docker rm &lt;CONTAINER-ID&gt;</code></li>
-<li>To <strong>run a docker in interactive bash</strong>: <code>docker run -it &lt;CONTAINER&gt; /bin/bash</code></li>
+<li>To <strong>remove a particular image</strong>: <code>docker rmi <image-name></image-name></code></li>
+<li>To <strong>stop a docker</strong>: <code>docker stop <container-id></container-id></code></li>
+<li>To <strong>remove a docker</strong>: <code>docker rm <container-id></container-id></code></li>
+<li>To <strong>run a docker in interactive bash</strong>: <code>docker run -it <container> /bin/bash</container></code></li>
 <li>To <strong>delete all the unused images</strong>: <code>docker system prune -a -f</code></li>
-<li>To <strong>pull a particular image</strong>: <code>docker pull &lt;docker-image&gt;</code></li>
+<li>To <strong>pull a particular image</strong>: <code>docker pull <docker-image></docker-image></code></li>
 <li>Jenkins pipeline: Command: <code>https://github.com/nikhilgoenkatech/JenkinsBankApp</code></li>
 </ul>
 </google-codelab-step>
@@ -71,12 +71,12 @@
 <p class="image-container"><img alt="Jenkins-Docker" src="img/e4a951a49a2d3304.png"></p>
 <p>To run the Jenkins docker, execute <code>docker run -d --network mynetwork --name Jenkins-Dynatrace -p 8020:8080 -v /var/jenkins:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock nikhilgoenka/jenkins-dynatrace-workshop</code></p>
 <h2 is-upgraded>Retrieving Jenkins Password</h2>
-<p>The initial password can be retrieved as <code>cat /var/Jenkins/secrets/initialAdminPassword</code></p>
+<p>The initial password can be retrieved as <code>cat /var/jenkins/secrets/initialAdminPassword</code></p>
 <p class="image-container"><img alt="Jenkins-Docker" src="img/30b98ad7c886614f.png"></p>
 <p>With the retrieved password, access the Jenkins URL via your web browser.</p>
 <p>Within your Host View, dropdown the <strong>Properties and Tags</strong> and you will get a list of various metadata associated with the host created. Locate the <strong>Public IP Address</strong> and copy its value.</p>
 <p class="image-container"><img alt="Host-properties" src="img/4033f126cef6b4a8.png"></p>
-<p>Open up your <strong>web browser</strong> and access the Jenkins URL via <code>&lt;IP address&gt;:8020</code></p>
+<p>Open up your <strong>web browser</strong> and access the Jenkins URL via <code><ip address>:8020</ip></code></p>
 </google-codelab-step>
 <google-codelab-step label="Setting up Jenkins" duration="15">
 <h2 is-upgraded>Installing Docker Pipeline Plugin</h2>
@@ -201,7 +201,7 @@
 <p class="image-container"><img alt="Jenkins-Docker" src="img/f6937f5cf394b26e.png"></p>
 <h2 is-upgraded>Understanding the Build Pipeline process</h2>
 <p>Referring to the Jenkins File, the following code handles the <strong>pushing of Jenkins deployment information</strong> into Dynatrace.</p>
-<pre><code>        dir (&#39;dynatrace-scripts&#39;) {
+<pre><code language="language-yaml" class="language-yaml">        dir (&#39;dynatrace-scripts&#39;) {
             // push a deployment event on the host with the tag JenkinsInstance created using automatic tagging rule
             sh &#39;./pushdeployment.sh HOST CONTEXTLESS JenkinsInstance ANZ_ACM_Security_Group &#39; +
                &#39;${BUILD_TAG} ${BUILD_NUMBER} ${JOB_NAME} &#39; + 
@@ -209,7 +209,7 @@
 </code></pre>
 <p class="image-container"><img alt="Jenkins-Docker" src="img/93133c371bec5abc.png"></p>
 <p>Referring to the Jenkins File, the following code handles the <strong>pushing of deployment information</strong> into Dynatrace. This step utilizes environment varibles such as <strong>DT_CLUSTER_ID</strong>, <strong>DT_TAGS</strong> and <strong>DT_CUSTOM_PROP</strong></p>
-<pre><code>    stage(&#39;DeployStaging&#39;) {
+<pre><code language="language-yaml" class="language-yaml">    stage(&#39;DeployStaging&#39;) {
         // Lets deploy the previously build container
         def app = docker.image(&#34;sample-bankapp-service:${BUILD_NUMBER}&#34;)
         app.run(&#34;--network mynetwork --name SampleOnlineBankStaging -p 3000:3000 &#34; +

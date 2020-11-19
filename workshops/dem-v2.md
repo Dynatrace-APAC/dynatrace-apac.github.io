@@ -19,7 +19,7 @@ This repository contains the hands on for the Dynatrace Digital Experience Manag
 * Dynatrace SaaS/Managed Account. Get your free SaaS trial [here](https://www.dynatrace.com/trial/).
 * AWS account, with the ability to create an EC2 instance from a public AMI. Signup to a free trial [here](https://aws.amazon.com/free/).
 * Chrome Browser
-* SSH client such as [mobaxterm](https://mobaxterm.mobatek.net/).
+
 
 ### Lab Setup
 The following steps are used for this lab:
@@ -41,9 +41,17 @@ Duration: 15
 
 In this exercise, we will deploy the OneAgent to a Linux instance and let the OneAgent discover what is running in that instance.
 
-### Download the OneAgent
+### Using Terminal via Web Browser
 
-Use PuTTy (Windows) or Terminal (Mac), ssh into the instance. (IP address was provided in your email)
+To faciliate the labs, we will access the Linux instance **via terminal through a web browser**.
+
+Use the **URL** was provided in your email to access the SSH terminal. Make sure that the URL looks like `<Public IP Address>/wetty`
+
+Use the **login name** and **password** as provided in your email.
+
+![Deploy](assets/dem/wetty.png)
+
+### Download the OneAgent
 
 Open your browser and access the Dynatrace URL.
 
@@ -59,7 +67,6 @@ Within the Dynatrace OneAgent for Linux page, follow these steps below:
 
 * Click **Copy** button next to "Download the installer" text field.
 * **Paste** the command into your terminal window and execute it.
-* *
 
 ![Deploy](assets/dem/download-copy-1.png)
 
