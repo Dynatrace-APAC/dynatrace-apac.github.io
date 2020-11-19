@@ -45,7 +45,7 @@ In this exercise, we will deploy the OneAgent to a Linux instance and let the On
 
 To faciliate the labs, we will access the Linux instance **via terminal through a web browser**.
 
-Use the **URL** was provided in your email to access the SSH terminal. Make sure that the URL looks like `<Public IP Address>/wetty`
+Use the **URL** was provided in your email to access the SSH terminal. Make sure the URL looks like `Public IP Address/wetty`
 
 Use the **login name** and **password** as provided in your email.
 
