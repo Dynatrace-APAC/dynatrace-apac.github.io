@@ -420,26 +420,26 @@ Follow the steps below:
 **Sample queries**
 
 **Create a funnel for user journey**
-```SQL
+```sql
 SELECT FUNNEL(useraction.name="loading of page /special-offers.jsp" AS "Special Offers landing page", useraction.name = "loading of page /orange-booking-review.jsf" AS "Review package", useraction.name = "loading of page /orange-booking-payment.jsf" AS "Payment") FROM usersession
 ```
 
 **Understand page performance from a specific location**
-```SQL
+```sql
 SELECT DATETIME(starttime, 'MM/dd/yyyy hh:mm', '30m'),AVG(useraction.visuallyCompleteTime)
 FROM usersession
 WHERE country IS "United States" GROUP BY DATETIME(starttime, 'MM/dd/yyyy hh:mm', '30m')
 ```
 
 **Understand which users are experiecing errors**
-```SQL
+```sql
 SELECT userId, SUM(totalErrorCount) FROM usersession
 WHERE totalErrorCount IS NOT NULL
 GROUP BY userId ORDER BY SUM(totalErrorCount) DESC
 ```
 
 **Gather statistics/analaysis**
-```SQL
+```sql
 SELECT COUNT(*) FROM usersession WHERE useraction.name = "loading of page /orange.jsf"
 ```
 <!-- ------------------------ -->

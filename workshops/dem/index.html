@@ -374,20 +374,20 @@ Done.
 <p class="image-container"><img alt="USQL" src="img/2d867123a395b5d2.png"></p>
 <p><strong>Sample queries</strong></p>
 <p><strong>Create a funnel for user journey</strong></p>
-<pre><code language="language-SQL" class="language-SQL">SELECT FUNNEL(useraction.name=&#34;loading of page /special-offers.jsp&#34; AS &#34;Special Offers landing page&#34;, useraction.name = &#34;loading of page /orange-booking-review.jsf&#34; AS &#34;Review package&#34;, useraction.name = &#34;loading of page /orange-booking-payment.jsf&#34; AS &#34;Payment&#34;) FROM usersession
+<pre><code language="language-sql" class="language-sql">SELECT FUNNEL(useraction.name=&#34;loading of page /special-offers.jsp&#34; AS &#34;Special Offers landing page&#34;, useraction.name = &#34;loading of page /orange-booking-review.jsf&#34; AS &#34;Review package&#34;, useraction.name = &#34;loading of page /orange-booking-payment.jsf&#34; AS &#34;Payment&#34;) FROM usersession
 </code></pre>
 <p><strong>Understand page performance from a specific location</strong></p>
-<pre><code language="language-SQL" class="language-SQL">SELECT DATETIME(starttime, &#39;MM/dd/yyyy hh:mm&#39;, &#39;30m&#39;),AVG(useraction.visuallyCompleteTime)
+<pre><code language="language-sql" class="language-sql">SELECT DATETIME(starttime, &#39;MM/dd/yyyy hh:mm&#39;, &#39;30m&#39;),AVG(useraction.visuallyCompleteTime)
 FROM usersession
 WHERE country IS &#34;United States&#34; GROUP BY DATETIME(starttime, &#39;MM/dd/yyyy hh:mm&#39;, &#39;30m&#39;)
 </code></pre>
 <p><strong>Understand which users are experiecing errors</strong></p>
-<pre><code language="language-SQL" class="language-SQL">SELECT userId, SUM(totalErrorCount) FROM usersession
+<pre><code language="language-sql" class="language-sql">SELECT userId, SUM(totalErrorCount) FROM usersession
 WHERE totalErrorCount IS NOT NULL
 GROUP BY userId ORDER BY SUM(totalErrorCount) DESC
 </code></pre>
 <p><strong>Gather statistics/analaysis</strong></p>
-<pre><code language="language-SQL" class="language-SQL">SELECT COUNT(*) FROM usersession WHERE useraction.name = &#34;loading of page /orange.jsf&#34;
+<pre><code language="language-sql" class="language-sql">SELECT COUNT(*) FROM usersession WHERE useraction.name = &#34;loading of page /orange.jsf&#34;
 </code></pre>
 
 
