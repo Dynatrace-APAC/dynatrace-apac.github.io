@@ -419,27 +419,29 @@ Follow the steps below:
 
 **Sample queries**
 
-**Example 1**
+**Create a funnel for user journey**
+```SQL
+SELECT FUNNEL(useraction.name="loading of page /special-offers.jsp" AS "Special Offers landing page", useraction.name = "loading of page /orange-booking-review.jsf" AS "Review package", useraction.name = "loading of page /orange-booking-payment.jsf" AS "Payment") FROM usersession
+```
+
+**Understand page performance from a specific location**
 ```SQL
 SELECT DATETIME(starttime, 'MM/dd/yyyy hh:mm', '30m'),AVG(useraction.visuallyCompleteTime)
 FROM usersession
 WHERE country IS "United States" GROUP BY DATETIME(starttime, 'MM/dd/yyyy hh:mm', '30m')
 ```
 
-**Example 2**
+**Understand which users are experiecing errors**
 ```SQL
 SELECT userId, SUM(totalErrorCount) FROM usersession
 WHERE totalErrorCount IS NOT NULL
 GROUP BY userId ORDER BY SUM(totalErrorCount) DESC
 ```
 
-**Example 3**
+**Gather statistics/analaysis**
 ```SQL
 SELECT COUNT(*) FROM usersession WHERE useraction.name = "loading of page /orange.jsf"
 ```
-
-Are you able to describe what each sample query is trying to visualize?
-
 <!-- ------------------------ -->
 
 ## Feedback
@@ -473,4 +475,4 @@ We hope you enjoyed this lab and found it useful. We would love your feedback!
 </form>
 
 Positive
-: 💡 For other ideas and suggestions, please **[reach out via email](mailto:APAC-SE-Central@dynatrace.com?subject=Kubernetes Workshop - Ideas and Suggestions")**.
+: 💡 For other ideas and suggestions, please **[reach out via email](mailto:APAC-SE-Central@dynatrace.com?subject=DEM Workshop - Ideas and Suggestions")**.
