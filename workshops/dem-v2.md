@@ -399,7 +399,7 @@ Dynatrace captures detailed user session data each time a user interacts with yo
 
 A typical use case for using USQL is to build dashboards to visualize business metrics.
 
-![USQL](assets/dem/500-USQL.png)
+![USQL](assets/dem/USQL-Dashboard.png)
 
 Positive
 : Dynatrace Documentation is referenced [here](https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/how-to-use-real-user-monitoring/cross-application-user-session-analytics/custom-queries-segmentation-and-aggregation-of-session-data/)
