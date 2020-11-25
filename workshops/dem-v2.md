@@ -15,11 +15,7 @@ Duration: 1
 This repository contains the hands on for the Dynatrace Digital Experience Management (DEM) Workshop.
 
 ### Prerequisites
-
-* Dynatrace SaaS/Managed Account. Get your free SaaS trial [here](https://www.dynatrace.com/trial/).
-* AWS account, with the ability to create an EC2 instance from a public AMI. Signup to a free trial [here](https://aws.amazon.com/free/).
 * Chrome Browser
-
 
 ### Lab Setup
 The following steps are used for this lab:
@@ -27,7 +23,7 @@ The following steps are used for this lab:
     * Sample App is based on [easyTravel](https://community.dynatrace.com/community/display/DL/easyTravel)
 
 Negative
-: **For Self-paced training**, follow the [Prerequisite Actions](https://github.com/Dynatrace-APAC/Workshop-DEM/tree/master/Prerequisite%20Actions) to create Easytravel application that will be used throughout this workshop.
+: **For Self-paced training**, follow the [Prerequisite Actions](https://github.com/Dynatrace-APAC/Workshop-DEM/tree/master/Prerequisite%20Actions) to create Easytravel application that will be used throughout this workshop. 
 
 ### What You’ll Learn
 - Understand Real User Monitoring setup with easyTravel App 
