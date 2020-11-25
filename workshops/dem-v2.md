@@ -23,7 +23,7 @@ The following steps are used for this lab:
     * Sample App is based on [easyTravel](https://community.dynatrace.com/community/display/DL/easyTravel)
 
 Negative
-: **For Self-paced training**, follow the [Prerequisite Actions](https://github.com/Dynatrace-APAC/Workshop-DEM/tree/master/Prerequisite%20Actions) to create Easytravel application that will be used throughout this workshop. 
+: **For Self-paced training**, follow the [Prerequisite Actions](https://github.com/Dynatrace-APAC/Workshop-DEM/tree/master/Prerequisite%20Actions) to create Easytravel application that will be used throughout this workshop. Note that you'll need access to **Dynatrace** and have **running AWS EC2** from the pre-reqs.
 
 ### What You’ll Learn
 - Understand Real User Monitoring setup with easyTravel App 
