@@ -1,34 +1,22 @@
 
 <!doctype html>
-
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-  <meta name="theme-color" content="#4F7DC9">
-  <meta charset="UTF-8">
-  <title>Digital Experience Management with Dynatrace</title>
-  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
-  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
-  <style>
-    .success {
-      color: #1e8e3e;
-    }
-    .error {
-      color: red;
-    }
-  </style>
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+<meta name="theme-color" content="#4F7DC9">
+<meta charset="UTF-8">
+<title>Digital Experience Management with Dynatrace</title>
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+<style>
+.success{color:#1e8e3e}.error{color:red} </style>
 </head>
 <body>
-  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
-  <google-codelab codelab-gaid="UA-175467274-1"
-                  id="dem"
-                  title="Digital Experience Management with Dynatrace"
-                  environment="web"
-                  feedback-link="mailto:APAC-SE-Central@dynatrace.com">
-    
-      <google-codelab-step label="Introduction" duration="1">
-        <p>This repository contains the hands on for the Dynatrace Digital Experience Management (DEM) Workshop.</p>
+<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+<google-codelab codelab-gaid="UA-175467274-1" id="dem" title="Digital Experience Management with Dynatrace" environment="web" feedback-link="mailto:APAC-SE-Central@dynatrace.com">
+<google-codelab-step label="Introduction" duration="1">
+<p>This repository contains the hands on for the Dynatrace Digital Experience Management (DEM) Workshop.</p>
 <h2 is-upgraded>Prerequisites</h2>
 <ul>
 <li>Chrome Browser</li>
@@ -36,7 +24,7 @@
 <h2 is-upgraded>Lab Setup</h2>
 <p>The following steps are used for this lab:</p>
 <ul>
-<li>Sample Application  <ul>
+<li>Sample Application <ul>
 <li>Sample App is based on <a href="https://community.dynatrace.com/community/display/DL/easyTravel" target="_blank">easyTravel</a></li>
 </ul>
 </li>
@@ -50,12 +38,9 @@
 <li>Learn Session Replay in Dynatrace</li>
 <li>Learn User Session Query Language (USQL)</li>
 </ul>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Basic Setup" duration="15">
-        <p>In this exercise, we will deploy the OneAgent to a Linux instance and let the OneAgent discover what is running in that instance.</p>
+</google-codelab-step>
+<google-codelab-step label="Basic Setup" duration="15">
+<p>In this exercise, we will deploy the OneAgent to a Linux instance and let the OneAgent discover what is running in that instance.</p>
 <h2 is-upgraded>Using Terminal via Web Browser</h2>
 <p>To faciliate the labs, we will access the Linux instance <strong>via terminal through a web browser</strong>.</p>
 <p>Use the <strong>URL</strong> was provided in your email to access the SSH terminal. Make sure the URL looks like <code>Public IP Address/wetty</code></p>
@@ -148,12 +133,9 @@ Done.
 <p>While waiting for Easy Travel to start, you can explore Dynatrace and using the Smartscape, Dynatrace will automatically discover the processes and dependencies that comprises the Easy Travel application!</p>
 <p><a href="https://www.dynatrace.com/support/help/get-started/4-things-youll-absolutely-love-about-dynatrace/" target="_blank">4 things</a> that you will love about Dynatrace!</p>
 <p class="image-container"><img alt="Smartscape" src="img/868e111ca8bd48bd.png"></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Configure Real User Monitoring" duration="15">
-        <p>In this lab, we will cover the basics of configuring Real User Monitoring. These are some of the best practices that should be followed every time the Dynatrace JavaScript agent is deployed, be it an automated or manual injection.</p>
+</google-codelab-step>
+<google-codelab-step label="Configure Real User Monitoring" duration="15">
+<p>In this lab, we will cover the basics of configuring Real User Monitoring. These are some of the best practices that should be followed every time the Dynatrace JavaScript agent is deployed, be it an automated or manual injection.</p>
 <aside class="special"><p>Dynatrace Documentation is referenced <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/setup-and-configuration/web-applications/" target="_blank">here</a></p>
 </aside>
 <h2 class="checklist" is-upgraded>What You&#39;ll Learn</h2>
@@ -180,7 +162,7 @@ Done.
 <li><strong>Scroll down</strong> to find the Top 3 included domains panel.</li>
 <li>Click <strong>View full details</strong>.</li>
 <li>Click on <strong>arrow</strong> on the 1st domain (internal domain eg. <strong>ip-address.ap-southeast-2.compute.internal</strong>) to drop down.</li>
-<li>Click on <strong>+ Create new application  </strong><ul>
+<li>Click on <strong>+ Create new application </strong><ul>
 <li>Your application will be created and listed on the Applications page.</li>
 <li>All user actions that are monitored on this domain will be mapped onto the newly created application.</li>
 </ul>
@@ -224,7 +206,7 @@ Done.
 <li>Select <strong>User tag</strong> under <strong>Capturing</strong></li>
 <li>Click on <strong>Add tag (identifier) rule</strong></li>
 <li>Select the drop down <strong>CSS Selector</strong></li>
-<li><strong>Copy and Paste</strong> the CSS Selector which you copied earlier from your browser&#39;s Developer Tool.  <ul>
+<li><strong>Copy and Paste</strong> the CSS Selector which you copied earlier from your browser&#39;s Developer Tool. <ul>
 <li>Use the CSS Selector <code>#loginForm\:j_idt39</code></li>
 <li>Since the CSS Selector also picks up some additional text, we can apply a clean up rule.</li>
 </ul>
@@ -237,12 +219,9 @@ Done.
 <p class="image-container"><img alt="Enable-framework" src="img/f44b43654f55d857.gif"></p>
 <aside class="special"><p>Dynatrace Documentation is referenced <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/how-to-use-real-user-monitoring/cross-application-user-session-analytics/identify-individual-users-for-session-analysis/" target="_blank">here</a></p>
 </aside>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Configure Synthetic Test" duration="15">
-        <p>In this exercise, we will cover creating a single URL synthetic test in Dynatrace. Dynatrace offers three types of synthetic monitoring:</p>
+</google-codelab-step>
+<google-codelab-step label="Configure Synthetic Test" duration="15">
+<p>In this exercise, we will cover creating a single URL synthetic test in Dynatrace. Dynatrace offers three types of synthetic monitoring:</p>
 <ul>
 <li><strong>Single-URL browser monitors</strong></li>
 <li><strong>Browser clickpaths</strong></li>
@@ -252,7 +231,7 @@ Done.
 </aside>
 <h2 is-upgraded>1. Use One-click creation of browser monitors for Easytravel</h2>
 <ul>
-<li>Click on <strong>Monitor from private locations</strong> on the right column in Easytravel Application  <ul>
+<li>Click on <strong>Monitor from private locations</strong> on the right column in Easytravel Application <ul>
 <li>Selection of Entry Actions is based on the Top 3 Entry Actions</li>
 <li>(Optional) You can edit the Top 3 Entry Actions if needed</li>
 </ul>
@@ -268,7 +247,7 @@ Done.
 <li><strong>Copy URL</strong> of Easytravel and <strong>Paste</strong> into URL Browser Monitor</li>
 <li>Name the monitor - <strong>Easytravel</strong></li>
 <li>Scroll down and click on <strong>Record clickpath</strong></li>
-<li><strong>Pop-up Browser</strong> appears. Record clickpath as follows:  <ul>
+<li><strong>Pop-up Browser</strong> appears. Record clickpath as follows: <ul>
 <li>Click on <strong>Login</strong> (top right)</li>
 <li>Click on <strong>small lock icon</strong> in pop-up and <strong>choose any name</strong></li>
 <li>Click on any <strong>Book Now</strong> icon</li>
@@ -281,7 +260,7 @@ Done.
 </li>
 <li>Recorded clickpath is now recorded in Dynatrace</li>
 <li>Click on <strong>Next</strong></li>
-<li><strong>Select Sydney (AWS)</strong> as location.  <ul>
+<li><strong>Select Sydney (AWS)</strong> as location. <ul>
 <li>Note that Sydney node is actually a cluster endpoint.</li>
 </ul>
 </li>
@@ -304,7 +283,7 @@ Done.
 <li><strong>Paste</strong> into Name Text Field</li>
 <li>Click on <strong>Add HTTP request</strong></li>
 <li>Scroll down and click <strong>Next</strong></li>
-<li>Scroll down and <strong>Select Sydney (AWS)</strong> as location.  <ul>
+<li>Scroll down and <strong>Select Sydney (AWS)</strong> as location. <ul>
 <li>Note that Sydney node is actually a cluster endpoint.</li>
 </ul>
 </li>
@@ -314,12 +293,9 @@ Done.
 <p class="image-container"><img alt="OneClick-Synthetic" src="img/e81bb07f484e335f.gif"></p>
 <aside class="special"><p>Dynatrace Documentation is referenced <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/synthetic-monitoring/http-monitors/create-an-http-monitor/" target="_blank">here</a></p>
 </aside>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Configure Session Replay" duration="15">
-        <p>In this exercise, we will cover <strong>configuring Session Replay</strong> in Dynatrace.</p>
+</google-codelab-step>
+<google-codelab-step label="Configure Session Replay" duration="15">
+<p>In this exercise, we will cover <strong>configuring Session Replay</strong> in Dynatrace.</p>
 <h2 is-upgraded>Enable Session Replay</h2>
 <p>Follow the steps below to enable session Replay:</p>
 <ul>
@@ -352,12 +328,9 @@ Done.
 <p class="image-container"><img alt="SR" src="img/909e1f4f0d38a89d.png"></p>
 <aside class="special"><p>Dynatrace Documentation is referenced <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/setup-and-configuration/web-applications/additional-configuration/configure-session-replay-for-personal-data-protection/" target="_blank">here</a></p>
 </aside>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Introduction to USQL" duration="15">
-        <p>Dynatrace captures detailed user session data each time a user interacts with your monitored application. This data includes all user actions and high level performance data. Using either the Dynatrace API or <strong>Dynatrace User Sessions Query Language (USQL)</strong>, you can easily run <strong>powerful queries, segmentations, and aggregations</strong> on this captured data.  User Sessions Query Language is a <strong>Dynatrace-specific query language</strong>, though it does rely on some SQL concepts and the syntax is similar, which makes it easy to get started.</p>
+</google-codelab-step>
+<google-codelab-step label="Introduction to USQL" duration="15">
+<p>Dynatrace captures detailed user session data each time a user interacts with your monitored application. This data includes all user actions and high level performance data. Using either the Dynatrace API or <strong>Dynatrace User Sessions Query Language (USQL)</strong>, you can easily run <strong>powerful queries, segmentations, and aggregations</strong> on this captured data. User Sessions Query Language is a <strong>Dynatrace-specific query language</strong>, though it does rely on some SQL concepts and the syntax is similar, which makes it easy to get started.</p>
 <p>A typical use case for using USQL is to build dashboards to visualize business metrics.</p>
 <p class="image-container"><img alt="USQL" src="img/33cf7ff5803c3dfb.png"></p>
 <aside class="special"><p>Dynatrace Documentation is referenced <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/how-to-use-real-user-monitoring/cross-application-user-session-analytics/custom-queries-segmentation-and-aggregation-of-session-data/" target="_blank">here</a></p>
@@ -387,12 +360,9 @@ GROUP BY userId ORDER BY SUM(totalErrorCount) DESC
 <p><strong>Gather statistics/analaysis</strong></p>
 <pre><code language="language-sql" class="language-sql">SELECT COUNT(*) FROM usersession WHERE useraction.name = &#34;loading of page /orange.jsf&#34;
 </code></pre>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Feedback" duration="3">
-        <p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
+</google-codelab-step>
+<google-codelab-step label="Feedback" duration="3">
+<p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
 <google-codelab-survey survey-id="dem-1">
 <h4>How was your overall experience with this lab?</h4>
 <paper-radio-group>
@@ -424,17 +394,12 @@ GROUP BY userId ORDER BY SUM(totalErrorCount) DESC
 </google-codelab-survey>
 <aside class="special"><p>💡 For other ideas and suggestions, please <a href="mailto:APAC-SE-Central@dynatrace.com?subject=DEM Workshop - Ideas and Suggestions" target="_blank"><strong>reach out via email</strong></a>.</p>
 </aside>
-
-
-      </google-codelab-step>
-    
-  </google-codelab>
-
-  <script src="../../elements/codelab-elements/native-shim.js"></script>
-  <script src="../../elements/codelab-elements/custom-elements.min.js"></script>
-  <script src="../../elements/codelab-elements/prettify.js"></script>
-  <script src="../../elements/codelab-elements/codelab-elements.js"></script>
-  <script src="//support.google.com/inapp/api.js"></script>
-
+</google-codelab-step>
+</google-codelab>
+<script src="../../elements/codelab-elements/native-shim.js"></script>
+<script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+<script src="../../elements/codelab-elements/prettify.js"></script>
+<script src="../../elements/codelab-elements/codelab-elements.js"></script>
+<script src="//support.google.com/inapp/api.js"></script>
 </body>
 </html>

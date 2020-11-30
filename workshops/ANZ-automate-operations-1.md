@@ -1,144 +1,192 @@
-summary: Automate Feedback Session 1
+summary: Automate Operations Session 1
 id: automate-operations-1
 categories: automate-operations
 tags: anz
 status: Published 
-authors: Brandon Neo
+authors: Nikhil Goenka
 Feedback Link: mailto:d1-apac@dynatrace.com
 Analytics Account: UA-175467274-1
 
 # Automate Operations - Session 1
+<!-- ------------------------ -->
+## Introduction 
+Duration: 1
 
-The labs contains the steps for Automate Operations: Integration of Load Test Tools with Dynatrace Session 1 training.
-You will get access to a EC2 instance that has been provided for the purposes of this training.
+This lab is the third session of the AIOps Enablement Series for ANZ Bank. This track focuses on the Automate Operations, which relates to how you could integate Dynatrace with orchestration tools to **Automate Operations**.
 
-### Prerequisites
-- Dynatrace SaaS/Managed Account. Get your free SaaS trial [here](https://www.dynatrace.com/trial/).
-- Chrome Browser 
+![overview](assets/ANZ-aiops/feedback1/overview-1.png)
 
 ### What You’ll Learn 
-- Integrate JMeter with Dynatrace.  
-- Push events in Dynatrace and create request-attributes 
-  - Dev/Test team can isolate the requests invoked during the load-tests.
-
-Negative
-: As different teams might have their own proprietary test-beds/suits, so we will demo stimulating requests using curl commands too.
-
-<!-- ------------------------ -->
-## Understanding Dynatrace Integration
-Duration: 5
-
-By integrating Dynatrace into your existing load testing process, you can stop broken builds in your delivery pipeline earlier.
-
-![Integration-overview](assets/ANZ-aiops/integration-overview.png)
-
-
-### Tag tests with HTTP headers 
-
-While executing a load test from your load testing tool of choice (JMeter, Neotys, LoadRunner, etc) each simulated HTTP request can be tagged with additional HTTP headers that contain test-transaction information (for example, script name, test step name, and virtual user ID). Dynatrace can analyze incoming HTTP headers and extract such contextual information from the header values and tag the captured requests with request attributes. Request attributes enable you to filter your monitoring data based on defined tags.
-
-![HTTP-Headers](assets/ANZ-aiops/adding-http-headers.png)
-
-**Full integration and approach is documentated [here]**(https://www.dynatrace.com/support/help/setup-and-configuration/integrations/third-party-integrations/test-automation-frameworks/dynatrace-and-load-testing-tools-integration/)
-
-<!-- ------------------------ -->
-## Defining Request Attribute
-Duration: 10
-
-You can use any (or multiple) HTTP headers or HTTP parameters to pass context information. 
-The extraction rules can be configured via **Settings > Server-side service monitoring > Request attributes.**
-
-The header x-dynatrace-test is used in the following examples with the following set of key/value pairs for the header:
-
-**VU**	| Virtual User ID of the unique user who sent the request.
-**SI**	| Source ID identifies the product that triggered the request (JMeter, LoadRunner, Neotys, or other)
-**TSN** | Test Step Name is a logical test step within your load testing script (for example, Login or Add to cart.
-**LSN**	| Load Script Name - name of the load testing script. This groups a set of test steps that make up a multi-step transaction (for example, an online purchase).
-**LTN** | The Load Test Name uniquely identifies a test execution (for example, 6h Load Test – June 25)
-**PC**	| Page Context provides information about the document that is loaded in the currently processed page.
-
-![Request-Attribute](assets/ANZ-aiops/request-attribute-1.png)
-
-![Request-Attribute](assets/ANZ-aiops/request-attribute-2.png)
-
-<!-- ------------------------ -->
-## Request Tag-based Analysis
-Duration: 20
-
-### Creating Tags
-
-Tagging is a powerful mechanism. However, to reap its benefits, tagging should be used carefully and in a meaningful way. To guide you towards this end, we provide you with specific recommendations and best practices, which are described below. With auto-tagging based on metadata, tags can be generated automatically and assigned to monitored entities with the specific metadata values that Dynatrace detects automatically.
-
-[Best Practices for Tagging](https://www.dynatrace.com/support/help/how-to-use-dynatrace/tags-and-metadata/) 
-
-### Naming Rules
-
-Dynatrace automatically provides names, but they don’t enable you to quickly identify where an application or service belongs to. To achieve this, it's recommended that you use service naming rules and process group naming rules. This can be done in Dynatrace using metadata imported from the monitored applications.
-
-You can use Dynatrace Naming Rules to differentiate requests
-
-![Request-tag](assets/ANZ-aiops/request-tag.png)
-
-Documentation [here](https://www.dynatrace.com/support/help/how-to-use-dynatrace/tags-and-metadata/setup/how-to-define-tags/)
-
-### Annotate Dynatrace with Events 
-
-The Events API delivers details about all uncorrelated events that Dynatrace collects within your environment. Information returned for each event includes attributes about the event source, the entity where the event was collected, and other event-specific details.
-
-PUSH endpoint enables third-party systems such as CI platforms (Jenkins, Bamboo, Electric Cloud, etc.) to provide additional details for Dynatrace automated root cause analysis.
-
-![Event-API](assets/ANZ-aiops/event-api.png)
-
-Documentation [here](https://www.dynatrace.com/support/help/dynatrace-api/environment-api/events/push-deployment-events-from-jenkins/)
-
-### Compare and Analyze events
-
-There are different ways to analyze the data. Your approach should be based on the type of performance analysis you want to do (for example, crashes, resource and performance hotspots, or scalability issues). 
-
-![Event-API](assets/ANZ-aiops/compare-analyze.png)
-
-Documentation [here] (https://www.dynatrace.com/support/help/shortlink/load-testing-process#compare--analyze)
-
-<!-- ------------------------ -->
-## Automate with Curl
-Duration: 10
-
-The steps that we ran through could be automated with by initiating HTTP requests through curl.
-
-![Event-API](assets/ANZ-aiops/automate-with-curl.png)
+- Integrate Ansible with Dynatrace  
+- Stimulate an issue in Dynatrace and let DAVIS AI pick up the issue automatically
+- Auto-remediate using ansible-remediation scripts
 
 
 <!-- ------------------------ -->
-
-## Feedback
-Duration: 3
-
-We hope you enjoyed this lab and found it useful. We would love your feedback!
-<form>
-  <name>How was your overall experience with this lab?</name>
-  <input value="Excellent" />
-  <input value="Good" />
-  <input value="Average" />
-  <input value="Fair" />
-  <input value="Poor" />
-</form>
-
-<form>
-  <name>What did you benefit most from this lab?</name>
-  <input value="Using OneAgent Operator to deploy in Kubernetes" />
-  <input value="Setting up Kubernetes integation" />
-  <input value="Enabling early access feature flags" />
-  <input value="Learning Kubernetes View in Dynatrace" />
-</form>
-
-<form>
-  <name>How likely are you to recommend this lab to a friend or colleague?</name>
-  <input value="Very Likely" />
-  <input value="Moderately Likely" />
-  <input value="Neither Likely nor unlikely" />
-  <input value="Moderately Unlikely" />
-  <input value="Very Unlikely" />
-</form>
+## Useful Commands ✅ 
 
 Positive
-: 💡 For other ideas and suggestions, please **[reach out via email](mailto:APAC-SE-Central@dynatrace.com?subject=Automate Feedback 1 - Ideas and Suggestions")**.
+: To start the docker with sample application:
+   `docker run -d --name SampleBankApp -p 4000:3000 nikhilgoenka/sample-bank-app`
+  * This would start the docker on port localhost:4000 with docker name as **SampleBankApp**
+   
+Positive
+: To start the jenkins docker:
+   `docker run -d --network mynetwork --name Jenkins-Dynatrace -p 8020:8080  -v /var/jenkins:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock nikhilgoenka/jenkins-dynatrace-workshop`
+   * -d runs the docker in daemon mode.
+   * -p 8020:8080 - By default, jenkins docker would be running on 8080. Specifying **-p 8020:8080** binds the 8080 in docker to localhost on 8020. So, you can forward/listen requests from docker using `localhost:8020`.
+   * -v Bind mounts a volume.
+    By default, jenkins docker is maintaining the pipeline/data information in /var/jenkins_home. 
+    Specifying **-v /var/jenkins:/var/jenkins_home** would mount the localhost:/var/jenkins directory so that the pipeline data is not lost once pipeline is re-started.
+    Specifying **-v /var/run/docker.sock:/var/run/docker.sock** will allow the jekins docker to leverage the dockerd running on localhost. This would be required since we are starting the
+    sample-app dockers while running the pipeline.
+
+Positive
+: To run the ansible-tower docker:
+   `docker run -d --name ansible-tower -p 8090:443 ybalt/ansible-tower`
+   This would start the docker on port **localhost:8090** with docker name as **ansible-tower**
+
+**Other useful commands:**
+* To **view all docker containers**: `docker ps -a`
+* To **view the downloaded images** on localhost: `docker images`
+* To **remove a particular image**: `docker rmi <IMAGE-NAME>`
+* To **stop a docker**: `docker stop <CONTAINER-ID>`
+* To **remove a docker**: `docker rm <CONTAINER-ID>`
+* To **run a docker in interactive bash**: `docker run -it <CONTAINER> /bin/bash`
+* To **delete all the unused images**: `docker system prune -a -f`
+* To **pull a particular image**: `docker pull <docker-image>`
+* Jenkins pipeline:
+   Command: `https://github.com/nikhilgoenkatech/JenkinsBankApp`
+
+<!-- ------------------------ -->
+
+## Preconfiguration Setup
+We will be using dockers to stimulate and remediate the issues, so ansible-tower docker will communicate with the other dockers using docker-network.
+In order it works as expected, start with checking if you already have a network present by issuing `docker network ls`
+If not, create a network by issuing the command `docker network create mynetwork`
+   
+Now, run **ansible-tower docker** as`docker create -v /var/lib/postgresql/9.6/main --name tower-data nikhilgoenka/ansibletower /bin/true`
+
+The above would create a postgres data volume which can be used to retain and retrieve the ansible-tower data. Once, the volume is created, run the ansible-tower docker as `docker run -d --network mynetwork --name ansible-tower --volumes-from tower-data -p 8090:443 nikhilgoenka/ansibletower`
+   
+From within your terminal, let us install **python-docker** on the hosts so that ansible-tower can perform operations on the host by running the following command `pip install docker`
+   
+We will use d1pacmworkshop user to access/change/modify docker, so give it required permissions on the docker. To do so, run `sudo usermod -aG docker d1pacmworkshop` 
+This would add d1pacmworkshop user to docker group and it will get the required permissions to access/change the docker.
+
+Lastly, navigate to `/home/ubuntu/ACMD1Workshop/additional_resources/app_docker/scripts folder` and run `wget https://raw.githubusercontent.com/nikhilgoenkatech/AIOPSAnsibleBankPlaybooks/main/synthetic-monitor.sh` to download the synthetic scripts that would be run in order to validate the auto-remediation.
+   
+Connect to "https://<my-IP>:8090/" and click on "Advanced" followed by Proceed to <IP:8090>   ![Ansible-Docker](assets/ANZ-aiops/ansible1/Ansible-tower-browser-advanced-option.png)
+
+Run the docker for **SampleBankApp** as below:
+docker run --network mynetwork -d --name SampleBankApp -p 3000:3000 nikhilgoenka/sample-bank-app:1.0
+Access the sample-bank app from your browser at http://<MACHINE-IP>:3000/login to populate the service "node-bank" under "Transactions & Services"
+
+## Configure Ansible
+Login into your ansible docker using credentials "admin" and password "dynatrace".
+![Ansible-Docker](assets/ANZ-aiops/ansible1/Ansible-tower-login.png)
+
+Import the license by clicking on "Browse" and uploading the license that was earlier shared with you in email.
+![Ansible-Docker](assets/ANZ-aiops/ansible1/Ansible-tower-import-license.png)
+
+### Setting up inventory
+Now, create the inventory by clicking on **Inventory** in the left-side as seen below:
+![Ansible-Docker](assets/ANZ-aiops/ansible1/Ansible-create-inventory.png)
+
+That would open the page displaying the existing inventories. Delete the existing inventory for a clearer view before adding one as seen below:
+![Ansible-Docker](assets/ANZ-aiops/ansible1/Ansible-create-inventory-2.png)
+![Ansible-Docker](assets/ANZ-aiops/ansible1/Ansible-add-inventory.png)
+   
+Negative:
+Inventories consists of all the hosts that you plan to run the playbook on. So, inventories act as the repository of the hosts.
+
+Once you add the inventory, you will get an option to **add hosts** for that inventory. Add the host by navigating to the "Hosts" tab.
+The host can be added with host-name=<AWS-IP> and description as "Application-Docker-Server". 
+![Ansible-Docker](assets/ANZ-aiops/ansible1/Ansible-add-hosts.png)
+![Ansible-Docker](assets/ANZ-aiops/ansible1/Ansible-add-hosts-2.png)
+   
+### Setting up Project
+Similarly, let us add a **project**. Project is a collection of ansible playbooks. To add/edit projects, click on "Projects". Start by deleting the existing "Demo Project" for a cleaner view, followed by clicking on "+" and "Project" to add your projects.
+   **Project-name**: `Application-playbooks`
+   **SCM Type**: Git
+   **SCM URL**: `https://github.com/nikhilgoenkatech/AIOPSAnsibleBankPlaybooks`
+
+![Ansible-Docker](assets/ANZ-aiops/ansible1/Ansible-create-project.png)
+
+### Setting up Credentials
+With the hosts and playbooks added, now add the credentials that ansible will use in order to connect to the configured hosts and run the playbook from projects. Navigate to **Credentials** as shown below.
+![Ansible-Docker](assets/ANZ-aiops/ansible1/Ansible-add-credentials.png)
+
+Delete the existing `Demo Credentials` and further, add credentials for your AWS host.
+   **Name**: Application-servers
+   **Credential Type**: Machine
+   **Username**: `d1pacmworkshop`
+   **Password**: `dynatrace`
+![Ansible-Docker](assets/ANZ-aiops/ansible1/Ansible-add-credentials-2.png)
+
+### Setting up Templates
+Add a template by navigating to **Templates** on the left-hand side and configure as below:
+	
+**Name**: Process-unavailable
+**Inventory**: Application-DT-inventory
+**Project**: Application-playbooks
+**Playbook**: process-restart.yaml	
+
+Add the extra variables as below:
+**tenanturl**: <your-tenant-url>
+**dttoken**: <your-token>
+**dtcommentapiurl**: <your-dynatrace-url>/api/v1/problem/details/{{pid}}/comments?Api-Token={{dttoken}}
+**dtdeploymentapiurl**: <your-dynatrace-url>/api/v1/events?Api-Token={{dttoken}}
+**my_ip**: <your-aws-instance-ip>
+
+Positive:
+Replace tenant-url with `https://xxx.live.dynatrace.com/` for SaaS where for managed, change to `https://managed.server/e/{environment-id}`
+![Ansible-Docker](assets/ANZ-aiops/ansible1/add-template-1.png)
+
+## Integrate Ansible-tower and Dynatrace     	
+
+### Availability alert
+Enable the **availability alert** for the NodeJS process. Within dynatrace-tenant, navigate to **Technologies > NodeJS Process-Group > Settings > Availability monitoring ** and toggle the "Enable process group availability monitoring" as below:	
+![Ansible-Docker](assets/ANZ-aiops/ansible1/availability-event.png)
+
+### Configure Alerting Profile
+Let us further set the Alerting profile so that the problems can be notified to 3rd party like email, slack-integration, etc. 
+Within your tenant, navigate to "Settings > Alerting > Alerting profiles". Now, add a new alerting profile "Ansible-playbook" and set the rules as below for 
+"Availability event".
+![Ansible-Docker](assets/ANZ-aiops/ansible1/Alerting-profile-setup.png)
+
+### Problem notification
+Once alerting profile is setup, let us setup the problem notification so that the problem information is relayed to ansible-tower. To do so, within your tenant navigate to Settings > Integration > Problem Notifications and click on **+Set up notifications**
+![Ansible-Docker](assets/ANZ-aiops/ansible1/Problem-notification-1.png)
+
+Select **Ansible Tower** as the 3rd party integration tool
+![Ansible-Docker](assets/ANZ-aiops/ansible1/Problem-notification-2.png)
+
+Configure the notification as below:
+**Ansible Tower job template URL**: URL of template added in step(11)
+**Username**: admin
+**Password**: dynatrace	
+![Ansible-Docker](assets/ANZ-aiops/ansible1/Ansible-problem-notification.png)
+
+## Stimulate the issue that triggers auto-remediation endpoint	
+Now, within your browser go to http://<MACHINE-IP>:3000/login and log-in with incorrect credentials. This would crash the docker in the backend resulting in the service no longer available.
+![Ansible-Docker](assets/ANZ-aiops/ansible1/docker-crashed.png)	
+This would create a problem in Dynatrace and as per the problem-notification set, it would trigger a notification to template and trigger the playbook automatically. 
+
+### Initial analysis
+The remediation would perform initial analysis on the problem like the problem-type, severity, collecting logs and push these as comments on the problem.
+![Ansible-Docker](assets/ANZ-aiops/ansible1/initial-analysis.png)
+
+### Auto-remediation
+Further, it would start the docker that has crashed due to incorrect logging and push a deployment event on the service:
+![Ansible-Docker](assets/ANZ-aiops/ansible1/docker-start.png)
+![Ansible-Docker](assets/ANZ-aiops/ansible1/custom-annotation.png)
+
+### Validating the auto-remediation
+Next, the playbook will create a synthetic monitor and run the user-actions on it to validate if the application is up entirely and there are no issues.![Ansible-Docker](assets/ANZ-aiops/ansible1/synthetic-monitor.png)
+
+### Complete auto-remediation
+Once completed, it would push the information in DT indicating that the remediation has been completed succesfully.
+![Ansible-Docker](assets/ANZ-aiops/ansible1/problem-completion.png)
+
+Positive: We won't close the problem as yet, so as DAVIS AI ingests the information and flag if the remediation had any issues.
