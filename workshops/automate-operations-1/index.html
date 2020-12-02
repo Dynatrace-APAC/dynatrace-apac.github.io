@@ -65,72 +65,98 @@
 <li>To <strong>run a docker in interactive bash</strong>: <code>docker run -it <CONTAINER> /bin/bash</code></li>
 <li>To <strong>delete all the unused images</strong>: <code>docker system prune -a -f</code></li>
 <li>To <strong>pull a particular image</strong>: <code>docker pull <docker-image></code></li>
-<li>Jenkins pipeline: Command: <code>https://github.com/nikhilgoenkatech/JenkinsBankApp</code></li>
+<li><strong>Jenkins pipeline</strong>: Command: <code>https://github.com/nikhilgoenkatech/JenkinsBankApp</code></li>
 </ul>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="Preconfiguration Setup" duration="0">
-        <p>We will be using dockers to stimulate and remediate the issues, so ansible-tower docker will communicate with the other dockers using docker-network. In order it works as expected, start with checking if you already have a network present by issuing <code>docker network ls</code> If not, create a network by issuing the command <code>docker network create mynetwork</code></p>
-<p>Now, run <strong>ansible-tower docker</strong> as<code>docker create -v /var/lib/postgresql/9.6/main --name tower-data nikhilgoenka/ansibletower /bin/true</code></p>
+        <p>We will run some commands that would need root permissions, so make sure you are root by running <code>sudo su</code></p>
+<p>We will be running application on dockers to stimulate and remediate the issues; so ansible-tower docker should be able communicate with the other dockers using docker-network.</p>
+<p>In order it works as expected, start with checking if you already have a network present by issuing  <code>docker network ls</code> If there is no network, create a network by issuing the command: <code>docker network create mynetwork</code></p>
+<p>Now, run <strong>ansible-tower docker</strong> as <code>docker create -v /var/lib/postgresql/9.6/main --name tower-data nikhilgoenka/ansibletower /bin/true</code></p>
 <p>The above would create a postgres data volume which can be used to retain and retrieve the ansible-tower data. Once, the volume is created, run the ansible-tower docker as <code>docker run -d --network mynetwork --name ansible-tower --volumes-from tower-data -p 8090:443 nikhilgoenka/ansibletower</code></p>
-<p>From within your terminal, let us install <strong>python-docker</strong> on the hosts so that ansible-tower can perform operations on the host by running the following command <code>pip install docker</code></p>
-<p>We will use d1pacmworkshop user to access/change/modify docker, so give it required permissions on the docker. To do so, run <code>sudo usermod -aG docker d1pacmworkshop</code> This would add d1pacmworkshop user to docker group and it will get the required permissions to access/change the docker.</p>
-<p>Lastly, navigate to <code>/home/ubuntu/ACMD1Workshop/additional_resources/app_docker/scripts folder</code> and run <code>wget https://raw.githubusercontent.com/nikhilgoenkatech/AIOPSAnsibleBankPlaybooks/main/synthetic-monitor.sh</code> to download the synthetic scripts that would be run in order to validate the auto-remediation.</p>
-<p>Connect to &#34;https://:8090/&#34; and click on &#34;Advanced&#34; followed by Proceed to <a href="IP:8090" target="_blank">IP:8090</a>   <img alt="Ansible-Docker" src="img/8429a8e6f050787.png"></p>
-<p>Run the docker for <strong>SampleBankApp</strong> as below: docker run –network mynetwork -d –name SampleBankApp -p 3000:3000 nikhilgoenka/sample-bank-app:1.0 Access the sample-bank app from your browser at http://:3000/login to populate the service &#34;node-bank&#34; under &#34;Transactions &amp; Services&#34;</p>
+<p>From within your terminal, let us install <strong>python-docker</strong> on the hosts so that ansible-tower can perform operations on the host. To install python-docker, run <code>apt-get install python-pip</code> followed by <code>pip install docker</code>. This would install docker library that ansible would use in order to remediate the issue.</p>
+<p>Further, we would need d1pacmworkshop user to access/change/modify docker, so let us give it required permissions on the docker. To do so, run<br><code>sudo usermod -aG docker d1pacmworkshop</code> This would add d1pacmworkshop user to docker group and it will get the required permissions to access/change the docker.</p>
+<p>Lastly, navigate to <code>/home/ubuntu/ACMD1Workshop/additional_resources/app_docker/scripts</code> folder and run<br><code>wget https://raw.githubusercontent.com/nikhilgoenkatech/AIOPSAnsibleBankPlaybooks/main/synthetic-monitor.sh</code> to download the synthetic scripts that would be run in order to validate the auto-remediation. Further, give the script execute permission using <code>chmod +x synthetic-monitor.sh</code></p>
+<p>Now, let us run the docker for <strong>SampleBankApp</strong> on which we will run playbooks and remediate issues as below:<br><code>docker rm SampleBankAppdocker run --network mynetwork -d --name SampleBankApp -p 3000:3000 nikhilgoenka/sample-bank-app:1.0</code><br> This would start the sample-bank-app on port 3000.</p>
+<p>Connect to your ansible-tower instance by opening &#34;https://my-IP:8090/&#34; (replace my-IP with your instance IP) in your browser and click on &#34;Advanced&#34; followed by proceed<br><img alt="Ansible-Docker" src="img/8429a8e6f050787.png"></p>
+<p>Also, access the sample-bank app from your browser at &#34;http://MY-IP:3000/login&#34; to populate the service &#34;node-bank&#34; under &#34;Transactions &amp; Services&#34;</p>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="Configure Ansible" duration="0">
-        <p>Login into your ansible docker using credentials &#34;admin&#34; and password &#34;dynatrace&#34;. <img alt="Ansible-Docker" src="img/ed41c6d1a9f1b2c7.png"></p>
-<p>Import the license by clicking on &#34;Browse&#34; and uploading the license that was earlier shared with you in email. <img alt="Ansible-Docker" src="img/28c582e3351a608.png"></p>
+        <p>Login into your ansible docker using credentials <strong>admin</strong> and password <strong>dynatrace</strong><img alt="Ansible-Docker" src="img/ed41c6d1a9f1b2c7.png"></p>
+<p>Import the license by clicking on &#34;Browse&#34; and uploading the license that was earlier shared with you in email.<br><img alt="Ansible-Docker" src="img/28c582e3351a608.png"></p>
+<p>Ansible Architecture consists of following important pillars which would need to be configured in order to leverage its functionality:</p>
+<ol type="1">
+<li><strong>Inventory</strong>: Inventory is a collection of your hosts. So, all the hosts under one-app can be part of your inventory.</li>
+<li><strong>Projects</strong>: Project is a collection of playbooks that would run on different hosts/inventories.</li>
+<li><strong>Credentials</strong> : Credentials are the credentials that ansible playbook would use to SSH on your hosts/inventories.</li>
+<li><strong>Template</strong> : The playbook can have it&#39;s own set of rules like vars, etc. and are referred to as Job-templates. So, let us configure each of these important parameters.</li>
+</ol>
 <h2 is-upgraded>Setting up inventory</h2>
-<p>Now, create the inventory by clicking on <strong>Inventory</strong> in the left-side as seen below: <img alt="Ansible-Docker" src="img/d9b2a43f4065f57b.png"></p>
-<p>That would open the page displaying the existing inventories. Delete the existing inventory for a clearer view before adding one as seen below: <img alt="Ansible-Docker" src="img/a7f34e54b748e6dc.png"><img alt="Ansible-Docker" src="img/a1bd0d956896acf6.png"></p>
-<p>Negative: Inventories consists of all the hosts that you plan to run the playbook on. So, inventories act as the repository of the hosts.</p>
-<p>Once you add the inventory, you will get an option to <strong>add hosts</strong> for that inventory. Add the host by navigating to the &#34;Hosts&#34; tab. The host can be added with host-name= and description as &#34;Application-Docker-Server&#34;. <img alt="Ansible-Docker" src="img/d2a535e69184df02.png"><img alt="Ansible-Docker" src="img/fcd51b21609ae8a3.png"></p>
+<p>Now, create the inventory by clicking on <strong>Inventory</strong> in the left-side as seen below:<br><img alt="Ansible-Docker" src="img/d9b2a43f4065f57b.png"></p>
+<p>That would open the page displaying the existing inventories. Delete the existing inventory for a clearer view before adding one as seen below:<br><strong>Delete existing inventory and select &#34;Inventory&#34;<br></strong><img alt="Ansible-Docker" src="img/a7f34e54b748e6dc.png"></p>
+<p><strong>Inventory Details<br></strong><img alt="Ansible-Docker" src="img/a1bd0d956896acf6.png"></p>
+<aside class="warning"><p>Inventories consists of all the hosts that you plan to run the playbook on. So, inventories act as the repository of the hosts.</p>
+</aside>
+<p>Once you add the inventory, you will get an option to <strong>add hosts</strong> for that inventory. Add the host by navigating to the &#34;Hosts&#34; tab.<br> Add host with host-name=my-IP and description as &#34;Application-Docker-Server&#34; (replace my-IP with the actual IP of your instance).</p>
+<p><strong>Add hosts<br></strong><img alt="Ansible-Docker" src="img/d2a535e69184df02.png"></p>
+<p><strong>New host details<br></strong><img alt="Ansible-Docker" src="img/fcd51b21609ae8a3.png"></p>
 <h2 is-upgraded>Setting up Project</h2>
-<p>Similarly, let us add a <strong>project</strong>. Project is a collection of ansible playbooks. To add/edit projects, click on &#34;Projects&#34;. Start by deleting the existing &#34;Demo Project&#34; for a cleaner view, followed by clicking on &#34;+&#34; and &#34;Project&#34; to add your projects.    <strong>Project-name</strong>: <code>Application-playbooks</code>    <strong>SCM Type</strong>: Git    <strong>SCM URL</strong>: <code>https://github.com/nikhilgoenkatech/AIOPSAnsibleBankPlaybooks</code></p>
-<p class="image-container"><img alt="Ansible-Docker" src="img/7a98800b0528f3ea.png"></p>
+<aside class="special"><p>Project is a collection of ansible playbooks.</p>
+</aside>
+<p>So, let us add a <strong>project</strong>. To add/edit projects, click on &#34;Projects&#34;. Start by deleting the existing &#34;Demo Project&#34; for a cleaner view, followed by clicking on &#34;+&#34; and &#34;Project&#34; to add your projects.<br><strong>Project-name</strong>: Application-playbooks<br><strong>SCM Type</strong>: Git<br><strong>SCM URL</strong>: <code>https://github.com/nikhilgoenkatech/AIOPSAnsibleBankPlaybooks</code></p>
+<p><strong>Create Project<br></strong><img alt="Ansible-Docker" src="img/7a98800b0528f3ea.png"></p>
 <h2 is-upgraded>Setting up Credentials</h2>
-<p>With the hosts and playbooks added, now add the credentials that ansible will use in order to connect to the configured hosts and run the playbook from projects. Navigate to <strong>Credentials</strong> as shown below. <img alt="Ansible-Docker" src="img/1266198c870b7d8b.png"></p>
-<p>Delete the existing <code>Demo Credentials</code> and further, add credentials for your AWS host.    <strong>Name</strong>: Application-servers    <strong>Credential Type</strong>: Machine    <strong>Username</strong>: <code>d1pacmworkshop</code>    <strong>Password</strong>: <code>dynatrace</code><img alt="Ansible-Docker" src="img/62e243f1ec80fd90.png"></p>
+<p>With the hosts and playbooks added, now add the credentials that ansible will use in order to connect to the configured hosts and run the playbook from projects.<br> Navigate to <strong>Credentials</strong> as shown below.<br><img alt="Ansible-Docker" src="img/c7f2cb574e3e5a8f.png"></p>
+<p>Delete the existing &#34;Demo Credentials&#34; and add credentials for your AWS host.</p>
+<p><strong>Name</strong>: Application-servers<br><strong>Credential Type</strong>: Machine<br><strong>Username</strong>: <code>d1pacmworkshop</code><br><strong>Password</strong>: <code>dynatrace</code><br><img alt="Ansible-Docker" src="img/e3a1e7f81fd32eeb.png"></p>
 <h2 is-upgraded>Setting up Templates</h2>
-<p>Add a template by navigating to <strong>Templates</strong> on the left-hand side and configure as below:</p>
-<p><strong>Name</strong>: Process-unavailable <strong>Inventory</strong>: Application-DT-inventory <strong>Project</strong>: Application-playbooks <strong>Playbook</strong>: process-restart.yaml	</p>
-<p>Add the extra variables as below: <strong>tenanturl</strong>: <strong>dttoken</strong>: <strong>dtcommentapiurl</strong>: /api/v1/problem/details/&#123;&#123;pid}}/comments?Api-Token=&#123;&#123;dttoken}} <strong>dtdeploymentapiurl</strong>: /api/v1/events?Api-Token=&#123;&#123;dttoken}} <strong>my_ip</strong>: </p>
-<p>Positive: Replace tenant-url with <code>https://xxx.live.dynatrace.com/</code> for SaaS where for managed, change to <code>https://managed.server/e/{environment-id}</code><img alt="Ansible-Docker" src="img/3c762fb29bf3626.png"></p>
+<p>Add a template by navigating to <strong>Templates</strong> on the left-hand side and delete the existing template before proceeding to add a new <strong>Job Template</strong>:</p>
+<p><strong>Delete Templates<br></strong><img alt="Ansible-Docker" src="img/25db4f5e9bc756a7.png"></p>
+<p>Configure the Template with the values as below:</p>
+<p><strong>Name</strong>: Process-unavailable<br><strong>Inventory</strong>: Application-DT-inventory<br><strong>Project</strong>: Application-playbooks<br><strong>Playbook</strong>: process-restart.yaml</p>
+<p>Also, please configure extra variables which will be used in your playbook as below:</p>
+<p><strong>tenanturl</strong>: your-tenant-url<br><strong>dttoken</strong>: your-token<br><strong>dtcommentapiurl</strong>: your-tenant-url/api/v1/problem/details/&#123;&#123;pid}}/comments?Api-Token=&#123;&#123;dttoken}}<br><strong>dtdeploymentapiurl</strong>: your-dynatrace-url/api/v1/events?Api-Token=&#123;&#123;dttoken}}<br><strong>my_ip</strong>: your-aws-instance-ip</p>
+<p>Also, please select the <strong>Prompt on launch</strong> which would enable the dynatrace-payload to be available for the job when triggered.</p>
+<aside class="special"><p>Replace your-tenant-url with &#34;https://xxx.live.dynatrace.com&#34; for SaaS where for managed, change to &#34;https://managed.server/e/{environment-id}&#34;<br></p>
+</aside>
+<p>A template would like below once configured fully.<br><img alt="Ansible-Docker" src="img/22ac300cb64d2f2a.png"></p>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="Integrate Ansible-tower and Dynatrace" duration="0">
         <h2 is-upgraded>Availability alert</h2>
-<p>Enable the <strong>availability alert</strong> for the NodeJS process. Within dynatrace-tenant, navigate to **Technologies &gt; NodeJS Process-Group &gt; Settings &gt; Availability monitoring ** and toggle the &#34;Enable process group availability monitoring&#34; as below:	 <img alt="Ansible-Docker" src="img/a8d466ccde3751a4.png"></p>
+<p>Enable the <strong>availability alert</strong> for the NodeJS process. Within dynatrace-tenant, navigate to <strong>Technologies &gt; NodeJS Process-Group &gt; Settings &gt; Availability monitoring</strong> and toggle the &#34;Enable process group availability monitoring&#34; as below:<br><img alt="Ansible-Docker" src="img/a8d466ccde3751a4.png"></p>
 <h2 is-upgraded>Configure Alerting Profile</h2>
-<p>Let us further set the Alerting profile so that the problems can be notified to 3rd party like email, slack-integration, etc. Within your tenant, navigate to &#34;Settings &gt; Alerting &gt; Alerting profiles&#34;. Now, add a new alerting profile &#34;Ansible-playbook&#34; and set the rules as below for &#34;Availability event&#34;. <img alt="Ansible-Docker" src="img/dcb146f4daf0463f.png"></p>
+<p>Let us further set the Alerting profile so that the problems can be notified to 3rd party like email, slack-integration, etc.<br> Within your tenant, navigate to &#34;Settings &gt; Alerting &gt; Alerting profiles&#34;. Now, add a new alerting profile &#34;Ansible-playbook&#34; and set the rules as below for &#34;Availability event&#34;.<br><img alt="Ansible-Docker" src="img/dcb146f4daf0463f.png"></p>
 <h2 is-upgraded>Problem notification</h2>
-<p>Once alerting profile is setup, let us setup the problem notification so that the problem information is relayed to ansible-tower. To do so, within your tenant navigate to Settings &gt; Integration &gt; Problem Notifications and click on <strong>+Set up notifications</strong><img alt="Ansible-Docker" src="img/1aeaa3c8c1a45633.png"></p>
-<p>Select <strong>Ansible Tower</strong> as the 3rd party integration tool <img alt="Ansible-Docker" src="img/efe56e19aa2c9f8b.png"></p>
-<p>Configure the notification as below: <strong>Ansible Tower job template URL</strong>: URL of template added in step(11) <strong>Username</strong>: admin <strong>Password</strong>: dynatrace	 <img alt="Ansible-Docker" src="img/5ad9a6402c8577d9.png"></p>
+<p>Once alerting profile is setup, let us setup the problem notification so that the problem information is relayed to ansible-tower. To do so, within your tenant navigate to <strong>Settings &gt; Integration &gt; Problem Notifications and click on Set up notifications<br></strong><img alt="Ansible-Docker" src="img/1aeaa3c8c1a45633.png"></p>
+<p>Select <strong>Ansible Tower</strong> as the 3rd party integration tool<br><img alt="Ansible-Docker" src="img/efe56e19aa2c9f8b.png"></p>
+<p>Configure the notification as below:</p>
+<p><strong>Ansible Tower job template URL</strong>: URL of template added earlier<br><strong>Username</strong>: admin<br><strong>Password</strong>: dynatrace<br><img alt="Ansible-Docker" src="img/8b8f859ad7def2d3.png"></p>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="Stimulate the issue that triggers auto-remediation endpoint" duration="0">
-        <p>Now, within your browser go to http://:3000/login and log-in with incorrect credentials. This would crash the docker in the backend resulting in the service no longer available. <img alt="Ansible-Docker" src="img/83a150cb07fd61e8.png">	 This would create a problem in Dynatrace and as per the problem-notification set, it would trigger a notification to template and trigger the playbook automatically.</p>
+        <p>Now, within your browser go to http://my-IP:3000/login and log-in with <strong>incorrect credentials</strong>. This would crash the docker in the backend resulting in the service no longer available.<br><img alt="Ansible-Docker" src="img/83a150cb07fd61e8.png"></p>
+<p>This triggers a problem in Dynatrace and according to the problem-notification configured earlier, it would send a notification to ansible job-template and trigger the playbook automatically.</p>
 <h2 is-upgraded>Initial analysis</h2>
-<p>The remediation would perform initial analysis on the problem like the problem-type, severity, collecting logs and push these as comments on the problem. <img alt="Ansible-Docker" src="img/7c8d134464d382ef.png"></p>
+<p>The remediation would perform initial analysis on the problem like the problem-type, severity, collecting logs and push these as comments on the problem.<br><img alt="Ansible-Docker" src="img/7c8d134464d382ef.png"></p>
 <h2 is-upgraded>Auto-remediation</h2>
-<p>Further, it would start the docker that has crashed due to incorrect logging and push a deployment event on the service: <img alt="Ansible-Docker" src="img/7e614bae6a1a4868.png"><img alt="Ansible-Docker" src="img/dbbdab3b686fc66c.png"></p>
+<p>Further, it would start the docker that has crashed due to incorrect logging and push a deployment event on the service:<br><img alt="Ansible-Docker" src="img/7e614bae6a1a4868.png"><br><img alt="Ansible-Docker" src="img/dbbdab3b686fc66c.png"></p>
 <h2 is-upgraded>Validating the auto-remediation</h2>
-<p>Next, the playbook will create a synthetic monitor and run the user-actions on it to validate if the application is up entirely and there are no issues.<img alt="Ansible-Docker" src="img/56ae26031beae13.png"></p>
+<p>Next, the playbook will create a synthetic monitor and run the user-actions on it to validate if the application is up entirely and there are no issues.<br><img alt="Ansible-Docker" src="img/56ae26031beae13.png"></p>
 <h2 is-upgraded>Complete auto-remediation</h2>
-<p>Once completed, it would push the information in DT indicating that the remediation has been completed succesfully. <img alt="Ansible-Docker" src="img/998fbea1439dc3a0.png"></p>
-<p>Positive: We won&#39;t close the problem as yet, so as DAVIS AI ingests the information and flag if the remediation had any issues.</p>
+<p>Once completed, it would push the information in DT indicating that the remediation has been completed succesfully.<br><img alt="Ansible-Docker" src="img/998fbea1439dc3a0.png"></p>
+<aside class="special"><p>We won&#39;t close the problem as yet and DAVIS AI validate the auto-remediation and flag if it has any issues.<br></p>
+</aside>
 
 
       </google-codelab-step>
