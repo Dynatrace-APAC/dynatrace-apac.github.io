@@ -1,0 +1,490 @@
+
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+<meta name="theme-color" content="#4F7DC9">
+<meta charset="UTF-8">
+<title>Dynatrace with OpenTelemetry</title>
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+<style>
+.success{color:#1e8e3e}.error{color:red} </style>
+</head>
+<body>
+<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+<google-codelab codelab-gaid="UA-175467274-1" id="opentelemetry" title="Dynatrace with OpenTelemetry" environment="web" feedback-link="mailto:APAC-SE-Central@dynatrace.com">
+<google-codelab-step label="Prepare the environment" duration="0">
+<p>In this step we will prepare the environment for the hands on exercises</p>
+<ul>
+<li>Install OneAgent</li>
+<li>Enable OpenTelemetry instrumentation</li>
+<li>Clone the repos for the Java and Go exercise</li>
+</ul>
+<h2 is-upgraded>Step 1: Install OneAgent</h2>
+<ul>
+<li>Access the Dynatrace tenant provided to you</li>
+<li>In your RDP Windows instance provided to you, download the Windows-based OneAgent from Deploy Dynatrace menu</li>
+<li>Start the installation with default settings</li>
+</ul>
+<h2 is-upgraded>Step 2: Enable OpenTelemetry and OpenTracing instrumentation</h2>
+<ul>
+<li>Go to your environment, under <code>Settings</code> &gt; <code>Server-side service monitoring</code> &gt; <code>Deep Monitoring</code> &gt; <code>OpenTelemetry and OpenTracing</code></li>
+<li>You might also be required to go to <code>New OneAgent features</code> to enable some flags <img alt="Deep Monitoring" src="img/b29864359036d6c3.gif"></li>
+</ul>
+<h2 is-upgraded>Step 3: Clone the repos</h2>
+<ul>
+<li>Launch Visual Studio Code</li>
+<li>Click on <code>clone repository</code>, and copy/enter</li>
+</ul>
+<p><code>https://github.com/Dynatrace-APAC/vhot2021.git</code></p>
+<p class="image-container"><img alt="CloneRepo" src="img/fea3859ee46a8f1e.png"></p>
+<ul>
+<li>Select the folder (e.g. Documents folder) to store the cloned repo <img alt="Folder" src="img/521bb929429b91b7.png"></li>
+<li>If prompted to open the cloned repository, click on <code>Open</code></li>
+</ul>
+<p class="image-container"><img alt="Open" src="img/eda8d78e2bc8c82c.png"></p>
+<h2 is-upgraded>You&#39;ve arrived</h2>
+<ul>
+<li>You are now ready to start the hands on! <img alt="Ready" src="img/f30d5012cdf3a4b4.png"></li>
+</ul>
+</google-codelab-step>
+<google-codelab-step label="OneAgent out-of-the-box instrumentation" duration="0">
+<p>In this step we will compile our Java Springboot application and explore the out-of-the-box instrumentation of the OneAgent</p>
+<h2 is-upgraded>Step 1: Compile and run the application</h2>
+<ul>
+<li>Edit <code>hazelcast-client.yaml</code> in VHOT2021 &gt; 02_OpenTracing &gt; src\main &gt; resources <img alt="EditFile" src="img/faba449fc753fda7.png"></li>
+<li>Input the public IP address given to you on the Zoom chat.</li>
+<li>Save the file, example <code>CTRL+S</code></li>
+<li>Open up a Terminal from the top menu bar <img alt="EditFile" src="img/547d408099f9cc13.png"></li>
+<li>Change diretory to <code>02_OpenTracing</code> and run this command <code>mvn spring-boot:runpowershell<br>PS C:\Users\dtu.training\Documents\vhot2021> cd 02_OpenTracing<br>PS C:\Users\dtu.training\Documents\vhot2021\02_OpenTracing> mvn spring-boot:run</code><br> - Check that the program compiles without any errors and it connects to the HazelCast nodes - Open a new terminal tab <img alt="EditFile" src="img/c1f48439c350341.png"> - Enter <code>curl.exe http://localhost:8080/get?key=testkey</code> - You will observe a response of <code>{"response":null}</code>. This is normal as you have not populated the HazelCast map with entries. <code>powershell<br>PS C:\Users\dtu.training\Documents\vhot2021> curl.exe http://localhost:8080/get?key=testkey<br>{"response":null}<br></code></li>
+</ul>
+<h2 is-upgraded>Step 2: Populate the HazelCast instance with entries and retrieve the data</h2>
+<ul>
+<li>Enter <code>curl.exe http://localhost:8080/pop1powershell<br>PS C:\Users\dtu.training\Documents\vhot2021> curl.exe http://localhost:8080/pop1<br>{"response":"100 entry inserted to the map with key: 1.2.3.4-* , starting with 1 "}</code><br> - Retrieve the data with the key format as <code><your public ip>-1</your></code>, example: <code>powershell<br>PS C:\Users\dtu.training\Documents\vhot2021> curl.exe http://localhost:8080/get?key=1.2.3.4-1<br>{"response":1.2.3.4-1}<br></code></li>
+<li>Execute a few more <code>get</code> transactions with different keys (you can use the any number from 1 to 99). If you use a number outside of the range, you will get a response of <code>null</code></li>
+<li>Once done, go back to the first terminal tab and terminate the Java program by using <code>CTRL+C</code></li>
+</ul>
+<p class="image-container"><img alt="EditFile" src="img/f0671c87412703b5.png"></p>
+<pre><code language="language-powershell" class="language-powershell">[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  17:53 min
+[INFO] Finished at: 
+[INFO] ------------------------------------------------------------------------
+Terminate batch job (Y/N)?
+</code></pre>
+<p>Enter Y</p>
+<h2 is-upgraded>Step 3: Explore Dynatrace PurePaths after auto instrumentation</h2>
+<ul>
+<li>Access your Dynatrace tenant in the browser</li>
+<li>Go to Transactions and Services &gt; CommandController &gt; Purepaths <img alt="OpenTracingPurePaths" src="img/48975275df4b4458.gif"></li>
+<li>Choose the /pop1 transaction <img alt="OpenTracingPurePaths" src="img/da20a78e7c693c7d.gif"></li>
+<li>You will observe that the totoal transaction response time was 3 secs, but all of the Java method calls were less than 30 ms. <img alt="OpenTracingPurePaths" src="img/14d37458b2ae8c.png"></li>
+<li>Clearly something else is responsible</li>
+</ul>
+</google-codelab-step>
+<google-codelab-step label="Using OpenTracing instrumentation libaries" duration="0">
+<p>In this step we extend the Java SpringBoot application with an available OpenTracing instrumentation libary.</p>
+<h2 is-upgraded>Step 1: Decorate the java code with the HazelCast OpenTracing libaries</h2>
+<ul>
+<li>Open <code>CommandController.java</code> from src\main &gt; java\com\hazelcast\kubernetes <img alt="EditFile" src="img/767835b1f273c820.png"></li>
+<li>Import the OpenTracing Libraries - Comment line 3 and 7</li>
+</ul>
+<pre><code language="language-java" class="language-java">  // /* ~~ OpenTracing ~~
+  import io.opentracing.contrib.hazelcast.TracingHazelcastInstance;
+  import io.opentracing.Tracer;
+  import io.opentracing.util.GlobalTracer;
+  //*/
+</code></pre>
+<ul>
+<li>Initialze the OpenTracing <a href="https://github.com/opentracing/opentracing-java/blob/master/opentracing-util/src/main/java/io/opentracing/util/GlobalTracer.java" target="_blank">GlobalTracer</a> - Comment line 28 and 32</li>
+</ul>
+<pre><code language="language-java" class="language-java">  // /* ~~ OpenTracing ~~
+    public Tracer initTracer() {
+        return GlobalTracer.get();
+    }
+  // */
+</code></pre>
+<ul>
+<li>Enhance or warp the HazelcastInstance with <a href="https://github.com/opentracing-contrib/java-hazelcast" target="_blank">TracingHazelcastInstance</a> - Comment line 35 and 42</li>
+</ul>
+<pre><code language="language-java" class="language-java">  // /* ~~ OpenTracing ~~
+    if (hazelcastInstance instanceof TracingHazelcastInstance) {
+        return hazelcastInstance;
+    }
+    hazelcastInstance = new TracingHazelcastInstance(
+            HazelcastClient.newHazelcastClient(),
+            false);
+  // */
+</code></pre>
+<ul>
+<li>Save the file, example <code>CTRL+S</code></li>
+</ul>
+<h2 is-upgraded>Step 2: Compile and run the application</h2>
+<ul>
+<li>Ensure that you are in the first terminal tab and run this command <code>mvn spring-boot:run</code></li>
+</ul>
+<pre><code language="language-powershell" class="language-powershell">  PS C:\Users\dtu.training\Documents\vhot2021\02_OpenTracing&gt; mvn spring-boot:run
+</code></pre>
+<ul>
+<li>Check that the program compiles without any errors and it connects to the HazelCast nodes</li>
+</ul>
+<h2 is-upgraded>Step 3: Populate the HazelCast instance with new entries and retrieve the data</h2>
+<ul>
+<li>Switch to the 2nd terminal tab</li>
+<li>Enter a few <code>get</code> transactions with any values for the key, for example</li>
+</ul>
+<pre><code language="language-powershell" class="language-powershell">  PS C:\Users\dtu.training\Documents\vhot2021&gt; curl.exe http://localhost:8080/get?key=samplekey
+  {&#34;response&#34;:null}
+  PS C:\Users\dtu.training\Documents\vhot2021&gt; curl.exe http://localhost:8080/get?key=1.2.3.4-1
+  {&#34;response&#34;:1.2.3.4-1}
+</code></pre>
+<ul>
+<li>Now, populate the HazelCast cache with new entries, enter <code>curl.exe http://localhost:8080/pop2</code></li>
+</ul>
+<pre><code language="language-powershell" class="language-powershell">  PS C:\Users\dtu.training\Documents\vhot2021&gt; curl.exe http://localhost:8080/pop2
+  {&#34;response&#34;:&#34;100 entry inserted to the map with key: 1.2.3.4-* , starting with 200 &#34;}
+</code></pre>
+<ul>
+<li>Retrieve the data with the key format as <code><your public ip>-200</your></code>, example:</li>
+</ul>
+<pre><code language="language-powershell" class="language-powershell">  PS C:\Users\dtu.training\Documents\vhot2021&gt; curl.exe http://localhost:8080/get?key=1.2.3.4-200
+  {&#34;response&#34;:1.2.3.4-200}
+</code></pre>
+<ul>
+<li>Execute a few more <code>get</code> transactions with different keys (from 200 until 299)</li>
+</ul>
+<h2 is-upgraded>Step 4: Explore Dynatrace PurePaths after implementing OpenTracing libaries</h2>
+<ul>
+<li>Access your Dynatrace tenant in the browser</li>
+<li>Go to Transactions and Services &gt; CommandController &gt; Purepaths</li>
+<li>Choose the /pop2 transaction</li>
+<li>You will observe that we are getting more visibility into the application execution - we are seeing 100 calls made to hazelcast <code>put</code> command, with each command taking about 30 ms, and 100 calls of 30 ms will compound to almost 3 secs! <img alt="OpenTracingPurePaths" src="img/a464a0984f7deddb.gif"></li>
+</ul>
+</google-codelab-step>
+<google-codelab-step label="Producing a simple Span and report it to Dynatrace" duration="0">
+<p>In this step we extend a sample program with an additional OpenTelemetry Span. The sample consists of an HTTP Server which is able to calculate any Fibonacci number. The result of that calculation is getting sent to a Kafka Broker.</p>
+<h2 is-upgraded>Prerequisites</h2>
+<ul>
+<li>OneAgent is already installed on your Workstation</li>
+<li>OpenTelemetry instrumentation for Golang has been enabled for your Dynatrace Environment (<code>Settings</code> &gt; <code>Server-side service monitoring</code> &gt; <code>Deep Monitoring</code> &gt; <code>OpenTelemetry and OpenTracing</code>) <img alt="Deep Monitoring" src="img/de2ff3c5109ea2f9.png"></li>
+</ul>
+<h2 is-upgraded>Step 1: Compile and launch the program</h2>
+<ul>
+<li>Start <code>Visual Studio Code</code> if it has not been started yet and choose the <code>03_OpenTelemetry</code> directory of the previously checked out GitHub Repository.</li>
+<li>In Visual Studio Code open up a Terminal</li>
+<li>Ensure that you are already in the <code>03_OpenTelemetry</code> directory, else change diretory to <code>03_OpenTelemetry</code> directory and compile the program using the command line <code>go build</code>. This produces a file name <code>fib.exe</code> within the current directory.</li>
+</ul>
+<pre><code language="language-powershell" class="language-powershell">  PS C:\Users\dtu.training\Documents\vhot2021&gt; cd 03_OpenTelemetry
+  PS C:\Users\dtu.training\Documents\vhot2021\03_OpenTelemetry&gt; go build
+</code></pre>
+<ul>
+<li>Launch <code>fib.exe</code> via your current Terminal <ul>
+<li>Windows Security likely will ask you to confirm, that this program is allowed to listen on incoming socket connections.</li>
+</ul>
+</li>
+<li>In your Dynatrace Environment navigate to <code>Hosts</code> and select the Workstation you&#39;re working on</li>
+<li>Use either your Browser or <code>curl http://localhost:28080/fib?n=3</code> within a new Terminal to access your new HTTP Service</li>
+<li>Wait until <code>fib.exe</code> shows up among the Processes on this host</li>
+<li>Dynatrace by default has decided to disable monitoring for this executable (<code>Process isn't monitored</code>). Click on the link <code>monitored technologies</code> and override the defaults for this Process Group.</li>
+<li><img alt="Process isn’t monitored" src="img/1466e54877dffd3a.png"></li>
+<li>Within your Terminal press <code>Ctrl-C</code> to shut down <code>fib.exe</code>. Launch <code>fib.exe</code> again.</li>
+<li>Dynatrace in some cases tells you afterwards that this process needs to get restarted yet another time. Within your Terminal press <code>Ctrl-C</code> to shut down <code>fib.exe</code>. Launch <code>fib.exe</code> again.</li>
+<li><img alt="Process must be restarted" src="img/be6525eacc126b3f.png"></li>
+<li>Use either your Browser or <code>curl http://localhost:28080/fib?n=3</code> within a new Terminal to access your new HTTP Service</li>
+<li>Wait for a couple of seconds. After that you should see a PurePath for the HTTP request you just sent to your HTTP Service. <ul>
+<li>The contents of this PurePath is produced by out of the box Sensors of OneAgent</li>
+</ul>
+</li>
+<li><img alt="PurePath" src="img/b7f693568bc566b0.png"></li>
+</ul>
+<h2 is-upgraded>Step 2: Introduce OpenTelemetry to your Application</h2>
+<ul>
+<li>Shut down <code>fib.exe</code> using <code>Ctrl-C</code> within your Terminal if you haven&#39;t done so already</li>
+<li>Lines 16-18 in <code>main.go</code> are required to initialize OpenTelemetry and configure a minimal Span Exporter <ul>
+<li>Delete Line 15 and Line 19 in order to remove the comment. The function <code>main()</code> should now look like this:<br></li>
+</ul>
+<pre><code language="language-go" class="language-go">func main() {
+  if err := initGlobalTracer(nil); err != nil {
+    panic(err)
+  }
+  /* LESSON 05: EXPORTING METRICS
+  initMetricsProvider()
+  */
+  http.HandleFunc(&#34;/fib&#34;, FibServer)
+  http.HandleFunc(&#34;/favicon.ico&#34;, faviconHandler)
+  http.ListenAndServe(&#34;:28080&#34;, nil)
+}
+</code></pre>
+<ul>
+<li>Within function <code>FibServer</code> there exists currently commented out code. These lines are accessing the OpenTelemetry API.</li>
+<li>Delete Lines 28 and 35 in order to enable the currently commented out code. The function <code>FibServer</code> should now look like this: <code>go<br>// FibServer handles HTTP requests for fibonacci calculation<br>func FibServer(w http.ResponseWriter, r *http.Request) {<br>tracer := global.Tracer("http")<br>ctx := context.Background()<br>var span trace.Span<br>ctx, span = tracer.Start(ctx, "http-request")<br>defer span.End()<br>if n, err := getIntParam(r); err != nil {<br>http.Error(w, err.Error(), http.StatusBadRequest)<br>} else {<br>result, numIterations := fibonacci.New().Calc(n)<br>reportMetric(n, numIterations)<br>kafka.Send(result)<br>w.Write([]byte(fmt.Sprintf("%d", result)))<br>}<br>} <br></code></li>
+</ul>
+</li>
+<li>Press <code>Ctrl-S</code> to save your changes in <code>main.go</code></li>
+<li>In your Terminal, compile the program using the command line <code>go build</code></li>
+<li>Launch <code>fib.exe</code> via your current Terminal</li>
+<li>Use either your Browser or <code>curl http://localhost:28080/fib?n=3</code> within a new Terminal to access your new HTTP Service</li>
+</ul>
+<h2 is-upgraded>You&#39;ve arrived</h2>
+<ul>
+<li>The PurePath you just created now contains an additional PurePath Node created via OpenTelemetry <img alt="OTelPurepath" src="img/37e6203fd777ef1f.png"></li>
+</ul>
+</google-codelab-step>
+<google-codelab-step label="Child Spans and Span Attributes" duration="0">
+<p>The OpenTelemetry Span we just created is more or less redundant. The HTTP Sensor of Dynatrace already created the necessary PurePath Node. Whatever we have introduced via OpenTelemetry doesn&#39;t really enrich our experience. In this task our goal is to grant users of Dynatrace deeper insight into what is going on when the Fibonacci number is getting calculated.</p>
+<h2 is-upgraded>Prerequisites</h2>
+<ul>
+<li>You have completed the previous task <code>Producing a simple Span and report it to Dynatrace</code></li>
+</ul>
+<h2 is-upgraded>Step 1: Introduce OpenTelemetry functionality into the Fibonacci function</h2>
+<ul>
+<li>Delete Line 43 and Line 82 in <code>fibonacci.go</code>. It removes the comments around a new version of our Fibonacci code</li>
+<li>Delete Lines 12-41 in <code>fibonacci.go</code>. This is the old version of our Fibonacci code. We don&#39;t need it anymore.</li>
+<li>The source code for the Fibonacci Calculator should now look like this:</li>
+</ul>
+<pre><code language="language-go" class="language-go">    // Fibonacci calculates fibonacci numbers
+    type Fibonacci interface {
+        Calc(n int) (int, int) // Calc has no documentation
+    }
+
+    // New creates a new Fibonacci Calculator
+    func New(ctx context.Context) Fibonacci {
+        return &amp;fibonacci{Context: ctx}
+    }
+
+    type fibonacci struct {
+        Context context.Context
+    }
+
+    // Calc calculates the n-th fibonacci number
+    // The first return value is the fibonacci number to be calculated
+    // The second return value reports the number of recursive invocation that were required in order to calculate the result
+    func (f *fibonacci) Calc(n int) (int, int) {
+        var span trace.Span
+        tracer := global.Tracer(&#34;&#34;)
+        f.Context, span = tracer.Start(f.Context, fmt.Sprintf(&#34;fib(%d)&#34;, n))
+        defer span.End()
+
+        if n &lt; 3 {
+            span.SetAttributes(label.Key(&#34;fib.result&#34;).Int(1))
+            return 1, 1
+        }
+        a, iterA := f.Calc(n - 1)
+        b, iterB := f.Calc(n - 2)
+        result := a + b
+        span.SetAttributes(label.Key(&#34;fib.result&#34;).Int(result))
+        return result, iterA + iterB + 1
+    }  
+</code></pre>
+<ul>
+<li>Press <code>Ctrl-S</code> in order to save the changes you&#39;ve made in <code>fibonacci.go</code></li>
+<li>Because of these changes we are now getting an error in <code>main.go</code>. Creating a Fibonacci Calculator now requires an additional parameter</li>
+<li>Delete Line 45 and 65 in <code>main.go</code>. It gets rid of the comments around a new version of the function <code>FibServer</code></li>
+<li>Delete Lines 26-43 in <code>main.go</code>. This is the old version of function <code>FibServer</code>. We don&#39;t need it anymore.</li>
+<li>Function <code>FibServer</code> should now look like this:</li>
+</ul>
+<pre><code language="language-go" class="language-go">	// FibServer handles HTTP requests for fibonacci calculation
+	func FibServer(w http.ResponseWriter, r *http.Request) {
+		tracer := global.Tracer(&#34;http&#34;)
+		ctx := context.Background()
+
+		var span trace.Span
+		ctx, span = tracer.Start(ctx, &#34;http-request&#34;)
+		defer span.End()
+
+		if n, err := getIntParam(r); err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		} else {
+			result, numIterations := fibonacci.New(ctx).Calc(n)
+			reportMetric(n, numIterations)
+			kafka.Send(result)
+			w.Write([]byte(fmt.Sprintf(&#34;%d&#34;, result)))
+		}
+	}
+</code></pre>
+<ul>
+<li>Press <code>Ctrl-S</code> in order to save the changes you&#39;ve made in <code>main.go</code></li>
+<li>Shut down <code>fib.exe</code> using <code>Ctrl-C</code> within your Terminal if you haven&#39;t done so already.</li>
+<li>In your Terminal, compile the program using the command line <code>go build</code></li>
+<li>Launch <code>fib.exe</code> via your current Terminal</li>
+<li>Use either your Browser or <code>curl http://localhost:28080/fib?n=3</code> within a new Terminal to access your new HTTP Service</li>
+<li>The PurePath you just created now contains an additional PurePath Node per invocation of the Fibonacci Calculator&#39;s <code>Calc</code> function. <img alt="OTelPurepathCalc" src="img/5a131b15fcd99b26.png"></li>
+</ul>
+<h2 is-upgraded>Step 2: Tell Dynatrace which OpenTelemetry Attributes are of interest for you</h2>
+<ul>
+<li>In Dynatrace navigate to <code>Settings</code> &gt; <code>Server-side service monitoring</code> &gt; <code>Span Attributes</code>. Add an additional item here. The key you want Dynatrace to capture is <code>fib.result</code>. <img alt="SpanAttributes" src="img/c9d73f8eb0b8a6f4.gif"></li>
+<li>Use either your Browser or <code>curl http://localhost:28080/fib?n=3</code> within a new Terminal to access your new HTTP Service <img alt="SpanAttributes" src="img/fe9167641aa2c796.gif"></li>
+</ul>
+<h2 is-upgraded>Step 3: Capture a Request Attribute based on the OpenTelemetry Key</h2>
+<ul>
+<li>In Dynatrace navigate to <code>Settings</code> &gt; <code>Server-side service monitoring</code> &gt; <code>Request Attributes</code>.</li>
+<li>The Data Source for our Request Attribute needs to be a <code>Span Attribute</code>.</li>
+<li>The Key of the Request Attribute is called <code>fib.result</code> (unless you have chosen a different name)</li>
+<li>We are just interested in the last value within the PurePath - any intermediate results should be ignored.</li>
+<li>Remember to click on <code>SAVE</code> in order for the Request Attribute to be registered! <img alt="ReqAttributes" src="img/1d9b7e5c7c8a930c.gif"></li>
+<li>Use either your Browser or <code>curl http://localhost:28080/fib?n=3</code> within a new Terminal to access your new HTTP Service</li>
+</ul>
+<h2 is-upgraded>You&#39;ve arrived</h2>
+<ul>
+<li>The PurePath you just created now contains an additional PurePath Node per invocation of the Fibonacci Calculator&#39;s <code>Calc</code> function. In addition the Request Attribute you just created is also available on every PurePath. <img alt="ReqAttributes" src="img/b7992d36678a8889.gif"></li>
+</ul>
+</google-codelab-step>
+<google-codelab-step label="Instrumentation Libraries" duration="0">
+<p>Compile Time instrumentation might be fun to some extent, but it&#39;s usually not your job to do that. The idea behind OpenTelemetry is that third party software either already comes fully instrumented (with all the necessary source code for OpenTelemetry included) or alternatively is getting provided as an optional feature via a helper library.</p>
+<h2 is-upgraded>Prerequisites</h2>
+<ul>
+<li>You have completed the previous task <code>Child Spans and Span Attributes</code></li>
+</ul>
+<h2 is-upgraded>Step 1: Introduce OpenTelemetry via instrumentation library</h2>
+<ul>
+<li>Line 12 in <code>kafka.go</code> refers to the Kafka Broker that is supposed to receive messages. Replace it with the URL you&#39;ve been given from your instructor at the beginning of this task.</li>
+<li>Line 37 in <code>kafka.go</code> represents the magic that&#39;s required to introduce OpenTelemetry Tracing capabilities to an existing Kafka Producer <ul>
+<li>Delete Lines 36 and 38 in order to get rid of the comment</li>
+<li>The function <code>newSyncProducer</code> should now look like this</li>
+</ul>
+</li>
+</ul>
+<pre><code language="language-go" class="language-go">    // newSyncProducer has no documentation
+    func newSyncProducer(brokers []string) (sarama.SyncProducer, error) {
+        config := sarama.NewConfig()
+        config.Version = sarama.V2_0_0_0
+        config.Producer.Return.Successes = true
+
+        producer, err := sarama.NewSyncProducer(brokers, config)
+        if err != nil {
+            return nil, err
+        }
+
+        producer = otelsarama.WrapSyncProducer(config, producer)
+        return producer, nil
+    }  
+</code></pre>
+<ul>
+<li>Press <code>Ctrl-S</code> in order to save the changes you&#39;ve made in <code>kafka.go</code></li>
+<li>Shut down <code>fib.exe</code> using <code>Ctrl-C</code> within your Terminal if you haven&#39;t done so already.</li>
+<li>Compile the program using the command line <code>go build</code>. This produces a file name <code>fib.exe</code> within the current directory.</li>
+<li>Launch <code>fib.exe</code> via your current Terminal</li>
+<li>Use either your Browser or <code>curl http://localhost:28080/fib?n=3</code> within a new Terminal to access your new HTTP Service</li>
+<li>The PurePath you just created contains an additional PurePath Node for when the application reaches out to the Kafka Broker <img alt="OTelPurepathKafka" src="img/1991ddcfe7cbb2ad.png"></li>
+</ul>
+<h2 is-upgraded>Step 2: Introduce OpenTelemetry via instrumentation library</h2>
+<ul>
+<li>Investigate the additional PurePath Node. What additional data does it potentially offer?</li>
+<li>Introduce - like in LESSON 02 - the necessary configuration settings in order to capture that information</li>
+<li>Optionally you can also make that data available via Request Attribute <ul>
+<li>Why is not necessarily EVERY Span Attribute also a candidate for a Request Attribute?</li>
+</ul>
+</li>
+</ul>
+<h2 is-upgraded>You&#39;ve arrived</h2>
+<ul>
+<li>You have successfully instrumented Kafka Client communication without modifying the original library.</li>
+</ul>
+</google-codelab-step>
+<google-codelab-step label="Creating Instrumentation Libraries" duration="0">
+<p>With LESSION 02 we actually overshot. First of all, we had to modify the existing source code of the Fibonacci Calculator. This is rarely possible for third party libraries. But even then you&#39;d rather prefer to use the original libraries instead of patching them. Second, our solution traces ALL the invocations of the <code>Calc</code> function. Trace sizes easily explode given a sufficiently high input value.</p>
+<h2 is-upgraded>Prerequisites</h2>
+<ul>
+<li>You have completed the previous task <code>Instrumentation Libraries</code></li>
+<li>Shut down <code>fib.exe</code> using <code>Ctrl-C</code> within your Terminal if you haven&#39;t done so already.</li>
+</ul>
+<h2 is-upgraded>Step 1: Restore the original Fibonacci Calculator and create a Wrapper</h2>
+<ul>
+<li>Delete Lines 12 - 48 in <code>fibonacci.go</code>. We are getting rid of our patched version of of the Fibonacci Calculator</li>
+<li>Delete Lines 14 and 56 in <code>fibonacci.go</code>. What we&#39;re getting is the original source code of the Fibonacci Calculator - and a bit more on top</li>
+<li>Press <code>Ctrl-S</code> in order to save the changes you&#39;ve made in <code>fibonacci.go</code></li>
+<li>The changes we&#39;ve made to <code>fibonacci.go</code> again are creating errors within <code>main.go</code>.</li>
+<li>Delete Line 45 and Line 65 in <code>main.go</code>. Between these two lines is yet another version of the function <code>FibServer</code></li>
+<li>Delete Lines 26-43 in <code>main.go</code>. We&#39;re getting rid of the old version of <code>FibServer</code></li>
+<li>Press <code>Ctrl-S</code> in order to save the changes you&#39;ve made in <code>main.go</code></li>
+<li>Shut down <code>fib.exe</code> using <code>Ctrl-C</code> within your Terminal if you haven&#39;t done so already.</li>
+<li>Compile the program using the command line <code>go build'</code>. This produces a file name <code>fib.exe</code> within the current directory.</li>
+<li>Launch <code>fib.exe</code> via your current Terminal</li>
+<li>Use either your Browser or <code>curl http://localhost:28080/fib?n=3</code> within a new Terminal to access your new HTTP Service</li>
+</ul>
+<h2 is-upgraded>You&#39;ve arrived</h2>
+<ul>
+<li>The PurePath you just created does no longer report a Span for every single invocation of the function <code>Calc</code>. Most importantly the code of the original Fibonacci Calculator remains untouched. You&#39;ve managed to create an instrumentation library that performs the necessary work. <img alt="OTelPurepathInstLib" src="img/fdccbb445cea4814.png"></li>
+</ul>
+</google-codelab-step>
+<google-codelab-step label="Reporting Metrics" duration="0">
+<p>Apart from getting deeper insight into what&#39;s going on within an application on a transactional level, OpenTelemetry also covers the ability to gather metrics. In this lesson we learn how to enable the OpenTelemetry Metric Exporter for Dynatrace.</p>
+<h2 is-upgraded>Prerequisites</h2>
+<ul>
+<li>You have completed the previous task <code>Creating Instrumentation Libraries</code></li>
+</ul>
+<h2 is-upgraded>Step 1: Initialize the Dynatrace Metrics Provider for OpenTelemetry</h2>
+<ul>
+<li>Delete Line 18 and Line 20 in <code>main.go</code>. This way <code>initMetricsProvider()</code> will get called upon process start</li>
+<li>Function <code>main</code> in <code>main.go</code> should now look like this:</li>
+</ul>
+<pre><code language="language-go" class="language-go">    func main() {
+        if err := initGlobalTracer(nil); err != nil {
+            panic(err)
+        }
+        initMetricsProvider()
+        http.HandleFunc(&#34;/fib&#34;, FibServer)
+        http.HandleFunc(&#34;/favicon.ico&#34;, faviconHandler)
+        http.ListenAndServe(&#34;:28080&#34;, nil)
+    }
+</code></pre>
+<ul>
+<li>Press <code>Ctrl-S</code> in order to save the changes you&#39;ve made in <code>main.go</code></li>
+<li>Line 21 within <code>metrics.go</code> requires the endpoint URL for metric ingest of your Dynatrace environment to be specified <ul>
+<li>You can find the host name of your Dynatrace environment in the address line of your browser when navigating within the Dynatrace WebUI</li>
+<li>Example: <code>https://abc12345.sprint.dynatracelabs.com/api/v2/metrics/ingest</code></li>
+</ul>
+</li>
+<li>Line 18 within <code>metrics.go</code> requires you to specify an API Token. It is required for authentication. <ul>
+<li>In the Dynatrace WebUI navigate to <code>Settings</code> &gt; <code>Integration</code> &gt; <code>Dynatrace API</code></li>
+<li>Generate a new API Token here</li>
+<li>The access scope (= permissions) needs to include <code>Ingest metrics</code></li>
+<li>The name of the API Token can get chosen freely</li>
+<li>You can now copy the API Token to your clipboard and paste into the String on Line 18 of <code>metrics.go</code></li>
+<li><img alt="API Token" src="img/ae2d286edb3b7257.png"></li>
+</ul>
+</li>
+<li>Shut down <code>fib.exe</code> using <code>Ctrl-C</code> within your Terminal if you haven&#39;t done so already.</li>
+<li>Compile the program using the command line <code>go build</code>. This produces a file name <code>fib.exe</code> within the current directory.</li>
+<li>Launch <code>fib.exe</code> via your current Terminal</li>
+<li>In your Browser or via <code>curl</code> create a series of requests like these. Feel free to repeat some of these requests a couple of times <ul>
+<li><code>http://localhost:28080/fib?n=1</code></li>
+<li><code>http://localhost:28080/fib?n=2</code></li>
+<li><code>http://localhost:28080/fib?n=3</code></li>
+<li><code>http://localhost:28080/fib?n=4</code></li>
+<li><code>http://localhost:28080/fib?n=5</code></li>
+<li><code>http://localhost:28080/fib?n=6</code></li>
+<li><code>http://localhost:28080/fib?n=7</code></li>
+<li><code>http://localhost:28080/fib?n=8</code></li>
+<li><code>http://localhost:28080/fib?n=9</code></li>
+<li><code>http://localhost:28080/fib?n=10</code></li>
+<li><code>http://localhost:28080/fib?n=11</code></li>
+</ul>
+</li>
+<li>Within the Dynatrace WebUI select <code>Create custom chart</code> in the left hand side menu</li>
+<li>On top of your screen you&#39;re getting the option to <code>Analyze multidimensional metrics from Prometheus, StatsD and others channels right on your dashboards</code>. Click on <code>Try it out</code> in order to launch the <code>Data explorer</code>.</li>
+<li><img alt="Custom Chart" src="img/669a64154810ef9.png"></li>
+<li>Click on the Dropdown box <code>Filter metrics by</code> and type in <code>otel</code>. You should now be able to select the metric <code>otel.fibonacci.iterations</code>.</li>
+<li>Click on the input box <code>Split by</code>. You should be able to select <code>input</code> here.</li>
+<li>For this specific kind of metric it makes sense to select <code>Pie</code> as the Visualization on the right hand side menu</li>
+<li><img alt="Data Explorer" src="img/5d89418eb82d18fd.png"></li>
+<li>Click on <code>Run query</code></li>
+</ul>
+<h2 is-upgraded>You&#39;ve arrived</h2>
+<ul>
+<li>You have successfully reported a metric via OpenTelemetry and charted it in Dynatrace</li>
+<li>Like with additional Spans you can expect third party libraries to already have chosen a set of metrics for you, that are worth reporting.</li>
+<li>The only job left for you is to initialize the Dynatrace Exporter.</li>
+</ul>
+</google-codelab-step>
+</google-codelab>
+<script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+<script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+<script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+<script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+<script src="//support.google.com/inapp/api.js"></script>
+</body>
+</html>
