@@ -1,0 +1,26 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-03-01T13:45:25+11:00",
+  "id": "dt-love",
+  "duration": 0,
+  "title": "Why Devs Love Dynatrace",
+  "authors": "Brandon Neo",
+  "summary": "DT-love",
+  "source": "DT-love.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "dt-love"
+  ],
+  "tags": [
+    "bootcamp"
+  ],
+  "feedback": "mailto:APAC-SE-Central@dynatrace.com",
+  "ga": "UA-175467274-1",
+  "url": "dt-love"
+}

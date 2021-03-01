@@ -1,0 +1,395 @@
+
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+<meta name="theme-color" content="#4F7DC9">
+<meta charset="UTF-8">
+<title>Actionable Infra Observability</title>
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+<style>
+.success{color:#1e8e3e}.error{color:red} </style>
+</head>
+<body>
+<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+<google-codelab codelab-gaid="UA-175467274-1" id="Actionable-infra" title="Actionable Infra Observability" environment="web" feedback-link="mailto:APAC-SE-Central@dynatrace.com">
+<google-codelab-step label="Environment Setup" duration="0">
+<p>Here are a few quick steps to get your environment ready for today&#39;s exercises.</p>
+<h2 is-upgraded>Step 1. Turn on Metric Ingest in the Dynatrace UI</h2>
+<ul>
+<li>Navigate to Settings &gt; Monitoring &gt; Monitored Technologies <ul>
+<li>Scroll down to the bottom of the list</li>
+</ul>
+</li>
+<li>Turn on Dynatrace OneAgent StatsD, Pipe, HTTP Metric API</li>
+</ul>
+<h2 is-upgraded>Step 2. Restart Telegraf</h2>
+<ul>
+<li>Navigate to the terminal in DTU <code>bash<br>(ubuntuvm)$ sudo systemctl restart telegraf</code><br> ### Step 3. Clone Git Hub Repo - In the DTU terminal <code>bash<br>(ubuntuvm)$ git clone https://github.com/JasonOstroski/Perform2021-ActionableInfraScripts.git<br></code></li>
+</ul>
+<h2 is-upgraded>Step 4. Set up a browser monitor in the Dynatrace UI</h2>
+<ul>
+<li>Navigate to Synthetics &gt; Create a Synthetic Monitor</li>
+<li>Create a browser monitor</li>
+<li>URL is the Public IP address on port 8080 <ul>
+<li>Ex: http://12.345.67.89:8080</li>
+<li>Find the Public IP in the Environments tab in DTU</li>
+<li>Monitor Name: EasyTravel Home</li>
+</ul>
+</li>
+<li>Leave all other defaults and select 3 locations</li>
+</ul>
+</google-codelab-step>
+<google-codelab-step label="Metric Browser and Explorer" duration="0">
+<h2 is-upgraded>Exercise Prep: CPU Temp</h2>
+<p>Let&#39;s generate some data for some later exercises</p>
+<h3 is-upgraded>Kick off the CPU Temp Script</h3>
+<ul>
+<li>In the DTU Terminal run the following</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">   (ubuntuvm)$ cd Perform2021-ActionableInfraScripts
+   (ubuntuvm)$ python3 cputemp.py
+</code></pre>
+<h2 is-upgraded>Metric Browser</h2>
+<ul>
+<li>Search for Metric by name <ul>
+<li>Example: Telegraf.mem.used_percent</li>
+<li>Favorite the Metric</li>
+<li>Which dimensions are available?</li>
+</ul>
+</li>
+<li>Create Chart and pin into a new dashboard <ul>
+<li>Give the dashboard a meaningful name</li>
+<li>Ex: Infrastructure Overview</li>
+<li>Tile Name: Memory Utilization <img alt="metricbrowser" src="img/94e8f94a72b52dc0.png"></li>
+</ul>
+</li>
+</ul>
+<h2 is-upgraded>Metric Browser vs Explorer</h2>
+<ul>
+<li>Metric Explorer <ul>
+<li>Create Custom Chart &gt; Try it out</li>
+<li>Search for the CPU System Usage Telegraf Metric</li>
+<li>Pin the CPU System Usage Telegraf Metric to the dashboard</li>
+</ul>
+</li>
+<li>Which way was easier, browser or explorer? <ul>
+<li>Why would you choose one over the other? <img alt="metricexplorer" src="img/102329a8e2ed07e4.png"></li>
+</ul>
+</li>
+</ul>
+<h2 is-upgraded>Thresholds</h2>
+<h3 is-upgraded>Disk Used Threshold Chart</h3>
+<ul>
+<li>Chart the Telegraf Disk Used Percent Metric in the Explorer <ul>
+<li>Aggregation: Average</li>
+</ul>
+</li>
+<li>Thresholds: Green: Blank, Yellow: 40, Red: 75</li>
+<li>Chart Mode: Column</li>
+<li>Pin to dashboard <ul>
+<li>Tile name: Disk Used % <img alt="diskthreshold2" src="img/83ce3a953074957d.png"><img alt="diskthreshold1" src="img/baa60a0b0fd5704b.png"></li>
+</ul>
+</li>
+</ul>
+<h3 is-upgraded>Top List with Thresholds: EC2 CPU</h3>
+<ul>
+<li>Create a Top List with EC2 CPU Usage % <ul>
+<li>Aggregation: Average</li>
+<li>Split by: de.entity.ec2_instance</li>
+<li>Fold Transformation: Last</li>
+</ul>
+</li>
+<li>Thresholds: Green: 0, Yellow: 40, Red: 60</li>
+<li>Pin to dashboard <img alt="topthreshold1" src="img/b3fa92566c4f60ed.png"><img alt="topthreshold2" src="img/b8fd2567783d8080.png"></li>
+</ul>
+<h3 is-upgraded>Optional: Top List with Threshold: Process CPU</h3>
+<ul>
+<li>Create a Top List with Process CPU Usage <ul>
+<li>Aggregation: Average</li>
+<li>Split by: Process</li>
+<li>Fold Transformation: Last</li>
+</ul>
+</li>
+<li>Thresholds: Green: 0, Yellow: 5, Red: 20</li>
+<li>Pin to dashboard <img alt="topthreshold1" src="img/2f04fd0d5f4a4cd.png"><img alt="topthreshold2" src="img/d6b18a2396fe4592.png"></li>
+</ul>
+<h2 is-upgraded>Splitting and Filtering</h2>
+<h3 is-upgraded>Splitting</h3>
+<ul>
+<li>Create an area chart with Process Network Load <ul>
+<li>Metric: builtin:tech.generic.network.load</li>
+<li>Aggregation: Average</li>
+<li>Split by: Process</li>
+<li>Filter: Only show EasyTravel Processes and Nginx</li>
+</ul>
+</li>
+<li>Pin to dashboard</li>
+</ul>
+<p class="image-container"><img alt="splitting1" src="img/36f593111ca7fb73.png"></p>
+<p class="image-container"><img alt="splitting2" src="img/ef04ca2aed81d99.png"></p>
+<h3 is-upgraded>CPU Temp Split</h3>
+<ul>
+<li>One of out servers is running high on CPU temp and we want to review the CPU temp vs usage</li>
+<li>Create an area chart with CPU System Usage <ul>
+<li>Metric: builtin:host.cpu.system</li>
+<li>Aggregation: Average</li>
+</ul>
+</li>
+<li>Create a line chart with CPU Temp <ul>
+<li>This data comes from the script we started a few exercises back</li>
+<li>Metric: cpu.temperature</li>
+<li>Aggregation: Average</li>
+<li>Split by: CPU</li>
+</ul>
+</li>
+<li>Pin to dashboard</li>
+</ul>
+<p class="image-container"><img alt="cpusplitting1" src="img/7d52e1002ad4f311.png"></p>
+<p class="image-container"><img alt="cpusplitting2" src="img/6ab77fbcfc7eb2f5.png"></p>
+<h2 is-upgraded>Exercise Prep: Shop Response Time</h2>
+<h3 is-upgraded>Stop CPU and start shop response time</h3>
+<ul>
+<li>Back in the DTU Terminal <ul>
+<li>Stop the cpu temp script with Ctrl + C</li>
+<li>Start the retail shop response time script</li>
+</ul>
+</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">  (ubuntuvm)$ python3 retailresponsetime.py
+</code></pre>
+<h2 is-upgraded>Dashboarding</h2>
+<h3 is-upgraded>Let&#39;s clean up the Infrastructure Overview dashboard</h3>
+<ul>
+<li>Add Tags: Infrastructure, Ops</li>
+<li>Favorite the dashboard</li>
+<li>Add Tiles: Host Health, Problems</li>
+<li>Headers: Overview, Shop Performance, Infrastructure Detail</li>
+</ul>
+<p class="image-container"><img alt="infradashboard" src="img/f8ab4e1658bb6244.png"></p>
+<h2 is-upgraded>Shop Performance</h2>
+<h3 is-upgraded>Create an area chart of average response time</h3>
+<ul>
+<li>Metric: retail.shop.responsetime</li>
+<li>Aggregation: Average</li>
+<li>Pin to Infrastructure Overview dashboard</li>
+</ul>
+<p class="image-container"><img alt="shopresponsetime" src="img/a2cc3f7a2ee21b21.png"></p>
+<h3 is-upgraded>Create a line chart, breaking down the response time by city</h3>
+<ul>
+<li>Aggregation: Average</li>
+<li>Split by: city</li>
+<li>Pin to Infrastructure Overview dashboard</li>
+</ul>
+<h3 is-upgraded>Optional Exercise: Shop Performance Dashboard</h3>
+<ul>
+<li>Create a 2nd Dashboard called Shop Performance to highlight East vs West Shop Performance</li>
+<li>Track East and West response times in different tiles of the dashboard <ul>
+<li>Metric: retail.shop.responsetime</li>
+<li>Aggegration: Average</li>
+<li>Split By: City</li>
+<li>Filter by: Region useast or uswest</li>
+</ul>
+</li>
+<li>Create a mark down link from the Infrastructure Overview dashboards <ul>
+<li>Create a mark down link from the Shop Performance Dashboard back to the Infrastructure Overview dashboard</li>
+<li>Mark down example: <code>[Region Breakdown](#dashboard;id=4e0089b5-8f38-4e8f-949f-1113acf79f5c)</code></li>
+<li>Mark down back button example: <code>## [⇦](#dashboard;id=bbbbbbbb-0008-0000-0000-000000000000)</code></li>
+</ul>
+</li>
+<li>Where do I get the id values from?</li>
+</ul>
+<p class="image-container"><img alt="regionbreakdown" src="img/a002d4fc25df3971.png"></p>
+</google-codelab-step>
+<google-codelab-step label="Management Zones" duration="0">
+<h2 is-upgraded>Creating a dimension mananagement zone</h2>
+<ul>
+<li>Look at the retail.shop.responsetime metric in the metric browser and gain insights on available data dimensions <h2 is-upgraded>Scenario</h2>
+<ul>
+<li>You have different IT teams for East and West stores</li>
+<li>Each team only wants to analyze their region&#39;s performance</li>
+<li>Create 2 different management zones to cover this</li>
+<li>Add the required management zone rules (Dimensional data rules)</li>
+</ul>
+</li>
+<li>What happens to the shop tiles in the dashboards when you select the different management zones? <ul>
+<li>Explore this in the Metric Explorer too!</li>
+</ul>
+</li>
+</ul>
+<p class="image-container"><img alt="mgmtzone" src="img/404204386687a0d2.png"></p>
+</google-codelab-step>
+<google-codelab-step label="SLOs" duration="0">
+<h2 is-upgraded>Synthetic SLO</h2>
+<h3 is-upgraded>Create a synthetic availablity SLO</h3>
+<ul>
+<li>Name: Homepage Availability SLO <ul>
+<li>Use existing percentage Toggle</li>
+<li>Metric: builtin:synthetic.browser.availability.location.total</li>
+<li>Evaluation Type: Aggregate</li>
+<li>SLO Filter: type(&#34;SYNTHETIC_TEST&#34;),entityName(&#34;Easytravel Home&#34;)</li>
+<li>Target Percentage: 98%</li>
+<li>Warning Percent: 99%</li>
+<li>Timeframe: -1d</li>
+</ul>
+</li>
+<li>Where do I get Metric Name from?</li>
+<li>Where do I get SLO Filter from?</li>
+<li>Add to Dashboard via SLO page pin icon <img alt="syntheticslo" src="img/6335a78c53fb556c.png"></li>
+</ul>
+<h2 is-upgraded>Service Availablity SLO</h2>
+<h3 is-upgraded>Create a Service Availablity SLO</h3>
+<ul>
+<li>Name: Service Availability Authentication <ul>
+<li>Count of success metric: builtin:service.errors.server.successCount</li>
+<li>Total count metric: builtin:service.requestCount.server</li>
+<li>Evaluation Type: Aggregate</li>
+<li>SLO Filter: type(&#34;SERVICE&#34;), entityId(&#34;SERVICE-12345XYZ&#34;)</li>
+<li>Where do I get the entityId from?</li>
+<li>Target percentage: 95%</li>
+<li>Warning percentage: 97.5%</li>
+<li>Timeframe: -1d</li>
+</ul>
+</li>
+<li>Add it to the dashboard from the dashboard editor</li>
+</ul>
+<p class="image-container"><img alt="serviceslo" src="img/8f51ad8008daeefc.png"></p>
+</google-codelab-step>
+<google-codelab-step label="Alerting" duration="0">
+<h2 is-upgraded>Auto-Adaptive Baselines</h2>
+<h3 is-upgraded>Create an auto-adaptive baseline alert for shop response time</h3>
+<ul>
+<li>Navigate to Settings &gt; Anomaly Detection &gt; Custom Events for Alerting</li>
+<li>Create an auto-adaptive baseline <ul>
+<li>Metric: retail.shop.responsetime</li>
+<li>Aggregation: Average</li>
+<li>City: NewYork</li>
+<li>Entity: None</li>
+<li>Alert of anomalies of 1 time the normal signal fluctuation.</li>
+<li>Metric is above baseline for 1 minute during any 5 minute period</li>
+<li>Name: New York Response Time</li>
+<li>Severity: Slowdown</li>
+</ul>
+</li>
+</ul>
+<p class="image-container"><img alt="autobaseline" src="img/13e3dea62fb1a567.png"></p>
+<h2 is-upgraded>Static Thresholds</h2>
+<h3 is-upgraded>Create a Static Threshold on CPU Temp</h3>
+<ul>
+<li>Navigate to Settings &gt; Anomaly Detection &gt; Custom Events for Alerting <ul>
+<li>Metric: cpu.temperature</li>
+<li>Aggregation: Average</li>
+<li>Entity: Host</li>
+<li>Static Threshold: 95</li>
+<li>What&#39;s the recommended threshold?</li>
+<li>Raise if above threshold for 1 minute during 5 minute period</li>
+<li>Review the Alert Preview</li>
+<li>What happens if you change the threshold to 85?</li>
+<li>Change back to 95 after review</li>
+</ul>
+</li>
+<li>Title: CPU Temperature</li>
+<li>Severity: Resource</li>
+</ul>
+<p class="image-container"><img alt="static1" src="img/c8dec4c578453633.png"></p>
+<p class="image-container"><img alt="static2" src="img/37fecbde9afb8e7c.png"></p>
+<h2 is-upgraded>Let&#39;s turn up the heat!</h2>
+<ul>
+<li>Back in the DTU Terminal</li>
+<li>Stop the retailresponsetime.py script if it&#39;s still running (Ctrl + C)</li>
+<li>Start the retail script:</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">(ubuntuvm)$ python3 cputemp.py HHMM 10
+</code></pre>
+<ul>
+<li>HHMM is the time you&#39;d like the CPU scenario to start</li>
+<li>Start it a few minutes after the current time</li>
+<li>You can run timedatectl to check current time</li>
+<li>Ex: 1828 is 1:28 PM EST or 18:28 UTC</li>
+<li>10 is the number of minutes you&#39;d like the scenario to run for</li>
+<li>Wait a few minutes and let&#39;s see the problem!</li>
+</ul>
+<h2 is-upgraded>Problem Evaluation</h2>
+<ul>
+<li>Review the problem ticket</li>
+<li>Drill into the host and view the events <img alt="problem" src="img/8506073a2f01c2bf.png"></li>
+</ul>
+</google-codelab-step>
+<google-codelab-step label="Metric API" duration="0">
+<h2 is-upgraded>Create an API Token</h2>
+<ul>
+<li>Settings&gt;Integration&gt;Dynatrace API</li>
+<li>Generate Token, name it, and turn on: <ul>
+<li>API v1 - Access problem and event feed, metrics, and topology, Read Configuration, Write Configuration, User Sessions</li>
+<li>API v2 - Read Metrics</li>
+<li>Copy the value and store in a safe place</li>
+</ul>
+</li>
+<li>Navigate to the API Explorer: Environment API v2 <ul>
+<li>Authorize and paste in API Token</li>
+</ul>
+</li>
+<li>GET /metrics/query <ul>
+<li>Metric Selector: telegraf.cpu.usage_user</li>
+<li>View available options and output <img alt="metricapi" src="img/14cd1df8397ca3b.png"></li>
+</ul>
+</li>
+</ul>
+<h2 is-upgraded>Postman Prep</h2>
+<p>Create a workspace: PerformHOT2021</p>
+<ul>
+<li>Import from RAW Text</li>
+<li>Open a new browser tab: https://github.com/JasonOstroski/Perform2021-ActionableInfraScripts/</li>
+<li>View Raw of metrics_api_postman_collection.json</li>
+<li>Copy the entire text and paste into Postman</li>
+</ul>
+<h2 is-upgraded>Postman</h2>
+<ul>
+<li>Let&#39;s get data from the Dynatrace Metric API!</li>
+<li>For the CPU and Disk GET Requests: <ul>
+<li>Replace &#123;&#123;URL}} in GET with your Dynatrace Environment</li>
+<li>Be mindful that it&#39;s easy to copy and paste https:// and it&#39;s already in the GET</li>
+<li>Replace &#123;&#123;API_TOKEN}} in the header with your API Token</li>
+</ul>
+</li>
+<li>You can also do the replacements via Postman environments</li>
+</ul>
+</google-codelab-step>
+<google-codelab-step label="Configurator" duration="0">
+<h2 is-upgraded>Let&#39;s add some more dashboards!</h2>
+<ul>
+<li>https://dynatrace.github.io/BizOpsConfigurator <ul>
+<li>Enter your tenant URL and API Token</li>
+<li>Deploy Ops, Platform Overview CPU Utilization (no diamond)</li>
+</ul>
+</li>
+</ul>
+<p class="image-container"><img alt="config1" src="img/3e9f31df3c94e052.png"></p>
+<ul>
+<li>Deploy Ops, Capacity Management, AWS Overview</li>
+</ul>
+<p class="image-container"><img alt="config2" src="img/c187c58e5a5fb154.png"></p>
+<ul>
+<li>Deploy Ops, AIOps, Dashboard Basics</li>
+<li>Deploy any other dashboard templates you want to try out.</li>
+<li>Navigate back to the Dynatrace UI and see the new dashboards!</li>
+</ul>
+<h2 is-upgraded>How can I bring my dashboard home with me?</h2>
+<ul>
+<li>Go to your Infrastructure Overview dashboard</li>
+<li>Click ... Button in upper right corner &gt; Share &gt; Advanced Settings</li>
+<li>Click dashboard JSON &gt; Download</li>
+<li>This is also available in the Configuration API for managing dashboards at scale</li>
+</ul>
+<p class="image-container"><img alt="dashboardjson" src="img/26bbf8bfc5bbd8fb.png"></p>
+</google-codelab-step>
+</google-codelab>
+<script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+<script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+<script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+<script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+<script src="//support.google.com/inapp/api.js"></script>
+</body>
+</html>

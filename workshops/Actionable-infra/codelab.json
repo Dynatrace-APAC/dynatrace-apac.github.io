@@ -1,0 +1,26 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-03-01T14:40:57+11:00",
+  "id": "Actionable-infra",
+  "duration": 0,
+  "title": "Actionable Infra Observability",
+  "authors": "Brandon Neo",
+  "summary": "Actionable-Infra",
+  "source": "infra-observ.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "actionable-infra"
+  ],
+  "tags": [
+    "bootcamp"
+  ],
+  "feedback": "mailto:APAC-SE-Central@dynatrace.com",
+  "ga": "UA-175467274-1",
+  "url": "Actionable-infra"
+}

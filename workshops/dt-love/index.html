@@ -1,0 +1,333 @@
+
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+<meta name="theme-color" content="#4F7DC9">
+<meta charset="UTF-8">
+<title>Why Devs Love Dynatrace</title>
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+<style>
+.success{color:#1e8e3e}.error{color:red} </style>
+</head>
+<body>
+<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+<google-codelab codelab-gaid="UA-175467274-1" id="dt-love" title="Why Devs Love Dynatrace" environment="web" feedback-link="mailto:APAC-SE-Central@dynatrace.com">
+<google-codelab-step label="Agenda" duration="0">
+<p class="image-container"><img alt="memac" src="img/912a546e0fa65650.png"></p>
+<h2 is-upgraded>What we&#39;re covering/not covering</h2>
+<ul>
+<li>This is not a product tutorial (although we will demo and show new features of the product)</li>
+<li>We will cover some best practices on Loadtesting and Release comparison so you can apply this in you company and help release better software faster.</li>
+<li>The software optimizations and analysis can be done <a href="https://www.dynatrace.com/support/help/technology-support/supported-technologies-and-versions/" target="_blank">in any technology that Dynatrace can monitor</a></li>
+<li>There is no need to be an Azure or Keptn expert and everything we are covering can be applied to ANY environment (e.g. Azure, GCP, Kubernetes, On-Prem, etc...) and any modern CI/CD Pipeline that can be triggered via REST.</li>
+</ul>
+<h2 is-upgraded>What you will learn today</h2>
+<ul>
+<li>Help you become more comfortable using Dynatrace to diagnose application problems, understand the service dependencies, the architecture and know how and where to optimize.</li>
+<li>Help you diagnose the overall health of an environment from thousands of services all the way to threads, exceptions and response times of a single transaction end-2-end through all layers (FullStack)</li>
+<li>Get Feedback on Transactions for Developers</li>
+<li>Do a Top Down-analysis and Bottom-Up (on single or multiple transactions)</li>
+<li>Understand the added-value for developers to have an automated qualitygate in the CI/CD pipeline.</li>
+<li>Make the diagnosis easy for others in your organization</li>
+<li>Not everybody needs to be a &#34;Dynatrace Expert&#34;</li>
+<li>Understand how you can leverage Davis so she helps you monitor and diagnose applications.</li>
+<li>Understand the value of automatic quality gates with performances as a self-service</li>
+<li>Best Practices for automatic loadtesting and quality gates. How to build SLI/SLOs for continuous release comparison. </li>
+<li>Integrate, compare and analyze Loadtests with Dynatrace</li>
+<li>Compare and analyze GarbageCollection, Memory Allocation, Survived Objects, ThreadGroups &amp; blocking Threads as well as CPU Utilization for loadtests or any ondemand analysis for that matter.</li>
+</ul>
+</google-codelab-step>
+<google-codelab-step label="Overview of the System" duration="0">
+<h2 is-upgraded>Diagnosing the Health of an Environment</h2>
+<p>Leveraging tags and Management Zones you can get very fast and easy an understanding of UX, transactions, hosts, application network traffic, failures on the whole environment or on specific stages, departments, subcompanies, etc.</p>
+<p>In this example you can get an overview of:</p>
+<ul>
+<li>the amount and health of databases, services, hosts and applications.</li>
+<li>amount of requests vs responsetime 95th percentile</li>
+<li>network status</li>
+<li>HTTP errors and failed transactions</li>
+<li>Database calls and time spent in database per transaction</li>
+<li>most failing services</li>
+<li>service throughput</li>
+<li>slowest services</li>
+<li>database calls per service</li>
+<li>service time spent in wait, lock, IO and CPU</li>
+<li>JVM CPU by ThreadGroup</li>
+<li>GC by Poolname</li>
+<li>Memory Allocation Objects by API</li>
+</ul>
+<p class="image-container"><img alt="software-intelligence-dashboard" src="img/d51e9bebbde409e7.png"></p>
+<h3 is-upgraded>Let&#39;s get the big picture of the environment.</h3>
+<ul>
+<li>Use the Management Zone</li>
+<li>Navigate into: <ul>
+<li>Technologies</li>
+<li>Applications</li>
+<li>Smartscape</li>
+</ul>
+</li>
+</ul>
+<h3 is-upgraded>Introducing Diagnostic Tools</h3>
+<ul>
+<li>Open Technologies</li>
+</ul>
+</google-codelab-step>
+<google-codelab-step label="Basic Diagnostics" duration="0">
+<h2 is-upgraded>Top Requests</h2>
+<p>Search for:</p>
+<ul>
+<li>Only failed transactions</li>
+<li>Transactions with more than 10 seconds over the last 6 hours</li>
+<li>Transactions calling dynatrace.com</li>
+<li>Transactions that makes more than 100 database calls.</li>
+</ul>
+<h2 is-upgraded>Top Database Statements</h2>
+<p>Search for:</p>
+<ul>
+<li>Do we have failing database statements?</li>
+<li>Which is the slowest database transaction of the day? <strong>Continue analysing with the outliers</strong></li>
+<li>Which SQL hast the most Fetch count and wich the most Row count? Where is this transaction coming from? Which application and which user action is triggering this SQL?</li>
+</ul>
+<h2 is-upgraded>Exceptions</h2>
+<p>⚠️ Exceptions are expensive and can cost unnecessary memory and CPU consumption. Having the ability to sort them by amount, impact and impacted services allows you to assign them to tickets in your backlog. Making your application continuously better.</p>
+<p>Search for:</p>
+<ul>
+<li>All Exceptions of the day</li>
+<li>Failed exceptions</li>
+</ul>
+<p>ProTip: Dynatrace has the ability to configure custom error detection for your services. If there is an BusinessException where you want to mark the transation failed so the failurerate increases, you can do this in the <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/transactions-and-services/configuration/configure-service-error-detection/" target="_blank">service error detection</a>.</p>
+<h2 is-upgraded>Let 👧 🧠 DAVIS work for you!</h2>
+</google-codelab-step>
+<google-codelab-step label="Developer Feedback and Manual Testing" duration="0">
+<p>Feedback is one of the most important attributes on Software Development. The better, faster and reliable the feedback is, the better will the software be.</p>
+<p>In this section we will see how developers can get feedback on real time from integration or production systems.</p>
+<p><strong>No more &#34;well... it worked on my computer, is operations problem now 🤷‍♂️ &#34;❗️</strong></p>
+<p class="image-container"><img src="img/4f5430d5ad15b509.png"></p>
+<h2 is-upgraded>REST Sign-In</h2>
+<h3 is-upgraded>REST Sign-In (Create Account) EasyTravel</h3>
+<p>We are asked to test the REST Sign-In and Login functionality of Easytravel. To understand the flow of the transaction, response time and architecture. We are only given the REST Endpoint.</p>
+<pre><code language="language-bash" class="language-bash">POST http://&#123;&#123;custom.easytravel_ip}}/easytravel/rest/signin
+</code></pre>
+<p>JSON Body</p>
+<pre><code language="language-json" class="language-json">{
+    &#34;firstName&#34;: &#34;&#123;&#123;custom.developer_name}}&#34;,
+    &#34;lastName&#34;: &#34;&#123;&#123;custom.developer_name}} LastName&#34;,
+    &#34;email&#34;: &#34;&#123;&#123;custom.developer_name}}&#34;,
+    &#34;password&#34;: &#34;&#123;&#123;custom.developer_name}}&#34;,
+    &#34;state&#34;: &#34;Bayern&#34;,
+    &#34;city&#34;: &#34;Munich&#34;,
+    &#34;street&#34;: &#34;Main Street 1&#34;,
+    &#34;door&#34;: &#34;&#34;,
+    &#34;phone&#34;: &#34;+49123456789&#34;
+}
+
+</code></pre>
+<p>We are going to pass this attributes into the POST request.</p>
+<pre><code language="language-bash" class="language-bash">HTTP Headers:
+Content-Type: application/json
+x-developer: yourname
+</code></pre>
+<p>For this we can use cURL, Postman or any REST tool. Here is an API Test already preconfigured for you <a href="https://apitester.com/shared/checks/961787656e25474a903dd5dd917d7570" target="_blank">🚦 API TEST Template for SingIn</a></p>
+<ul>
+<li>The test consists of basically 2 steps, POST request and an assert.</li>
+<li>Modify the X-Developer Header with <strong>your_name_identifier</strong>.</li>
+<li>This value will be used as email and password for the creation of the SignIn. (just for keeping things simple)</li>
+</ul>
+<h3 is-upgraded>Create an Account via REST</h3>
+<p class="image-container"><img alt="software-intelligence-dashboard" src="img/52184be50bfd25c3.png"></p>
+<ul>
+<li>Click on Test</li>
+<li>It should pass all 4 steps.</li>
+<li>Now, click on „Test„ again. Yes, with the same data. Let‘s try to create the same Sign-In Account.</li>
+<li>The test should fail. What error code did you get?</li>
+</ul>
+<h2 is-upgraded>REST Log-In</h2>
+<h3 is-upgraded>REST Login (Log in to the created account) EasyTravel</h3>
+<pre><code language="language-bash" class="language-bash">POST http://&#123;&#123;custom.easytravel_ip}}/easytravel/rest/login
+</code></pre>
+<p>JSON Body</p>
+<pre><code language="language-json" class="language-json">{
+    &#34;username&#34;: &#34;&#123;&#123;custom.developer_name}}&#34;,
+    &#34;password&#34;: &#34;&#123;&#123;custom.developer_name}}&#34;
+}
+</code></pre>
+<h3 is-upgraded>Login via REST</h3>
+<ul>
+<li>Open the test <a href="https://apitester.com/shared/checks/67a53403e464439fb4909b205912267d" target="_blank">🚦 API TEST Template for Login</a></li>
+<li>Modify the developer name with your_name to the name where you created the account</li>
+<li>Click on Test</li>
+<li>You should have a succesfull test and the reponse returns the entered data from the Account.</li>
+</ul>
+<h2 is-upgraded>REST Sign-In requests in Dynatrace</h2>
+<h3 is-upgraded>MDA FeedBack Developer</h3>
+<ul>
+<li>Go to MDA and search the request by <code>{RequestAttribute:Developer}</code></li>
+<li>Filter your requests and show the Service-Flow.</li>
+</ul>
+<h3 is-upgraded>ServiceFlow of the Developer Requests</h3>
+<ul>
+<li>Start the flow from the nginx reverse proxy.</li>
+<li>By not filtering the 3 requests (2x signin + 1x login) you&#39;ll see the flow of the 3.</li>
+</ul>
+<h3 is-upgraded>Filter by the first correct sign-in</h3>
+<p>Let&#39;s analyze first the correct signin.</p>
+<ul>
+<li>Fiter by <em>HTTP Code 200</em> + Request <em>&#34;sign&#34;</em> notice that you don&#39;t need to match the exact name of the request.</li>
+<li>Notice how Dynatrace shows detailed information from every service and inter-tiercalls as DB calls.</li>
+</ul>
+<h3 is-upgraded>Response Time Hotspots Sign-In</h3>
+<p>Navigate with the Response Time Hotspots all the way to the Database. Follow the services. Notice the detailed information about the SQLs and even the Connection Acquisitions.</p>
+<h3 is-upgraded>Difference between the 2 Sign-Ins</h3>
+<p>Can you notice the difference from the two Sign-in why the second Sign-in failed? That it got an HTTP 403 is obvious. But if you look at the purepaths in detail you&#39;ll notice that the select statement of the first Sign-In did not return any results from the database on the select statement hence it could create an account and subsequently an Insert was done. In the second attempt since there was a result (a row) returned, no Insert statement or new Account was created.</p>
+<h2 is-upgraded>REST Login requests in Dynatrace</h2>
+<h3 is-upgraded>Service-flow Login</h3>
+<ul>
+<li>Now show the flow of a Login.</li>
+<li>Notice again the intertier-calls how they add up, the contribution of each service and the infrastructure where it&#39;s running.</li>
+</ul>
+<p class="image-container"><img alt="Login Flow" src="img/f4f83a1841d12efd.png"></p>
+<h3 is-upgraded>ResponseTime Hotspots Login</h3>
+<p>Open the ResponseTime Hotspots from the ReverseProxy. Notice the contribution from Tomcat the Calls to AuthenticationService (4x) and VerificationService (1x)</p>
+<p>Notice the contribution by Method within the AuthenticationService and how it can tell us which method is taking the most time within a single transaction (even though we are moving in 2 digit ms time)</p>
+</google-codelab-step>
+<google-codelab-step label="Automating Tests and Validations" duration="0">
+<h2 is-upgraded>REST Validation with Dynatrace</h2>
+<p class="image-container"><img src="img/6d3621d6208371a1.png"></p>
+<p><em>🧑🏻‍🏫 The presenter will explain with more detail</em></p>
+<h2 is-upgraded>Full Browser Booking Validation with Dynatrace</h2>
+<p class="image-container"><img src="img/4ada46ecdcae6035.png"></p>
+<p><em>🧑🏻‍🏫 The presenter will explain with more detail</em></p>
+<h2 is-upgraded>Automated Performance Validations</h2>
+<p class="image-container"><img alt="gq" src="img/a8be73eb75da49b1.png"></p>
+</google-codelab-step>
+<google-codelab-step label="CICD Environment with Intelligent QualityGates" duration="0">
+<p>The basis of this section is for understanding the set-up and methodology behind automatic quality gates. There is a hughe amount of value building an automatic quality gate based on performance tests with release validations and comparisons. With best practices you can achieve validations on functional, architectural, infrastructure, performance and business levels, <strong>automatically</strong>.</p>
+<p>This 🏎 speeds_up not only the delivery but also the quality of the software by detecting issues faster on code-changes being merged or pushed to a release branch. Dynatrace is continuously capturing on real-time high-resolution information through the whole stack and on all layers. This information can and should be used for optimizing your software continuously.</p>
+<p>By building intelligent quality gates, you increase the quality of your software and free-up valuable resources (Performance Engineers and Developers) so they can focus on <strong>&#34;Building Better Software Faster&#34;</strong></p>
+<p><em>🧑🏻‍🏫 The presenter will explain with more detail</em></p>
+<h2 is-upgraded>The Build Process</h2>
+<p class="image-container"><img alt="Login Flow" src="img/9fffeb8a46e905cd.png"></p>
+<p><em>🧑🏻‍🏫 The presenter will explain with more detail</em></p>
+<h2 is-upgraded>The quality gate in staging</h2>
+<p class="image-container"><img alt="Login Flow" src="img/606e02de2d7e5ef7.png"></p>
+<p><em>🧑🏻‍🏫 The presenter will explain with more detail</em></p>
+<h2 is-upgraded>Explainer SLI/SLO-based Evaluation</h2>
+<p class="image-container"><img alt="Login Flow" src="img/f15f83e49b7193fd.png"></p>
+<p><em>🧑🏻‍🏫 The presenter will explain with more detail</em></p>
+<h2 is-upgraded>Best Practice SLI/SLO evaluation</h2>
+<p>Business KPI, Architectural, Functional and Performance validation</p>
+<p class="image-container"><img alt="Login Flow" src="img/dbfd9a886b966f62.png"></p>
+<p><em>🧑🏻‍🏫 The presenter will explain with more detail</em></p>
+<h2 is-upgraded>Release Validation Dashboard</h2>
+<p class="image-container"><img alt="release validation dashboard" src="img/c321df9c43303047.png"></p>
+<p><em>🧑🏻‍🏫 The presenter will explain with more detail</em></p>
+</google-codelab-step>
+<google-codelab-step label="Analysis UseCases" duration="0">
+<h2 is-upgraded>Deployment Overview</h2>
+<p>EasyTravel Continuous Deployment</p>
+<pre><code language="language-bash" class="language-bash">case $h in
+&#34;12&#34; | &#34;06&#34;)
+EASYTRAVELDEPLOYMENT=&#34;None&#34;
+;;
+&#34;01&#34; | &#34;07&#34;)
+EASYTRAVELDEPLOYMENT=&#34;CPULoadJourneyService&#34;
+;;
+&#34;02&#34; | &#34;08&#34;)
+EASYTRAVELDEPLOYMENT=&#34;DBSpammingAuthWithAppDeployment&#34;
+;;
+&#34;03&#34; | &#34;09&#34;)
+EASYTRAVELDEPLOYMENT=&#34;LoginProblems&#34;
+;;
+&#34;04&#34; | &#34;10&#34;)
+EASYTRAVELDEPLOYMENT=&#34;JourneyUpdateSlow&#34;
+;;
+&#34;05&#34; | &#34;11&#34;)
+EASYTRAVELDEPLOYMENT=&#34;CreditCardCheckError500&#34;
+;;
+esac
+
+</code></pre>
+<h2 is-upgraded>Foundations of Loadtest analysis</h2>
+<ul>
+<li>Show the service flow of the &#34;9 - Finish Payment&#34; test step (of any release)</li>
+<li>Show the exceptions and the impacted TestSteps of a Loadtest of the last 6 hours.</li>
+</ul>
+<p>The &#34;EasyTravel Webserver&#34; is the entrypoint for the sessionbased LoadTests (and the validation of Keptn based on the Tag <code>easytravel-azdo</code>). The Deployment events are displayed on this Service. Tip: For finding a specific load test with the deployment events on the service</p>
+<ul>
+<li>either display the events for the last 6 hours</li>
+<li>enter the time to a fix hour <code>08:00 to 09:00</code> and then navigate back or forward</li>
+</ul>
+<p class="image-container"><img alt="et-webserver" src="img/54cc944b5e08bf89.png"></p>
+<ul>
+<li>Open the &#34;EasyTravel Webserver&#34;</li>
+<li>Show the response time, throughput and failure rate of the different test steps (without a chart)</li>
+</ul>
+<h2 is-upgraded>UseCase CPULoadJourneyService</h2>
+<ul>
+<li>We want to understand why the release CPULoadJourneySevice failed.</li>
+<li>Compare CPULoadJourneyService with build Zero (None) (filter the Loadtest)</li>
+<li>What do you notice first?</li>
+<li>Show the response time comparison of the different Loadtest Steps.</li>
+<li>Which steps are slower? why? what changed? Where? Which Service Team should fix which Methond and in which Class?</li>
+</ul>
+<p>Here is a <a href="http://www.javadecompilers.com/" target="_blank">web-based Java decompiler</a> in case you are keen in finding the issue in the code. Hint: Search for a loop</p>
+<h2 is-upgraded>UseCase JourneyUpdateSlow</h2>
+<ul>
+<li>Compare JourneyUpdateSlow with build Zero (filter the Loadtest)</li>
+<li>What do you notice first?</li>
+<li>Show the response time comparison of the different Loadtest Steps. Which steps are slower? why? what changed?</li>
+</ul>
+<h2 is-upgraded>UseCase JourneyUpdateSlow - Solution</h2>
+<h3 is-upgraded>Please take 5 minutes and digest this information.</h3>
+<p>Dynatrace showed that the frontend calls 6 times the journeyService. 1 time the <code>findLocations()</code> (slight rt increase) and 5 times the <code>findJourneys()</code> with an increase of <em>~380 ms</em> per call. The increase in <code>findJourneys()</code> is mostly in <em>Lock/Wait</em> time, letting us know also that there are new querys being executed. The contribution of the queries itself is not the problem (responsetime wise except from one new query with <em>~ 80ms</em>) but the code, meaning the Database is performant but not the implementation. The rest of the time <em>~ +240ms</em> is in _LockWait... time, meaning the calls are non performant and subsequent.</p>
+<p class="image-container"><img src="img/5df97895f5d973c3.png"></p>
+<p>Please take a moment and digest the amount and level of insights Dynatrace gave you with a few clicks. If you know how to filter and where to click, it is absolutely insane the depth and amount of insights that Dynatrace provides OOTB to the Developers and DevOps. And again, we are just testing the Frontend URL and did not configure anything but how to record the loadtest (HTTP Headers).</p>
+<h2 is-upgraded>UseCase Memory Allocation</h2>
+<p class="image-container"><img alt="memac" src="img/3eec951b504178c0.png"></p>
+<ul>
+<li>Which Release has a high GarbageCollection Impact? A Memory Allocation Problem? (it should be on the EasyTravel API)</li>
+<li>Identify the Process, API and Service.</li>
+<li>How big is the impact of the survived Memory? and which Objects/Classes were they?</li>
+<li>Can you explain why?</li>
+<li>Which test step was it?</li>
+</ul>
+<h2 is-upgraded>UseCase CPU Analysis</h2>
+<p class="image-container"><img alt="memac" src="img/7f2a97a9d52127f0.png"></p>
+<ul>
+<li>Which release is the most CPU intensive? Which Service? and which Methods?</li>
+<li>Can you explain why?</li>
+</ul>
+<h2 is-upgraded>UseCase Thread Analysis</h2>
+<p class="image-container"><img alt="memac" src="img/a44d8a58965bcb24.png"></p>
+<ul>
+<li>Which release has a blocking Thread issue?</li>
+<li>Can you explain why?</li>
+</ul>
+<h2 is-upgraded>UseCase BankService</h2>
+<h3 is-upgraded>Analysing the Impact on other Components</h3>
+<h3 is-upgraded>The BankJob</h3>
+<ul>
+<li>Show the Database Impact of the Bankjob into the EasyTravel Database</li>
+<li>List all the SQLs</li>
+<li>Which SQL is being called the most?</li>
+<li>Which SQL returns the most rows?</li>
+<li>Which is the fastest SQL?</li>
+<li>Which is the slowest SQL?</li>
+<li>Is there an SQL modification on the Booking Table? <ul>
+<li>if yes, which statement is it? If you found such statement. Let the team responsible know which Method and which Service is doing that modification.</li>
+<li>Which Method from the Bankjob is responsible?</li>
+</ul>
+</li>
+</ul>
+</google-codelab-step>
+</google-codelab>
+<script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+<script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+<script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+<script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+<script src="//support.google.com/inapp/api.js"></script>
+</body>
+</html>

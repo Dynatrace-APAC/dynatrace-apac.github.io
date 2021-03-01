@@ -3,10 +3,10 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="description" content="We are going virtual for the bootcamp this season! The contents are just as exciting but instead of locking everyone in for 3 straight days, we will be splitting it into 2 parts – MATE Sessions (Theory) and Hands-on (Practical). These labs will be the practical application of what was covered in the MATE sessions">
+<meta name="description" content="Lab sessions to be used for virtual bootcamps.">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="generator" content="Dynatrace vBootcamp Oct 2020">
-<meta name="application-name" content="Dynatrace vBootcamp Oct 2020">
+<meta name="generator" content="Dynatrace vBootcamp">
+<meta name="application-name" content="Dynatrace vBootcamp">
 <link rel="canonical" href="https://dynatrace-apac.github.io/bootcamp/">
 <link rel="preconnect" href="https://www.google-analytics.com">
 <script>
@@ -15,14 +15,14 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
     ga('send', 'pageview');
 </script>
 <script async src="https://www.google-analytics.com/analytics.js"></script>
-<title>Dynatrace vBootcamp Oct 2020</title>
+<title>Dynatrace vBootcamp</title>
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="import" href="/elements/elements.html">
 <style is="custom-style">
 :root{--paper-tabs-selection-bar-color:currentcolor;--paper-input-container-underline:{display:none};--paper-input-container-underline-focus:{display:none};}.dropdown-filter{--paper-input-container:{background-color:#23282d;display:block;padding:4px}} </style>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="#455a64">
-<meta name="apple-mobile-web-app-title" content="Dynatrace vBootcamp Oct 2020">
+<meta name="apple-mobile-web-app-title" content="Dynatrace vBootcamp">
 <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="194x194" href="/images/favicons/favicon-194x194.png">
@@ -34,8 +34,8 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
 <meta name="theme-color" content="#455a64">
 <meta name="og:type" property="og:type" content="website">
-<meta name="og:title" property="og:title" content="Dynatrace vBootcamp Oct 2020">
-<meta name="og:description" property="og:description" content="We are going virtual for the bootcamp this season! The contents are just as exciting but instead of locking everyone in for 3 straight days, we will be splitting it into 2 parts – MATE Sessions (Theory) and Hands-on (Practical). These labs will be the practical application of what was covered in the MATE sessions">
+<meta name="og:title" property="og:title" content="Dynatrace vBootcamp">
+<meta name="og:description" property="og:description" content="Lab sessions to be used for virtual bootcamps.">
 <meta name="og:url" property="og:url" content="https://dynatrace-apac.github.io/bootcamp/">
 <meta name="og:site_name" property="og:site_name" content="APAC Tech Labs">
 <meta name="og:determiner" property="og:determiner" content="the">
@@ -47,8 +47,8 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <meta name="og:image:height" property="og:image:height" content="1200">
 <meta name="og:image:alt" property="og:image:alt" content="Dynatrace">
 <meta name="twitter:card" property="twitter:card" content="summary_large_image">
-<meta name="twitter:title" property="twitter:title" content="Dynatrace vBootcamp Oct 2020">
-<meta name="twitter:description" property="twitter:description" content="We are going virtual for the bootcamp this season! The contents are just as exciting but instead of locking everyone in for 3 straight days, we will be splitting it into 2 parts – MATE Sessions (Theory) and Hands-on (Practical). These labs will be the practical application of what was covered in the MATE sessions">
+<meta name="twitter:title" property="twitter:title" content="Dynatrace vBootcamp">
+<meta name="twitter:description" property="twitter:description" content="Lab sessions to be used for virtual bootcamps.">
 <meta name="twitter:image" property="twitter:image" content="/images/og-image.png">
 <meta name="twitter:url" property="twitter:url" content="https://dynatrace-apac.github.io/bootcamp/">
 </head>
@@ -73,8 +73,8 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <div class="banner-description">
 <img id="logo" src="/bootcamp/bootcamp.jpg" alt="Event logo">
 <div class="banner-meta">
-<h3>Dynatrace vBootcamp Oct 2020</h3>
-<p>We are going virtual for the bootcamp this season! The contents are just as exciting but instead of locking everyone in for 3 straight days, we will be splitting it into 2 parts – MATE Sessions (Theory) and Hands-on (Practical). These labs will be the practical application of what was covered in the MATE sessions</p>
+<h3>Dynatrace vBootcamp</h3>
+<p>Lab sessions to be used for virtual bootcamps.</p>
 </div>
 </div>
 </div>
@@ -90,14 +90,27 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 </div>
 <paper-dropdown-menu label="Filter by category" class="dropdown-filter" no-label-float noink no-animations>
 <paper-listbox id="categorylist" slot="dropdown-content" class="dropdown-content" on-iron-activate="onCategoryActivate" attr-for-selected="filter">
+<paper-item filter="actionable-infra">actionable-infra</paper-item>
 <paper-item filter="azure">azure</paper-item>
 <paper-item filter="dem">dem</paper-item>
+<paper-item filter="dt-love">dt-love</paper-item>
 <paper-item filter="infra">infra</paper-item>
 <paper-item filter="istio">istio</paper-item>
 <paper-item filter="opentel">opentel</paper-item>
 </paper-listbox>
 </paper-dropdown-menu></div>
 <card-sorter id="cards" class="site-width">
+<a href="/workshops/Actionable-infra/index.html?index=..%2F..bootcamp" on-tap="navigate" class="codelab-card category-actionable-infra" data-category="actionable-infra" data-title="Actionable Infra Observability" data-duration="0" data-updated="2021-03-01T14:40:57+11:00" data-tags="bootcamp" data-pin="">
+<div class="description">Actionable Infra Observability</div>
+<div class="card-duration">
+<span></span>
+<span>Updated Mar 1, 2021</span>
+</div>
+<div class="card-footer">
+<div class="category-icon actionable-infra-icon"></div>
+<paper-button class="actionable-infra-bg">Start</paper-button>
+</div>
+</a>
 <a href="/workshops/usql/index.html?index=..%2F..bootcamp" on-tap="navigate" class="codelab-card category-dem" data-category="dem,bizops" data-title="Advanced USQL" data-duration="18" data-updated="2020-10-17T21:20:37+11:00" data-tags="bootcamp" data-pin="">
 <div class="description">Advanced USQL</div>
 <div class="card-duration">
@@ -151,6 +164,17 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <div class="card-footer">
 <div class="category-icon infra-icon"></div>
 <paper-button class="infra-bg">Start</paper-button>
+</div>
+</a>
+<a href="/workshops/dt-love/index.html?index=..%2F..bootcamp" on-tap="navigate" class="codelab-card category-dt-love" data-category="dt-love" data-title="Why Devs Love Dynatrace" data-duration="0" data-updated="2021-03-01T13:45:25+11:00" data-tags="bootcamp" data-pin="">
+<div class="description">Why Devs Love Dynatrace</div>
+<div class="card-duration">
+<span></span>
+<span>Updated Mar 1, 2021</span>
+</div>
+<div class="card-footer">
+<div class="category-icon dt-love-icon"></div>
+<paper-button class="dt-love-bg">Start</paper-button>
 </div>
 </a>
 </card-sorter>
