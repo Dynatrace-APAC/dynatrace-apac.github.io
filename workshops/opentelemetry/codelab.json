@@ -3,13 +3,13 @@
   "format": "html",
   "prefix": "https://storage.googleapis.com",
   "mainga": "UA-49880327-14",
-  "updated": "2021-02-26T16:25:29+11:00",
+  "updated": "2021-03-29T12:45:54+11:00",
   "id": "opentelemetry",
   "duration": 0,
   "title": "Dynatrace with OpenTelemetry",
-  "authors": "Brandon Neo",
+  "authors": "Myrvin Yap",
   "summary": "OpenTelemetry",
-  "source": "opentelemetry.md",
+  "source": "otel.md",
   "theme": "",
   "status": [
     "published"
