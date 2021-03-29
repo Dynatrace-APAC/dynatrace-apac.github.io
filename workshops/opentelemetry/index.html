@@ -24,8 +24,18 @@
 </ul>
 <h2 class="checklist" is-upgraded>What You&#39;ll Learn</h2>
 <ul>
-<li>TODO</li>
-<li>TODO</li>
+<li>Tracing <ul>
+<li>Use OpenTelemetry SDKs to create SPANs and SPAN attributes</li>
+<li>Use Dynatrace to analyze the PurePaths with the Otel Spans</li>
+<li>Create Request Attributes using the OpenTelemetry SPAN attributes</li>
+<li>Make use of pre-instrumented libraries in your code</li>
+</ul>
+</li>
+<li>Metrics <ul>
+<li>Make use of Dynatrace OpenTelemetry Metrics Exporter</li>
+<li>Use Dynatrace to browse and visualize the metrics</li>
+</ul>
+</li>
 </ul>
 </google-codelab-step>
 <google-codelab-step label="Prepare the environment" duration="0">
@@ -35,8 +45,6 @@
 <li>Install OneAgent</li>
 <li>Clone the repos for the exercise</li>
 </ul>
-<aside class="warning"><p>TODO - Placeholder</p>
-</aside>
 <h2 is-upgraded>Step 1: Enable OpenTelemetry instrumentation</h2>
 <ul>
 <li>Go to your environment, under <code>Settings</code> &gt; <code>Server-side service monitoring</code> &gt; <code>Deep Monitoring</code> &gt; <code>OpenTelemetry and OpenTracing</code><img alt="Deep Monitoring" src="img/816630c2b886baca.png"></li>
@@ -45,22 +53,7 @@
 <ul>
 <li>Launch browser-based VS Code Server</li>
 <li>Enter the supplied password</li>
-<li>Open a <strong>NEW</strong> Terminal <img alt="**NEW**Terminal" src="img/384059894804209.png"></li>
-<li>Ensure that you are in the home directory</li>
-<li><code>source</code> the profile file</li>
-</ul>
-<pre><code language="language-bash" class="language-bash">  $ cd ~
-  $ pwd
-  /home/dynatrace
-  $ souce .profile
-</code></pre>
-<ul>
-<li>Validate <code>go</code> version</li>
-</ul>
-<pre><code language="language-bash" class="language-bash">  $ go version
-  go version go1.15.7 linux/amd64
-</code></pre>
-<ul>
+<li>Open a new Terminal <img alt="New Terminal" src="img/384059894804209.png"></li>
 <li>Access the Dynatrace tenant provided to you</li>
 <li>Deploy Dynatrace OneAgent (Linux)</li>
 <li>Start the installation with default settings</li>
@@ -70,6 +63,9 @@
 <li>Click on <code>clone repository</code> on the Welcome tab <img alt="CloneRepo" src="img/377b30bb7d3769c6.png"></li>
 <li>Enter <code>https://github.com/Dynatrace-APAC/Workshop-otel.git</code></li>
 <li>Click on Clone from GitHub and choose the default home directory <code>/home/dynatrace</code></li>
+<li>Click on OK</li>
+<li>When asked &#34;Would you like to open the cloned repository?&#34; Click on OPEN.</li>
+<li>After the clone, you should get a folder structure similar to the one below <img alt="ExerciseStructure" src="img/24f3276057200515.png"></li>
 </ul>
 <h2 is-upgraded>You&#39;ve arrived</h2>
 <ul>
@@ -80,7 +76,14 @@
 <p>In this step we extend a sample program with an additional OpenTelemetry Span. The sample consists of an HTTP Server which is able to calculate any Fibonacci number. The result of that calculation is getting sent to a Kafka Broker.</p>
 <h2 is-upgraded>Compile and launch the program</h2>
 <ul>
-<li>Go to a terminal window</li>
+<li>Open a terminal window</li>
+<li><code>source</code> the profile file and validate <code>go</code> version</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">  $ souce ~/.profile
+  $ go version
+  go version go1.15.7 linux/amd64
+</code></pre>
+<ul>
 <li>Change diretory to <code>ex1</code> directory and compile the program using the command line <code>go build</code>. This produces a file name <code>fib</code> within the current directory.</li>
 </ul>
 <pre><code language="language-bash" class="language-bash">  $ cd ex1
@@ -92,16 +95,15 @@
 <pre><code language="language-bash" class="language-bash">  $ ./fib
 </code></pre>
 <ul>
-<li>In your Dynatrace Environment navigate to <code>Hosts</code> and select the host</li>
-<li>Open a <strong>NEW</strong> terminal window</li>
-<li>Fire transactions to access your <strong>NEW</strong> HTTP Service</li>
+<li>Spilt a new terminal window <img alt="SplitTerminal" src="img/f9e005a1127b467e.png"></li>
+<li>Fire transactions to access your new HTTP Service</li>
 </ul>
 <pre><code language="language-bash" class="language-bash">  $ curl http://localhost:28080/fib?n=1;echo
 </code></pre>
 <ul>
+<li>In your Dynatrace Environment navigate to <code>Hosts</code> and select the host</li>
 <li>Wait until <code>fib</code> shows up among the Processes on this host</li>
-<li>Dynatrace by default has decided to disable monitoring for this executable (<code>Process isn't monitored</code>). Click on the link <code>monitored technologies</code> and override the defaults for this Process Group.</li>
-<li><img alt="Process isn’t monitored" src="img/1466e54877dffd3a.png"></li>
+<li>Dynatrace by default has decided to disable monitoring for this executable (<code>Process isn't monitored</code>). Click on the link <code>monitored technologies</code> and override the defaults for this Process Group. <img alt="Process isn’t monitored" src="img/1466e54877dffd3a.png"></li>
 <li>Within your Terminal press <code>Ctrl-C</code> to shut down <code>fib</code>. Launch <code>fib</code> again.</li>
 <li>Fire transactions to access the http service, using n=1</li>
 </ul>
@@ -109,10 +111,9 @@
 </code></pre>
 <ul>
 <li>Wait for a couple of seconds. After that you should see a PurePath for the HTTP request you just sent to your HTTP Service. <ul>
-<li>The contents of this PurePath is produced by out of the box Sensors of OneAgent</li>
+<li>The contents of this PurePath is produced by out of the box Sensors of OneAgent <img alt="PurePath" src="img/b7f693568bc566b0.png"></li>
 </ul>
 </li>
-<li><img alt="PurePath" src="img/b7f693568bc566b0.png"></li>
 </ul>
 <h2 is-upgraded>1-1 Declaring a Global Tracer</h2>
 <ul>
@@ -178,7 +179,7 @@
 <li>Line 35 and 39 - Insert // on each line - this is the <strong>NEW</strong> code that we want to introduce</li>
 <li>These code snippet mandates that the <code>trace context</code> is sent as a parameter and returned together with the function</li>
 </ul>
-<pre><code language="language-go" class="language-go">  func **NEW**(ctx context.Context) Fibonacci {
+<pre><code language="language-go" class="language-go">  func New(ctx context.Context) Fibonacci {
 	return &amp;fibonacci{Context: ctx}
 	
   type fibonacci struct {
@@ -215,9 +216,9 @@
 <li>Open <code>main.go</code></li>
 <li>Line 39 and 41 - Delete // on each line - this is OLD code that we want to remove</li>
 <li>Line 43 and 45 - Insert // on each line - this is the <strong>NEW</strong> code that we want to introduce</li>
-<li>The previous <code>fibonacci.**NEW**().Calc(n)</code> is not valid any more and thus, this code snippet shows how we can pass the <code>trace context</code> from the parent <code>http-request</code> to the child request</li>
+<li>The previous <code>fibonacci.New().Calc(n)</code> is not valid any more and thus, this code snippet shows how we can pass the <code>trace context</code> from the parent <code>http-request</code> to the child request</li>
 </ul>
-<pre><code language="language-go" class="language-go">  result, numIterations := fibonacci.**NEW**(ctx).Calc(n)
+<pre><code language="language-go" class="language-go">  result, numIterations := fibonacci.New(ctx).Calc(n)
 </code></pre>
 <h2 is-upgraded>Recompile and execute transactions again</h2>
 <ul>
@@ -319,7 +320,7 @@
 <li>Line 44 and 46 - Insert // on each line - this is the <strong>NEW</strong> code that we want to introduce</li>
 <li>This code snippet is modfied based on how the <strong>NEW</strong> Fibonacci function is designed - OpenTelemetry SDK wrapped around the function</li>
 </ul>
-<pre><code language="language-go" class="language-go">  result, numIterations := fibonacci.Wrap(ctx, fibonacci.**NEW**()).Calc(n)
+<pre><code language="language-go" class="language-go">  result, numIterations := fibonacci.Wrap(ctx, fibonacci.New()).Calc(n)
 </code></pre>
 <h2 is-upgraded>Recompile and execute transactions again</h2>
 <ul>
@@ -447,8 +448,7 @@
 <li>Open the metrics browser in Dynatrace WebUI, find the metric, and click on the button <code>create chart</code></li>
 <li>Alternatively, you can also use the Data Explorer and click on the Dropdown box <code>Filter metrics by</code> and type in <code>otel</code>.</li>
 <li>Click on the input box <code>Split by</code>. You should be able to select <code>input</code> here.</li>
-<li>For this specific kind of metric it makes sense to select <code>Pie</code> as the Visualization on the right hand side menu</li>
-<li><img alt="Data Explorer" src="img/5d89418eb82d18fd.png"></li>
+<li>For this specific kind of metric it makes sense to select <code>Pie</code> as the Visualization on the right hand side menu <img alt="Data Explorer" src="img/5d89418eb82d18fd.png"></li>
 <li>Click on <code>Run query</code></li>
 </ul>
 <h2 is-upgraded>5-3 Using DynatraceAPI endpoint for metrics ingestion</h2>
@@ -469,7 +469,7 @@
 <li>Line 25 - Delete // - this is <strong>NEW</strong> endpoint that we want to introduce</li>
 <li>Line 25 - Edit the URL to include your environment ID</li>
 </ul>
-<aside class="warning"><p>https://mou612.managed-sprint.dynalabs.io/e//api/v2/metrics/ingest</p>
+<aside class="warning"><p>https://mou612.managed-sprint.dynalabs.io/e/<strong>REPLACE with environmentID</strong>/api/v2/metrics/ingest</p>
 </aside>
 <ul>
 <li>Line 30 - Delete // - this is to INTRODUCE the Dynatrace API token into the code</li>
@@ -478,10 +478,13 @@
 </ul>
 <h2 is-upgraded>Recompile and execute transactions again</h2>
 <ul>
-<li>VS Code Server auto-saves any edits made, however, if you would like to be sure, press <code>Ctrl-S</code> to save your changes in <code>metrics.go</code> and <code>main.go</code></li>
+<li>VS Code Server auto-saves any edits made, however, if you would like to be sure, press <code>Ctrl-S</code> to save your changes in <code>metrics.go</code></li>
+<li>In your Terminal, compile the program using the command line <code>go build</code>, launch <code>fib</code> and in the other terminal</li>
 <li>In your terminal, create a series of requests like these. Feel free to repeat some of these requests a couple of times</li>
 </ul>
-<pre><code language="language-bash" class="language-bash">  $ curl http://localhost:28080/fib?n=12;echo
+<pre><code language="language-bash" class="language-bash">  $ go build
+  $ ./fib
+  $ curl http://localhost:28080/fib?n=12;echo
   $ curl http://localhost:28080/fib?n=13;echo
   $ curl http://localhost:28080/fib?n=14;echo
   $ curl http://localhost:28080/fib?n=15;echo

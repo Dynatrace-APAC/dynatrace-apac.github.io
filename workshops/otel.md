@@ -17,8 +17,14 @@ This repository contains labs for the OpenTelemetry Hands-On Session. The tech s
 - Dynatrace Tenant/Environment
 
 ### What You’ll Learn 
-- TODO
-- TODO
+- Tracing
+  - Use OpenTelemetry SDKs to create SPANs and SPAN attributes
+  - Use Dynatrace to analyze the PurePaths with the Otel Spans
+  - Create Request Attributes using the OpenTelemetry SPAN attributes
+  - Make use of pre-instrumented libraries in your code
+- Metrics
+  - Make use of Dynatrace OpenTelemetry Metrics Exporter
+  - Use Dynatrace to browse and visualize the metrics
 
 <!-- ------------------------ -->
 ## Prepare the environment
@@ -27,9 +33,6 @@ In this step we will prepare the environment for the hands on exercises
 - Install OneAgent
 - Clone the repos for the exercise
 
-Negative
-: TODO - Placeholder
-
 ### Step 1: Enable OpenTelemetry instrumentation
 - Go to your environment, under `Settings` > `Server-side service monitoring` > `Deep Monitoring` > `OpenTelemetry and OpenTracing`
   ![Deep Monitoring](assets/bootcamp/otel/deep_monitoring.png)
@@ -37,25 +40,8 @@ Negative
 ### Step 2: Install OneAgent
 - Launch browser-based VS Code Server
 - Enter the supplied password
-- Open a **NEW** Terminal
-  ![**NEW**Terminal](assets/bootcamp/otel/CodeServer-Terminal.png)
-- Ensure that you are in the home directory
-- `source` the profile file
-
-  ```bash
-  $ cd ~
-  $ pwd
-  /home/dynatrace
-  $ souce .profile
-  ```
-
-- Validate `go` version
-
-  ```bash
-  $ go version
-  go version go1.15.7 linux/amd64
-  ```
-  
+- Open a new Terminal
+  ![New Terminal](assets/bootcamp/otel/CodeServer-Terminal.png)
 - Access the Dynatrace tenant provided to you
 - Deploy Dynatrace OneAgent (Linux)
 - Start the installation with default settings
@@ -65,6 +51,10 @@ Negative
   ![CloneRepo](assets/bootcamp/otel/CodeServer-clonerepo.png)
 - Enter `https://github.com/Dynatrace-APAC/Workshop-otel.git`
 - Click on Clone from GitHub and choose the default home directory `/home/dynatrace`
+- Click on OK
+- When asked "Would you like to open the cloned repository?" Click on OPEN.
+- After the clone, you should get a folder structure similar to the one below
+  ![ExerciseStructure](assets/bootcamp/otel/CodeServer-ExerciseStructure.png)
 
 ### You've arrived
 - You are now ready to start the hands on!
@@ -76,7 +66,15 @@ The sample consists of an HTTP Server which is able to calculate any Fibonacci n
 The result of that calculation is getting sent to a Kafka Broker.
 
 ### Compile and launch the program
-- Go to a terminal window
+- Open a terminal window
+- `source` the profile file and validate `go` version
+
+  ```bash
+  $ souce ~/.profile
+  $ go version
+  go version go1.15.7 linux/amd64
+  ```
+
 - Change diretory to `ex1` directory and compile the program using the command line `go build`. This produces a file name `fib` within the current directory.
 
   ```bash
@@ -89,18 +87,18 @@ The result of that calculation is getting sent to a Kafka Broker.
   ```bash
   $ ./fib
   ```
-  
-- In your Dynatrace Environment navigate to `Hosts` and select the host
-- Open a **NEW** terminal window
-- Fire transactions to access your **NEW** HTTP Service
+- Spilt a new terminal window
+  ![SplitTerminal](assets/bootcamp/otel/CodeServer-split.png)
+- Fire transactions to access your new HTTP Service
 
   ```bash
   $ curl http://localhost:28080/fib?n=1;echo
   ```
-  
+
+- In your Dynatrace Environment navigate to `Hosts` and select the host
 - Wait until `fib` shows up among the Processes on this host
 - Dynatrace by default has decided to disable monitoring for this executable (`Process isn't monitored`). Click on the link `monitored technologies` and override the defaults for this Process Group.
-- ![Process isn't monitored](assets/bootcamp/otel/process_isnt_monitored.png)
+  ![Process isn't monitored](assets/bootcamp/otel/process_isnt_monitored.png)
 - Within your Terminal press `Ctrl-C` to shut down `fib`. Launch `fib` again. 
 - Fire transactions to access the http service, using n=1
 
@@ -110,7 +108,7 @@ The result of that calculation is getting sent to a Kafka Broker.
   
 - Wait for a couple of seconds. After that you should see a PurePath for the HTTP request you just sent to your HTTP Service.
   - The contents of this PurePath is produced by out of the box Sensors of OneAgent
-- ![PurePath](assets/bootcamp/otel/purepath.png)
+  ![PurePath](assets/bootcamp/otel/purepath.png)
 
 ### 1-1 Declaring a Global Tracer
 - Shut down `fib` using `Ctrl-C` within your Terminal if you haven't done so already
@@ -183,7 +181,7 @@ Positive
 - These code snippet mandates that the `trace context` is sent as a parameter and returned together with the function
   
   ```go
-  func **NEW**(ctx context.Context) Fibonacci {
+  func New(ctx context.Context) Fibonacci {
 	return &fibonacci{Context: ctx}
 	
   type fibonacci struct {
@@ -221,10 +219,10 @@ Positive
 - Open `main.go`
 - Line 39 and 41 - Delete // on each line - this is OLD code that we want to remove
 - Line 43 and 45 - Insert // on each line - this is the **NEW** code that we want to introduce
-- The previous `fibonacci.**NEW**().Calc(n)` is not valid any more and thus, this code snippet shows how we can pass the `trace context` from the parent `http-request` to the child request
+- The previous `fibonacci.New().Calc(n)` is not valid any more and thus, this code snippet shows how we can pass the `trace context` from the parent `http-request` to the child request
   
   ```go
-  result, numIterations := fibonacci.**NEW**(ctx).Calc(n)
+  result, numIterations := fibonacci.New(ctx).Calc(n)
   ```
   
 ### Recompile and execute transactions again
@@ -335,7 +333,7 @@ Positive
 - This code snippet is modfied based on how the **NEW** Fibonacci function is designed - OpenTelemetry SDK wrapped around the function
   
   ```go
-  result, numIterations := fibonacci.Wrap(ctx, fibonacci.**NEW**()).Calc(n)
+  result, numIterations := fibonacci.Wrap(ctx, fibonacci.New()).Calc(n)
   ```
 
 ### Recompile and execute transactions again
@@ -478,7 +476,7 @@ Negative
 - Alternatively, you can also use the Data Explorer and click on the Dropdown box `Filter metrics by` and type in `otel`.
 - Click on the input box `Split by`. You should be able to select `input` here.
 - For this specific kind of metric it makes sense to select `Pie` as the Visualization on the right hand side menu
-- ![Data Explorer](assets/bootcamp/otel/data_explorer.png)
+  ![Data Explorer](assets/bootcamp/otel/data_explorer.png)
 - Click on `Run query`
 
 ### 5-3 Using DynatraceAPI endpoint for metrics ingestion
@@ -499,17 +497,20 @@ Positive
 - Line 25 - Edit the URL to include your environment ID
 
 Negative
-: https://mou612.managed-sprint.dynalabs.io/e/**<REPLACE with environmentID>**/api/v2/metrics/ingest
+: https://mou612.managed-sprint.dynalabs.io/e/**REPLACE with environmentID**/api/v2/metrics/ingest
 
 - Line 30 - Delete // - this is to INTRODUCE the Dynatrace API token into the code
 - Line 59 - Insert // - this is OLD metric name that we want to remove
 - Line 60 - Delete // - this is **NEW** metric name that we want to introduce
 
 ### Recompile and execute transactions again
-- VS Code Server auto-saves any edits made, however, if you would like to be sure, press `Ctrl-S` to save your changes in `metrics.go` and `main.go`
+- VS Code Server auto-saves any edits made, however, if you would like to be sure, press `Ctrl-S` to save your changes in `metrics.go`
+- In your Terminal, compile the program using the command line `go build`, launch `fib` and in the other terminal
 - In your terminal, create a series of requests like these. Feel free to repeat some of these requests a couple of times
   
   ```bash
+  $ go build
+  $ ./fib
   $ curl http://localhost:28080/fib?n=12;echo
   $ curl http://localhost:28080/fib?n=13;echo
   $ curl http://localhost:28080/fib?n=14;echo
