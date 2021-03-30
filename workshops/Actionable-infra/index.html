@@ -19,38 +19,81 @@
 <p>Here are a few quick steps to get your environment ready for today&#39;s exercises.</p>
 <h2 is-upgraded>Step 1. Turn on Metric Ingest in the Dynatrace UI</h2>
 <ul>
-<li>Navigate to Settings &gt; Monitoring &gt; Monitored Technologies <ul>
+<li>Navigate to <strong>Settings &gt; Monitoring &gt; Monitored Technologies </strong><ul>
 <li>Scroll down to the bottom of the list</li>
 </ul>
 </li>
 <li>Turn on Dynatrace OneAgent StatsD, Pipe, HTTP Metric API</li>
 </ul>
-<h2 is-upgraded>Step 2. Restart Telegraf</h2>
+<h2 is-upgraded>Step 2. Create a Dynatrace API token with Metric Ingest permission</h2>
 <ul>
-<li>Navigate to the terminal in DTU <code>bash<br>(ubuntuvm)$ sudo systemctl restart telegraf</code><br> ### Step 3. Clone Git Hub Repo - In the DTU terminal <code>bash<br>(ubuntuvm)$ git clone https://github.com/JasonOstroski/Perform2021-ActionableInfraScripts.git<br></code></li>
-</ul>
-<h2 is-upgraded>Step 4. Set up a browser monitor in the Dynatrace UI</h2>
-<ul>
-<li>Navigate to Synthetics &gt; Create a Synthetic Monitor</li>
-<li>Create a browser monitor</li>
-<li>URL is the Public IP address on port 8080 <ul>
-<li>Ex: http://12.345.67.89:8080</li>
-<li>Find the Public IP in the Environments tab in DTU</li>
-<li>Monitor Name: EasyTravel Home</li>
+<li>Navigate to <strong>Settings &gt; Integration &gt; Dynatrace API &gt; Generate Token with Ingest Metrics</strong> toggle on</li>
+<li>Copy and save the token in a secure place <h2 is-upgraded>Step 3. Set up a browser monitor in the Dynatrace UI</h2>
+</li>
+<li>Navigate to <strong>Synthetics &gt; Create a Synthetic Monitor</strong></li>
+<li>Create a browser monitor against Dynatrace Home Page <ul>
+<li>Ex: https://dynatrace.com</li>
+<li>Monitor Name: Dynatrace Home</li>
 </ul>
 </li>
-<li>Leave all other defaults and select 3 locations</li>
+<li>Leave all other defaults and select 3 locations<br> <br></li>
 </ul>
 </google-codelab-step>
+<google-codelab-step label="Install Telegraf" duration="0">
+<h2 is-upgraded>Step 1. Download and install the latest release of Telegraf from https://portal.influxdata.com/downloads/</h2>
+<ul>
+<li>Telegraf is written in Go, so there are no dependencies for the agent <ul>
+<li>Note: Plugins that run on top of Telegraf may have dependencies</li>
+</ul>
+</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">wget https://dl.influxdata.com/telegraf/releases/telegraf-1.18.0-1.x86_64.rpm
+sudo yum localinstall telegraf-1.18.0-1.x86_64.rpm
+</code></pre>
+<h2 is-upgraded>Step 2. (Optional) After the installation is complete, navigate to https://github.com/influxdata/telegraf</h2>
+<ul>
+<li>Navigate to plugins folder <ul>
+<li>Take a look at the different types of input plugins available</li>
+<li>Take a look at the different types of output plugins available</li>
+</ul>
+</li>
+<li>Any notable absentees in the output vendor list?</li>
+</ul>
+<h2 is-upgraded>Step 3. Let&#39;s configure Telegraf to send data to Dynatrace</h2>
+<ul>
+<li>Navigate to Telegraf config folder and edit telegraf.conf file <br><code>cd /etc/telegraf/<br>sudo vi telegraf.conf<br></code></li>
+</ul>
+<h3 is-upgraded>Let&#39;s tell telegraf where to send the data - documentation here https://www.dynatrace.com/support/help/shortlink/telegraf</h3>
+<ul>
+<li>Find <code>outputs.dynatrace</code> within the conf file and enable it by deleting the # at the beginning of the line</li>
+<li>Uncomment ‘url&#39; and add your Dynatrace environment URL with /api/v2/metrics/ingest appended at the end of the URL</li>
+<li>Uncomment ‘api_token&#39; and add API token from previous excercise</li>
+<li>Finally, uncomment ‘prefix&#39; parameter and leave &#34;telegraf.&#34; - this helps us search metrics from telegraf easily within Dynatrace</li>
+</ul>
+<h3 is-upgraded>By default, basic infrastructure metrics such as disk, memory and CPU should be enabled. Confirm by checking inputs.cpu, inputs.disk are uncommented</h3>
+<ul>
+<li>Uncomment those plugins if they&#39;re not already enabled</li>
+<li>Save and close the conf file</li>
+</ul>
+<h2 is-upgraded>Step 4. Let&#39;s start Telegraf service</h2>
+<pre><code>sudo service telegraf start
+</code></pre>
+</google-codelab-step>
 <google-codelab-step label="Metric Browser and Explorer" duration="0">
+<h2 is-upgraded>Step 1. Clone Git Hub Repo</h2>
+<ul>
+<li>In the DTU terminal</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">git clone https://github.com/JasonOstroski/Perform2021-ActionableInfraScripts.git
+</code></pre>
 <h2 is-upgraded>Exercise Prep: CPU Temp</h2>
 <p>Let&#39;s generate some data for some later exercises</p>
 <h3 is-upgraded>Kick off the CPU Temp Script</h3>
 <ul>
 <li>In the DTU Terminal run the following</li>
 </ul>
-<pre><code language="language-bash" class="language-bash">   (ubuntuvm)$ cd Perform2021-ActionableInfraScripts
-   (ubuntuvm)$ python3 cputemp.py
+<pre><code language="language-bash" class="language-bash">(ubuntuvm)$ cd Perform2021-ActionableInfraScripts
+(ubuntuvm)$ python3 cputemp.py
 </code></pre>
 <h2 is-upgraded>Metric Browser</h2>
 <ul>
@@ -63,10 +106,11 @@
 <li>Create Chart and pin into a new dashboard <ul>
 <li>Give the dashboard a meaningful name</li>
 <li>Ex: Infrastructure Overview</li>
-<li>Tile Name: Memory Utilization <img alt="metricbrowser" src="img/94e8f94a72b52dc0.png"></li>
+<li>Tile Name: Memory Utilization</li>
 </ul>
 </li>
 </ul>
+<p class="image-container"><img alt="metricbrowser" src="img/94e8f94a72b52dc0.png"></p>
 <h2 is-upgraded>Metric Browser vs Explorer</h2>
 <ul>
 <li>Metric Explorer <ul>
@@ -76,10 +120,11 @@
 </ul>
 </li>
 <li>Which way was easier, browser or explorer? <ul>
-<li>Why would you choose one over the other? <img alt="metricexplorer" src="img/102329a8e2ed07e4.png"></li>
+<li>Why would you choose one over the other?</li>
 </ul>
 </li>
 </ul>
+<p class="image-container"><img alt="metricexplorer" src="img/102329a8e2ed07e4.png"></p>
 <h2 is-upgraded>Thresholds</h2>
 <h3 is-upgraded>Disk Used Threshold Chart</h3>
 <ul>
@@ -90,10 +135,11 @@
 <li>Thresholds: Green: Blank, Yellow: 40, Red: 75</li>
 <li>Chart Mode: Column</li>
 <li>Pin to dashboard <ul>
-<li>Tile name: Disk Used % <img alt="diskthreshold2" src="img/83ce3a953074957d.png"><img alt="diskthreshold1" src="img/baa60a0b0fd5704b.png"></li>
+<li>Tile name: Disk Used %</li>
 </ul>
 </li>
 </ul>
+<p class="image-container"><img alt="diskthreshold2" src="img/83ce3a953074957d.png"><img alt="diskthreshold1" src="img/baa60a0b0fd5704b.png"></p>
 <h3 is-upgraded>Top List with Thresholds: EC2 CPU</h3>
 <ul>
 <li>Create a Top List with EC2 CPU Usage % <ul>
@@ -103,8 +149,9 @@
 </ul>
 </li>
 <li>Thresholds: Green: 0, Yellow: 40, Red: 60</li>
-<li>Pin to dashboard <img alt="topthreshold1" src="img/b3fa92566c4f60ed.png"><img alt="topthreshold2" src="img/b8fd2567783d8080.png"></li>
+<li>Pin to dashboard</li>
 </ul>
+<p class="image-container"><img alt="topthreshold1" src="img/b3fa92566c4f60ed.png"><img alt="topthreshold2" src="img/b8fd2567783d8080.png"></p>
 <h3 is-upgraded>Optional: Top List with Threshold: Process CPU</h3>
 <ul>
 <li>Create a Top List with Process CPU Usage <ul>
@@ -114,8 +161,9 @@
 </ul>
 </li>
 <li>Thresholds: Green: 0, Yellow: 5, Red: 20</li>
-<li>Pin to dashboard <img alt="topthreshold1" src="img/2f04fd0d5f4a4cd.png"><img alt="topthreshold2" src="img/d6b18a2396fe4592.png"></li>
+<li>Pin to dashboard</li>
 </ul>
+<p class="image-container"><img alt="topthreshold1" src="img/2f04fd0d5f4a4cd.png"><img alt="topthreshold2" src="img/d6b18a2396fe4592.png"></p>
 <h2 is-upgraded>Splitting and Filtering</h2>
 <h3 is-upgraded>Splitting</h3>
 <ul>
@@ -229,7 +277,7 @@
 <li>Use existing percentage Toggle</li>
 <li>Metric: builtin:synthetic.browser.availability.location.total</li>
 <li>Evaluation Type: Aggregate</li>
-<li>SLO Filter: type(&#34;SYNTHETIC_TEST&#34;),entityName(&#34;Easytravel Home&#34;)</li>
+<li>SLO Filter: type(&#34;SYNTHETIC_TEST&#34;),entityName(&#34;Dynatrace Home&#34;)</li>
 <li>Target Percentage: 98%</li>
 <li>Warning Percent: 99%</li>
 <li>Timeframe: -1d</li>
@@ -237,8 +285,9 @@
 </li>
 <li>Where do I get Metric Name from?</li>
 <li>Where do I get SLO Filter from?</li>
-<li>Add to Dashboard via SLO page pin icon <img alt="syntheticslo" src="img/6335a78c53fb556c.png"></li>
+<li>Add to Dashboard via SLO page pin icon</li>
 </ul>
+<p class="image-container"><img alt="syntheticslo" src="img/6335a78c53fb556c.png"></p>
 <h2 is-upgraded>Service Availablity SLO</h2>
 <h3 is-upgraded>Create a Service Availablity SLO</h3>
 <ul>
@@ -333,10 +382,11 @@
 </li>
 <li>GET /metrics/query <ul>
 <li>Metric Selector: telegraf.cpu.usage_user</li>
-<li>View available options and output <img alt="metricapi" src="img/14cd1df8397ca3b.png"></li>
+<li>View available options and output</li>
 </ul>
 </li>
 </ul>
+<p class="image-container"><img alt="metricapi" src="img/14cd1df8397ca3b.png"></p>
 <h2 is-upgraded>Postman Prep</h2>
 <p>Create a workspace: PerformHOT2021</p>
 <ul>
