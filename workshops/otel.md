@@ -70,7 +70,7 @@ The result of that calculation is getting sent to a Kafka Broker.
 - `source` the profile file and validate `go` version
 
   ```bash
-  $ souce ~/.profile
+  $ source ~/.profile
   $ go version
   go version go1.15.7 linux/amd64
   ```
