@@ -53,8 +53,9 @@ Open your browser and access the Dynatrace URL.
 
 Follow these steps below:
 
-* Select **Deploy Dynatrace** from the navigation menu.
-* Click the **Start installation** 
+* Select **Dynatrace Hub** from the navigation menu.
+* Select **OneAgent**
+* Select **Download OneAgent** button from the bottom right.  
 * Click on **Linux**
 
 ![Deploy](assets/dem/installation-1.gif)
@@ -254,7 +255,7 @@ Once you’ve identified where usernames are located in your page source, you ca
    - Use the CSS Selector `#loginForm\:j_idt39`
    - Since the CSS Selector also picks up some additional text, we can apply a clean up rule.
 * Toggle ON **Apply cleanup rule**
-* Use `Hello (.*)!` on the Regex Text Field
+* Use `Hello ([^!]*+)` on the Regex Text Field
 * Click on **Add tag (identifier) rule**
 * Click on **Save**
 

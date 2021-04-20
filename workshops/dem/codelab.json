@@ -1,9 +1,9 @@
 {
   "environment": "web",
   "format": "html",
-  "prefix": "../../elements",
+  "prefix": "https://storage.googleapis.com",
   "mainga": "UA-49880327-14",
-  "updated": "2020-11-25T18:51:23+11:00",
+  "updated": "2021-04-20T10:59:28+10:00",
   "id": "dem",
   "duration": 79,
   "title": "Digital Experience Management with Dynatrace",
