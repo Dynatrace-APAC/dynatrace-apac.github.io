@@ -1,0 +1,26 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-04-22T15:32:43+10:00",
+  "id": "azure-partner",
+  "duration": 64,
+  "title": "Dynatrace with Azure",
+  "authors": "Brandon Neo",
+  "summary": "Azure Hands-On",
+  "source": "azure-partner.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "azure"
+  ],
+  "tags": [
+    "partner"
+  ],
+  "feedback": "mailto:APAC-SE-Central@dynatrace.com",
+  "ga": "UA-175467274-1",
+  "url": "azure-partner"
+}
