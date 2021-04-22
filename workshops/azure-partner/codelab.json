@@ -1,7 +1,7 @@
 {
   "environment": "web",
   "format": "html",
-  "prefix": "https://storage.googleapis.com",
+  "prefix": "../../elements",
   "mainga": "UA-49880327-14",
   "updated": "2021-04-22T15:32:43+10:00",
   "id": "azure-partner",
