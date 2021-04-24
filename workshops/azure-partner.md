@@ -252,6 +252,10 @@ Duration: 5
 The OneAgents have a specific requirement when it comes to supportability of NodeJS versions and bitness. In the [documentation](https://www.dynatrace.com/support/help/shortlink/supported-technologies#nodejs), it is mentioned that only ***64-bit*** NodeJS versions are supported.
 
 However, when creating the Azure WebApp, it defaults to 32-bits, as seen in this configuration screen:
+
+![32-bits](assets/bootcamp/azure/weather-expressconfig.png)
+
+### Enabling 64-bits NodeJS for Azure WebApps via Azure Portal
 - In Azure Portal, go to the Weather-**Express** ***App Service***
 - In the left menu, scroll down to **Configuration** > **General Settings**
 - Let's change this to 64-bits
@@ -261,6 +265,8 @@ However, when creating the Azure WebApp, it defaults to 32-bits, as seen in this
 - Click on **SAVE** and **stop followed by start** the App Service application to recycle the application's worker process
 - Access the webapp's URL again and fire a few transactions
 - You should now be able to see that the NodeJS service has been detected and instrumented
+
+![Weather-Express-NodeJS](assets/bootcamp/azure/Dynatrace-weather-express-nodejs.gif)
 
 <!-- ------------------------ -->
 ## Investigating the Weather-Express issue with Dynatrace
