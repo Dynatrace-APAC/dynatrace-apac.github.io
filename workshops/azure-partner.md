@@ -4,7 +4,7 @@ categories: azure
 tags: partner
 status: Published 
 authors: Brandon Neo
-Feedback Link: mailto:jason.nail@dynatrace.com
+Feedback Link: mailto:jason.nai@dynatrace.com
 Analytics Account: UA-175467274-1
 
 # Dynatrace with Azure
