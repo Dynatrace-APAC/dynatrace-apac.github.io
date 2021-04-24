@@ -108,10 +108,10 @@ Duration: 5
 ### Copy out relevant information via Dynatrace UI
 - Create a **PaaS token**, copy it and store is somewhere safe
 - As this is a Managed environment, you will need both environment ID and server URL
-  Environment ID (in bold)
-  `https://mou612.managed-sprint.dynalabs.io/e/`**cd783e4f-f498-4cfc-bc8b-1201bde4726a**
-  Server URL for Dynatrace Managed
-  `https://{your-domain}/e/{your-environment-id}/api`
+  - Environment ID (in bold)
+     `https://mou612.managed-sprint.dynalabs.io/e/`**cd783e4f-f498-4cfc-bc8b-1201bde4726a**
+  - Server URL for Dynatrace Managed
+    `https://{your-domain}/e/{your-environment-id}/api`
 
 ### Install Dynatrace OneAgent site extension via Azure Portal
 - In Azure Portal, go to the **Weather-Service** App Service
