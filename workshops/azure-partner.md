@@ -240,7 +240,9 @@ Positive
   ![Dynatrace-weather-service](assets/bootcamp/azure/Dynatrace-weather-express-pp.gif)
 
 > Do you notice that some purepaths have errors?
+> 
 > What is displayed when drilling down into the purepaths?
+> 
 > Is there enough visibility to diagnose the error?
 
 <!-- ------------------------ -->
