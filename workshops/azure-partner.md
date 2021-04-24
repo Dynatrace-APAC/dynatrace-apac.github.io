@@ -272,7 +272,8 @@ However, when creating the Azure WebApp, it defaults to 32-bits, as seen in this
 ## Investigating the Weather-Express issue with Dynatrace
 Duration: 5
 
-Access the **/current** purepaths again and this time, you should have a pretty good idea on where the error is coming from 
+Access the **/current** purepaths again and this time, Dynatrace should give you a pretty good idea where the error is coming from
+
 ![Weather-ExpressPP](assets/bootcamp/azure/weather-express-pp.gif)
 
 ### Resolution and Verification
@@ -281,9 +282,18 @@ Go to **App Service Editor (Preview)** and under `WWWROOT/config/main.js`, resol
 
 - Renaming your Uri to your **firstname-lastname**-weather-service.azurewebsites.net/weather
 
-![Azure-shell](assets/bootcamp/azure/debugging-2.gif)
+![Azure-shell](assets/bootcamp/azure/resolve.gif)
 
-Once you have resolved the issue, you should be able to access your **Weather Express Portal** 
+Once you have resolved the issue, the **Weather Express Portal** should be displaying the weather in Linz and any location that you enter.
+
+![Weather-Express](assets/bootcamp/azure/Weather-Express-success.png)
+
+> Use Dynatrace to explore "Applications", "Transactions and Service", "PurePaths" etc.
+> 
+> What can you tell about the data collected and how do you think it will help various teams like CloudOps, App Dev teams, Business teams etc.?
+
+Positive
+: Screen shot the entire Service Flow starting from User, and some comments on the above question and send it to mailto: jason.nai@dynatrace.com. A surprise awaits you!
 
 <!-- ------------------------ -->
 ## Function setup
