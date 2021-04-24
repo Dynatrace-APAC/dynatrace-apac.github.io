@@ -149,16 +149,18 @@ Duration: 5
 - Go to **Transactions and Services**, you should see 4 services, 2 are of the .NET technology and another 2, the NodeJS technology 
   ![Dynatrace-weather-service](assets/bootcamp/azure/Dynatrace-weather-service-serviceview.png)
   
-Positive
-: Can you tell the relationship between the .NET and NodeJS services?
-: How do you see graphically which service calls which service?
+> Can you tell the relationship between the .NET and NodeJS services?
+> 
+> How do you see graphically which service calls which service?
 
 ### Investigate the PurePaths
 - Deep dive into some of the PurePaths
   ![Dynatrace-weather-service](assets/bootcamp/azure/Dynatrace-weather-service-pp.gif)
 
 > What do you notice of the response times of some of the transactions?
+> 
 > What other components were called?
+> 
 > Did you have to do any instrumentation to get this visibility?
 
 <!-- ------------------------ -->
