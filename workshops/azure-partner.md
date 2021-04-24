@@ -52,9 +52,9 @@ The above command will download the git from the repo into your Cloud bastion ho
 
 <!-- ------------------------ -->
 ## Deploy Weather Service WebApp
-Duration: 1
+Duration: 10
 
-In this exercise, you will deploy a Azure WebApp web service API that collects weather information from various cities/countries.
+In this exercise, you will deploy a Azure WebApp web service API that collects weather information of various cities/countries in a JSON format
 
 Technology stack used
 - NodeJS
@@ -62,7 +62,7 @@ Technology stack used
 - Radis Cache (hosted in a central location, outside of your Azure subscription)
 
 Negative
-: Depending on your cloud shell location, you may change the **$location** value within the **publish.p1** to fit your region. Full list of regions are [here](https://azure.microsoft.com/en-au/global-infrastructure/geographies/#geographies)
+: **publish.ps1** is a PowerShell script written to automate the creation of the AppServicePlan, AppService and also to upload the source codes of our application. Depending on your cloud shell location, you may change the **$location** value within the **publish.ps1** to fit your region. **By default**, it is set to **Souteast Asia**. Full list of regions are [here](https://azure.microsoft.com/en-au/global-infrastructure/geographies/#geographies)
 
 Example
 ```bash
