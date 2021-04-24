@@ -61,8 +61,7 @@ Technology stack used
 - .NET
 - Radis Cache (hosted in a central location, outside of your Azure subscription)
 
-Negative
-: **publish.ps1** is a PowerShell script written to automate the creation of the AppServicePlan, AppService and also to upload the source codes of our application. Depending on your cloud shell location, you may change the **$location** value within the **publish.ps1** to fit your region. **By default**, it is set to **Souteast Asia**. Full list of regions are [here](https://azure.microsoft.com/en-au/global-infrastructure/geographies/#geographies)
+> Note: **publish.ps1** is a PowerShell script written to automate the creation of the AppServicePlan, AppService and also to upload the source codes of our application. Depending on your cloud shell location, you may change the **$location** value within the **publish.ps1** to fit your region. **By default**, it is set to **Souteast Asia**. Full list of regions are [here](https://azure.microsoft.com/en-au/global-infrastructure/geographies/#geographies)
 
 Example
 ```bash
@@ -151,10 +150,9 @@ Positive
 - Deep dive into some of the PurePaths
   ![Dynatrace-weather-service](assets/bootcamp/azure/Dynatrace-weather-service-pp.gif)
 
-Positive
-: What do you notice of the response times of some of the transactions?
-: What other components were called?
-: Did you have to do any instrumentation to get this visibility?
+> What do you notice of the response times of some of the transactions?
+> What other components were called?
+> Did you have to do any instrumentation to get this visibility?
 
 
 <!-- ------------------------ -->
