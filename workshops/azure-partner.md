@@ -3,7 +3,7 @@ id: azure-partner
 categories: azure
 tags: partner
 status: Published 
-authors: Brandon Neo
+authors: Jason Nai
 Feedback Link: mailto:jason.nai@dynatrace.com
 Analytics Account: UA-175467274-1
 
