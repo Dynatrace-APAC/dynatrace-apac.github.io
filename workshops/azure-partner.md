@@ -139,7 +139,7 @@ Positive
 : Full Documentation [here](https://www.dynatrace.com/support/help/technology-support/cloud-platforms/microsoft-azure-services/oneagent-integration/integrate-oneagent-on-azure-app-service/)
 
 <!-- ------------------------ -->
-## Automated observability for APIs
+## Automated observability with Dynatrace
 Duration: 5
 
 ### Validating technology stacks
