@@ -87,11 +87,12 @@ Enter **Y** when prompted to deploy the content of the Weather Service app (**pa
 
 ### Verify Resource Group creation
 
-Now that your app has been deployed, verify that the resource group has been deployed as well. 
+Now that your app has been deployed, verify that the resource group has been deployed as well.
+- Go to the Azure Portal > Resource Groups > **firstname-lastname-weather-service**
+- Click on the link under the section Overview > Essentials > URL
+  ![Azure-shell](assets/bootcamp/azure/weather-service.gif)
 
-![Azure-shell](assets/bootcamp/azure/weather-service.gif)
-
-Append `/weather/current/Linz` to your URL from your **firstname-lastname-weather-service** App Service
+- Append `/weather/current/Linz` to your URL from your **firstname-lastname-weather-service** App Service
 
 **Example**
 
@@ -130,7 +131,12 @@ Duration: 5
 - Select Browse
 - On the Start monitoring your App Service instance page, enter your environment ID, your API token, and your server URL
 - Select Install OneAgent
-- After installation is complete, go to Azure Portal and **restart** or **stop followed by start** the App Service application to recycle the application's worker process
+- You will see this message once installation is complete
+  ```
+  The OneAgent is installed and up-to-date
+  Enjoy monitoring from Dynatrace.
+  ```
+- Go back to the Weather-Service App Service and **restart** or **stop followed by start** the App Service application to recycle the application's worker process
 - Access the webapp's URL again and fire a few transactions
 
 ![Azure-shell](assets/bootcamp/azure/deployment-site-extension.gif)
