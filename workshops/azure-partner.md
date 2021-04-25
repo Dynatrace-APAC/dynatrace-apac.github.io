@@ -254,7 +254,7 @@ Positive
 > Is there enough visibility to diagnose the error?
 
 <!-- ------------------------ -->
-## Solving the mystery of the missing NodeJS services
+## Solving the mystery of the missing services
 Duration: 5
 
 The OneAgents have a specific requirement when it comes to supportability of NodeJS versions and bitness. In the [documentation](https://www.dynatrace.com/support/help/shortlink/supported-technologies#nodejs), it is mentioned that only ***64-bit*** NodeJS versions are supported.
