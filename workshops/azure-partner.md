@@ -312,6 +312,8 @@ Once you have resolved the issue, the **Weather Express Portal** should be displ
 
 > Use Dynatrace to explore "Applications", "Transactions and Service", "PurePaths" etc.
 > 
+> Can you tell how Weather Express and Weather Service are related? Who calls who, and how is it called? Did you have to do complex configuration steps to reach this level of visibility?
+> 
 > What can you tell about the data collected and how do you think it will help various teams like CloudOps, App Dev teams, Business teams etc.?
 
 Positive
