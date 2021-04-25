@@ -59,7 +59,7 @@ In this exercise, you will deploy a Azure WebApp web service API that collects w
 Technology stack used
 - NodeJS
 - .NET
-- Radis Cache (hosted in a central location, outside of your Azure subscription)
+- Microsoft managed CosmosDB (hosted in a central location, outside of your Azure subscription)
 
 > Note: **publish.ps1** is a PowerShell script written to automate the creation of the AppServicePlan, AppService and also to upload the source codes of our application. Depending on your cloud shell location, you may change the **$location** value within the **publish.ps1** to fit your region. **By default**, it is set to **Souteast Asia**. Full list of regions are [here](https://azure.microsoft.com/en-au/global-infrastructure/geographies/#geographies)
 > 
@@ -180,7 +180,7 @@ In this exercise, you will deploy a Azure WebApp web service that renders a Web 
 Technology stack used
 - NodeJS
 - .NET
-- CosmosDB (hosted in a central location, outside of your Azure subscription)
+- Redis cache (hosted in a central location, outside of your Azure subscription)
 
 Change folder to **weather-express** folder with `cd ../weather-express` command
 
