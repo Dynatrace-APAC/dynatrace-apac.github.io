@@ -276,6 +276,7 @@ However, when creating the Azure WebApp, it defaults to 32-bits, as seen in this
 - Click on **SAVE** and **stop followed by start** the App Service application to recycle the application's worker process
 - Access the webapp's URL again and fire a few transactions
 - You should now be able to see that the NodeJS service has been detected and instrumented
+- Click on the **"Current weather in Gdansk"** and change the location in the URL to `/current?loc=Singapore` or `/current?loc=Malaysia`
 
 ![Weather-Express-NodeJS](assets/bootcamp/azure/Dynatrace-weather-express-nodejs.gif)
 
@@ -283,17 +284,27 @@ However, when creating the Azure WebApp, it defaults to 32-bits, as seen in this
 ## Investigating the Weather-Express issue with Dynatrace
 Duration: 5
 
-Access the **/current** purepaths again and this time, Dynatrace should give you a pretty good idea where the error is coming from
+Access the **/current** purepaths again. Investigate the `/current?loc=Singapore` and/or `/current?loc=Malaysia` and this time, Dynatrace should give you a pretty good idea where the error is coming from
 
 ![Weather-ExpressPP](assets/bootcamp/azure/weather-express-pp.gif)
 
+> What do you think is causing this error?
+
 ### Resolution and Verification
 
-Go to **App Service Editor (Preview)** and under `WWWROOT/config/main.js`, resolve the following based on the GIF
+In order to resolve this issue, we have to change the code. For Azure WebApps, a built-in Code editor can be used to modify codes.
+
+To access to built-in code editor
+- In Azure Portal, go to the Weather-**Express** ***App Service***
+- In the left menu, scroll down to **Development Tools** > **App Service Editor (Preview)**
+- Click on **Go** and the browser-based editor will open in another tab
+- Under `WWWROOT/config/main.js`, resolve the following based on the GIF
 
 - Renaming your Uri to your **firstname-lastname**-weather-service.azurewebsites.net/weather
 
 ![Azure-shell](assets/bootcamp/azure/resolve.gif)
+
+- Recycle the App Service again
 
 Once you have resolved the issue, the **Weather Express Portal** should be displaying the weather in Linz and any location that you enter.
 
