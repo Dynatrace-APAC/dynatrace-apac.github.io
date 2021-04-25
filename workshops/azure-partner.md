@@ -202,6 +202,8 @@ Enter **Y** when prompted to deploy the content of the Weather Service app (**pa
 
 Similar to the **Weather Service App** verfication, check on the **Weather Express App** App Service URL.
 
+Click on **"Current weather in Linz"** and after which **"Current weather in Gdansk"**
+
 Negative
 : What is the error that you observed?
 
