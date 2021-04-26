@@ -53,8 +53,8 @@ cd partner-azure/weather-service
 The above command will download the git from the repo into your Cloud bastion host. This is setup based on your **Storage Account** location.
 
 <!-- ------------------------ -->
-## Connectiing Azure Monitor to Dynatrace (Optional)
-Duration: 5
+## Connecting Azure Monitor to Dynatrace (Optional)
+Duration: 10
 
 ### (a) Prerequisites
 
