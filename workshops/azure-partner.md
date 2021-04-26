@@ -183,9 +183,10 @@ Duration: 5
   Enjoy monitoring from Dynatrace.
   ```
 - Go back to the Weather-Service App Service and **restart** the App Service application to recycle the application's worker process
+  ![Restart](assets/bootcamp/azure/webapp-restart.png)
 - Access the webapp's URL again and fire a few transactions
 
-![Azure-shell](assets/bootcamp/azure/deployment-site-extension.gif)
+![DeploymentSiteExtension](assets/bootcamp/azure/deployment-site-extension.gif)
 
 Positive
 : Full Documentation [here](https://www.dynatrace.com/support/help/technology-support/cloud-platforms/microsoft-azure-services/oneagent-integration/integrate-oneagent-on-azure-app-service/)
@@ -278,10 +279,11 @@ Similar to instrumenting the Weather-Service WebApp, use the Azure site extensio
 - Select Browse
 - On the Start monitoring your App Service instance page, enter your environment ID, your API token, and your server URL
 - Select Install OneAgent
-- After installation is complete, go to Azure Portal and **restart** or **stop followed by start** the App Service application to recycle the application's worker process
+- After installation is complete, go to Azure Portal and **restart** the App Service application to recycle the application's worker process
+  ![Restart](assets/bootcamp/azure/webapp-restart.png)
 - Access the webapp's URL again and fire a few transactions
 
-![Azure-shell](assets/bootcamp/azure/deployment-site-extension.gif)
+![Deployment-site-extension](assets/bootcamp/azure/deployment-site-extension.gif)
 
 Positive
 : Full Documentation [here](https://www.dynatrace.com/support/help/technology-support/cloud-platforms/microsoft-azure-services/oneagent-integration/integrate-oneagent-on-azure-app-service/)
@@ -324,15 +326,15 @@ However, when creating the Azure WebApp, it defaults to 32-bits, as seen in this
   ![Azure-appservice-config](assets/bootcamp/azure/appserviceconfig1.gif)
 - Another configuration is required, under **Application settings** tab (next to General Settings), look for `WEBSITE_NODE_DEFAULT_VERSION`
 - Edit that line and set the value to `~10`
-
   > `WEBSITE_NODE_DEFAULT_VERSION = ~10`
+  
   ![Azure-appservice-config](assets/bootcamp/azure/appserviceconfig2.gif)
-- Click on **SAVE** and **stop followed by start** the App Service application to recycle the application's worker process
+- Click on **SAVE** and **restart** the App Service application to recycle the application's worker process
+  ![Restart](assets/bootcamp/azure/webapp-restart.png)
 - Access the webapp's URL again and fire a few transactions
 - You should now be able to see that the NodeJS service has been detected and instrumented
 - Click on the **"Current weather in Gdansk"** and change the location in the URL to `/current?loc=Singapore` or `/current?loc=Malaysia`
-
-![Weather-Express-NodeJS](assets/bootcamp/azure/Dynatrace-weather-express-nodejs.gif)
+  ![Weather-Express-NodeJS](assets/bootcamp/azure/Dynatrace-weather-express-nodejs.gif)
 
 <!-- ------------------------ -->
 ## Investigating the Weather-Express issue with Dynatrace
@@ -352,17 +354,19 @@ To access to built-in code editor
 - In Azure Portal, go to the Weather-**Express** ***App Service***
 - In the left menu, scroll down to **Development Tools** > **App Service Editor (Preview)**
 - Click on **Go** and the browser-based editor will open in another tab
-- Under `WWWROOT/config/main.js`, resolve the following based on the GIF
+  ![AppServiceEditor](assets/bootcamp/azure/AppServiceEditor.gif)
 
+- Under `WWWROOT/config/main.js`, resolve the following based on the GIF
 - Renaming your Uri to your **firstname-lastname**-weather-service.azurewebsites.net/weather
 
-![Azure-shell](assets/bootcamp/azure/resolve.gif)
+  ![Azure-shell](assets/bootcamp/azure/resolve.gif)
 
 - Recycle the App Service again
+  ![Restart](assets/bootcamp/azure/webapp-restart.png)
 
 Once you have resolved the issue, the **Weather Express Portal** should be displaying the weather in Linz and any location that you enter.
 
-![Weather-Express](assets/bootcamp/azure/Weather-Express-success.png)
+![Weather-Express](assets/bootcamp/azure/Weather-Express-success.gif)
 
 > Use Dynatrace to explore "Applications", "Transactions and Service", "PurePaths" etc.
 > 
@@ -442,4 +446,4 @@ We hope you enjoyed this lab and found it useful. We would love your feedback!
 </form>
 
 Positive
-: 💡 For other ideas and suggestions, please **[reach out via email](mailto:APAC-SE-Central@dynatrace.com?subject=Kubernetes Workshop - Ideas and Suggestions")**.
+: 💡 For other ideas and suggestions, please **[reach out via email](mailto:jason.nai@dynatrace.com?subject=Azure - Ideas and Suggestions")**.
