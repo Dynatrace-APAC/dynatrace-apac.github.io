@@ -35,11 +35,11 @@ Login to [Azure Portal](https://portal.azure.com/) with your designated email.
 
 Click on **Cloud Shell icon** on the top navigation bar.
 
-![Azure](assets/bootcamp/azure/azure-shell.png)
+![Azure](assets/partners/azure/azure-shell.png)
 
 Make sure that you have selected **PowerShell** in the left drop-down within Cloud shell.
 
-![Azure](assets/bootcamp/azure/power-shell.png)
+![Azure](assets/partners/azure/power-shell.png)
 
 ### (b) Clone github repo
 
@@ -129,14 +129,14 @@ Replace the **firstname-lastname** from the below command and adapt that to your
 
 Enter **Y** when prompted to deploy the content of the Weather Service app (**partner-azure/weather-service/weather-service-app.zip**)
 
-![Azure-shell](assets/bootcamp/azure/azure-shell-yes.png)
+![Azure-shell](assets/partners/azure/azure-shell-yes.png)
 
 ### (b) Verify Resource Group creation
 
 Now that your app has been deployed, verify that the resource group has been deployed as well.
 - Go to the Azure Portal > Resource Groups > **firstname-lastname-weather-service** (select the ***App Service*** one)
 - Click on the link under the section Overview > Essentials > URL
-  ![Azure-shell](assets/bootcamp/azure/weather-service.gif)
+  ![Azure-shell](assets/partners/azure/weather-service.gif)
 
 - Append `/weather/current/Linz` to your URL from your **firstname-lastname-weather-service** App Service
 
@@ -146,7 +146,7 @@ Now that your app has been deployed, verify that the resource group has been dep
 
 You should get a page reflecting JSON results.
 
-![Azure-shell](assets/bootcamp/azure/weather-service-results.png)
+![Azure-shell](assets/partners/azure/weather-service-results.png)
 
 <!-- ------------------------ -->
 ## Instrumenting Weather-Service
@@ -189,10 +189,10 @@ We will now deploy Dynatrace OneAgent via Azure site-extensions, before we do so
   Enjoy monitoring from Dynatrace.
   ```
 
-![DeploymentSiteExtension](assets/bootcamp/azure/deployment-site-extension.gif)
+![DeploymentSiteExtension](assets/partners/azure/deployment-site-extension.gif)
 
 - Go back to the Weather-Service App Service and **restart** the App Service application to recycle the application's worker process
-  ![Restart](assets/bootcamp/azure/webapp-restart.png)
+  ![Restart](assets/partners/azure/webapp-restart.png)
 - Access the webapp's URL again and fire a few transactions
 
 Positive
@@ -206,9 +206,9 @@ Duration: 5
 Once Dynatrace has been deployed, the OneAgent will start collecting data. It is advisible to validate if the data collected accurately represents the environment. It is not suffucent to simply check for services or purepaths. 
 - Access Dynatrace UI, left hand menu > **Technology**
 - As you can see, Dynatrace automatically detects both ASP.NET and the NodeJS components
-  ![Dynatrace-weather-service](assets/bootcamp/azure/Dynatrace-weather-service-tech.png)
+  ![Dynatrace-weather-service](assets/partners/azure/Dynatrace-weather-service-tech.png)
 - Go to **Transactions and Services**, you should see 4 services, 2 are of the .NET technology and another 2, the NodeJS technology 
-  ![Dynatrace-weather-service](assets/bootcamp/azure/Dynatrace-weather-service-serviceview.png)
+  ![Dynatrace-weather-service](assets/partners/azure/Dynatrace-weather-service-serviceview.png)
   
 Negative
 : Can you tell the relationship between the .NET and NodeJS services?
@@ -218,7 +218,7 @@ Negative
 
 ### (b) Investigate the PurePaths
 - Deep dive into some of the PurePaths
-  ![Dynatrace-weather-service](assets/bootcamp/azure/Dynatrace-weather-service-pp.png)
+  ![Dynatrace-weather-service](assets/partners/azure/Dynatrace-weather-service-pp.png)
 
 Negative
 : What do you notice of the response times of some of the transactions?
@@ -267,9 +267,9 @@ Enter **Y** when prompted to deploy the content of the Weather Service app (**pa
 Similar to the **Weather Service App** verfication, check on the **Weather Express App** App Service URL.
 - Go to the Azure Portal > Resource Groups > **firstname-lastname-weather-express** (select the ***App Service*** one)
 - Click on the link under the section Overview > Essentials > URL
-  ![Weather-Express](assets/bootcamp/azure/weather-express.gif)
+  ![Weather-Express](assets/partners/azure/weather-express.gif)
 - In the Weather Express web UI, click on **"Current weather in Linz"** and after which **"Current weather in Gdansk"**
-  ![Weather-Express](assets/bootcamp/azure/weather-express-currweather.png)
+  ![Weather-Express](assets/partners/azure/weather-express-currweather.png)
 
 Negative
 : What is the error that you observed?
@@ -282,10 +282,10 @@ Similar to instrumenting the Weather-Service WebApp, use the Azure site extensio
 
 ### Install Dynatrace OneAgent site extension via Azure Portal
 
-![Deployment-site-extension](assets/bootcamp/azure/deployment-site-extension.gif)
+![Deployment-site-extension](assets/partners/azure/deployment-site-extension.gif)
 
 - After installation is complete, go to Azure Portal and **restart** the App Service application to recycle the application's worker process
-  ![Restart](assets/bootcamp/azure/webapp-restart.png)
+  ![Restart](assets/partners/azure/webapp-restart.png)
 - Access the webapp's URL again and fire a few transactions
 
 Positive
@@ -297,14 +297,14 @@ Duration: 5
 
 ### (a) Validating technology stacks
 - Go to **Transactions and Services**, investigate the **weather-express** services 
-  ![Dynatrace-weather-express](assets/bootcamp/azure/Dynatrace-weather-express-serviceview.png)
+  ![Dynatrace-weather-express](assets/partners/azure/Dynatrace-weather-express-serviceview.png)
   
 Negative
 : What services were detected for weather-**express**? Do you think there are any missing services?
 
 ### (b) Investigate the PurePaths
 - Deep dive into some of the PurePaths, especially those purepaths with the URL **/current**
-  ![Dynatrace-weather-express](assets/bootcamp/azure/Dynatrace-weather-express-pp.gif)
+  ![Dynatrace-weather-express](assets/partners/azure/Dynatrace-weather-express-pp.gif)
 
 Negative
 : Do you notice that some purepaths have errors?
@@ -323,24 +323,24 @@ The OneAgents have a specific requirement when it comes to supportability of Nod
 
 However, when creating the Azure WebApp, it defaults to 32-bits, as seen in this configuration screen:
 
-![32-bits](assets/bootcamp/azure/weather-expressconfig.png)
+![32-bits](assets/partners/azure/weather-expressconfig.png)
 
 ### Enabling 64-bits NodeJS for Azure WebApps via Azure Portal
 - In Azure Portal, go to the Weather-**Express** ***App Service***
 - In the left menu, scroll down to **Settings** > **Configuration** > **General Settings**
 - Let's change this to 64-bits
-  ![Azure-appservice-config](assets/bootcamp/azure/appserviceconfig1.gif)
+  ![Azure-appservice-config](assets/partners/azure/appserviceconfig1.gif)
 - Another configuration is required, under **Application settings** tab (next to General Settings), look for `WEBSITE_NODE_DEFAULT_VERSION`
 - Edit that line and set the value to `~10`
   > `WEBSITE_NODE_DEFAULT_VERSION = ~10`
   
-  ![Azure-appservice-config](assets/bootcamp/azure/appserviceconfig2.gif)
+  ![Azure-appservice-config](assets/partners/azure/appserviceconfig2.gif)
 - Click on **SAVE** and **restart** the App Service application to recycle the application's worker process
-  ![Restart](assets/bootcamp/azure/webapp-restart.png)
+  ![Restart](assets/partners/azure/webapp-restart.png)
 - Access the webapp's URL again and fire a few transactions
 - You should now be able to see that the NodeJS service has been detected and instrumented
 - Click on the **"Current weather in Gdansk"** and change the location in the URL to `/current?loc=Singapore` or `/current?loc=Malaysia`
-  ![Weather-Express-NodeJS](assets/bootcamp/azure/Dynatrace-weather-express-nodejs.gif)
+  ![Weather-Express-NodeJS](assets/partners/azure/Dynatrace-weather-express-nodejs.gif)
 
 <!-- ------------------------ -->
 ## Investigating the Weather-Express issue with Dynatrace
@@ -348,7 +348,7 @@ Duration: 5
 
 Access the **/current** purepaths again. Investigate the `/current?loc=Singapore` and/or `/current?loc=Malaysia` and this time, Dynatrace should give you a pretty good idea where the error is coming from
 
-![Weather-ExpressPP](assets/bootcamp/azure/weather-express-pp.gif)
+![Weather-ExpressPP](assets/partners/azure/weather-express-pp.gif)
 
 Negative
 : What do you think is causing this error?
@@ -361,19 +361,19 @@ To access to built-in code editor
 - In Azure Portal, go to the Weather-**Express** ***App Service***
 - In the left menu, scroll down to **Development Tools** > **App Service Editor (Preview)**
 - Click on **Go** and the browser-based editor will open in another tab
-  ![AppServiceEditor](assets/bootcamp/azure/AppServiceEditor.gif)
+  ![AppServiceEditor](assets/partners/azure/AppServiceEditor.gif)
 
 - Under `WWWROOT/config/main.js`, resolve the following based on the GIF
 - Renaming your Uri to your **firstname-lastname**-weather-service.azurewebsites.net/weather
 
-  ![Azure-shell](assets/bootcamp/azure/resolve.gif)
+  ![Azure-shell](assets/partners/azure/resolve.gif)
 
 - Recycle the App Service again
-  ![Restart](assets/bootcamp/azure/webapp-restart.png)
+  ![Restart](assets/partners/azure/webapp-restart.png)
 
 Once you have resolved the issue, the **Weather Express Portal** should be displaying the weather in Linz and any location that you enter.
 
-![Weather-Express](assets/bootcamp/azure/Weather-Express-success.gif)
+![Weather-Express](assets/partners/azure/Weather-Express-success.gif)
 
 > Use Dynatrace to explore "Applications", "Transactions and Service", "PurePaths" etc.
 > 
@@ -409,7 +409,7 @@ Create a Azure App based on the following:
 - **Create**
 - Once created, **Go to Resource**
 
-![Azure-shell](assets/bootcamp/azure/function-setup.gif)
+![Azure-shell](assets/partners/azure/function-setup.gif)
 
 ### (b) Adding A Function
 
@@ -421,13 +421,13 @@ Create a Azure Function based on the following:
 - Code + Test
 - Test/Run, Run 
 
-![Azure-shell](assets/bootcamp/azure/function.gif)
+![Azure-shell](assets/partners/azure/function.gif)
 
 ### (c) Instrumenting Azure Functions via Site Extensions
 
 Deploy and instrument the Function App with Site Extension
 
-![Azure-shell](assets/bootcamp/azure/azure-function-pp.png)
+![Azure-shell](assets/partners/azure/azure-function-pp.png)
 
 <!-- ------------------------ -->
 
