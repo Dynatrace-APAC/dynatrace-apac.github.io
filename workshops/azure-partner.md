@@ -295,10 +295,10 @@ Duration: 5
   ![Dynatrace-weather-service](assets/bootcamp/azure/Dynatrace-weather-express-serviceview.png)
   
 Negative
-: How many services are detected for weather-**express**? Do you think there are any missing services?
+: What services were detected for weather-**express**? Do you think there are any missing services?
 
 ### (b) Investigate the PurePaths
-- Deep dive into some of the PurePaths
+- Deep dive into some of the PurePaths, especially those purepaths with the URL **/current**
   ![Dynatrace-weather-service](assets/bootcamp/azure/Dynatrace-weather-express-pp.gif)
 
 > Do you notice that some purepaths have errors?
