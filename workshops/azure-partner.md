@@ -29,7 +29,7 @@ This repository contains labs for the Azure Hands-On Session.
 ## Preparing the environment
 Duration: 1
 
-### Clone Repo to Azure Cloud shell
+### (a) Launch Azure Cloud shell
 
 Login to [Azure Portal](https://portal.azure.com/) with your designated email.
 
@@ -41,14 +41,59 @@ Make sure that you have selected **PowerShell** in the left drop-down within Clo
 
 ![Azure](assets/bootcamp/azure/power-shell.png)
 
+### (b) Clone github repo
+
 Within the Cloudshell terminal, type in the below.
 
-```bash
+```powershell
 git clone https://github.com/Dynatrace-APAC/partner-azure.git
 cd partner-azure/weather-service
 ```
 
 The above command will download the git from the repo into your Cloud bastion host. This is setup based on your **Storage Account** location.
+
+<!-- ------------------------ -->
+## Connectiing Azure Monitor to Dynatrace (Optional)
+Duration: 5
+
+### (a) Prerequisites
+
+In addition to monitoring your Azure workloads using OneAgent, Dynatrace provides integration with Azure Monitor which adds infrastructure monitoring to gain insight even into serverless application scenarios.
+
+You will need to have
+- Sufficient permissions to register an application with your Azure AD tenant, and assign the application to a role in your Azure Subscription
+- An Azure service principal to access Azure APIs
+- See [Documentation](https://www.dynatrace.com/support/help/shortlink/azure-monitor-integration#prerequisites) for full pre-requistes
+
+### (b) Create an Azure service principal
+- Go to the Azure Management Portal and select Azure Active Directory.
+- Select App registrations in the navigation pane of the selected Active Directory.
+- Select New application registration at the top of the App registrations blade, and type the name of your application.
+- Select Register.
+- Copy the Application (client) ID, and save it for future retrieval. This ID is required to configure Dynatrace to connect to your Azure account.
+- Select Certificates & secrets > New client secret to create a new security key.
+- Type a key description and select a key duration in the Expires list.
+- Select Add to save the new key, which displays the key value in the Value field. Copy the value and save it for future retrieval (along with your Client ID).
+
+### (c) Grant access permissions for your service principal
+- You need at least **reader** permissions for Dynatrace to monitor your services.
+
+### (d) Grant access to an Azure subscription
+- On Azure Portal, select All services > General > Subscriptions.
+- In the Subscriptions blade, enter your subscription.
+- Select Access control (IAM) in the subscription navigation pane.
+- Select Add and enter the Reader role.
+- In the Select field, paste the description name or application (client) ID obtained when creating the Azure service principal.
+- Select the application and Save to grant the service principal access to your subscription.
+
+### (e) Configure Dynatrace to connect to your Azure environment
+- In the desired Dynatrace environment, click Settings > Cloud and virtualization > Azure.
+- Type a descriptive name for the connection.
+- Enter the Client ID and Tenant ID obtained when creating the Azure service principal.
+- Enter the Secret Key obtained when creating the Azure service principal.
+
+Positive
+: Full [documentation here](https://www.dynatrace.com/support/help/technology-support/cloud-platforms/microsoft-azure-services/set-up-integration-with-azure-monitor/)
 
 <!-- ------------------------ -->
 ## Deploy Weather Service WebApp
@@ -64,31 +109,32 @@ Technology stack used
 > Note: **publish.ps1** is a PowerShell script written to automate the creation of the AppServicePlan, AppService and also to upload the source codes of our application. Depending on your cloud shell location, you may change the **$location** value within the **publish.ps1** to fit your region. **By default**, it is set to **Southeast Asia**. Full list of regions are [here](https://azure.microsoft.com/en-au/global-infrastructure/geographies/#geographies)
 > 
 > Example
-> ```bash
+> ```powershell
 > $location="Southeast Asia"
 > ```
-> ```bash  
+> ```powershell
 > $location="Australia East"
 > ```
 
-### Execute script publish.ps1 to deploy WebApp
+### (a) Execute script publish.ps1 to deploy WebApp
 
 Replace the **firstname-lastname** from the below command and adapt that to your own.
 
 `./publish.ps1 firstname-lastname-dynatrace firstname-lastname-weather-service`
 
 **Example**
-
-**./publish.ps1 brandon-neo-dynatrace brandon-neo-weather-service**
+```powershell
+./publish.ps1 brandon-neo-dynatrace brandon-neo-weather-service
+```
 
 Enter **Y** when prompted to deploy the content of the Weather Service app (**partner-azure/weather-service/weather-service-app.zip**)
 
 ![Azure-shell](assets/bootcamp/azure/azure-shell-yes.png)
 
-### Verify Resource Group creation
+### (b) Verify Resource Group creation
 
 Now that your app has been deployed, verify that the resource group has been deployed as well.
-- Go to the Azure Portal > Resource Groups > **firstname-lastname-weather-service**
+- Go to the Azure Portal > Resource Groups > **firstname-lastname-weather-service** (select the ***App Service*** one)
 - Click on the link under the section Overview > Essentials > URL
   ![Azure-shell](assets/bootcamp/azure/weather-service.gif)
 
@@ -106,7 +152,7 @@ You should get a page reflecting JSON results.
 ## Instrumenting Weather-Service
 Duration: 5
 
-### Copy out relevant information via Dynatrace UI
+### (a) Copy out relevant information via Dynatrace UI
 - Create a **PaaS token**, copy it and store is somewhere safe
 - As this is a Managed environment, you will need both environment ID and server URL
   - Environment ID (in bold)
@@ -120,7 +166,7 @@ Duration: 5
     Negative
     : Don't forget to add **/api**!
 
-### Install Dynatrace OneAgent site extension via Azure Portal
+### (b) Install Dynatrace OneAgent site extension via Azure Portal
 - In Azure Portal, go to the Weather-**Service** ***App Service***
 - In the left menu, scroll down to **Development Tools** > **Extensions**
 - Select Add, Select Choose extension
@@ -136,7 +182,7 @@ Duration: 5
   The OneAgent is installed and up-to-date
   Enjoy monitoring from Dynatrace.
   ```
-- Go back to the Weather-Service App Service and **restart** or **stop followed by start** the App Service application to recycle the application's worker process
+- Go back to the Weather-Service App Service and **restart** the App Service application to recycle the application's worker process
 - Access the webapp's URL again and fire a few transactions
 
 ![Azure-shell](assets/bootcamp/azure/deployment-site-extension.gif)
@@ -148,7 +194,8 @@ Positive
 ## Automated observability with Dynatrace
 Duration: 5
 
-### Validating technology stacks
+### (a) Validating technology stacks
+Once Dynatrace has been deployed, the OneAgent will start collecting data. It is advisible to validate if the data collected accurately represents the environment. It is not suffucent to simply check for services or purepaths. 
 - Access Dynatrace UI, left hand menu > **Technology**
 - As you can see, Dynatrace automatically detects both ASP.NET and the NodeJS components
   ![Dynatrace-weather-service](assets/bootcamp/azure/Dynatrace-weather-service-tech.png)
@@ -159,7 +206,7 @@ Duration: 5
 > 
 > How do you see graphically which service calls which service?
 
-### Investigate the PurePaths
+### (b) Investigate the PurePaths
 - Deep dive into some of the PurePaths
   ![Dynatrace-weather-service](assets/bootcamp/azure/Dynatrace-weather-service-pp.gif)
 
@@ -167,13 +214,13 @@ Duration: 5
 > 
 > What other components were called?
 > 
-> Did you have to do any instrumentation to get this visibility?
+> Did you have to do manually instrument the app or do any coding to get this visibility?
 
 <!-- ------------------------ -->
 ## Deploy Weather Express Web App - A Web UI over the weather-restify api
 Duration: 5
 
-### Deploy Weather Express WebApp
+### (a) Deploy Weather Express WebApp
 
 In this exercise, you will deploy a Azure WebApp web service that renders a Web UI and provides an interactive interface to display weather information.
 
@@ -186,23 +233,29 @@ Change folder to **weather-express** folder with `cd ../weather-express` command
 
 > Note: Similar to the previous step, you may change the **$location** value within the **publish.ps1** to fit your region. **By default**, it is set to **Southeast Asia**. Full list of regions are [here](https://azure.microsoft.com/en-au/global-infrastructure/geographies/#geographies)
 
-### Execute script publish.ps1 to deploy WebApp
+### (b) Execute script publish.ps1 to deploy WebApp
 
 Replace the **firstname-lastname** from the below command and adapt that to your own.
 
 `./publish.ps1 firstname-lastname-dynatrace firstname-lastname-weather-express`
 
-**Example**
+Negative
+: Do note that the naming is weather-**express**
 
-**./publish.ps1 brandon-neo-dynatrace brandon-neo-weather-express**
+**Example**
+```powershell
+./publish.ps1 brandon-neo-dynatrace brandon-neo-weather-express
+```
 
 Enter **Y** when prompted to deploy the content of the Weather Service app (**partner-azure/weather-service/weather-express-app.zip**)
 
-### Verify Resource Group creation
+### (c) Verify Resource Group creation
 
 Similar to the **Weather Service App** verfication, check on the **Weather Express App** App Service URL.
-
-Click on **"Current weather in Linz"** and after which **"Current weather in Gdansk"**
+- Go to the Azure Portal > Resource Groups > **firstname-lastname-weather-express** (select the ***App Service*** one)
+- Click on the link under the section Overview > Essentials > URL
+  ![Azure-shell](assets/bootcamp/azure/weather-express.gif)
+- In the Weather Express web UI, click on **"Current weather in Linz"** and after which **"Current weather in Gdansk"**
 
 Negative
 : What is the error that you observed?
@@ -236,14 +289,14 @@ Positive
 ## Automated observability for Weather-Express
 Duration: 5
 
-### Validating technology stacks
+### (a) Validating technology stacks
 - Go to **Transactions and Services**, investigate the **weather-express** services 
   ![Dynatrace-weather-service](assets/bootcamp/azure/Dynatrace-weather-express-serviceview.png)
   
-Positive
-: How many services are detected for weather-**express**
+Negative
+: How many services are detected for weather-**express**? Do you think there are any missing services?
 
-### Investigate the PurePaths
+### (b) Investigate the PurePaths
 - Deep dive into some of the PurePaths
   ![Dynatrace-weather-service](assets/bootcamp/azure/Dynatrace-weather-express-pp.gif)
 
@@ -290,7 +343,7 @@ Access the **/current** purepaths again. Investigate the `/current?loc=Singapore
 
 > What do you think is causing this error?
 
-### Resolution and Verification
+### (a) Resolution and Verification
 
 In order to resolve this issue, we have to change the code. For Azure WebApps, a built-in Code editor can be used to modify codes.
 
@@ -323,7 +376,7 @@ Positive
 ## Function setup
 Duration: 15
 
-### Creating Function App
+### (a) Creating Function App
 
 Create a Azure App based on the following:
 
@@ -346,7 +399,7 @@ Create a Azure App based on the following:
 
 ![Azure-shell](assets/bootcamp/azure/function-setup.gif)
 
-### Adding A Function
+### (b) Adding A Function
 
 Create a Azure Function based on the following:
 
@@ -358,7 +411,7 @@ Create a Azure Function based on the following:
 
 ![Azure-shell](assets/bootcamp/azure/function.gif)
 
-### Instrumenting Azure Functions via Site Extensions
+### (c) Instrumenting Azure Functions via Site Extensions
 
 Deploy and instrument the Function App with Site Extension
 
