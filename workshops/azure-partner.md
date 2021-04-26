@@ -254,8 +254,9 @@ Enter **Y** when prompted to deploy the content of the Weather Service app (**pa
 Similar to the **Weather Service App** verfication, check on the **Weather Express App** App Service URL.
 - Go to the Azure Portal > Resource Groups > **firstname-lastname-weather-express** (select the ***App Service*** one)
 - Click on the link under the section Overview > Essentials > URL
-  ![Azure-shell](assets/bootcamp/azure/weather-express.gif)
+  ![Weather-Express](assets/bootcamp/azure/weather-express.gif)
 - In the Weather Express web UI, click on **"Current weather in Linz"** and after which **"Current weather in Gdansk"**
+  ![Weather-Express](assets/bootcamp/azure/weather-express-currweather.png)
 
 Negative
 : What is the error that you observed?
