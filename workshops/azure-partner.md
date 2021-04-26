@@ -188,11 +188,12 @@ We will now deploy Dynatrace OneAgent via Azure site-extensions, before we do so
   The OneAgent is installed and up-to-date
   Enjoy monitoring from Dynatrace.
   ```
+
+![DeploymentSiteExtension](assets/bootcamp/azure/deployment-site-extension.gif)
+
 - Go back to the Weather-Service App Service and **restart** the App Service application to recycle the application's worker process
   ![Restart](assets/bootcamp/azure/webapp-restart.png)
 - Access the webapp's URL again and fire a few transactions
-
-![DeploymentSiteExtension](assets/bootcamp/azure/deployment-site-extension.gif)
 
 Positive
 : Full Documentation [here](https://www.dynatrace.com/support/help/technology-support/cloud-platforms/microsoft-azure-services/oneagent-integration/integrate-oneagent-on-azure-app-service/)
@@ -272,24 +273,15 @@ Negative
 ## Instrumenting Weather-Express to diagnose the error
 Duration: 5
 
-Similar to instrumenting the Weather-Service WebApp, use the Azure site extensions
+Similar to instrumenting the Weather-Service WebApp, use the Azure site extensions with the previously copied PaaS token, environment ID and Server URL
 
 ### Install Dynatrace OneAgent site extension via Azure Portal
-- In Azure Portal, go to the Weather-**Express** ***App Service***
-- In the left menu, scroll down to **Development Tools** > **Extensions**
-- Select Add, Select Choose extension
-- Select Dynatrace OneAgent
-- Select Accept legal terms and then select OK to accept the legal terms
-- Select OK to add the extension
-- Select Dynatrace OneAgent
-- Select Browse
-- On the Start monitoring your App Service instance page, enter your environment ID, your API token, and your server URL
-- Select Install OneAgent
+
+![Deployment-site-extension](assets/bootcamp/azure/deployment-site-extension.gif)
+
 - After installation is complete, go to Azure Portal and **restart** the App Service application to recycle the application's worker process
   ![Restart](assets/bootcamp/azure/webapp-restart.png)
 - Access the webapp's URL again and fire a few transactions
-
-![Deployment-site-extension](assets/bootcamp/azure/deployment-site-extension.gif)
 
 Positive
 : Full Documentation [here](https://www.dynatrace.com/support/help/technology-support/cloud-platforms/microsoft-azure-services/oneagent-integration/integrate-oneagent-on-azure-app-service/)
@@ -309,11 +301,14 @@ Negative
 - Deep dive into some of the PurePaths, especially those purepaths with the URL **/current**
   ![Dynatrace-weather-service](assets/bootcamp/azure/Dynatrace-weather-express-pp.gif)
 
-> Do you notice that some purepaths have errors?
-> 
-> What is displayed when drilling down into the purepaths?
-> 
-> Is there enough visibility to diagnose the error?
+Negative
+: Do you notice that some purepaths have errors?
+ 
+Negative
+: What is displayed when drilling down into the purepaths?
+ 
+Negative
+: Is there enough visibility to diagnose the error?
 
 <!-- ------------------------ -->
 ## Solving the mystery of the missing services
@@ -350,7 +345,8 @@ Access the **/current** purepaths again. Investigate the `/current?loc=Singapore
 
 ![Weather-ExpressPP](assets/bootcamp/azure/weather-express-pp.gif)
 
-> What do you think is causing this error?
+Negative
+: What do you think is causing this error?
 
 ### (a) Resolution and Verification
 
