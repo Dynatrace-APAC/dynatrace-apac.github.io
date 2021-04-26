@@ -297,14 +297,14 @@ Duration: 5
 
 ### (a) Validating technology stacks
 - Go to **Transactions and Services**, investigate the **weather-express** services 
-  ![Dynatrace-weather-service](assets/bootcamp/azure/Dynatrace-weather-express-serviceview.png)
+  ![Dynatrace-weather-express](assets/bootcamp/azure/Dynatrace-weather-express-serviceview.png)
   
 Negative
 : What services were detected for weather-**express**? Do you think there are any missing services?
 
 ### (b) Investigate the PurePaths
 - Deep dive into some of the PurePaths, especially those purepaths with the URL **/current**
-  ![Dynatrace-weather-service](assets/bootcamp/azure/weather-express-pp.gif)
+  ![Dynatrace-weather-express](assets/bootcamp/azure/Dynatrace-weather-express-pp.gif)
 
 Negative
 : Do you notice that some purepaths have errors?
