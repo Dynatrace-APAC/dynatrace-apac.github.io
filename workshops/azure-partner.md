@@ -321,12 +321,12 @@ However, when creating the Azure WebApp, it defaults to 32-bits, as seen in this
 - In Azure Portal, go to the Weather-**Express** ***App Service***
 - In the left menu, scroll down to **Settings** > **Configuration** > **General Settings**
 - Let's change this to 64-bits
-  ![Azure-appservice-config](assets/bootcamp/azure/appserviceconfig1.png)
+  ![Azure-appservice-config](assets/bootcamp/azure/appserviceconfig1.gif)
 - Another configuration is required, under **Application settings** tab (next to General Settings), look for `WEBSITE_NODE_DEFAULT_VERSION`
 - Edit that line and set the value to `~10`
 
   > `WEBSITE_NODE_DEFAULT_VERSION = ~10`
-  ![Azure-appservice-config](assets/bootcamp/azure/appserviceconfig2.png)
+  ![Azure-appservice-config](assets/bootcamp/azure/appserviceconfig2.gif)
 - Click on **SAVE** and **stop followed by start** the App Service application to recycle the application's worker process
 - Access the webapp's URL again and fire a few transactions
 - You should now be able to see that the NodeJS service has been detected and instrumented
