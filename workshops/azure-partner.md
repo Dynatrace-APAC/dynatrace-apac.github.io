@@ -210,19 +210,24 @@ Once Dynatrace has been deployed, the OneAgent will start collecting data. It is
 - Go to **Transactions and Services**, you should see 4 services, 2 are of the .NET technology and another 2, the NodeJS technology 
   ![Dynatrace-weather-service](assets/bootcamp/azure/Dynatrace-weather-service-serviceview.png)
   
-> Can you tell the relationship between the .NET and NodeJS services?
-> 
-> How do you see graphically which service calls which service?
+Negative
+: Can you tell the relationship between the .NET and NodeJS services?
+ 
+Negative
+: How do you see graphically which service calls which service?
 
 ### (b) Investigate the PurePaths
 - Deep dive into some of the PurePaths
   ![Dynatrace-weather-service](assets/bootcamp/azure/Dynatrace-weather-service-pp.png)
 
-> What do you notice of the response times of some of the transactions?
-> 
-> What other components were called?
-> 
-> Did you have to do manually instrument the app or do any coding to get this visibility?
+Negative
+: What do you notice of the response times of some of the transactions?
+ 
+Negative
+: What other components were called?
+ 
+Negative
+: Did you have to do manually instrument the app or do any coding to get this visibility?
 
 <!-- ------------------------ -->
 ## Deploy Weather Express Web App - A Web UI over the weather-restify api
@@ -299,7 +304,7 @@ Negative
 
 ### (b) Investigate the PurePaths
 - Deep dive into some of the PurePaths, especially those purepaths with the URL **/current**
-  ![Dynatrace-weather-service](assets/bootcamp/azure/Dynatrace-weather-express-pp.gif)
+  ![Dynatrace-weather-service](assets/bootcamp/azure/weather-express-pp.gif)
 
 Negative
 : Do you notice that some purepaths have errors?
