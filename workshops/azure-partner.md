@@ -208,7 +208,7 @@ Once Dynatrace has been deployed, the OneAgent will start collecting data. It is
 
 ### (b) Investigate the PurePaths
 - Deep dive into some of the PurePaths
-  ![Dynatrace-weather-service](assets/bootcamp/azure/Dynatrace-weather-service-pp.gif)
+  ![Dynatrace-weather-service](assets/bootcamp/azure/Dynatrace-weather-service-pp.png)
 
 > What do you notice of the response times of some of the transactions?
 > 
