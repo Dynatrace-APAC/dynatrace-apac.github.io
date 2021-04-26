@@ -152,21 +152,27 @@ You should get a page reflecting JSON results.
 ## Instrumenting Weather-Service
 Duration: 5
 
-### (a) Copy out relevant information via Dynatrace UI
+### (a) Information required - EnvID, PaaS token, Server URL 
+We will now deploy Dynatrace OneAgent via Azure site-extensions, before we do so, please extract out the following information and paste them in a textpad/Notepad/text editor etc.
+
+#### (i) PaaS Token
 - Create a **PaaS token**, copy it and store is somewhere safe
+
+#### (ii) Environment ID
 - As this is a Managed environment, you will need both environment ID and server URL
-  - Environment ID (in bold)
+- Environment ID (in bold)
 
-    Example: `https://mou612.managed-sprint.dynalabs.io/e/`**cd783e4f-f498-4cfc-bc8b-1201bde4726a**
+  Example: `https://mou612.managed-sprint.dynalabs.io/e/`**cd783e4f-f498-4cfc-bc8b-1201bde4726a**
 
-  - Server URL for Dynatrace Managed
+#### (iii) Server URL
+- Server URL for Dynatrace Managed
 
-    Example `https://{your-domain}/e/{your-environment-id}/api`
+  Example `https://{your-domain}/e/{your-environment-id}/api`
 
-    Negative
-    : Don't forget to add **/api**!
+  Negative
+  : Don't forget to add **/api**!
 
-### (b) Install Dynatrace OneAgent site extension via Azure Portal
+### (b) Install Dynatrace OneAgent site extensions via Azure Portal
 - In Azure Portal, go to the Weather-**Service** ***App Service***
 - In the left menu, scroll down to **Development Tools** > **Extensions**
 - Select Add, Select Choose extension
@@ -177,7 +183,7 @@ Duration: 5
 - Select Browse
 - On the Start monitoring your App Service instance page, enter your environment ID, your API token, and your server URL
 - Select Install OneAgent
-- You will see this message once installation is complete
+- You will see this message once installation is complete in that page
   ```
   The OneAgent is installed and up-to-date
   Enjoy monitoring from Dynatrace.
