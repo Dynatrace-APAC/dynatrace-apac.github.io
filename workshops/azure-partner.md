@@ -106,15 +106,15 @@ Technology stack used
 - .NET
 - Microsoft managed CosmosDB (hosted in a central location, outside of your Azure subscription)
 
-> Note: **publish.ps1** is a PowerShell script written to automate the creation of the AppServicePlan, AppService and also to upload the source codes of our application. Depending on your cloud shell location, you may change the **$location** value within the **publish.ps1** to fit your region. **By default**, it is set to **Southeast Asia**. Full list of regions are [here](https://azure.microsoft.com/en-au/global-infrastructure/geographies/#geographies)
-> 
-> Example
-> ```powershell
-> $location="Southeast Asia"
-> ```
-> ```powershell
-> $location="Australia East"
-> ```
+***Note:*** **publish.ps1** is a PowerShell script written to automate the creation of the AppServicePlan, AppService and also to upload the source codes of our application. Depending on your cloud shell location, you may change the **$location** value within the **publish.ps1** to fit your region. **By default**, it is set to **Southeast Asia**. Full list of regions are [here](https://azure.microsoft.com/en-au/global-infrastructure/geographies/#geographies)
+
+Example
+```powershell
+$location="Southeast Asia"
+```
+```powershell
+$location="Australia East"
+```
 
 ### (a) Execute script publish.ps1 to deploy WebApp
 
@@ -162,15 +162,15 @@ We will now deploy Dynatrace OneAgent via Azure site-extensions, before we do so
 - As this is a Managed environment, you will need both environment ID and server URL
 - Environment ID (in bold)
 
-  Example: `https://mou612.managed-sprint.dynalabs.io/e/`**cd783e4f-f498-4cfc-bc8b-1201bde4726a**
+Example: `https://mou612.managed-sprint.dynalabs.io/e/`**cd783e4f-f498-4cfc-bc8b-1201bde4726a**
 
 #### (iii) Server URL
 - Server URL for Dynatrace Managed
 
-  Example `https://{your-domain}/e/{your-environment-id}/api`
+Example `https://{your-domain}/e/{your-environment-id}/api`
 
-  Negative
-  : Don't forget to add **/api**!
+Negative
+: Don't forget to add **/api**!
 
 ### (b) Install Dynatrace OneAgent site extensions via Azure Portal
 - In Azure Portal, go to the Weather-**Service** ***App Service***
@@ -199,7 +199,7 @@ Positive
 : Full Documentation [here](https://www.dynatrace.com/support/help/technology-support/cloud-platforms/microsoft-azure-services/oneagent-integration/integrate-oneagent-on-azure-app-service/)
 
 <!-- ------------------------ -->
-## Automated observability with Dynatrace
+## Automated observability for Weather-Service API
 Duration: 5
 
 ### (a) Validating technology stacks
@@ -230,7 +230,7 @@ Negative
 : Did you have to do manually instrument the app or do any coding to get this visibility?
 
 <!-- ------------------------ -->
-## Deploy Weather Express Web App - A Web UI over the weather-restify api
+## Deploy Weather Express Web App (web-ui)
 Duration: 5
 
 ### (a) Deploy Weather Express WebApp
@@ -275,7 +275,7 @@ Negative
 : What is the error that you observed?
 
 <!-- ------------------------ -->
-## Instrumenting Weather-Express to diagnose the error
+## Instrumenting Weather-Express for diagnosis
 Duration: 5
 
 Similar to instrumenting the Weather-Service WebApp, use the Azure site extensions with the previously copied PaaS token, environment ID and Server URL
@@ -316,7 +316,7 @@ Negative
 : Is there enough visibility to diagnose the error?
 
 <!-- ------------------------ -->
-## Solving the mystery of the missing services
+## Solving mystery of missing services
 Duration: 5
 
 The OneAgents have a specific requirement when it comes to supportability of NodeJS versions and bitness. In the [documentation](https://www.dynatrace.com/support/help/shortlink/supported-technologies#nodejs), it is mentioned that only ***64-bit*** NodeJS versions are supported.
@@ -331,19 +331,22 @@ However, when creating the Azure WebApp, it defaults to 32-bits, as seen in this
 - Let's change this to 64-bits
   ![Azure-appservice-config](assets/partners/azure/appserviceconfig1.gif)
 - Another configuration is required, under **Application settings** tab (next to General Settings), look for `WEBSITE_NODE_DEFAULT_VERSION`
-- Edit that line and set the value to `~10`
-  > `WEBSITE_NODE_DEFAULT_VERSION = ~10`
-  
+- Edit that line and set the value to `~10` (**this is not a mistake**, please include ~)
+  ```
+  WEBSITE_NODE_DEFAULT_VERSION = ~10`
+  ```
+- Click on **SAVE**
   ![Azure-appservice-config](assets/partners/azure/appserviceconfig2.gif)
-- Click on **SAVE** and **restart** the App Service application to recycle the application's worker process
+- **Restart** the App Service application to recycle the application's worker process
   ![Restart](assets/partners/azure/webapp-restart.png)
 - Access the webapp's URL again and fire a few transactions
 - You should now be able to see that the NodeJS service has been detected and instrumented
 - Click on the **"Current weather in Gdansk"** and change the location in the URL to `/current?loc=Singapore` or `/current?loc=Malaysia`
-  ![Weather-Express-NodeJS](assets/partners/azure/Dynatrace-weather-express-nodejs.gif)
+
+![Weather-Express-NodeJS](assets/partners/azure/Dynatrace-weather-express-nodejs.gif)
 
 <!-- ------------------------ -->
-## Investigating the Weather-Express issue with Dynatrace
+## Investigating with Dynatrace
 Duration: 5
 
 Access the **/current** purepaths again. Investigate the `/current?loc=Singapore` and/or `/current?loc=Malaysia` and this time, Dynatrace should give you a pretty good idea where the error is coming from
@@ -375,14 +378,17 @@ Once you have resolved the issue, the **Weather Express Portal** should be displ
 
 ![Weather-Express](assets/partners/azure/Weather-Express-success.gif)
 
-> Use Dynatrace to explore "Applications", "Transactions and Service", "PurePaths" etc.
-> 
-> Can you tell how Weather Express and Weather Service are related? Who calls who, and how is it called? Did you have to do complex configuration steps to reach this level of visibility?
-> 
-> What can you tell about the data collected and how do you think it will help various teams like CloudOps, App Dev teams, Business teams etc.?
+Negative
+: Use Dynatrace to explore "Applications", "Transactions and Service", "PurePaths" etc. Can you tell how Weather Express and Weather Service are related?
+
+Negative
+: Who calls who, and how is it called? Did you have to do complex configuration steps to reach this level of visibility?
+
+Negative
+:What can you tell about the data collected and how do you think it will help various teams like CloudOps, App Dev teams, Business teams etc.?
 
 Positive
-: Screen shot the entire Service Flow starting from User, and some comments on the above question and send it to mailto: jason.nai@dynatrace.com. A surprise awaits you!
+: Screen shot the entire Service Flow starting from User, and some comments on the above question and send it to [jason.nai@dynatrace.com](mailto: jason.nai@dynatrace.com). A surprise awaits you!
 
 <!-- ------------------------ -->
 ## Function setup

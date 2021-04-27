@@ -98,23 +98,17 @@ cd partner-azure/weather-service
 <li>.NET</li>
 <li>Microsoft managed CosmosDB (hosted in a central location, outside of your Azure subscription)</li>
 </ul>
-<p>Note: <strong>publish.ps1</strong> is a PowerShell script written to automate the creation of the AppServicePlan, AppService and also to upload the source codes of our application. Depending on your cloud shell location, you may change the <strong>$location</strong> value within the <strong>publish.ps1</strong> to fit your region. <strong>By default</strong>, it is set to <strong>Southeast Asia</strong>. Full list of regions are <a href="https://azure.microsoft.com/en-au/global-infrastructure/geographies/#geographies" target="_blank">here</a></p>
+<p><strong><em>Note: </em></strong><strong>publish.ps1</strong> is a PowerShell script written to automate the creation of the AppServicePlan, AppService and also to upload the source codes of our application. Depending on your cloud shell location, you may change the <strong>$location</strong> value within the <strong>publish.ps1</strong> to fit your region. <strong>By default</strong>, it is set to <strong>Southeast Asia</strong>. Full list of regions are <a href="https://azure.microsoft.com/en-au/global-infrastructure/geographies/#geographies" target="_blank">here</a></p>
 <p>Example</p>
-<pre><code language="language-powershell" class="language-powershell">&gt; $location=&#34;Southeast Asia&#34;
-&gt; ```
-&gt; ```powershell
-&gt; $location=&#34;Australia East&#34;
-&gt; ```
-
-### (a) Execute script publish.ps1 to deploy WebApp
-
-Replace the **firstname-lastname** from the below command and adapt that to your own.
-
-`./publish.ps1 firstname-lastname-dynatrace firstname-lastname-weather-service`
-
-**Example**
-```powershell
-./publish.ps1 brandon-neo-dynatrace brandon-neo-weather-service
+<pre><code language="language-powershell" class="language-powershell">$location=&#34;Southeast Asia&#34;
+</code></pre>
+<pre><code language="language-powershell" class="language-powershell">$location=&#34;Australia East&#34;
+</code></pre>
+<h2 is-upgraded>(a) Execute script publish.ps1 to deploy WebApp</h2>
+<p>Replace the <strong>firstname-lastname</strong> from the below command and adapt that to your own.</p>
+<p><code>./publish.ps1 firstname-lastname-dynatrace firstname-lastname-weather-service</code></p>
+<p><strong>Example</strong></p>
+<pre><code language="language-powershell" class="language-powershell">./publish.ps1 brandon-neo-dynatrace brandon-neo-weather-service
 </code></pre>
 <p>Enter <strong>Y</strong> when prompted to deploy the content of the Weather Service app (<strong>partner-azure/weather-service/weather-service-app.zip</strong>)</p>
 <p class="image-container"><img alt="Azure-shell" src="img/4619adda03124b6.png"></p>
@@ -148,7 +142,8 @@ Replace the **firstname-lastname** from the below command and adapt that to your
 <li>Server URL for Dynatrace Managed</li>
 </ul>
 <p>Example <code>https://{your-domain}/e/{your-environment-id}/api</code></p>
-<p>Negative : Don&#39;t forget to add <strong>/api</strong>!</p>
+<aside class="warning"><p>Don&#39;t forget to add <strong>/api</strong>!</p>
+</aside>
 <h2 is-upgraded>(b) Install Dynatrace OneAgent site extensions via Azure Portal</h2>
 <ul>
 <li>In Azure Portal, go to the Weather-<strong>Service </strong><strong><em>App Service</em></strong></li>
@@ -171,7 +166,7 @@ Replace the **firstname-lastname** from the below command and adapt that to your
 <aside class="special"><p>Full Documentation <a href="https://www.dynatrace.com/support/help/technology-support/cloud-platforms/microsoft-azure-services/oneagent-integration/integrate-oneagent-on-azure-app-service/" target="_blank">here</a></p>
 </aside>
 </google-codelab-step>
-<google-codelab-step label="Automated observability with Dynatrace" duration="5">
+<google-codelab-step label="Automated observability for Weather-Service API" duration="5">
 <h2 is-upgraded>(a) Validating technology stacks</h2>
 <p>Once Dynatrace has been deployed, the OneAgent will start collecting data. It is advisible to validate if the data collected accurately represents the environment. It is not suffucent to simply check for services or purepaths.</p>
 <ul>
@@ -194,7 +189,7 @@ Replace the **firstname-lastname** from the below command and adapt that to your
 <aside class="warning"><p>Did you have to do manually instrument the app or do any coding to get this visibility?</p>
 </aside>
 </google-codelab-step>
-<google-codelab-step label="Deploy Weather Express Web App - A Web UI over the weather-restify api" duration="5">
+<google-codelab-step label="Deploy Weather Express Web App (web-ui)" duration="5">
 <h2 is-upgraded>(a) Deploy Weather Express WebApp</h2>
 <p>In this exercise, you will deploy a Azure WebApp web service that renders a Web UI and provides an interactive interface to display weather information.</p>
 <p>Technology stack used</p>
@@ -224,7 +219,7 @@ Replace the **firstname-lastname** from the below command and adapt that to your
 <aside class="warning"><p>What is the error that you observed?</p>
 </aside>
 </google-codelab-step>
-<google-codelab-step label="Instrumenting Weather-Express to diagnose the error" duration="5">
+<google-codelab-step label="Instrumenting Weather-Express for diagnosis" duration="5">
 <p>Similar to instrumenting the Weather-Service WebApp, use the Azure site extensions with the previously copied PaaS token, environment ID and Server URL</p>
 <h2 is-upgraded>Install Dynatrace OneAgent site extension via Azure Portal</h2>
 <p class="image-container"><img alt="Deployment-site-extension" src="img/50d4c8ecec689ee1.gif"></p>
@@ -253,7 +248,7 @@ Replace the **firstname-lastname** from the below command and adapt that to your
 <aside class="warning"><p>Is there enough visibility to diagnose the error?</p>
 </aside>
 </google-codelab-step>
-<google-codelab-step label="Solving the mystery of the missing services" duration="5">
+<google-codelab-step label="Solving mystery of missing services" duration="5">
 <p>The OneAgents have a specific requirement when it comes to supportability of NodeJS versions and bitness. In the <a href="https://www.dynatrace.com/support/help/shortlink/supported-technologies#nodejs" target="_blank">documentation</a>, it is mentioned that only <strong><em>64-bit</em></strong> NodeJS versions are supported.</p>
 <p>However, when creating the Azure WebApp, it defaults to 32-bits, as seen in this configuration screen:</p>
 <p class="image-container"><img alt="32-bits" src="img/75fb6d61d1a105b0.png"></p>
@@ -263,17 +258,16 @@ Replace the **firstname-lastname** from the below command and adapt that to your
 <li>In the left menu, scroll down to <strong>Settings</strong> &gt; <strong>Configuration</strong> &gt; <strong>General Settings</strong></li>
 <li>Let&#39;s change this to 64-bits <img alt="Azure-appservice-config" src="img/6dba13aa1ed2c890.gif"></li>
 <li>Another configuration is required, under <strong>Application settings</strong> tab (next to General Settings), look for <code>WEBSITE_NODE_DEFAULT_VERSION</code></li>
-<li>Edit that line and set the value to <code>~10</code> &gt; <code>WEBSITE_NODE_DEFAULT_VERSION = ~10</code></li>
-</ul>
-<p class="image-container"><img alt="Azure-appservice-config" src="img/65ecaad3e1dfb9ce.gif"></p>
-<ul>
-<li>Click on <strong>SAVE</strong> and <strong>restart</strong> the App Service application to recycle the application&#39;s worker process <img alt="Restart" src="img/fbc91da4b2d2860.png"></li>
+<li>Edit that line and set the value to <code>~10</code> (<strong>this is not a mistake</strong>, please include ~) <br><code>WEBSITE_NODE_DEFAULT_VERSION = ~10`<br></code></li>
+<li>Click on <strong>SAVE</strong><img alt="Azure-appservice-config" src="img/65ecaad3e1dfb9ce.gif"></li>
+<li><strong>Restart</strong> the App Service application to recycle the application&#39;s worker process <img alt="Restart" src="img/fbc91da4b2d2860.png"></li>
 <li>Access the webapp&#39;s URL again and fire a few transactions</li>
 <li>You should now be able to see that the NodeJS service has been detected and instrumented</li>
-<li>Click on the <strong>&#34;Current weather in Gdansk&#34;</strong> and change the location in the URL to <code>/current?loc=Singapore</code> or <code>/current?loc=Malaysia</code><img alt="Weather-Express-NodeJS" src="img/ac99ef8b040ffb98.gif"></li>
+<li>Click on the <strong>&#34;Current weather in Gdansk&#34;</strong> and change the location in the URL to <code>/current?loc=Singapore</code> or <code>/current?loc=Malaysia</code></li>
 </ul>
+<p class="image-container"><img alt="Weather-Express-NodeJS" src="img/ac99ef8b040ffb98.gif"></p>
 </google-codelab-step>
-<google-codelab-step label="Investigating the Weather-Express issue with Dynatrace" duration="5">
+<google-codelab-step label="Investigating with Dynatrace" duration="5">
 <p>Access the <strong>/current</strong> purepaths again. Investigate the <code>/current?loc=Singapore</code> and/or <code>/current?loc=Malaysia</code> and this time, Dynatrace should give you a pretty good idea where the error is coming from</p>
 <p class="image-container"><img alt="Weather-ExpressPP" src="img/523e7ff9935995f7.gif"></p>
 <aside class="warning"><p>What do you think is causing this error?</p>
@@ -294,10 +288,12 @@ Replace the **firstname-lastname** from the below command and adapt that to your
 </ul>
 <p>Once you have resolved the issue, the <strong>Weather Express Portal</strong> should be displaying the weather in Linz and any location that you enter.</p>
 <p class="image-container"><img alt="Weather-Express" src="img/a63a63ff08289827.gif"></p>
-<p>Use Dynatrace to explore &#34;Applications&#34;, &#34;Transactions and Service&#34;, &#34;PurePaths&#34; etc.</p>
-<p>Can you tell how Weather Express and Weather Service are related? Who calls who, and how is it called? Did you have to do complex configuration steps to reach this level of visibility?</p>
-<p>What can you tell about the data collected and how do you think it will help various teams like CloudOps, App Dev teams, Business teams etc.?</p>
-<aside class="special"><p>Screen shot the entire Service Flow starting from User, and some comments on the above question and send it to mailto: jason.nai@dynatrace.com. A surprise awaits you!</p>
+<aside class="warning"><p>Use Dynatrace to explore &#34;Applications&#34;, &#34;Transactions and Service&#34;, &#34;PurePaths&#34; etc. Can you tell how Weather Express and Weather Service are related?</p>
+</aside>
+<aside class="warning"><p>Who calls who, and how is it called? Did you have to do complex configuration steps to reach this level of visibility?</p>
+</aside>
+<p>Negative :What can you tell about the data collected and how do you think it will help various teams like CloudOps, App Dev teams, Business teams etc.?</p>
+<aside class="special"><p>Screen shot the entire Service Flow starting from User, and some comments on the above question and send it to <a href="mailto: jason.nai@dynatrace.com" target="_blank">jason.nai@dynatrace.com</a>. A surprise awaits you!</p>
 </aside>
 </google-codelab-step>
 <google-codelab-step label="Function setup" duration="15">
