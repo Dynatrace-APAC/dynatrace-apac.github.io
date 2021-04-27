@@ -3,11 +3,11 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="description" content="The Dynatrace APAC Workshops provide a guided, tutorial-based hands-on learning experience. These labs will provide sessions that are presented by Dynatrace APAC Partner Team but will also be feasible for self-learning.">
+<meta name="description" content="Transform faster with unparalleled observability, automation, and intelligence in one platform. Use these interactive demos to understand what makes our platform unique.">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="generator" content="Dynatrace Partners Online Workshops">
-<meta name="application-name" content="Dynatrace Partners Online Workshops">
-<link rel="canonical" href="https://dynatrace-apac.github.io/partners/">
+<meta name="generator" content="Dynatrace">
+<meta name="application-name" content="Dynatrace">
+<link rel="canonical" href="https://dynatrace-apac.github.io/interactive-demo/">
 <link rel="preconnect" href="https://www.google-analytics.com">
 <script>
 window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
@@ -15,14 +15,14 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
     ga('send', 'pageview');
 </script>
 <script async src="https://www.google-analytics.com/analytics.js"></script>
-<title>Dynatrace Partners Online Workshops</title>
+<title>Dynatrace</title>
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="import" href="/elements/elements.html">
 <style is="custom-style">
 :root{--paper-tabs-selection-bar-color:currentcolor;--paper-input-container-underline:{display:none};--paper-input-container-underline-focus:{display:none};}.dropdown-filter{--paper-input-container:{background-color:#23282d;display:block;padding:4px}} </style>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="#455a64">
-<meta name="apple-mobile-web-app-title" content="Dynatrace Partners Online Workshops">
+<meta name="apple-mobile-web-app-title" content="Dynatrace">
 <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="194x194" href="/images/favicons/favicon-194x194.png">
@@ -34,9 +34,9 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
 <meta name="theme-color" content="#455a64">
 <meta name="og:type" property="og:type" content="website">
-<meta name="og:title" property="og:title" content="Dynatrace Partners Online Workshops">
-<meta name="og:description" property="og:description" content="The Dynatrace APAC Workshops provide a guided, tutorial-based hands-on learning experience. These labs will provide sessions that are presented by Dynatrace APAC Partner Team but will also be feasible for self-learning.">
-<meta name="og:url" property="og:url" content="https://dynatrace-apac.github.io/partners/">
+<meta name="og:title" property="og:title" content="Dynatrace">
+<meta name="og:description" property="og:description" content="Transform faster with unparalleled observability, automation, and intelligence in one platform. Use these interactive demos to understand what makes our platform unique.">
+<meta name="og:url" property="og:url" content="https://dynatrace-apac.github.io/interactive-demo/">
 <meta name="og:site_name" property="og:site_name" content="APAC Tech Labs">
 <meta name="og:determiner" property="og:determiner" content="the">
 <meta name="og:locale" property="og:locale" content="en_US">
@@ -47,10 +47,10 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <meta name="og:image:height" property="og:image:height" content="1200">
 <meta name="og:image:alt" property="og:image:alt" content="Dynatrace">
 <meta name="twitter:card" property="twitter:card" content="summary_large_image">
-<meta name="twitter:title" property="twitter:title" content="Dynatrace Partners Online Workshops">
-<meta name="twitter:description" property="twitter:description" content="The Dynatrace APAC Workshops provide a guided, tutorial-based hands-on learning experience. These labs will provide sessions that are presented by Dynatrace APAC Partner Team but will also be feasible for self-learning.">
+<meta name="twitter:title" property="twitter:title" content="Dynatrace">
+<meta name="twitter:description" property="twitter:description" content="Transform faster with unparalleled observability, automation, and intelligence in one platform. Use these interactive demos to understand what makes our platform unique.">
 <meta name="twitter:image" property="twitter:image" content="/images/og-image.png">
-<meta name="twitter:url" property="twitter:url" content="https://dynatrace-apac.github.io/partners/">
+<meta name="twitter:url" property="twitter:url" content="https://dynatrace-apac.github.io/interactive-demo/">
 </head>
 <body id="app" is="body-bind" class="loading fullbleed view">
 <paper-header-panel id="main" mode="standard" main>
@@ -68,14 +68,19 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 </div>
 </div>
 </div>
-<header id="banner" down>
+<header id="banner" down$="[[_toBoolean(selectedFilter)]]">
 <div class="site-width">
-<div class="banner-description">
-<img id="logo" src="/bootcamp/bootcamp.jpg" alt="Event logo">
-<div class="banner-meta">
-<h3>Dynatrace Partners Online Workshops</h3>
-<p>The Dynatrace APAC Workshops provide a guided, tutorial-based hands-on learning experience. These labs will provide sessions that are presented by Dynatrace APAC Partner Team but will also be feasible for self-learning.</p>
-</div>
+<h2 class="banner-title">Dynatrace Interactive Demo</h2>
+<div class="banner-description" data-filter-selected$="[[_toBoolean(selectedFilter)]]">
+<p class="banner-info">
+Transform faster with unparalleled observability, automation, and intelligence in one platform. Use these interactive demos to understand what makes our platform unique.
+<br>
+<a href="/" class="button">Home</a>
+<a href="/schedule" class="button">Virtual Hands-On Workshops</a>
+<a href="/interactive-demo" class="button">Interactive Demo</a>
+<a href="https://www.dynatrace.com/request-demo/" class="button">Request a Demo</a>
+<a href="https://www.dynatrace.com/trial/" class="button">Free Trial</a>
+</p>
 </div>
 </div>
 </header>
@@ -88,17 +93,51 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <paper-tab>Duration</paper-tab>
 </paper-tabs>
 </div>
-</div>
+<paper-dropdown-menu label="Filter by category" class="dropdown-filter" no-label-float noink no-animations>
+<paper-listbox id="categorylist" slot="dropdown-content" class="dropdown-content" on-iron-activate="onCategoryActivate" attr-for-selected="filter">
+<paper-item filter="adv-obs">adv-obs</paper-item>
+<paper-item filter="autonomous-cloud">autonomous-cloud</paper-item>
+<paper-item filter="bizops">bizops</paper-item>
+<paper-item filter="dem">dem</paper-item>
+<paper-item filter="kubernetes">kubernetes</paper-item>
+<paper-item filter="kubernetes-gke">kubernetes-gke</paper-item>
+</paper-listbox>
+</paper-dropdown-menu></div>
 <card-sorter id="cards" class="site-width">
-<a href="/workshops/azure-partner/index.html?index=..%2F..partners" on-tap="navigate" class="codelab-card category-azure" data-category="azure" data-title="Dynatrace with Azure" data-duration="75" data-updated="2021-04-27T11:41:11+10:00" data-tags="partner" data-pin="">
-<div class="description">Dynatrace with Azure</div>
+<a href="https://interact.dynatrace.com/" on-tap="navigate" class="codelab-card category-apps-microservices" data-category="apps-microservices" data-title="Apps And Microservices Demo" data-duration="136" data-updated="2020-07-28T15:48:24+10:00" data-tags="apps-microservices" data-pin="1">
+<div class="card-pin"></div>
+<div class="description">Apps & Microservices</div>
 <div class="card-duration">
-<span>75 min </span>
-<span>Updated Apr 27, 2021</span>
+<span>INTERACTIVE DEMO</span>
+<span></span>
 </div>
 <div class="card-footer">
-<div class="category-icon azure-icon"></div>
-<paper-button class="azure-bg">Start</paper-button>
+<div class="category-icon apps-microservices-icon"></div>
+<paper-button class="apps-microservices-bg">Start</paper-button>
+</div>
+</a>
+<a href="https://interact.dynatrace.com/infrastructure-demo/p/1" on-tap="navigate" class="codelab-card category-infrastructure" data-category="apps-microservices" data-title="Apps And Microservices Demo" data-duration="136" data-updated="2020-07-28T15:48:24+10:00" data-tags="apps-microservices" data-pin="1">
+<div class="card-pin"></div>
+<div class="description">Infrastructure</div>
+<div class="card-duration">
+<span>INTERACTIVE DEMO</span>
+<span></span>
+</div>
+<div class="card-footer">
+<div class="category-icon infrastructure-icon"></div>
+<paper-button class="infrastructure-bg">Start</paper-button>
+</div>
+</a>
+<a href="https://interact.dynatrace.com/davis-explained/p/1" on-tap="navigate" class="codelab-card category-davis" data-category="apps-microservices" data-title="Apps And Microservices Demo" data-duration="136" data-updated="2020-07-28T15:48:24+10:00" data-tags="apps-microservices" data-pin="1">
+<div class="card-pin"></div>
+<div class="description">Dynatrace DAVIS Explained</div>
+<div class="card-duration">
+<span>INTERACTIVE DEMO</span>
+<span></span>
+</div>
+<div class="card-footer">
+<div class="category-icon davis-icon"></div>
+<paper-button class="davis-bg">Start</paper-button>
 </div>
 </a>
 </card-sorter>
