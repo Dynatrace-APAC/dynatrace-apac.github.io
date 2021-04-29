@@ -1,0 +1,26 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "../../elements",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-04-29T15:49:25+10:00",
+  "id": "get-started-dt",
+  "duration": 15,
+  "title": "Get Started with Dynatrace",
+  "authors": "Brandon Neo",
+  "summary": "Get Started with Dynatrace",
+  "source": "get-started-dt.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "get-started"
+  ],
+  "tags": [
+    "microlab"
+  ],
+  "feedback": "mailto:APAC-SE-Central@dynatrace.com",
+  "ga": "UA-175467274-1",
+  "url": "get-started-dt"
+}
