@@ -85,15 +85,21 @@ Negative
 
 ![Smartscape](assets/dem/smartscape.png)
 
-All the analyzed through **Dynatrace DAVIS**, our AI Engine that uses deterministic AI to performs an automatic fault-tree analysis. This is causation not correlation.
+### 3-min Overview
 
-To learn more, use the [Interactive Demos](/interactive-demo) to find out more about why [Dynatrace](https://www.dynatrace.com/platform/) is unique
+<video id="c6naXcYqT7Y"></video>
+
+### Dynatrace Davis
+
+All these are analyzed through **Dynatrace DAVIS**, our AI Engine that uses deterministic AI to performs an automatic fault-tree analysis. This is not just correlation but causation of problems.
+
+To learn more, use the [Interactive Demos](/interactive-demo) to find out about why [Dynatrace](https://www.dynatrace.com/platform/) is unique
 
 <!-- ------------------------ -->
 ## Fine tune your environment
 Duration: 5
 
-You can now access your [home dashboard](https://www.dynatrace.com/support/help/how-to-use-dynatrace/dashboards-and-charts/), by logging in to your Dynatrace monitoring environment. All monitoring data should be there already. However, some additional post-deployment steps are required. These steps could be found in our [documentation page](https://www.dynatrace.com/support/help/shortlink/section-get-started#step-4-fine-tune-your-environment)
+You can now also access your [home dashboard](https://www.dynatrace.com/support/help/how-to-use-dynatrace/dashboards-and-charts/). However to obtain greater observability, some additional post-deployment steps are required. These steps could be found in our [documentation page](https://www.dynatrace.com/support/help/shortlink/section-get-started#step-4-fine-tune-your-environment)
 
 ### Deploy to other hosts 
 
@@ -120,7 +126,7 @@ Dynatrace is an all-in-one platform that's purpose-built for a wide range of use
 **Cloud Automation**
 - Dynatrace AIOps gives you precise answers automatically. Dynatrace collects high-fidelity data and maps dependencies in real-time so that the Dynatrace explainable AI engine, Davis®, can show you the precise root causes of problems or anomalies, enabling quick auto-remediation and intelligent cloud orchestration.
 
-The above use cases are also labs which you can run through:
+The above use cases are setup as labs which you can run through:
 * [Digital Experience Management with Dynatrace](/workshops/dem)
 * [Advanced Observability with Dynatrace](/workshops/advanced-observability)
 * [BizOps with Dynatrace](/workshops/bizops)
