@@ -85,9 +85,11 @@ Negative
 
 ![Smartscape](assets/dem/smartscape.png)
 
-### 3-min Overview
+### 5-min Get Started Overview
 
-<video id="c6naXcYqT7Y"></video>
+Watch this short, **5 minute overview demo** to see how Dynatrace can be your single source of truth with AI intelligence that can tell you what you need to focus on so you can spend more time innovating and less time trouble shooting.
+
+<video id="0ihCziAJ07U"></video>
 
 ### Dynatrace Davis
 
