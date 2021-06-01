@@ -182,7 +182,7 @@ Duration: 15
 
 In this exercise, we will automate configuration of Dynatrace environment.
 
-Using [Dynatrace Monitoring as Code (Monaco)]https://github.com/dynatrace-oss/dynatrace-monitoring-as-code), you can automate the configuration of all global Dynatrace environments without human intervention. Various use cases include:
+Using [Dynatrace Monitoring as Code (Monaco)](https://github.com/dynatrace-oss/dynatrace-monitoring-as-code), you can automate the configuration of all global Dynatrace environments without human intervention. Various use cases include:
 
 * Having the ability to templatize our configuration for reusability across multiple environments
 * Interdependencies between configurations should be handled without keeping track of unique identifiers
