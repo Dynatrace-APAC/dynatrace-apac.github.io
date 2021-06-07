@@ -152,9 +152,8 @@ Positive
 To restart the sample app Sockshop execute the following command:
 
 ```bash
-cd sockshop
-./recycle-sockshop-frontend.sh
-./recycle-sockshop-frontend-production.sh
+kubectl delete po --all -n dev
+kubectl delete po --all -n production
 ```
 
 ### Explore the Sockshop Application
@@ -165,8 +164,8 @@ Within Dynatrace, follow the steps below to get Sockshop URL:
 * Expand **Properties and tag** in Host view
 * **Select and Copy** Public Host name from the metadata
 * **Amend the Public Host name** to match the following format:
-  - Sockshop Production `http://production.front-end.<public-ip>.nip.io/`
-  - Sockshop Dev `http://dev.front-end.<public-ip>.nip.io`
+  - Sockshop Production `http://production.front-end.PUBLIC-IP.nip.io/`
+  - Sockshop Dev `http://dev.front-end.PUBLIC-IP.nip.io`
 
 ### Explore the Smartscape
 
@@ -202,6 +201,16 @@ These can be found within the lab registration email.
 export DT_TENANT= https://mou612.managed-sprint.dynalabs.io/e/<ENV>
 export DT_API_TOKEN=dt0c01.IH6********************************************
 ```
+
+After setting up, run the following command to configure Dynatrace:
+
+`./push-monaco.sh` 
+
+Below are the configurations done:
+
+* Synthetic monitoring
+* Service naming rules
+* Carts SLO
 
 <!-- ------------------------ -->
 ## Request Attributes
@@ -259,6 +268,69 @@ Repeat the steps above for **Request Attributes: Size**
 ## SLO
 Duration: 15
 
+In this exercise, we will cover the setting up Service Level Objectives (SLO). These objectives are based on a target of our measured Service Level Indicators (SLI) to fulfill the business's Service Level Agreement (SLA). 
+
+### Creating SLO
+
+On the left nav, go to **SLOs > Add new SLO**
+
+We will be creating a SLO for **Sockshop Frontend**. Use the following:
+
+* Name this SLO: `Sockshop Frontend Error SLO`
+* Select tab **Calculate success rate using two metrics**
+* Under **numerator** dropdown, use `builtin:service.errors.server.successCount`
+* Click on the selected field - **number of calls without server side errors**
+* Under **denominator** dropdown, use `builtin:service.requestCount.server`
+* Click on the selected field - **Request count - server**
+* Click on **Next**
+* Under **Entity selector**, use `type("SERVICE"),tag("[Kubernetes]tier:frontend")`
+* Click on **Preview**
+* You should have selected **2 entityIDs** with Display Name **front-end**
+* Click on **Next**
+* Use default thresholds for **Failure, Warning and Good**
+* Use `-1hr` under Timeframe
+* Click on **Save**
+
+![SLO](assets/cloud-observe/slo.gif)
+
+### Creating metrics for Catalogue page
+
+Next, we will be creating a custom metric for successful requests count to Catalogue page
+
+* On the left nav, go to `Transactions and services`
+* Click on `front-end` service
+* Click on **View dynamic requests**
+* Scroll down and with **/catelogue** request, select the **graph icon (Create analysis view)**
+* Under **Metric** downdrop, select **Successful request count**
+* Click on **Create metric**
+* Under Metric name, use `cataloguesuccesscount`
+* Click on **Create metric**
+
+![SLO](assets/cloud-observe/catalogue-success-count.gif)
+
+* Under **Metric** downdrop, change and select **request count**
+* Click on **Create metric**
+* Under Metric name, use `cataloguecount`
+* Click on **Create metric**
+
+![SLO](assets/cloud-observe/catalogue-count.png)
+
+### Creating SLO for Catalogue Availability
+
+* Name this SLO: `Catalogue Availability SLO`
+* Select tab **Calculate success rate using two metrics**
+* Under **numerator** dropdown, use `calc:service.cataloguesuccesscount`
+* Click on the selected field - **Catalogue Success Count**
+* Under **denominator** dropdown, use `calc:service.cataloguecount`
+* Click on the selected field - **Catalogue Count**
+* Click on **Next**
+* Click on **Next**
+* Use `85` for **Failure**
+* Use `90` for **Warning**
+* Use `-15m` under Timeframe
+* Click on **Save**
+
+![SLO](assets/cloud-observe/catalogue-success-count.gif)
 
 <!-- ------------------------ -->
 ## Dashboards
