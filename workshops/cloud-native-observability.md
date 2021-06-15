@@ -34,7 +34,7 @@ The following steps are used for this lab:
 - Site Reliability Engineering - Service Level Objectives
 
 <!-- ------------------------ -->
-## Basic Setup
+## Deploy OneAgent Operator
 Duration: 15
 
 In this exercise, we will deploy the OneAgent to a Linux instance running Kubernetes(Microk8s) and let the OneAgent discover what is running in that instance.
@@ -167,6 +167,9 @@ Within Dynatrace, follow the steps below to get Sockshop URL:
   - Sockshop Production `http://production.front-end.PUBLIC-IP.nip.io/`
   - Sockshop Dev `http://dev.front-end.PUBLIC-IP.nip.io`
 
+Positive
+: Note that if you're attending a workshop, these links will be included as part of your workshop email
+
 ### Explore the Smartscape
 
 While waiting for Easy Travel to start, you can explore Dynatrace and using the Smartscape, Dynatrace will automatically discover the processes and dependencies that comprises the Easy Travel application! 
@@ -211,6 +214,10 @@ Below are the configurations done:
 * Synthetic monitoring
 * Service naming rules
 * Carts SLO
+* Application definitions
+* Dashboards
+* Process naming rules
+* Management zones
 
 <!-- ------------------------ -->
 ## Request Attributes
@@ -272,7 +279,7 @@ In this exercise, we will cover the setting up Service Level Objectives (SLO). T
 
 ### Creating SLO
 
-On the left nav, go to **SLOs > Add new SLO**
+On the left nav, go to **Service level objectives > Add new SLO**
 
 We will be creating a SLO for **Sockshop Frontend**. Use the following:
 
@@ -283,12 +290,12 @@ We will be creating a SLO for **Sockshop Frontend**. Use the following:
 * Under **denominator** dropdown, use `builtin:service.requestCount.server`
 * Click on the selected field - **Request count - server**
 * Click on **Next**
-* Under **Entity selector**, use `type("SERVICE"),tag("[Kubernetes]tier:frontend")`
+* Under **Entity selector**, use `type("SERVICE"),tag("[Kubernetes]tier:frontend"),tag("[Kubernetes]stage:prod")`
 * Click on **Preview**
-* You should have selected **2 entityIDs** with Display Name **front-end**
+* You should have selected **1 entityID** with Display Name **front-end.production**
 * Click on **Next**
 * Use default thresholds for **Failure, Warning and Good**
-* Use `-1hr` under Timeframe
+* Use `-1h` under Timeframe
 * Click on **Save**
 
 ![SLO](assets/cloud-observe/slo.gif)

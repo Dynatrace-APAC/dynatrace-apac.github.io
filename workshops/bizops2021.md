@@ -221,11 +221,8 @@ Here is how the completed configuration will look like:
 Once everything is configured, you should have this list of session/useraction properties:
 ![Session properties](assets/bizops2021/task1c-properties-complete.png)
 
-<aside class="positive">
-Reference documents
-- [Session Properties Help page](https://www.dynatrace.com/support/help/shortlink/user-session-properties)
-- [Request Attribute Help page](https://www.dynatrace.com/support/help/shortlink/request-attributes)
-</aside>
+Positive 
+: Reference documents - [Session Properties Help page](https://www.dynatrace.com/support/help/shortlink/user-session-properties) and [Request Attribute Help page](https://www.dynatrace.com/support/help/shortlink/request-attributes)
 
 <!-- ------------------------ -->
 ## Task-1d - Session Replay
@@ -268,6 +265,7 @@ Positive
 3. Drag a **User Sessions Query** tile and click on **Configure tile**
    ![Dashboard](assets/bizops2021/task2-CreateDashboard.gif)
 4. Enter the following query:
+
    ```SQL
    SELECT FUNNEL(useraction.name like "*journeys*" AS "Journey Search", useraction.name = "click on book now (xhr: /easytravel/rest/journeys/)" AS "Click on Book Now", useraction.name = "click on sign in (xhr: /easytravel/rest/login)" AS "Login", useraction.name="click on book journey  (xhr: /easytravel/rest/validate-creditcard)" AS "Submit Payment") FROM usersession
    ```
@@ -296,12 +294,14 @@ Positive
 1. While having the Dashboard in **Edit** mode, click on the previously created tile and click on the **clone** button, then click on the **configure tile** button
    ![Dashboard](assets/bizops2021/task2-CloneDashboard.gif)
 2. Enter the following query:
+
    ```SQL
    select datetime(starttime, "E HH:mm", "10m"), count(*) as "Conversions" from usersession where useraction.matchingConversionGoals="Credit card validated" group by datetime(starttime,"E HH:mm","10m")
    ```
 3. Click on the **run query** button
 4. Select **Line chart**
 5. Rename this to
+
    ```
    Conversions over time
    ```
@@ -318,12 +318,14 @@ Positive
 
 1. Clone the tile from above and click on **configure tile**
 2. Modify the query:
+
    ```SQL
    select sum (doubleProperties.booking) as Revenue from usersession
    ```
 3. Click on the **run query** button
 4. It will automatically select a **Single value**
 5. Rename this to
+
    ```
    Booking revenue
    ```
@@ -340,15 +342,13 @@ Positive
 
 1. Clone the tile from above and click on **configure tile**
 2. Modify the query:
+
    ```SQL
    SELECT sum (doubleProperties.tripcost) as "Revenue Lost" from usersession where useraction.matchingConversionGoals IS NULL AND doubleProperties.tripcost > 0
    ```
 3. Click on the **run query** button
 4. It will automatically select **Single value**
-5. Rename this to
-   ```
-   Abandoned cart value
-   ```
+5. Rename this `Abandoned cart value`
 6. Click on the **save changes to dashboard** button
 
 ![Dashboard](assets/bizops2021/task2-Abandoned-usql.png)
@@ -359,42 +359,44 @@ Positive
 
 1. Clone the tile from above and click on **configure tile**
 2. Modify the query:
+
    ```SQL
    SELECT userid from usersession where useraction.name = "click on book journey  (xhr: /easytravel/rest/validate-creditcard)" and doubleProperties.booking is null
    ```
 3. Click on the **run query** button
 4. Select **Table only**
-5. Rename this to
-   ```
-   Users affected by abandoned cart
-   ```
+5. Rename this to `Users affected by abandoned cart`
 6. Click on the **save changes to dashboard** button
 
 ![Dashboard](assets/bizops2021/task2-AbandonedUsers-usql.png)
 
 <!-- ------------------------ -->
+
 ## Task-3 - Action on the data
 
-Let's challange DAVIS :tm:!
+Let's challange DAVIS™️!
 
 Access the EasyTravel Angular actual booking application
 - Open Dashboards
 - Click on the **...Welcome to the Dynatrace Workshop 🔬** Dashboard
 - Click on the **Booking Portals:✈ EasyTravel Angular** link
-  ![Action on the data](assets/bizops2021/task3-prework1.gif)
+
+![Action on the data](assets/bizops2021/task3-prework1.gif)
+
 - Book a travel package
 - You can use userid **alex** or **peter**
 - What do you notice?
 - Try clicking on **(3) Payment** multiple times
 - Before you close your browser, do the following:
   - Open your browser's **developer tools**
-    ![Action on the data](assets/bizops2021/task3-prework2.png)
-  - Go to **Console tab**
-  - Type the following:
-    ```console
-	dtrum.endSession()
-	```
-    ![Action on the data](assets/bizops2021/task3-prework3.png)
+
+![Action on the data](assets/bizops2021/task3-prework2.png)
+
+- Go to **Console tab**
+- Type the following:
+` dtrum.endSession()`
+
+![Action on the data](assets/bizops2021/task3-prework3.png)
 
 ### Scenario #1
 **Conversions** are dropping! And so is **Revenue**!
@@ -409,13 +411,12 @@ Even if it is not an IT issue, something must be causing vistors to be **frustra
 Negative
 : Use Dynatrace to determine what is causing friction to your visitors.
 
-> ***Hint:***
->
-> Some dashboards in the **Sample BizDevOps Dashboard** might give a clue to what is happening.
->
-> ![Scenario1](assets/bizops2021/task3-scenario1-3.png)
->
-> Also, investigating some user sessions together with **Session Replay** might uncover some facts about your application that cannot be detected by logs or investigating application code.
+***Hint:***
+Some dashboards in the **Sample BizDevOps Dashboard** might give a clue to what is happening.
+
+![Scenario1](assets/bizops2021/task3-scenario1-3.png)
+
+Also, investigating some user sessions together with **Session Replay** might uncover some facts about your application that cannot be detected by logs or investigating application code.
 
 ### Scenario #2
 DAVIS has detected an Anomaly! You also have observed that there are users who are affected and have abandoned their booking process!
@@ -425,13 +426,10 @@ DAVIS has detected an Anomaly! You also have observed that there are users who a
 Negative
 : Will you be faster than DAVIS in determining the root cause?
 
-> ***Hint:***
->
-> The dashboard that you created just now would have contain all the information for you to understand what is causing errors.
->
-> You can start with the **Problem** tile and drill down from there.
->
-> You can also investigate each individual user session.
+***Hint:***
+The dashboard that you created just now would have contain all the information for you to understand what is causing errors.
+You can start with the **Problem** tile and drill down from there.
+You can also investigate each individual user session.
 
 <!-- ------------------------ -->
 

@@ -1,22 +1,34 @@
 
 <!doctype html>
+
 <html>
 <head>
-<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
-<meta name="theme-color" content="#4F7DC9">
-<meta charset="UTF-8">
-<title>BizOps with Dynatrace</title>
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
-<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
-<style>
-.success{color:#1e8e3e}.error{color:red} </style>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>BizOps with Dynatrace</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
 </head>
 <body>
-<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
-<google-codelab codelab-gaid="UA-175467274-1" id="biz-ops" title="BizOps with Dynatrace" environment="web" feedback-link="mailto:APAC-SE-Central@dynatrace.com">
-<google-codelab-step label="Overview" duration="0">
-<p>This Repo contains the labs we are going to work though as part of the BizOps – Bridging the Gap to the Business Hands On Workshop.</p>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid="UA-175467274-1"
+                  id="biz-ops"
+                  title="BizOps with Dynatrace"
+                  environment="web"
+                  feedback-link="mailto:APAC-SE-Central@dynatrace.com">
+    
+      <google-codelab-step label="Overview" duration="0">
+        <p>This Repo contains the labs we are going to work though as part of the BizOps – Bridging the Gap to the Business Hands On Workshop.</p>
 <p>For the purposes of the Hands-On, we will automate and make the steps seamless for the participants</p>
 <h2 is-upgraded>Prerequisites</h2>
 <ul>
@@ -25,7 +37,7 @@
 <h2 is-upgraded>Lab Setup</h2>
 <p>The following steps are used for this lab:</p>
 <ul>
-<li>Sample Application <ul>
+<li>Sample Application  <ul>
 <li>Sample App is based on <a href="https://confluence.dynatrace.com/community/display/DL/easyTravel" target="_blank">Easy Travel</a></li>
 <li>There are 2 interfaces running for Easy Travel - Classic UI and Angular UI</li>
 </ul>
@@ -33,7 +45,7 @@
 </ul>
 <h2 class="checklist" is-upgraded>What You&#39;ll Learn</h2>
 <ul>
-<li>Bring business context to IT metrics <ul>
+<li>Bring business context to IT metrics  <ul>
 <li>Identify individual users for session analysis</li>
 <li>Conversion goals</li>
 <li>Session Replay</li>
@@ -41,7 +53,7 @@
 </li>
 <li>Visualize the data and enhance collaboration between Ops and Line-of-business teams</li>
 <li>Action on the data</li>
-<li>Learn Dynatrace Capabilities such as <ul>
+<li>Learn Dynatrace Capabilities such as  <ul>
 <li>Session Replay</li>
 <li>User Session Properties</li>
 <li>User Session Query Language (USQL)</li>
@@ -49,18 +61,24 @@
 </ul>
 </li>
 </ul>
-</google-codelab-step>
-<google-codelab-step label="Task-1 - Bring business context to IT metrics" duration="0">
-<p>The goal of this exercise is to enhance the basic Real User Monitoring configuration in Dynatrace to bring business context to IT metrics. As such, we will not be going through the basic configuration of Dynatrace and have pre-setup the environment with the configuration:</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Task-1 - Bring business context to IT metrics" duration="0">
+        <p>The goal of this exercise is to enhance the basic Real User Monitoring configuration in Dynatrace to bring business context to IT metrics. As such, we will not be going through the basic configuration of Dynatrace and have pre-setup the environment with the configuration:</p>
 <ul>
 <li>Organizing applications</li>
 <li>Enable JavaScript framework support​</li>
 <li>Logical grouping of user actions (configure User Action Naming​)</li>
 </ul>
 <p>If you are interested in the basic setup, the following lab reference will be a good guide <a href="https://dynatrace-apac.github.io/workshops/dem/index.html?index=..%2F..index#0" target="_blank">Digital Experience Management with Dynatrace</a></p>
-</google-codelab-step>
-<google-codelab-step label="Task-1a - Identify individual users for session analysis" duration="0">
-<p>One of the key features of Dynatrace Real User Monitoring is the ability to uniquely identify individual users across different browsers, devices, and user sessions.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Task-1a - Identify individual users for session analysis" duration="0">
+        <p>One of the key features of Dynatrace Real User Monitoring is the ability to uniquely identify individual users across different browsers, devices, and user sessions.</p>
 <p>By default, Dynatrace assigns a unique, random ID to each new user. You can however assign more meaningful custom user tags that are comprised of, for example, user names or email addresses.</p>
 <p>In this exercise, we will use the approach of tagging users based on <strong><em>page source</em></strong>. This approach to user tagging works by capturing available data in your application&#39;s page source.</p>
 <p>The Easy Travel Angular app displays the user name at the top right hand corner. This is done via the text of a DOM element or a JavaScript variable.</p>
@@ -70,7 +88,7 @@
 <li>Select the <strong>EasyTravel Angular</strong> application</li>
 <li>Click the Browse button <strong>(...)</strong> and select <strong>Edit</strong></li>
 <li>Under the <strong>Capturing</strong> header, look for <strong>User tag</strong><img alt="User Tag" src="img/fe59d78ee590d3d9.gif"></li>
-<li>Click <strong>Add user tag rule </strong><ul>
+<li>Click <strong>Add user tag rule  </strong><ul>
 <li>Source type: <strong>CSS Selector</strong></li>
 <li>CSS Selector field: <br><code>a.greeting<br></code></li>
 <li>Toggle Apply cleanup rule <strong>on</strong></li>
@@ -81,7 +99,7 @@
 <li>Remember to click on <strong>Save changes</strong> button</li>
 </ol>
 <p>Once the configuration is complete, this is how it should look like: <img alt="User Tag" src="img/269a9a1eb55db9a8.png"></p>
-<p> How to get CSS selectors? </p>
+<p>   How to get CSS selectors?  </p>
 <p>### How to get CSS selectors?</p>
 <ol type="1">
 <li>Assess the EasyTravel Angular homepage</li>
@@ -89,7 +107,7 @@
 <li>Login with username: <strong>alex</strong> and password: <strong>alex</strong> and click <strong>Next</strong></li>
 <li>Right click on the name <strong>Alex Elliot</strong> and click <strong>inspect</strong></li>
 <li>Right click on the td element and select <strong>Copy</strong> &gt; <strong>Copy Selector</strong></li>
-<li>list <ul>
+<li>list  <ul>
 <li>With some</li>
 <li>Sub bullets </li>
 </ul>
@@ -97,17 +115,20 @@
 </ol>
 <aside class="special"><p>Reference document: <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/how-to-use-real-user-monitoring/cross-application-user-session-analytics/identify-individual-users-for-session-analysis/" target="_blank">Identify Individual Users for Session Analysis</a></p>
 </aside>
-</google-codelab-step>
-<google-codelab-step label="Task-1b - Creating Conversion Rates" duration="0">
-<p>Conversion goals are useful for understanding if users are meeting critical milestones in a user journey, for example, successful checkouts, newsletter signups, or demo signups</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Task-1b - Creating Conversion Rates" duration="0">
+        <p>Conversion goals are useful for understanding if users are meeting critical milestones in a user journey, for example, successful checkouts, newsletter signups, or demo signups</p>
 <p>In this exercise, we will create conversion goals for the Easy Travel Angular application.</p>
 <ol type="1">
 <li>In the same screen as the previous task, scroll down to <strong>Session Replay and behavior</strong> heading, and select <strong>Conversion Goals</strong><img alt="Conversion" src="img/cce099b144ee0181.gif"></li>
-<li>Click <strong>Add goal</strong> button and enter the following: <ul>
+<li>Click <strong>Add goal</strong> button and enter the following:  <ul>
 <li>Name: <br><code>Credit card validated<br></code></li>
 <li>Type of goal: <strong>User Action<br></strong></li>
 <li>Rule applies to: <strong>XHR actions<br></strong></li>
-<li>Rule <ul>
+<li>Rule  <ul>
 <li><strong>Page URL</strong></li>
 <li><strong>contains<br></strong><code>easytravel/rest/validate-creditcard<br></code></li>
 </ul>
@@ -116,12 +137,15 @@
 </ul>
 </li>
 </ol>
-<p> Validating conversion goal setting </p>
+<p>   Validating conversion goal setting  </p>
 <p>Check results aginst the application: <strong>EasyTravel Angular</strong> &gt; <strong>User behavior</strong></p>
 <p class="image-container"><img alt="Conversion" src="img/bfea93ce17688d75.png"></p>
-</google-codelab-step>
-<google-codelab-step label="Task-1c - Session and User action Properties" duration="0">
-<p>In this exercise, we will create session and user action properties to expose additional data to Dynatrace. This is useful for bringing additonal context regarding the users (e.g. campaign source, various items selected by users etc.) for analytics purposes.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Task-1c - Session and User action Properties" duration="0">
+        <p>In this exercise, we will create session and user action properties to expose additional data to Dynatrace. This is useful for bringing additonal context regarding the users (e.g. campaign source, various items selected by users etc.) for analytics purposes.</p>
 <p>Dynatrace has pre-defined a list of popular software that uses tags to give context to the sessions. Some of them are</p>
 <ul>
 <li>Google Analytics</li>
@@ -140,7 +164,7 @@
 <p>Since these are pre-defined, all we need to do is to select from the list. In this section, we will select the following:</p>
 <ul>
 <li>Click on the drop down, select <strong>web properties</strong></li>
-<li>Under <strong>Configure properties</strong>, select the corresponding <strong>Add</strong> button for the following: <ul>
+<li>Under <strong>Configure properties</strong>, select the corresponding <strong>Add</strong> button for the following:  <ul>
 <li>UTM Source</li>
 <li>UTM campaign</li>
 <li>UTM term <img alt="Web property pack" src="img/441354b34c66a735.png"></li>
@@ -157,7 +181,7 @@
 <li>Request attribute name: <strong>Revenue</strong></li>
 <li>Display name: <br><code>Booking<br></code></li>
 <li>(auto fill) Key: <strong>booking</strong></li>
-<li>Storage type: <ul>
+<li>Storage type:  <ul>
 <li>Store as <strong>session</strong> property</li>
 </ul>
 </li>
@@ -172,7 +196,7 @@
 <li>CSS Selector <br><code>#summary > div:nth-child(5) > p<br></code></li>
 <li>Display name: <br><code>Trip Cost<br></code></li>
 <li>(auto fill) Key: <strong>tripcost</strong></li>
-<li>Storage type: <ul>
+<li>Storage type:  <ul>
 <li>Store as <strong>session</strong> property</li>
 </ul>
 </li>
@@ -185,7 +209,7 @@
 <li>Request attribute name: <strong>Destination</strong></li>
 <li>Display name: <br><code>Destination<br></code></li>
 <li>(auto fill) Key: <strong>destination</strong></li>
-<li>Storage type: <ul>
+<li>Storage type:  <ul>
 <li>Store as <strong>session</strong> property</li>
 <li>Store as <strong>user action</strong> property</li>
 </ul>
@@ -195,11 +219,14 @@
 <p>Here is how the completed configuration will look like: <img alt="Custom property" src="img/94c19a505926b06a.png"></p>
 <h2 is-upgraded>Completed configuration screen</h2>
 <p>Once everything is configured, you should have this list of session/useraction properties: <img alt="Session properties" src="img/f3723797561e9c3b.png"></p>
-<aside class="special"><p> Reference documents - [Session Properties Help page](https://www.dynatrace.com/support/help/shortlink/user-session-properties) - [Request Attribute Help page](https://www.dynatrace.com/support/help/shortlink/request-attributes) </p>
+<aside class="special"><p>Reference documents - <a href="https://www.dynatrace.com/support/help/shortlink/user-session-properties" target="_blank">Session Properties Help page</a> and <a href="https://www.dynatrace.com/support/help/shortlink/request-attributes" target="_blank">Request Attribute Help page</a></p>
 </aside>
-</google-codelab-step>
-<google-codelab-step label="Task-1d - Session Replay" duration="0">
-<p>In this exercise, we will cover configuring Session Replay in Dynatrace.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Task-1d - Session Replay" duration="0">
+        <p>In this exercise, we will cover configuring Session Replay in Dynatrace.</p>
 <p>Follow the steps below to enable session Replay:</p>
 <ol type="1">
 <li>In the same screen as the previous task, scroll down to <strong>Session Replay and behavior</strong> heading, and select <strong>Session Replay</strong></li>
@@ -210,36 +237,57 @@
 </ol>
 <aside class="special"><p>Reference document: <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/basic-concepts/session-replay/" target="_blank">Session Replay</a></p>
 </aside>
-</google-codelab-step>
-<google-codelab-step label="Task-2 - Visualize the data" duration="0">
-<p>We are now ready to visualize the data collected in Dynatrace. In this exercise, you can see how <strong>conversion goals</strong>, <strong>session/action properties</strong> can provide much more insights and context to the IT metrics for analysis.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Task-2 - Visualize the data" duration="0">
+        <p>We are now ready to visualize the data collected in Dynatrace. In this exercise, you can see how <strong>conversion goals</strong>, <strong>session/action properties</strong> can provide much more insights and context to the IT metrics for analysis.</p>
 <p>This is the dashboard that we will aim to create.</p>
 <p class="image-container"><img alt="Dashboard" src="img/f6e6dd57f5ceebd6.png"></p>
-</google-codelab-step>
-<google-codelab-step label="Task-2a - Visualize Payment funnel" duration="0">
-<aside class="special"><p>Goal: to visulize a user journey when user is making a payament on your site</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Task-2a - Visualize Payment funnel" duration="0">
+        <aside class="special"><p>Goal: to visulize a user journey when user is making a payament on your site</p>
 </aside>
 <p class="image-container"><img alt="Dashboard" src="img/b1fd44466d8f6f7b.png"></p>
 <ol type="1">
 <li>Navigate to <strong>Dashboards</strong> on the left hand naviation menu</li>
 <li>Click on the buton <strong>Create Dashboard</strong> and enter a name and click on <strong>Create</strong></li>
 <li>Drag a <strong>User Sessions Query</strong> tile and click on <strong>Configure tile</strong><img alt="Dashboard" src="img/5efe26834c2f0fef.gif"></li>
-<li>Enter the following query: <pre><code language="language-SQL" class="language-SQL">SELECT FUNNEL(useraction.name like &#34;*journeys*&#34; AS &#34;Journey Search&#34;, useraction.name = &#34;click on book now (xhr: /easytravel/rest/journeys/)&#34; AS &#34;Click on Book Now&#34;, useraction.name = &#34;click on sign in (xhr: /easytravel/rest/login)&#34; AS &#34;Login&#34;, useraction.name=&#34;click on book journey  (xhr: /easytravel/rest/validate-creditcard)&#34; AS &#34;Submit Payment&#34;) FROM usersession
+<li>Enter the following query:</li>
+</ol>
+<pre><code language="language-SQL" class="language-SQL">   SELECT FUNNEL(useraction.name like &#34;*journeys*&#34; AS &#34;Journey Search&#34;, useraction.name = &#34;click on book now (xhr: /easytravel/rest/journeys/)&#34; AS &#34;Click on Book Now&#34;, useraction.name = &#34;click on sign in (xhr: /easytravel/rest/login)&#34; AS &#34;Login&#34;, useraction.name=&#34;click on book journey  (xhr: /easytravel/rest/validate-creditcard)&#34; AS &#34;Submit Payment&#34;) FROM usersession
 </code></pre>
 <ol type="1">
 <li>Click on the <strong>run query</strong> button</li>
 <li>Rename this to <br><code>Payment funnel<br></code></li>
-<li>Click on the <strong>save changes to dashboard</strong> button <img alt="Dashboard" src="img/d963ebcd4491e070.png"> Task-2b - Visualize Business KPI metrics Positive</li>
+<li>Click on the <strong>save changes to dashboard</strong> button</li>
 </ol>
-Goal - to visulize some critical metrics to indicate health of business <h2 is-upgraded>Conversion over time</h2>
-PositivePurpose - Conversions over time help to track the trend in meeting conversion goals. Very low conversion rates indicate that your customers are facing friction in completing the customer journey. <img alt="Dashboard" src="img/c26cd9ed1a9392f0.png"> <ol type="1">
+<p class="image-container"><img alt="Dashboard" src="img/d963ebcd4491e070.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Task-2b - Visualize Business KPI metrics" duration="0">
+        <aside class="special"><p>Goal - to visulize some critical metrics to indicate health of business</p>
+</aside>
+<h2 is-upgraded>Conversion over time</h2>
+<aside class="special"><p>Purpose - Conversions over time help to track the trend in meeting conversion goals. Very low conversion rates indicate that your customers are facing friction in completing the customer journey.</p>
+</aside>
+<p class="image-container"><img alt="Dashboard" src="img/c26cd9ed1a9392f0.png"></p>
+<ol type="1">
 <li>While having the Dashboard in <strong>Edit</strong> mode, click on the previously created tile and click on the <strong>clone</strong> button, then click on the <strong>configure tile</strong> button <img alt="Dashboard" src="img/d199a73f869a95e.gif"></li>
-<li>Enter the following query: <code>SQL<br>select datetime(starttime, "E HH:mm", "10m"), count(*) as "Conversions" from usersession where useraction.matchingConversionGoals="Credit card validated" group by datetime(starttime,"E HH:mm","10m")<br></code></li>
+<li>Enter the following query:</li>
 </ol>
-</li>
+<pre><code language="language-SQL" class="language-SQL">   select datetime(starttime, &#34;E HH:mm&#34;, &#34;10m&#34;), count(*) as &#34;Conversions&#34; from usersession where useraction.matchingConversionGoals=&#34;Credit card validated&#34; group by datetime(starttime,&#34;E HH:mm&#34;,&#34;10m&#34;)
+</code></pre>
+<ol type="1">
 <li>Click on the <strong>run query</strong> button</li>
 <li>Select <strong>Line chart</strong></li>
-<li>Rename this to <pre><code>Conversions over time
+<li>Rename this to  <pre><code>Conversions over time
 </code></pre>
 </li>
 <li>Click on the <strong>save changes to dashboard</strong> button</li>
@@ -251,25 +299,33 @@ PositivePurpose - Conversions over time help to track the trend in meeting conve
 <p class="image-container"><img alt="Dashboard" src="img/1618374a6166593c.png"></p>
 <ol type="1">
 <li>Clone the tile from above and click on <strong>configure tile</strong></li>
-<li>Modify the query: <pre><code language="language-SQL" class="language-SQL">select sum (doubleProperties.booking) as Revenue from usersession
+<li>Modify the query:</li>
+</ol>
+<pre><code language="language-SQL" class="language-SQL">   select sum (doubleProperties.booking) as Revenue from usersession
 </code></pre>
 <ol type="1">
 <li>Click on the <strong>run query</strong> button</li>
 <li>It will automatically select a <strong>Single value</strong></li>
-<li>Rename this to <br><code>Booking revenue<br></code></li>
-<li>Click on the <strong>save changes to dashboard</strong> button <img alt="Dashboard" src="img/d2574f1ce3d20463.png"> <h2 is-upgraded>Abandoned cart totals</h2>
-Positive</li>
-</ol>
-Purpose - Often, the &#34;basket value&#34; of a virtual &#34;shopping cart&#34; are potentially the amount that your visitors to your site will transact. However, for whatever reason, like a payment failure or an invalid promo code, will cause your visitors to abandon the entire transaction or change the items in the &#34;shopping cart&#34;. Tracking this value and also the list of users affected will give you an indication if your visitors are dropping out before &#34;checkout&#34; or &#34;purchase&#34; and arrest the problem before it impacts the business. <img alt="Dashboard" src="img/d65a5ef5688b19bc.png"> <ol type="1">
-<li>Clone the tile from above and click on <strong>configure tile</strong></li>
-<li>Modify the query: <code>SQL<br>SELECT sum (doubleProperties.tripcost) as "Revenue Lost" from usersession where useraction.matchingConversionGoals IS NULL AND doubleProperties.tripcost > 0<br></code></li>
-</ol>
-</li>
-<li>Click on the <strong>run query</strong> button</li>
-<li>It will automatically select <strong>Single value</strong></li>
-<li>Rename this to <pre><code>Abandoned cart value
+<li>Rename this to  <pre><code>Booking revenue
 </code></pre>
 </li>
+<li>Click on the <strong>save changes to dashboard</strong> button</li>
+</ol>
+<p class="image-container"><img alt="Dashboard" src="img/d2574f1ce3d20463.png"></p>
+<h2 is-upgraded>Abandoned cart totals</h2>
+<aside class="special"><p>Purpose - Often, the &#34;basket value&#34; of a virtual &#34;shopping cart&#34; are potentially the amount that your visitors to your site will transact. However, for whatever reason, like a payment failure or an invalid promo code, will cause your visitors to abandon the entire transaction or change the items in the &#34;shopping cart&#34;. Tracking this value and also the list of users affected will give you an indication if your visitors are dropping out before &#34;checkout&#34; or &#34;purchase&#34; and arrest the problem before it impacts the business.</p>
+</aside>
+<p class="image-container"><img alt="Dashboard" src="img/d65a5ef5688b19bc.png"></p>
+<ol type="1">
+<li>Clone the tile from above and click on <strong>configure tile</strong></li>
+<li>Modify the query:</li>
+</ol>
+<pre><code language="language-SQL" class="language-SQL">   SELECT sum (doubleProperties.tripcost) as &#34;Revenue Lost&#34; from usersession where useraction.matchingConversionGoals IS NULL AND doubleProperties.tripcost &gt; 0
+</code></pre>
+<ol type="1">
+<li>Click on the <strong>run query</strong> button</li>
+<li>It will automatically select <strong>Single value</strong></li>
+<li>Rename this <code>Abandoned cart value</code></li>
 <li>Click on the <strong>save changes to dashboard</strong> button</li>
 </ol>
 <p class="image-container"><img alt="Dashboard" src="img/e5da3a790619a258.png"></p>
@@ -277,29 +333,46 @@ Purpose - Often, the &#34;basket value&#34; of a virtual &#34;shopping cart&#34;
 <p class="image-container"><img alt="Dashboard" src="img/6a4a7860a781aff0.png"></p>
 <ol type="1">
 <li>Clone the tile from above and click on <strong>configure tile</strong></li>
-<li>Modify the query: <pre><code language="language-SQL" class="language-SQL">SELECT userid from usersession where useraction.name = &#34;click on book journey  (xhr: /easytravel/rest/validate-creditcard)&#34; and doubleProperties.booking is null
+<li>Modify the query:</li>
+</ol>
+<pre><code language="language-SQL" class="language-SQL">   SELECT userid from usersession where useraction.name = &#34;click on book journey  (xhr: /easytravel/rest/validate-creditcard)&#34; and doubleProperties.booking is null
 </code></pre>
 <ol type="1">
 <li>Click on the <strong>run query</strong> button</li>
 <li>Select <strong>Table only</strong></li>
-<li>Rename this to <br><code>Users affected by abandoned cart<br></code></li>
-<li>Click on the <strong>save changes to dashboard</strong> button <img alt="Dashboard" src="img/71e126409409fb45.png"> Task-3 - Action on the data Let&#39;s challange DAVIS :tm:! Access the EasyTravel Angular actual booking application</li>
+<li>Rename this to <code>Users affected by abandoned cart</code></li>
+<li>Click on the <strong>save changes to dashboard</strong> button</li>
 </ol>
+<p class="image-container"><img alt="Dashboard" src="img/71e126409409fb45.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Task-3 - Action on the data" duration="0">
+        <p>Let&#39;s challange DAVIS™️!</p>
+<p>Access the EasyTravel Angular actual booking application</p>
 <ul>
 <li>Open Dashboards</li>
 <li>Click on the <strong>...Welcome to the Dynatrace Workshop 🔬</strong> Dashboard</li>
-<li>Click on the <strong>Booking Portals:✈ EasyTravel Angular</strong> link <img alt="Action on the data" src="img/7d34569ee98d21fa.gif"></li>
+<li>Click on the <strong>Booking Portals:✈ EasyTravel Angular</strong> link</li>
+</ul>
+<p class="image-container"><img alt="Action on the data" src="img/7d34569ee98d21fa.gif"></p>
+<ul>
 <li>Book a travel package</li>
 <li>You can use userid <strong>alex</strong> or <strong>peter</strong></li>
 <li>What do you notice?</li>
 <li>Try clicking on <strong>(3) Payment</strong> multiple times</li>
-<li>Before you close your browser, do the following:</li>
-<li>Open your browser&#39;s <strong>developer tools</strong><img alt="Action on the data" src="img/c8eeb6927ae39ad3.png"></li>
-<li>Go to <strong>Console tab</strong></li>
-<li>Type the following: <code>console<br>dtrum.endSession()<br></code><img alt="Action on the data" src="img/a8aaaff39e9fdbd8.png"></li>
+<li>Before you close your browser, do the following:  <ul>
+<li>Open your browser&#39;s <strong>developer tools</strong></li>
 </ul>
 </li>
-</ol>
+</ul>
+<p class="image-container"><img alt="Action on the data" src="img/c8eeb6927ae39ad3.png"></p>
+<ul>
+<li>Go to <strong>Console tab</strong></li>
+<li>Type the following: <code>dtrum.endSession()</code></li>
+</ul>
+<p class="image-container"><img alt="Action on the data" src="img/a8aaaff39e9fdbd8.png"></p>
 <h2 is-upgraded>Scenario #1</h2>
 <p><strong>Conversions</strong> are dropping! And so is <strong>Revenue</strong>!</p>
 <p class="image-container"><img alt="Scenario1" src="img/2ff2c0b30f7ea3b8.png"></p>
@@ -307,8 +380,7 @@ Purpose - Often, the &#34;basket value&#34; of a virtual &#34;shopping cart&#34;
 <p>Even if it is not an IT issue, something must be causing vistors to be <strong>frustrated</strong> and not completing the transactions.</p>
 <aside class="warning"><p>Use Dynatrace to determine what is causing friction to your visitors.</p>
 </aside>
-<p><strong><em>Hint:</em></strong></p>
-<p>Some dashboards in the <strong>Sample BizDevOps Dashboard</strong> might give a clue to what is happening.</p>
+<p><strong><em>Hint:</em></strong> Some dashboards in the <strong>Sample BizDevOps Dashboard</strong> might give a clue to what is happening.</p>
 <p class="image-container"><img alt="Scenario1" src="img/7a502a0a4c6d2f36.png"></p>
 <p>Also, investigating some user sessions together with <strong>Session Replay</strong> might uncover some facts about your application that cannot be detected by logs or investigating application code.</p>
 <h2 is-upgraded>Scenario #2</h2>
@@ -316,13 +388,13 @@ Purpose - Often, the &#34;basket value&#34; of a virtual &#34;shopping cart&#34;
 <p class="image-container"><img alt="Scenario2" src="img/34e1997edff48409.png"></p>
 <aside class="warning"><p>Will you be faster than DAVIS in determining the root cause?</p>
 </aside>
-<p><strong><em>Hint:</em></strong></p>
-<p>The dashboard that you created just now would have contain all the information for you to understand what is causing errors.</p>
-<p>You can start with the <strong>Problem</strong> tile and drill down from there.</p>
-<p>You can also investigate each individual user session.</p>
-</google-codelab-step>
-<google-codelab-step label="Feedback" duration="0">
-<p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
+<p><strong><em>Hint:</em></strong> The dashboard that you created just now would have contain all the information for you to understand what is causing errors. You can start with the <strong>Problem</strong> tile and drill down from there. You can also investigate each individual user session.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Feedback" duration="0">
+        <p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
 <google-codelab-survey survey-id="biz-ops-1">
 <h4>How was your overall experience with this lab?</h4>
 <paper-radio-group>
@@ -354,12 +426,17 @@ Purpose - Often, the &#34;basket value&#34; of a virtual &#34;shopping cart&#34;
 </google-codelab-survey>
 <aside class="special"><p>💡 For other ideas and suggestions, please <a href="mailto:APAC-SE-Central@dynatrace.com?subject=BizOps - Ideas and Suggestions" target="_blank"><strong>reach out via email</strong></a>.</p>
 </aside>
-</google-codelab-step>
-</google-codelab>
-<script src="../../elements/codelab-elements/native-shim.js"></script>
-<script src="../../elements/codelab-elements/custom-elements.min.js"></script>
-<script src="../../elements/codelab-elements/prettify.js"></script>
-<script src="../../elements/codelab-elements/codelab-elements.js"></script>
-<script src="//support.google.com/inapp/api.js"></script>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="../../elements/codelab-elements/native-shim.js"></script>
+  <script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+  <script src="../../elements/codelab-elements/prettify.js"></script>
+  <script src="../../elements/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
 </body>
 </html>
