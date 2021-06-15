@@ -1,6 +1,6 @@
 summary: Log Monitor 2.0
-id: log-mon-2
-categories: log-mon-2
+id: logmon-2
+categories: logmon-2
 tags: bootcamp
 status: Published 
 authors: Brandon Neo

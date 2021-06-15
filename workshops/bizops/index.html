@@ -36,10 +36,10 @@
 </li>
 </ul>
 <h2 class="checklist" is-upgraded>What You&#39;ll Learn</h2>
-<ul class="checklist">
+<ul>
 <li>Understand Real User Monitoring setup with easyTravel App</li>
 <li>Learn Digital Business Analytics</li>
-<li>Learn Dynatrace Capabilities such as <ul class="checklist">
+<li>Learn Dynatrace Capabilities such as <ul>
 <li>User Action Naming</li>
 <li>Key User Actions</li>
 <li>User Session Properties</li>
@@ -99,7 +99,7 @@
 </ul>
 <p>Custom Chart Tiles:</p>
 <ul>
-<li>Action count (by Apdex category)<ul>
+<li>Action count (by Apdex category) <ul>
 <li>Category: Applications</li>
 <li>Metric: Action count (by Apdex category) (Sum)</li>
 <li>View Results as: Timeseries</li>
@@ -110,7 +110,7 @@
 </li>
 </ul>
 </li>
-<li>Action count (by Apdex category)<ul>
+<li>Action count (by Apdex category) <ul>
 <li>Category: Applications</li>
 <li>Metric: Action count (by Apdex category) (Sum)</li>
 <li>View Results as: Pie</li>
@@ -121,7 +121,7 @@
 </li>
 </ul>
 </li>
-<li>Real User Errors<ul>
+<li>Real User Errors <ul>
 <li>Category: Applications</li>
 <li>Metric: Count of errors (by user type, error type and error origin) (Sum)</li>
 <li>View Results as: Pie</li>
@@ -133,7 +133,7 @@
 </li>
 </ul>
 </li>
-<li>Active Sessions<ul>
+<li>Active Sessions <ul>
 <li>Category: Applications</li>
 <li>Metric: Active Sessions</li>
 <li>View Results as: Top List</li>
@@ -145,7 +145,7 @@
 </li>
 </ul>
 </li>
-<li>Session Duration<ul>
+<li>Session Duration <ul>
 <li>Category: Applications</li>
 <li>Metric: Session Duration</li>
 <li>View Results as: Top List <ul>
@@ -216,7 +216,7 @@
 <ul>
 <li>Expression Type: <strong>CSS Selector<br></strong></li>
 <li>Data Type: <strong>Double</strong></li>
-<li>CSS Selector: <strong>The CSS Selector you copied above</strong> e.g <code>#iceform\:j_idt77-11-1 &gt; span</code></li>
+<li>CSS Selector: <strong>The CSS Selector you copied above</strong> e.g <code>#iceform\:j_idt77-11-1 > span</code></li>
 <li>Display Name: <strong>Booking Total</strong></li>
 <li>Key: <strong>bookingtotal</strong></li>
 <li>Display Name: <strong>Booking Total</strong></li>
@@ -266,42 +266,42 @@
 <p>USQL Tiles:</p>
 <h2 is-upgraded>Single Value Tiles</h2>
 <ul>
-<li>Satisfied Users<ul>
+<li>Satisfied Users <ul>
 <li>USQL Category: <strong>select count(usersessionid) as &#34;Satisfied Users&#34; from usersession where userExperienceScore=&#34;SATISFIED&#34;</strong></li>
 <li>Compare with previous timeframe: <strong>true</strong></li>
 <li>Dynamic time-frame shift: <strong>true</strong></li>
 <li>Visualization types: <strong>Single value</strong></li>
 </ul>
 </li>
-<li>Tolerated Users<ul>
+<li>Tolerated Users <ul>
 <li>USQL Category: <strong>select count(usersessionid) as &#34;Tolerated Users&#34; from usersession where userExperienceScore=&#34;TOLERATED&#34;</strong></li>
 <li>Compare with previous timeframe: <strong>true</strong></li>
 <li>Dynamic time-frame shift: <strong>true</strong></li>
 <li>Visualization types: <strong>Single value</strong></li>
 </ul>
 </li>
-<li>Frustrated Users<ul>
+<li>Frustrated Users <ul>
 <li>USQL Category: <strong>select count(usersessionid) as &#34;Frustrated Users&#34; from usersession where userExperienceScore=&#34;FRUSTRATED&#34;</strong></li>
 <li>Compare with previous timeframe: <strong>true</strong></li>
 <li>Dynamic time-frame shift: <strong>true</strong></li>
 <li>Visualization types: <strong>Single value</strong></li>
 </ul>
 </li>
-<li>Duration 90th Percentile<ul>
+<li>Duration 90th Percentile <ul>
 <li>USQL Category: <strong>select PERCENTILE(duration,90) as &#34;Duration 90th Percentile&#34; from useraction</strong></li>
 <li>Compare with previous timeframe: <strong>true</strong></li>
 <li>Dynamic time-frame shift: <strong>true</strong></li>
 <li>Visualization types: <strong>Single value</strong></li>
 </ul>
 </li>
-<li>Visually Complete 90th Percentile<ul>
+<li>Visually Complete 90th Percentile <ul>
 <li>USQL Category: <strong>select PERCENTILE(visuallyCompleteTime,90) as &#34;Visually Complete 90th Percentile&#34; from useraction</strong></li>
 <li>Compare with previous timeframe: <strong>true</strong></li>
 <li>Dynamic time-frame shift: <strong>true</strong></li>
 <li>Visualization types: <strong>Single value</strong></li>
 </ul>
 </li>
-<li>Speed Index 90th Percentile<ul>
+<li>Speed Index 90th Percentile <ul>
 <li>USQL Category: <strong>select PERCENTILE(speedIndex,90) as &#34;Speed Index 90th Percentile&#34; from useraction</strong></li>
 <li>Compare with previous timeframe: <strong>true</strong></li>
 <li>Dynamic time-frame shift: <strong>true</strong></li>
@@ -311,19 +311,19 @@
 </ul>
 <h2 is-upgraded>Charts</h2>
 <ul>
-<li>Duration<ul>
+<li>Duration <ul>
 <li>USQL Category: <strong>select DISTINCT DATETIME(starttime, &#34;HH:mm&#34;, &#34;10m&#34;) as &#34;Time&#34;, avg(useraction.duration) as &#34;Duration&#34; from useraction</strong></li>
 <li>Compare with previous timeframe: <strong>false</strong></li>
 <li>Visualization types: <strong>Bar chart</strong></li>
 </ul>
 </li>
-<li>Visually Complete<ul>
+<li>Visually Complete <ul>
 <li>USQL Category: <strong>select DISTINCT DATETIME(starttime, &#34;HH:mm&#34;, &#34;10m&#34;) as &#34;Time&#34;, AVG(visuallyCompleteTime) as &#34;Visually Complete&#34; from useraction</strong></li>
 <li>Compare with previous timeframe: <strong>false</strong></li>
 <li>Visualization types: <strong>Bar chart</strong></li>
 </ul>
 </li>
-<li>Speed Index<ul>
+<li>Speed Index <ul>
 <li>USQL Category: <strong>select DISTINCT DATETIME(starttime, &#34;HH:mm&#34;, &#34;10m&#34;) as &#34;Time&#34;, AVG(speedIndex) as &#34;Speed Index&#34; from useraction</strong></li>
 <li>Compare with previous timeframe: <strong>false</strong></li>
 <li>Visualization types: <strong>Bar chart</strong></li>
@@ -409,7 +409,7 @@
 <li>Select <strong>Try it Out</strong></li>
 <li>The following json will create a dashboard. Copy the JSON into the Example Value field</li>
 </ol>
-<pre><code>{
+<pre><code language="language-json" class="language-json">{
   &#34;dashboardMetadata&#34;: {
     &#34;name&#34;: &#34;Executive Overview Dashboard&#34;,
     &#34;shared&#34;: false,
@@ -903,7 +903,7 @@
 <li>Select <strong>Execute</strong>, to create your browser test.</li>
 </ol>
 <p>The server response should be response code <strong>201</strong> with a response body like the following:</p>
-<pre><code>{
+<pre><code language="language-json" class="language-json">{
   &#34;id&#34;: &#34;8f721746-8e2b-40fe-bd3b-61c1657d59df&#34;,
   &#34;name&#34;: &#34;Executive Overview Dashboard&#34;
 }
@@ -969,7 +969,7 @@
 </ol>
 <p class="image-container"><img alt="Tryout Timeseries API" src="img/66941c7195fe8fdb.PNG"></p>
 <ol type="1">
-<li>Enter the following parameters:<ul>
+<li>Enter the following parameters: <ul>
 <li>metricSelector: <strong>builtin:apps.web.apdex.userType:filter(eq(User type,Real users)):names</strong></li>
 <li>resolution: <strong>5m</strong></li>
 <li>from: <strong>now-4h</strong></li>
@@ -989,7 +989,7 @@
 <li>Select: <strong>Data &gt; From Web</strong></li>
 <li>Select <strong>Advanced</strong></li>
 <li>Enter your <strong>Request URL</strong> in <strong>URL Parts</strong></li>
-<li>Add the following <strong>HTTP request header parameter</strong> then click <strong>OK</strong> and <strong>Connect</strong>Accept text/csv; header=present; charset=utf-8 Authorization Api-Token </li>
+<li>Add the following <strong>HTTP request header parameter</strong> then click <strong>OK</strong> and <strong>Connect</strong> Accept text/csv; header=present; charset=utf-8 Authorization Api-Token </li>
 </ol>
 <p class="image-container"><img alt="API Result" src="img/6119e7fdcca13ef9.PNG"></p>
 <ol type="1">

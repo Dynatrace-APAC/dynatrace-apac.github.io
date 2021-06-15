@@ -1,0 +1,25 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "../../elements",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-06-15T20:07:03+10:00",
+  "id": "biz-ops",
+  "duration": 0,
+  "title": "BizOps with Dynatrace",
+  "summary": "BizOps with Dynatrace",
+  "source": "bizops2021.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "biz-ops"
+  ],
+  "tags": [
+    "biz-ops"
+  ],
+  "feedback": "mailto:APAC-SE-Central@dynatrace.com",
+  "ga": "UA-175467274-1",
+  "url": "biz-ops"
+}
