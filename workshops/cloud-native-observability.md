@@ -197,12 +197,13 @@ To faciliate the session, you can run the monaco code with the below:
 
 `./deploy-monaco.sh` 
 
-After setting it up, configure the **DT_TENANT** and **DT_API_TOKEN** variables.
+After setting it up, configure the **DT_TENANT** and **DT_API_TOKEN** and **DT_DASHBOARD_OWNER** variables.
 These can be found within the lab registration email.
 
 ```bash
 export DT_TENANT= https://mou612.managed-sprint.dynalabs.io/e/<ENV>
 export DT_API_TOKEN=dt0c01.IH6********************************************
+export DT_DASHBOARD_OWNER=<your email address>
 ```
 
 After setting up, run the following command to configure Dynatrace:
@@ -343,13 +344,44 @@ Next, we will be creating a custom metric for successful requests count to Catal
 ## Dashboards
 Duration: 15
 
-Refer to the left navigation bar and go to Dashboards. Dynatrace has now prebuilt dashboard templates such as **Application performance report** and **Real User Monitoring** dashboards.
+Refer to the left navigation bar and go to **Dashboards**. Dynatrace has now prebuilt dashboard templates such as **Kubernetes Dashboards** and **Real User Monitoring** dashboards.
 
-![Dashboards](assets/adv-observe/dashboards-list.png)
+As part of the Monaco rollout, you should also see dashboards created such as 
+**Environment Overview Dashboard** and **Prometheus - Environment Overview Dashboard**
+
+![Session-properties](assets/cloud-observe/dashboard-list.png)
 
 Drill down into each of these dashboards and explore the various dashboard widgets for App Owners and Business Users.
 
-![Session-properties](assets/adv-observe/app-performance-report.png)
+![Session-properties](assets/cloud-observe/k8s-dashboard.png)
+
+### Adding a SLO widget
+
+We will now add a new SLO widget based on the new SLO we've created.
+
+On the left nav, go to **Service level objectives**
+
+You can use the **pin icon** to pin the dashboard to **Environment Overview Dashboard** 
+
+![Session-properties](assets/cloud-observe/pin-SLO.png)
+
+<!-- ------------------------ -->
+## Releases
+Duration: 15
+
+Dynatrace also offers a built-in release-analysis solution that helps you determine the versions or stages of your deployed applications.
+
+On the left nav, go to **Releases**
+
+![Session-properties](assets/cloud-observe/releases.png)
+
+This provides an overview of **deployed component versions** and their **release events**.
+
+Drilling into each component, you will find additional metadata from the respective component.
+This provides context to the monitored component as well as information regarding it's **lifecycle** and **tracking issues**.
+
+![Session-properties](assets/cloud-observe/releases-detail.png)
+
 
 <!-- ------------------------ -->
 
