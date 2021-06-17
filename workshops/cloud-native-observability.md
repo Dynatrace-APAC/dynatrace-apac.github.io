@@ -29,9 +29,9 @@ The following steps are used for this lab:
 ### What You’ll Learn
 - Deploy OneAgent to a Kubernetes / Microservice Environment
 - GitOps / Monitoring as code approach to push application config
-- DEM / Session Properties / Request Attributes
 - Learn Metric Ingestion for automated baselines across all entities
 - Site Reliability Engineering - Service Level Objectives
+- Site Reliability Engineering - Releases
 
 <!-- ------------------------ -->
 ## Deploy OneAgent Operator
@@ -348,10 +348,10 @@ We hope you enjoyed this lab and found it useful. We would love your feedback!
 
 <form>
   <name>What did you benefit most from this lab?</name>
-  <input value="Automated Kubernetes Observability" />
-  <input value="Learning Monitoring as Code" />
-  <input value="Learning Metric Ingestion" />
-  <input value="Understanding Real User Monitoring setup" />
+  <input value="Deploy OneAgent to a Kubernetes" />
+  <input value="GitOps / Monitoring as code approach" />
+  <input value="Service Level Objectives" />
+  <input value="Releases" />
 </form>
 
 <form>
