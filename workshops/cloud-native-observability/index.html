@@ -60,7 +60,7 @@
         <p>In this exercise, we will deploy the OneAgent to a Linux instance running Kubernetes(Microk8s) and let the OneAgent discover what is running in that instance.</p>
 <h2 is-upgraded>Using Terminal via Web Browser</h2>
 <p>To faciliate the labs, we will access the Linux instance <strong>via terminal through a web browser</strong>.</p>
-<p>Use the <strong>URL</strong> was provided in your email to access the SSH terminal. Make sure the URL looks like <code>Public IP Address/wetty</code></p>
+<p>Use the <strong>URL</strong> was provided in your email to access the SSH terminal. Make sure the URL looks like <code>Public IP Address:8080/wetty</code></p>
 <p>Use the <strong>login name</strong> and <strong>password</strong> as provided in your email.</p>
 <p class="image-container"><img alt="Deploy" src="img/e609666e1c136993.png"></p>
 <h2 is-upgraded>Download the OneAgent</h2>
@@ -204,46 +204,6 @@ export DT_DASHBOARD_OWNER=&lt;your email address&gt;
 <li>Process naming rules</li>
 <li>Management zones</li>
 </ul>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Request Attributes" duration="10">
-        <p>In this exercise, we will cover the setting up Request Attributes. These leveraged for deep visibility into all the details of your users&#39; interactions with your application.</p>
-<h2 is-upgraded>Creating Request Attributes</h2>
-<p>Go to <strong>Settings &gt; Server-side service monitoring &gt; Request Attributes</strong></p>
-<p>Click on <strong>Define a new request attribute</strong> and use the following:</p>
-<ul>
-<li>Request attribute name - <strong>Size</strong></li>
-<li>Click on <strong>Add new data source</strong></li>
-<li>Request attribute source - <strong>Web request URL query parameter</strong></li>
-<li>Specify where attribute is captured - <strong>Capture from both client and server side and store where found</strong></li>
-<li>Parameter name - <strong>size</strong></li>
-<li>Click on <strong>Save</strong></li>
-</ul>
-<p class="image-container"><img alt="Request-attribute" src="img/9442c8e1d9a1c982.png"></p>
-<p>Go to <strong>Settings &gt; Server-side service monitoring &gt; Request Attributes</strong></p>
-<p>Click on <strong>Define a new request attribute</strong> and use the following:</p>
-<ul>
-<li>Request attribute name - <strong>Tags</strong></li>
-<li>Click on <strong>Add new data source</strong></li>
-<li>Process group tags -<strong>[Kubernetes]app:front-end.stable</strong></li>
-<li>Request attribute source - <strong>Web request URL query parameter</strong></li>
-<li>Specify where attribute is captured - <strong>Capture from both client and server side and store where found</strong></li>
-<li>Parameter name - <strong>tags</strong></li>
-<li><strong>Expand out</strong> Further restrict or process captured parameters</li>
-<li>2. Spilt into multiple attribute values using <code>%2C</code></li>
-<li>Click on <strong>Save</strong></li>
-</ul>
-<p class="image-container"><img alt="Request-attribute" src="img/ef86c2694be265d3.png"></p>
-<aside class="warning"><p>Note that examples of <strong>Request Attributes</strong> have also been created for you and we are doing these for the purposes of running through the request attribute creation process.</p>
-</aside>
-<h2 is-upgraded>Validate of  Request Attribute</h2>
-<p>Go to <strong>Transactions and services</strong> and filter on <strong>Request Attributes: Tags</strong></p>
-<p>Drill into the filtered service - <strong>front-end.production</strong></p>
-<p>Click on <strong>View dynamic requests</strong> and validate the key-value pairs of Tags under the <strong>Request Attribute</strong> tab.</p>
-<p>Repeat the steps above for <strong>Request Attributes: Size</strong></p>
-<p class="image-container"><img alt="Request-attribute" src="img/38780e4eac54dfb6.png"></p>
 
 
       </google-codelab-step>

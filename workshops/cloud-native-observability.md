@@ -43,7 +43,7 @@ In this exercise, we will deploy the OneAgent to a Linux instance running Kubern
 
 To faciliate the labs, we will access the Linux instance **via terminal through a web browser**.
 
-Use the **URL** was provided in your email to access the SSH terminal. Make sure the URL looks like `Public IP Address/wetty`
+Use the **URL** was provided in your email to access the SSH terminal. Make sure the URL looks like `Public IP Address:8080/wetty`
 
 Use the **login name** and **password** as provided in your email.
 
@@ -219,58 +219,6 @@ Below are the configurations done:
 * Dashboards
 * Process naming rules
 * Management zones
-
-<!-- ------------------------ -->
-## Request Attributes
-Duration: 10
-
-In this exercise, we will cover the setting up Request Attributes. These leveraged for deep visibility into all the details of your users’ interactions with your application. 
-
-### Creating Request Attributes
-
-Go to **Settings > Server-side service monitoring > Request Attributes**
-
-Click on **Define a new request attribute** and use the following:
-
-* Request attribute name - **Size**
-* Click on **Add new data source**
-* Request attribute source - **Web request URL query parameter**
-* Specify where attribute is captured - **Capture from both client and server side and store where found**
-* Parameter name - **size**
-* Click on **Save**
-
-![Request-attribute](assets/cloud-observe/request-attribute-1.png)
-
-Go to **Settings > Server-side service monitoring > Request Attributes**
-
-Click on **Define a new request attribute** and use the following:
-
-* Request attribute name - **Tags**
-* Click on **Add new data source**
-* Process group tags -**[Kubernetes]app:front-end.stable**
-* Request attribute source - **Web request URL query parameter**
-* Specify where attribute is captured - **Capture from both client and server side and store where found**
-* Parameter name - **tags**
-* **Expand out** Further restrict or process captured parameters
-* 2. Spilt into multiple attribute values using `%2C`
-* Click on **Save**
-
-![Request-attribute](assets/cloud-observe/request-attribute-2.png)
-
-NEGATIVE
-: Note that examples of **Request Attributes** have also been created for you and we are doing these for the purposes of running through the request attribute creation process.
-
-### Validate of  Request Attribute
-
-Go to **Transactions and services** and filter on **Request Attributes: Tags**
-
-Drill into the filtered service - **front-end.production**
-
-Click on **View dynamic requests** and validate the key-value pairs of Tags under the **Request Attribute** tab. 
-
-Repeat the steps above for **Request Attributes: Size**
-
-![Request-attribute](assets/cloud-observe/request-attribute-3.png)
 
 <!-- ------------------------ -->
 ## SLO
