@@ -262,7 +262,7 @@ Next, we will be creating a custom metric for successful requests count to Catal
 * On the left nav, go to `Transactions and services`
 * Click on `front-end` service
 * Click on **View dynamic requests**
-* Scroll down and with **/catelogue** request, select the **graph icon (Create analysis view)**
+* Scroll down and with **/catalogue** request, select the **graph icon (Create analysis view)**
 * Under **Metric** downdrop, select **Successful request count**
 * Click on **Create metric**
 * Under Metric name, use `cataloguesuccesscount`
@@ -319,7 +319,7 @@ You can use the **pin icon** to pin the dashboard to **Environment Overview Dash
 
 ![Session-properties](assets/cloud-observe/pin-SLO.png)
 
-### Adding a new custom metric widget
+### Adding a custom metric widget
 
 Within the **Environment Overview Dashboard** dashboard, click on **Edit**
 
@@ -333,13 +333,26 @@ Drag the **Custom Chart** widget onto the dashboard and click on **configure cus
 
 ![Session-properties](assets/cloud-observe/custom-chart.png)
 
-### Adding a new custom metric widget
+### Adding a custom metric widget with CODE
 
 Back at the dashboard view, click on the newly created widget to **clone another custom chart**
 
 On the new widget, click on **configure custom chart**
 
+Back in the Data Explorer view, following the below:
 
+* click on **Code** tab
+* You can view the **code equivalent** of the earlier custom metric widget
+* Amend the text to `((calc:service.cataloguesuccesscount) / (calc:service.cataloguecount)) * (100)`
+- This will get a **percentage of the successful catalogue counts**
+* On the left **Settings**, change the **threshold** on the below:
+ - 🟩 - `15`
+ - 🟨 - `10`
+ - 🟥 - `5`
+* Click on **Run query**
+* Click on **Pin to dashboard** and select **Environment Overview Dashboard**
+
+![Session-properties](assets/cloud-observe/code-custom-chart.png)
 
 <!-- ------------------------ -->
 ## Releases
