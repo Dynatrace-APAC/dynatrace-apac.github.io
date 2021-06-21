@@ -21,14 +21,18 @@
 <ul>
 <li>Dynatrace SaaS/Managed Account. Get your free SaaS trial <a href="https://www.dynatrace.com/trial/" target="_blank">here</a>.</li>
 <li>AWS account, with the ability to create an EC2 instance from a public AMI. Signup to a free trial <a href="https://aws.amazon.com/free/" target="_blank">here</a>.</li>
-<li>Chrome Browser</li>
-<li>SSH client such as <a href="https://mobaxterm.mobatek.net/" target="_blank">mobaxterm</a>.</li>
+<li>Modern web browser <ul>
+<li>Chromimum based, e.g. Google Chrome, MS Edge</li>
+<li>Firefox</li>
+</ul>
+</li>
 </ul>
 <h2 is-upgraded>Lab Setup</h2>
 <p>The following steps are used for this lab:</p>
 <ul>
 <li>Sample Application <ul>
-<li>Sample App is based on <a href="https://github.com/dynatrace-sockshop" target="_blank">Sockshop</a></li>
+<li><a href="https://github.com/dynatrace-sockshop" target="_blank">Sockshop</a></li>
+<li>Docker based app - Wordsmith</li>
 </ul>
 </li>
 </ul>
@@ -37,11 +41,11 @@
 <li>Deploy OneAgent to a Kubernetes / Microservice Environment</li>
 <li>How to use the new Log Viewer</li>
 <li>Ingest Logs via FluentD</li>
-<li>Cloud Forwarder ingestion with AWS Log Forwarder</li>
 <li>Using Log Metrics</li>
+<li>Cloud Forwarder ingestion with AWS Log Forwarder</li>
 </ul>
 </google-codelab-step>
-<google-codelab-step label="Basic Setup" duration="15">
+<google-codelab-step label="Deploy OneAgent to start monitoring" duration="10">
 <p>In this exercise, we will deploy the OneAgent to a Linux instance running Kubernetes(Microk8s) and let the OneAgent discover what is running in that instance.</p>
 <h2 is-upgraded>Using Terminal via Web Browser</h2>
 <p>To faciliate the labs, we will access the Linux instance <strong>via terminal through a web browser</strong>.</p>
@@ -134,10 +138,9 @@ $
 </aside>
 <h2 is-upgraded>Restart Sockshop application</h2>
 <p>To restart the sample app Sockshop execute the following command:</p>
-<pre><code language="language-bash" class="language-bash">kubectl delete po --all -n dev
-kubectl delete po --all -n production
+<pre><code language="language-bash" class="language-bash">kubectl delete po --all -n production
 </code></pre>
-<h2 is-upgraded>Explore the Sockshop Application</h2>
+<h2 is-upgraded>Accessing the production Sockshop Application</h2>
 <p>Within Dynatrace, follow the steps below to get Sockshop URL:</p>
 <ul>
 <li>Click on the <strong>hostname</strong> in the OneAgent deployment screen.</li>
@@ -145,77 +148,184 @@ kubectl delete po --all -n production
 <li><strong>Select and Copy</strong> Public Host name from the metadata</li>
 <li><strong>Amend the Public Host name</strong> to match the following format: <ul>
 <li>Sockshop Production <code>http://production.front-end.PUBLIC-IP.nip.io/</code></li>
-<li>Sockshop Dev <code>http://dev.front-end.PUBLIC-IP.nip.io</code></li>
 </ul>
 </li>
 </ul>
-<h2 is-upgraded>Installing Traditional Docker app</h2>
-<p>To install the traditional docker app, execute the commands below:</p>
-<pre><code language="language-bash" class="language-bash">git clone https://github.com/Nodnarboen/k8s-wordsmith-demo
-sudo apt install docker-compose
-docker-compose up
+</google-codelab-step>
+<google-codelab-step label="Deploy Wordsmith app" duration="5">
+<p>To run the Wordsmith app, based on traditional Docker containers, first clone the github repo</p>
+<pre><code language="language-bash" class="language-bash">$ git clone https://github.com/Nodnarboen/k8s-wordsmith-demo
+$ cd k8s-wordsmith-demo
 </code></pre>
+<aside class="warning"><p>Note: The next command will lock up the screen. Please open a new tab with a new WeTTy terminal before running the command. Alternatively, you can start the Wordsmith via the 2nd method.</p>
+</aside>
+<h2 is-upgraded>Method 1 - Duplicate terminals</h2>
+<p>This will take about 5 mins to build the image and run the docker image. Ensure that you have 2 terminal tabs and in one of the terminals, execute the following:</p>
+<pre><code language="language-bash" class="language-bash">$ cd k8s-wordsmith-demo
+$ docker-compose up
+...
+...
+db_1     | PostgreSQL init process complete; ready for start up.
+db_1     |
+db_1     | 2021-06-19 06:15:18.953 UTC [1] LOG:  listening on IPv4 address &#34;0.0.0.0&#34;, port 5432
+db_1     | 2021-06-19 06:15:18.953 UTC [1] LOG:  listening on IPv6 address &#34;::&#34;, port 5432
+db_1     | 2021-06-19 06:15:18.957 UTC [1] LOG:  listening on Unix socket &#34;/var/run/postgresql/.s.PGSQL.5432&#34;
+db_1     | 2021-06-19 06:15:18.987 UTC [48] LOG:  database system was shut down at 2021-06-19 06:15:18 UTC
+db_1     | 2021-06-19 06:15:19.007 UTC [1] LOG:  database system is ready to accept connections
+
+</code></pre>
+<p><strong><em>Note:</em></strong> You will not be able to access the command prompt.</p>
+<h2 is-upgraded>Method 2 - Using nohup</h2>
+<p>This will take about 5 mins to build the image and run the docker image. In one of the terminals, execute the following:</p>
+<pre><code language="language-bash" class="language-bash">$ cd k8s-wordsmith-demo
+$ nohup docker-compose up &amp;
+[1] 9667
+$ nohup: ignoring input and appending output to &#39;nohup.out&#39;
+$
+</code></pre>
+<p>The <code>nohup</code> command will return the command prompt to you. If you <code>tail</code> the <code>nohup.out</code> file, you will be able to see the progress of the output.</p>
+<h2 is-upgraded>Accessing the application</h2>
+<p>Open up another browser tab, access the following URL: <code>http://Public IP Address:8082</code>. You should see a page similar to the image below</p>
+<p class="image-container"><img alt="Deploy" src="img/6f5ad505ba15fe62.png"></p>
+</google-codelab-step>
+<google-codelab-step label="Log Monitoring with Dynatrace!" duration="10">
+<h2 is-upgraded>Initial configuration - selection of log sources</h2>
+<aside class="special"><p>Although the OneAgent <strong>automatically detects all logs</strong>, based on the conditions listed in the <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/log-monitoring/log-monitoring-v2/log-content-auto-discovery-v2/" target="_blank">documentation</a>, <strong><em>ingestion</em></strong> of <strong>all</strong> log data is <strong>not enabled by default</strong>.</p>
+</aside>
+<ol type="1">
+<li>Go to <strong>Settings</strong> &gt; <strong>Log Monitoring</strong> &gt; <strong>Log sources and storage</strong><img alt="Deploy" src="img/868168836748c493.png"></li>
+<li>Choose either the <strong>Host prespective</strong> or <strong>Process groups perspective</strong>. For this exercise, please select the EC2 instance under <strong>Host prespective</strong>.</li>
+</ol>
+<aside class="special"><p>Most admins understand servers/cloud instances better than process groups. If not sure, or in a POC situation, it is advisable to enable the <strong>entire host</strong> as a log source, as this will help in discovering the &#34;unknowns&#34;. As the POC progresses, you <strong><em>should</em></strong> revisit the log sources to fine tune which logs need to be monitored and which can be ignored.</p>
+</aside>
 <h2 is-upgraded>Explore the New Log Viewer</h2>
-<p>Notice how Docker Logs are automatically generated for Log Mon 2.0</p>
+<p>Notice how Docker Logs are automatically generated for Log Mononitoring 2.0</p>
 <p>You can use the <strong>facets</strong> or top filter bar to look for <strong>log_analytics_special_file_header</strong> to identify the automatic detected Docker Logs.</p>
 <p>The log events are fed in with context to the entities that they are related to them.</p>
+<p>As you refresh the browser page for the WordSmith app, go back to the console and observe the output. Notice how the output reflects what is seen in the Dynatrace Log viewer.</p>
+<pre><code>web_1    | 2021/06/19 06:18:06 /noun 1 available ips: [172.18.0.3]
+web_1    | 2021/06/19 06:18:06 /noun I choose 172.18.0.3
+web_1    | 2021/06/19 06:18:06 /noun Calling http://172.18.0.3:8080/noun
+web_1    | 2021/06/19 06:18:06 /adjective 1 available ips: [172.18.0.3]
+web_1    | 2021/06/19 06:18:06 /adjective I choose 172.18.0.3
+web_1    | 2021/06/19 06:18:06 /adjective Calling http://172.18.0.3:8080/adjective
+web_1    | 2021/06/19 06:18:06 /verb 1 available ips: [172.18.0.3]
+web_1    | 2021/06/19 06:18:06 /verb I choose 172.18.0.3
+web_1    | 2021/06/19 06:18:06 /verb Calling http://172.18.0.3:8080/verb
+words_1  | {&#34;word&#34;:&#34;the røtten&#34;}
+words_1  | {&#34;word&#34;:&#34;fjørd&#34;}
+words_1  | {&#34;word&#34;:&#34;will ship&#34;}
+web_1    | 2021/06/19 06:18:06 /adjective 1 available ips: [172.18.0.3]
+web_1    | 2021/06/19 06:18:06 /adjective I choose 172.18.0.3
+web_1    | 2021/06/19 06:18:06 /adjective Calling http://172.18.0.3:8080/adjective
+words_1  | {&#34;word&#34;:&#34;the røtten&#34;}
+web_1    | 2021/06/19 06:18:06 /noun 1 available ips: [172.18.0.3]
+web_1    | 2021/06/19 06:18:06 /noun I choose 172.18.0.3
+web_1    | 2021/06/19 06:18:06 /noun Calling http://172.18.0.3:8080/noun
+words_1  | {&#34;word&#34;:&#34;fjørd&#34;}
+
+</code></pre>
 </google-codelab-step>
 <google-codelab-step label="FluentD Ingestion" duration="15">
 <p>Dynatrace&#39;s new Log monitoring allows easy to use generic log ingestion. Using plugins such as FluentD, we can easily ingest log streams into Dynatrace.</p>
 <p>We will be using the FluentD plugin found <a href="https://github.com/dynatrace-oss/fluent-plugin-dynatrace" target="_blank">here</a></p>
-<h2 is-upgraded>Setting up Activegate</h2>
-<p>With generic ingestion, you&#39;ll need to rely on an Activgate. Follow the documentation instructions <a href="https://www.dynatrace.com/support/help/setup-and-configuration/dynatrace-activegate/installation/linux/linux-install-an-environment-activegate/" target="_blank">here</a></p>
+<h2 is-upgraded>Setting up Active Gate</h2>
+<p>With generic ingestion, you&#39;ll need to rely on an Activgate. Follow the documentation <a href="(https://www.dynatrace.com/support/help/setup-and-configuration/dynatrace-activegate/installation/linux/linux-install-an-environment-activegate/" target="_blank">instructions</a>) to install the Active Gate software in your current EC2 instance.</p>
 <p>Because we are installing Activegate on an AWS instance, we&#39;ll need to change it to use a public facing domain name.</p>
+<aside class="warning"><p>Remember to use <strong>sudo</strong> to execute the commands in this section!</p>
+</aside>
 <ul>
 <li>Go to <code>/var/lib/dynatrace/gateway/config/</code></li>
-<li>Edit <code>custom.properties</code></li>
-<li>Use the following:</li>
+<li>Edit the custom.properties file: <code>sudo nano custom.properties</code></li>
+<li>Add the following at the end of the file:</li>
 </ul>
 <pre><code language="language-bash" class="language-bash">[connectivity]
 dnsEntryPoint = https://PUBLIC_DOMAIN_NAME:9999
 </code></pre>
 <ul>
-<li>You can find the Public domain name as a metadata within <strong>Host View</strong></li>
-<li>Save and start Activegate with <code>systemctl restart dynatracegateway</code></li>
+<li>You can find the Public domain name <ul>
+<li>As a metadata within <strong>Host View</strong>, or</li>
+<li>Copy the URL from your WeTTy tab/WordSmith tab</li>
+</ul>
+</li>
+<li>Save and restart Active Gate with the command <code>sudo systemctl restart dynatracegateway</code></li>
 </ul>
 <h2 is-upgraded>Setting up FluentD</h2>
 <p>We will easy FluentD with following their <a href="https://docs.fluentd.org/installation/install-by-deb" target="_blank">official instructions</a></p>
-<p>Run the following command:</p>
-<p><code>curl -L https://toolbelt.treasuredata.com/sh/install-ubuntu-bionic-td-agent3.sh | sh</code></p>
-<p>Next refering to the Dynatrace&#39;s Opensource Repo, we can install the plugin with</p>
-<p><code>td-agent-gem install fluent-plugin-dynatrace</code></p>
+<ol type="1">
+<li>Run the following command:</li>
+</ol>
+<pre><code language="language-bash" class="language-bash">   $ curl -L https://toolbelt.treasuredata.com/sh/install-ubuntu-bionic-td-agent3.sh | sh
+</code></pre>
+<ol type="1">
+<li>Next refering to the <a href="https://github.com/dynatrace-oss/fluent-plugin-dynatrace" target="_blank">Dynatrace&#39;s Opensource Repo</a>, we can install the plugin with the command</li>
+</ol>
+<pre><code language="language-bash" class="language-bash">   $ sudo td-agent-gem install fluent-plugin-dynatrace
+</code></pre>
 <h2 is-upgraded>Ingesting logs via commandline</h2>
-<p>With the plugin and you simplify integrations to Dynatrace. But you might still need to transform logs into a format readable by Dynatrace. We will use our <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/log-monitoring/log-monitoring-v2/log-data-ingest/" target="_blank">documentation page</a> to apply necessary transformation.</p>
-<p>Edit the config file with this command</p>
-<p><code>nano /etc/td-agent/td-agent.conf</code></p>
-<p>Use the code below to output of <code>system.loadavg</code> to Dynatrace. We will also run that at an <strong>interval of 1m</strong> while adding adding additional parameters such as <strong>dt.process.commandline</strong> and <strong>status</strong></p>
-<pre><code language="language-yaml" class="language-yaml">&lt;source&gt;
-  @type exec
-  tag system.loadavg
-  command printf &#39;d system.loadavg &#39; | cat - /proc/loadavg | cut -d &#39; &#39; -f 1,2,3,4,5
-  run_interval 1m
-  &lt;parse&gt;
-    @type tsv
-    keys status,dt.process.commandline,avg1,avg5,avg15
-    delimiter &#34; &#34;
-  &lt;/parse&gt;
-&lt;/source&gt;
-
-&lt;match **&gt;
-   @type dynatrace
-   active_gate_url https://&lt;PUBLIC_DOMAIN_NAME&gt;:9999/e/&lt;TENANT_ID&gt;/api/v2/logs/ingest
-   api_token &lt;TOKEN_NAME&gt;
-   ssl_verify_none    true
-   &lt;buffer&gt;
-    flush_thread_count 1
-    chunk_limit_size 1048576
-   &lt;/buffer&gt;
-&lt;/match&gt;
+<p>With the plugin and you simplify integrations to Dynatrace. But you might still need to transform logs into a format readable by Dynatrace.</p>
+<p>We will use our <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/log-monitoring/log-monitoring-v2/log-data-ingest/" target="_blank">documentation page</a> to apply necessary transformation.</p>
+<ol type="1">
+<li>Create or reuse a <strong>Dynatarace API token</strong>.</li>
+<li>Ensure that the token has the necessary scope. If you are not sure, you can refer to the online <a href="https://www.dynatrace.com/support/help/shortlink/api-log-monitoring-v2-post-ingest#authentication" target="_blank">documentation</a>.</li>
+<li>Edit the config file with this command</li>
+</ol>
+<pre><code language="language-bash" class="language-bash">   $ sudo nano /etc/td-agent/td-agent.conf
+</code></pre>
+<ol type="1">
+<li>Use the code below to output of <code>system.loadavg</code> to Dynatrace. We will also run that at an <strong>interval of 1m</strong> while adding adding additional parameters such as <strong>dt.process.commandline</strong> and <strong>status</strong></li>
+</ol>
+<pre><code language="language-yaml" class="language-yaml">   &lt;source&gt;
+     @type exec
+     tag system.loadavg
+     command printf &#39;d system.loadavg &#39; | cat - /proc/loadavg | cut -d &#39; &#39; -f 1,2,3,4,5
+     run_interval 1m
+     &lt;parse&gt;
+       @type tsv
+       keys status,dt.process.commandline,avg1,avg5,avg15
+       delimiter &#34; &#34;
+     &lt;/parse&gt;
+   &lt;/source&gt;
+   
+   &lt;match **&gt;
+      @type dynatrace
+      active_gate_url https://&lt;PUBLIC_DOMAIN_NAME&gt;:9999/e/&lt;TENANT_ID&gt;/api/v2/logs/ingest
+      api_token &lt;TOKEN_NAME&gt;
+      ssl_verify_none    true
+      &lt;buffer&gt;
+       flush_thread_count 1
+       chunk_limit_size 1048576
+      &lt;/buffer&gt;
+   &lt;/match&gt;
 </code></pre>
 <aside class="warning"><p>Make sure you amend the values within <strong>Placeholder</strong> values such as <strong>PUBLIC_DOMAIN_NAME</strong> and <strong>TENANT_ID</strong> and <strong>TOKEN_NAME</strong></p>
 </aside>
-<p>Within the Log Viewer, you can also <strong>toggle on Advanced query</strong> and use this query <code>status="info" AND loglevel="DEBUG"</code> to filter down the songs</p>
+<ol type="1">
+<li>Within the Log Viewer, you can also <strong>toggle on Advanced query</strong> and use this query <code>status="info" AND loglevel="DEBUG"</code> to filter down the data stream</li>
+</ol>
 <p class="image-container"><img alt="Deploy" src="img/610792a19817a9d0.png"></p>
+</google-codelab-step>
+<google-codelab-step label="Log Metrics" duration="0">
+<p>Create a log metric based on the data ingested by Dynatrace thus far.</p>
+<aside class="special"><p>Goal: Configure Log Monitoring to search through <strong>all the ingested logs</strong> for the keyword <strong>server</strong> and count the number of times this word appears.</p>
+</aside>
+<ol type="1">
+<li>From the log viewer, apply the <strong>content</strong> filter and enter the text <code>server</code> (press the <strong>enter</strong> key)</li>
+<li>Notice how the left hand selection boxes change according to the what you can further filter for. We will be using these as <strong>dimensions</strong> for the metric</li>
+<li>Click <strong>Create metric</strong></li>
+<li>Specify a key: <code>log.myword</code></li>
+<li>Click on <strong>Add dimension</strong> and select the following: <ul>
+<li>dt.process.name</li>
+<li>status</li>
+<li>log.source</li>
+</ul>
+</li>
+<li>Save your changes</li>
+<li>Click on <strong>Metrics</strong> on the left navigation panel</li>
+<li>Search for <code>Text:log</code> to locate the log metric</li>
+<li>Click on <strong>create chart</strong></li>
+<li>You can spilt Log metrics with various dimensions attached to it</li>
+</ol>
 </google-codelab-step>
 <google-codelab-step label="AWS Log Forwarder" duration="0">
 <p>Next, we will try to ingest logs from Cloud vendors such as AWS. We will use the AWS Log Forwarder from <a href="https://github.com/dynatrace-oss/dynatrace-aws-log-forwarder" target="_blank">here</a></p>
@@ -223,37 +333,55 @@ dnsEntryPoint = https://PUBLIC_DOMAIN_NAME:9999
 <h2 is-upgraded>Deploying the Infrastructure</h2>
 <p>We will need to setup the AWS Infrastructure setup via running a Cloudformation script.</p>
 <p>Follow the steps to do that</p>
-<ul>
+<ol type="1">
 <li>Login to the <a href="https://console.aws.amazon.com/console/home?nc2=h_ct&src=header-signin" target="_blank">AWS Portal</a></li>
-</ul>
+</ol>
 <p class="image-container"><img alt="Deploy" src="img/2bcc689eab75d344.png"></p>
 <aside class="warning"><p>For those using Dynatrace Employee credentials, you can login via the <a href="https://internal.devops-services.dynatrace.com/upm/" target="_blank">ACE User Permission Manager</a> on VPN</p>
 </aside>
-<ul>
-<li>Choose the right role with the appropriate permissions and also the right region</li>
-<li>Click on the AWS CloudShell icon on top right area, next to the alarm icon</li>
+<ol type="1">
+<li>Choose the right <strong>role</strong> with the appropriate permissions</li>
+<li>In the AWS portal, Search bar at the top, search for <strong>CloudWatch</strong> and click on Logs &gt; <strong>Log groups</strong></li>
+</ol>
+<p class="image-container"><img alt="Deploy" src="img/266c28550e1d41f0.png"></p>
+<ol type="1">
+<li>Take note of the <strong>region</strong> (e.g. Virgina, Sydney etc.) that you are in. Not all regions can access the CloudWatch Log groups. Choose a region that you are able to see the Log groups page.</li>
+<li>Ensure that you are in the the right region and click on the AWS CloudShell icon on top right area, next to the alarm icon</li>
 <li>Amend the <strong>Placeholder</strong> values such as <strong>PUBLIC_DOMAIN_NAME</strong> and <strong>TENANT_ID</strong> and <strong>TOKEN_NAME</strong> in the script below</li>
-</ul>
-<pre><code language="language-bash" class="language-bash">TARGET_URL=https://&lt;PUBLIC_DOMAIN_NAME&gt;:9999/e/&lt;TENANT_ID&gt;
-TARGET_API_TOKEN=&lt;TOKEN_NAME&gt;
-REQUIRE_VALID_CERTIFICATE=false
+</ol>
+<pre><code language="language-bash" class="language-bash">   TARGET_URL=https://&lt;PUBLIC_DOMAIN_NAME&gt;:9999/e/&lt;TENANT_ID&gt;
+   TARGET_API_TOKEN=&lt;TOKEN_NAME&gt;
+   REQUIRE_VALID_CERTIFICATE=false
 </code></pre>
-<ul>
-<li><strong>Copy and paste</strong> the command in AWS CloudShell</li>
-<li>Run this script to download the script from the repo and to deploy the infrastructure:</li>
-</ul>
-<pre><code language="language-bash" class="language-bash">wget -O dynatrace-aws-log-forwarder.zip https://github.com/dynatrace-oss/dynatrace-aws-log-forwarder/releases/latest/download/dynatrace-aws-log-forwarder.zip &amp;&amp; unzip -qo dynatrace-aws-log-forwarder.zip &amp;&amp; ./dynatrace-aws-logs.sh deploy --target-url $TARGET_URL --target-api-token $TARGET_API_TOKEN --require-valid-certificate $REQUIRE_VALID_CERTIFICATE
+<ol type="1">
+<li>Run this script to download the script from the repo and to deploy the infrastructure. <strong>Copy and paste</strong> the command below AWS CloudShell:</li>
+</ol>
+<pre><code language="language-bash" class="language-bash">   wget -O dynatrace-aws-log-forwarder.zip https://github.com/dynatrace-oss/dynatrace-aws-log-forwarder/releases/latest/download/dynatrace-aws-log-forwarder.zip &amp;&amp; unzip -qo dynatrace-aws-log-forwarder.zip &amp;&amp; ./dynatrace-aws-logs.sh deploy --target-url $TARGET_URL --target-api-token $TARGET_API_TOKEN --require-valid-certificate $REQUIRE_VALID_CERTIFICATE
 </code></pre>
 <p class="image-container"><img alt="Deploy" src="img/cf2ae8154c1e15c4.png"></p>
 <h2 is-upgraded>Creating Demo Lamda Function</h2>
 <p>For the purpose of sending Cloudwatch, we will create a new Lambda function.</p>
-<ul>
+<ol type="1">
 <li>Duplicate the tab and search for Lambda within the AWS Search Bar and go to <strong>Lambda</strong></li>
 <li>Click on <strong>Create Function</strong></li>
 <li>Use default option of <strong>Author from scratch</strong></li>
 <li>Give a Function name <code>Demo</code></li>
 <li>Click on <strong>Create Function</strong></li>
-<li>We can also instrument this function with Dynatrace as a <a href="https://www.dynatrace.com/support/help/technology-support/cloud-platforms/amazon-web-services/integrations/deploy-oneagent-as-lambda-extension/" target="_blank">Lambda extension</a></li>
+</ol>
+<h2 is-upgraded>Subscribing to the Cloudwatch Logs</h2>
+<ol type="1">
+<li>Back within the AWS Cloudshell, run the following command: <code>./dynatrace-aws-logs.sh discover-log-groups > LOG_GROUPS_FILE</code></li>
+<li>You see the discovered log groups with <code>more LOG_GROUPS_FILE</code></li>
+<li>To subscribe, use the command below: <code>./dynatrace-aws-logs.sh subscribe --log-groups-from-file LOG_GROUPS_FILE</code></li>
+</ol>
+<h2 is-upgraded>View Cloudwatch logs in Dynatrace</h2>
+<p>Back in Dynatrace, go to the new Log Viewer to see the new Log events from Cloudwatch logs</p>
+<p class="image-container"><img alt="Deploy" src="img/703ccebc058693fc.png"></p>
+<h2 is-upgraded>[Optional] Instrumenting the Lambda function with Dynatrace</h2>
+<p>We can also instrument this function with Dynatrace as a <a href="https://www.dynatrace.com/support/help/technology-support/cloud-platforms/amazon-web-services/integrations/deploy-oneagent-as-lambda-extension/" target="_blank">Lambda extension</a></p>
+<aside class="special"><p>Benefit of instrumentation: &#34;Full stack&#34; observability, i.e. metrics + traces + logs!! :-)</p>
+</aside>
+<ol type="1">
 <li>Using <strong>Configure with JSON file</strong>, configure the function wtih Dynatrace instrumentation <ul>
 <li>Add environment variable to the function</li>
 <li>Add <code>dtconfig.json</code> with code snippet to the root folder</li>
@@ -261,19 +389,8 @@ REQUIRE_VALID_CERTIFICATE=false
 </ul>
 </li>
 <li>Once configured, click on <strong>Deploy</strong>* and <strong>Test</strong></li>
-</ul>
-<h2 is-upgraded>Subscribing to the Cloudwatch Logs</h2>
-<ul>
-<li>Back within the AWS Cloudshell, run the following command: <code>./dynatrace-aws-logs.sh discover-log-groups > LOG_GROUPS_FILE</code></li>
-<li>You see the discovered log groups with <code>more LOG_GROUPS_FILE</code></li>
-<li>To subscribe, use the command below: <code>./dynatrace-aws-logs.sh subscribe --log-groups-from-file LOG_GROUPS_FILE</code></li>
-</ul>
-<h2 is-upgraded>View Cloudwatch logs in Dynatrace</h2>
-<p>Back in Dynatrace, go to the new Log Viewer to see the new Log events from Cloudwatch logs</p>
-<p class="image-container"><img alt="Deploy" src="img/703ccebc058693fc.png"></p>
-</google-codelab-step>
-<google-codelab-step label="Log Metrics" duration="0">
-<p>Create a log metric based on the Cloudwatch metrics</p>
+</ol>
+<h2 is-upgraded>[Optional] Creating metrics based on the AWS ingested data</h2>
 <ul>
 <li>Filter on your aws.account.id</li>
 <li>Apply a filter for content with <code>REPORT RequestId:</code></li>
