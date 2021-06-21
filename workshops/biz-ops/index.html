@@ -17,7 +17,7 @@
 <google-codelab codelab-gaid="UA-175467274-1" id="biz-ops" title="BizOps with Dynatrace" environment="web" feedback-link="mailto:APAC-SE-Central@dynatrace.com">
 <google-codelab-step label="Overview" duration="0">
 <p>This Repo contains the labs we are going to work though as part of the BizOps – Bridging the Gap to the Business Hands On Workshop.</p>
-<p>For the purposes of the Hands-On, we will automate and make the steps seamless for the participants</p>
+<p>For the purposes of the Hands-On, we will automate and make the steps seamless for the participants.</p>
 <h2 is-upgraded>Prerequisites</h2>
 <ul>
 <li>Access to a Dynatrace tenant/environment</li>
@@ -27,7 +27,9 @@
 <ul>
 <li>Sample Application <ul>
 <li>Sample App is based on <a href="https://confluence.dynatrace.com/community/display/DL/easyTravel" target="_blank">Easy Travel</a></li>
-<li>There are 2 interfaces running for Easy Travel - Classic UI and Angular UI</li>
+<li>There are 2 interfaces running for Easy Travel</li>
+<li>Classic UI <img alt="Intro" src="img/8df3a5d16958f2dc.png"></li>
+<li>Angular UI <img alt="Intro" src="img/4f30100251cd9994.png"></li>
 </ul>
 </li>
 </ul>
@@ -50,7 +52,7 @@
 </li>
 </ul>
 </google-codelab-step>
-<google-codelab-step label="Task-1 - Bring business context to IT metrics" duration="0">
+<google-codelab-step label="Activity-1 - Bring business context to IT metrics" duration="0">
 <p>The goal of this exercise is to enhance the basic Real User Monitoring configuration in Dynatrace to bring business context to IT metrics. As such, we will not be going through the basic configuration of Dynatrace and have pre-setup the environment with the configuration:</p>
 <ul>
 <li>Organizing applications</li>
@@ -59,7 +61,7 @@
 </ul>
 <p>If you are interested in the basic setup, the following lab reference will be a good guide <a href="https://dynatrace-apac.github.io/workshops/dem/index.html?index=..%2F..index#0" target="_blank">Digital Experience Management with Dynatrace</a></p>
 </google-codelab-step>
-<google-codelab-step label="Task-1a - Identify individual users for session analysis" duration="0">
+<google-codelab-step label="Activity-1a - Identify individual users for session analysis" duration="0">
 <p>One of the key features of Dynatrace Real User Monitoring is the ability to uniquely identify individual users across different browsers, devices, and user sessions.</p>
 <p>By default, Dynatrace assigns a unique, random ID to each new user. You can however assign more meaningful custom user tags that are comprised of, for example, user names or email addresses.</p>
 <p>In this exercise, we will use the approach of tagging users based on <strong><em>page source</em></strong>. This approach to user tagging works by capturing available data in your application&#39;s page source.</p>
@@ -70,43 +72,35 @@
 <li>Select the <strong>EasyTravel Angular</strong> application</li>
 <li>Click the Browse button <strong>(...)</strong> and select <strong>Edit</strong></li>
 <li>Under the <strong>Capturing</strong> header, look for <strong>User tag</strong><img alt="User Tag" src="img/fe59d78ee590d3d9.gif"></li>
-<li>Click <strong>Add user tag rule </strong><ul>
+<li>Click <strong>Add user tag rule</strong> <ul>
 <li>Source type: <strong>CSS Selector</strong></li>
-<li>CSS Selector field: <br><code>a.greeting<br></code></li>
+<li>CSS Selector field: <pre><code>a.greeting
+</code></pre>
+</li>
 <li>Toggle Apply cleanup rule <strong>on</strong></li>
-<li>In the Regex box, copy the following <br><code>Hi, (.*+)<br></code></li>
+<li>In the Regex box, copy the following <pre><code>Hi, (.*+)
+</code></pre>
+</li>
 </ul>
 </li>
 <li>Click on <strong>Add user tag rule</strong> button</li>
 <li>Remember to click on <strong>Save changes</strong> button</li>
 </ol>
 <p>Once the configuration is complete, this is how it should look like: <img alt="User Tag" src="img/269a9a1eb55db9a8.png"></p>
-<p> How to get CSS selectors? </p>
-<p>### How to get CSS selectors?</p>
-<ol type="1">
-<li>Assess the EasyTravel Angular homepage</li>
-<li>Click on the <strong>signin</strong></li>
-<li>Login with username: <strong>alex</strong> and password: <strong>alex</strong> and click <strong>Next</strong></li>
-<li>Right click on the name <strong>Alex Elliot</strong> and click <strong>inspect</strong></li>
-<li>Right click on the td element and select <strong>Copy</strong> &gt; <strong>Copy Selector</strong></li>
-<li>list <ul>
-<li>With some</li>
-<li>Sub bullets </li>
-</ul>
-</li>
-</ol>
 <aside class="special"><p>Reference document: <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/how-to-use-real-user-monitoring/cross-application-user-session-analytics/identify-individual-users-for-session-analysis/" target="_blank">Identify Individual Users for Session Analysis</a></p>
 </aside>
 </google-codelab-step>
-<google-codelab-step label="Task-1b - Creating Conversion Rates" duration="0">
+<google-codelab-step label="Activity-1b - Creating Conversion Rates" duration="0">
 <p>Conversion goals are useful for understanding if users are meeting critical milestones in a user journey, for example, successful checkouts, newsletter signups, or demo signups</p>
 <p>In this exercise, we will create conversion goals for the Easy Travel Angular application.</p>
 <ol type="1">
-<li>In the same screen as the previous task, scroll down to <strong>Session Replay and behavior</strong> heading, and select <strong>Conversion Goals</strong><img alt="Conversion" src="img/cce099b144ee0181.gif"></li>
+<li>In the same screen as the previous activity, scroll down to <strong>Session Replay and behavior</strong> heading, and select <strong>Conversion Goals</strong><img alt="Conversion" src="img/cce099b144ee0181.gif"></li>
 <li>Click <strong>Add goal</strong> button and enter the following: <ul>
-<li>Name: <br><code>Credit card validated<br></code></li>
-<li>Type of goal: <strong>User Action<br></strong></li>
-<li>Rule applies to: <strong>XHR actions<br></strong></li>
+<li>Name: <pre><code>Credit card validated
+</code></pre>
+</li>
+<li>Type of goal: <strong>User Action</strong></li>
+<li>Rule applies to: <strong>XHR actions</strong></li>
 <li>Rule <ul>
 <li><strong>Page URL</strong></li>
 <li><strong>contains<br></strong><code>easytravel/rest/validate-creditcard<br></code></li>
@@ -116,11 +110,11 @@
 </ul>
 </li>
 </ol>
-<p> Validating conversion goal setting </p>
+<h2 is-upgraded>Validating conversion goal setting</h2>
 <p>Check results aginst the application: <strong>EasyTravel Angular</strong> &gt; <strong>User behavior</strong></p>
 <p class="image-container"><img alt="Conversion" src="img/bfea93ce17688d75.png"></p>
 </google-codelab-step>
-<google-codelab-step label="Task-1c - Session and User action Properties" duration="0">
+<google-codelab-step label="Activity-1c - Session and User action Properties" duration="0">
 <p>In this exercise, we will create session and user action properties to expose additional data to Dynatrace. This is useful for bringing additonal context regarding the users (e.g. campaign source, various items selected by users etc.) for analytics purposes.</p>
 <p>Dynatrace has pre-defined a list of popular software that uses tags to give context to the sessions. Some of them are</p>
 <ul>
@@ -133,7 +127,7 @@
 <p>For additional data sources that can be extracted from your application, use <strong>custom defined properties</strong> to define string, numeric, and date properties for your monitored user actions and user sessions.</p>
 <p>Property values are then captured as part of each of your users&#39; journeys. Property values can be leveraged for unrivaled visibility into all the details of your users&#39; interactions with your application.</p>
 <ol type="1">
-<li>In the same screen as the previous task, go to the <strong>Capturing</strong> heading, and select <strong>Session and action properties</strong><img alt="Session properties" src="img/8ac6f7c6c8b062f4.png"></li>
+<li>In the same screen as the previous activity, go to the <strong>Capturing</strong> heading, and select <strong>Session and action properties</strong><img alt="Session properties" src="img/8ac6f7c6c8b062f4.png"></li>
 <li>Click on the button <strong>Add properties</strong></li>
 </ol>
 <h2 is-upgraded>Property packs - Google Analytics/Adobe/UTM codes etc.</h2>
@@ -155,7 +149,9 @@
 <li>Select the <strong>Custom defined property</strong> tab</li>
 <li>Select the Expression type: <strong>Server side request attribute</strong></li>
 <li>Request attribute name: <strong>Revenue</strong></li>
-<li>Display name: <br><code>Booking<br></code></li>
+<li>Display name: <pre><code>Booking
+</code></pre>
+</li>
 <li>(auto fill) Key: <strong>booking</strong></li>
 <li>Storage type: <ul>
 <li>Store as <strong>session</strong> property</li>
@@ -169,8 +165,12 @@
 <ul>
 <li>Expression type: <strong>CSS Selector</strong></li>
 <li>Data type: <strong>Double</strong></li>
-<li>CSS Selector <br><code>#summary > div:nth-child(5) > p<br></code></li>
-<li>Display name: <br><code>Trip Cost<br></code></li>
+<li>CSS Selector <pre><code>#summary &gt; div:nth-child(5) &gt; p
+</code></pre>
+</li>
+<li>Display name: <pre><code>Trip Cost
+</code></pre>
+</li>
 <li>(auto fill) Key: <strong>tripcost</strong></li>
 <li>Storage type: <ul>
 <li>Store as <strong>session</strong> property</li>
@@ -183,7 +183,9 @@
 <ul>
 <li>Expression type: <strong>Server side request attribute</strong></li>
 <li>Request attribute name: <strong>Destination</strong></li>
-<li>Display name: <br><code>Destination<br></code></li>
+<li>Display name: <pre><code>Destination
+</code></pre>
+</li>
 <li>(auto fill) Key: <strong>destination</strong></li>
 <li>Storage type: <ul>
 <li>Store as <strong>session</strong> property</li>
@@ -198,11 +200,11 @@
 <aside class="special"><p>Reference documents - <a href="https://www.dynatrace.com/support/help/shortlink/user-session-properties" target="_blank">Session Properties Help page</a> and <a href="https://www.dynatrace.com/support/help/shortlink/request-attributes" target="_blank">Request Attribute Help page</a></p>
 </aside>
 </google-codelab-step>
-<google-codelab-step label="Task-1d - Session Replay" duration="0">
+<google-codelab-step label="Activity-1d - Session Replay" duration="0">
 <p>In this exercise, we will cover configuring Session Replay in Dynatrace.</p>
 <p>Follow the steps below to enable session Replay:</p>
 <ol type="1">
-<li>In the same screen as the previous task, scroll down to <strong>Session Replay and behavior</strong> heading, and select <strong>Session Replay</strong></li>
+<li>In the same screen as the previous activity, scroll down to <strong>Session Replay and behavior</strong> heading, and select <strong>Session Replay</strong></li>
 <li>Toggle ON <strong>Enable Session Replay</strong><img alt="SessionReplay" src="img/f87007a3ee540cd6.png"></li>
 <li>Scroll down to <strong>Recoding mask settings</strong> tab, select <strong>Mask user input</strong><img alt="SessionReplay" src="img/732463cea91adf1d.png"></li>
 <li>Click on the <strong>Playback masking settings</strong> tab, select <strong>Mask user input</strong><img alt="SessionReplay" src="img/79ce0dfef44f456a.png"></li>
@@ -211,12 +213,12 @@
 <aside class="special"><p>Reference document: <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/basic-concepts/session-replay/" target="_blank">Session Replay</a></p>
 </aside>
 </google-codelab-step>
-<google-codelab-step label="Task-2 - Visualize the data" duration="0">
+<google-codelab-step label="Activity-2 - Visualize the data" duration="0">
 <p>We are now ready to visualize the data collected in Dynatrace. In this exercise, you can see how <strong>conversion goals</strong>, <strong>session/action properties</strong> can provide much more insights and context to the IT metrics for analysis.</p>
 <p>This is the dashboard that we will aim to create.</p>
 <p class="image-container"><img alt="Dashboard" src="img/f6e6dd57f5ceebd6.png"></p>
 </google-codelab-step>
-<google-codelab-step label="Task-2a - Visualize Payment funnel" duration="0">
+<google-codelab-step label="Activity-2a - Visualize Payment funnel" duration="0">
 <aside class="special"><p>Goal: to visulize a user journey when user is making a payament on your site</p>
 </aside>
 <p class="image-container"><img alt="Dashboard" src="img/b1fd44466d8f6f7b.png"></p>
@@ -230,12 +232,14 @@
 </code></pre>
 <ol type="1">
 <li>Click on the <strong>run query</strong> button</li>
-<li>Rename this to <br><code>Payment funnel<br></code></li>
+<li>Rename this to <pre><code>Payment funnel
+</code></pre>
+</li>
 <li>Click on the <strong>save changes to dashboard</strong> button</li>
 </ol>
 <p class="image-container"><img alt="Dashboard" src="img/d963ebcd4491e070.png"></p>
 </google-codelab-step>
-<google-codelab-step label="Task-2b - Visualize Business KPI metrics" duration="0">
+<google-codelab-step label="Activity-2b - Visualize Business KPI metrics" duration="0">
 <aside class="special"><p>Goal - to visulize some critical metrics to indicate health of business</p>
 </aside>
 <h2 is-upgraded>Conversion over time</h2>
@@ -289,7 +293,9 @@
 <ol type="1">
 <li>Click on the <strong>run query</strong> button</li>
 <li>It will automatically select <strong>Single value</strong></li>
-<li>Rename this <code>Abandoned cart value</code></li>
+<li>Rename this to <pre><code>Abandoned cart value
+</code></pre>
+</li>
 <li>Click on the <strong>save changes to dashboard</strong> button</li>
 </ol>
 <p class="image-container"><img alt="Dashboard" src="img/e5da3a790619a258.png"></p>
@@ -304,12 +310,14 @@
 <ol type="1">
 <li>Click on the <strong>run query</strong> button</li>
 <li>Select <strong>Table only</strong></li>
-<li>Rename this to <code>Users affected by abandoned cart</code></li>
+<li>Rename this to <pre><code>Users affected by abandoned cart
+</code></pre>
+</li>
 <li>Click on the <strong>save changes to dashboard</strong> button</li>
 </ol>
 <p class="image-container"><img alt="Dashboard" src="img/71e126409409fb45.png"></p>
 </google-codelab-step>
-<google-codelab-step label="Task-3 - Action on the data" duration="0">
+<google-codelab-step label="Activity-3 - Action on the data" duration="0">
 <p>Let&#39;s challange DAVIS™️!</p>
 <p>Access the EasyTravel Angular actual booking application</p>
 <ul>
@@ -331,7 +339,7 @@
 <p class="image-container"><img alt="Action on the data" src="img/c8eeb6927ae39ad3.png"></p>
 <ul>
 <li>Go to <strong>Console tab</strong></li>
-<li>Type the following: <code>dtrum.endSession()</code></li>
+<li>Type the following: <br><code>dtrum.endSession()<br></code></li>
 </ul>
 <p class="image-container"><img alt="Action on the data" src="img/a8aaaff39e9fdbd8.png"></p>
 <h2 is-upgraded>Scenario #1</h2>
@@ -341,7 +349,8 @@
 <p>Even if it is not an IT issue, something must be causing vistors to be <strong>frustrated</strong> and not completing the transactions.</p>
 <aside class="warning"><p>Use Dynatrace to determine what is causing friction to your visitors.</p>
 </aside>
-<p><strong><em>Hint:</em></strong> Some dashboards in the <strong>Sample BizDevOps Dashboard</strong> might give a clue to what is happening.</p>
+<p><strong><em>Hint:</em></strong></p>
+<p>Some dashboards in the <strong>Sample BizDevOps Dashboard</strong> might give a clue to what is happening.</p>
 <p class="image-container"><img alt="Scenario1" src="img/7a502a0a4c6d2f36.png"></p>
 <p>Also, investigating some user sessions together with <strong>Session Replay</strong> might uncover some facts about your application that cannot be detected by logs or investigating application code.</p>
 <h2 is-upgraded>Scenario #2</h2>
@@ -349,7 +358,195 @@
 <p class="image-container"><img alt="Scenario2" src="img/34e1997edff48409.png"></p>
 <aside class="warning"><p>Will you be faster than DAVIS in determining the root cause?</p>
 </aside>
-<p><strong><em>Hint:</em></strong> The dashboard that you created just now would have contain all the information for you to understand what is causing errors. You can start with the <strong>Problem</strong> tile and drill down from there. You can also investigate each individual user session.</p>
+<p><strong><em>Hint:</em></strong></p>
+<p>The dashboard that you created just now would have contain all the information for you to understand what is causing errors.</p>
+<p>You can start with the <strong>Problems</strong> tile and drill down from there.</p>
+<p>You can also investigate each individual user session by using the tiles that list the user names who are facing difficulties.</p>
+</google-codelab-step>
+<google-codelab-step label="Activity-4 - Putting it together (BizDevOps use cases)" duration="0">
+<p>By applying Business Analytics in Dynatrace, we could easily achieve the following goals:</p>
+<p class="image-container"><img alt="BizDevOps Use case" src="img/32dcd2ba746647c8.png"></p>
+</google-codelab-step>
+<google-codelab-step label="Activity-4a - Create a &#34;friction-less&#34; user experience by reducing errors" duration="0">
+<p>The #1 cause of drop-outs/user frustration is errors!</p>
+<p>Errors can come from various sources:</p>
+<ul>
+<li>Server-side applications - business logic, coding errors etc.</li>
+<li>Client-side applications (browser/mobile app) - JavaScript errors, AJAX calls, pop-up screens etc.</li>
+<li>3rd-party - CDNs, external providers like Facebook, Twitter etc.</li>
+</ul>
+<p>More so, DDoS attacks and cross-site scripting attacks that cause <a href="https://www.dynatrace.com/news/blog/automatically-detect-potential-frontend-attacks-that-cause-content-security-policy-csp-violations/" target="_blank">Content Security Policy (CSP) violations</a> can make your website unresponsive or steal data and personally identifiable information of your users.</p>
+<p>Prioritizing what needs to be fixed is usually a challenging task as there are many types of errors and analyzing them one-by-one will not be efficient.</p>
+<p class="image-container"><img alt="BizDevOps Use case" src="img/cbbf75024e7b6eff.png"></p>
+<aside class="special"><p>Goal of this activity is to help you in: (1) Increasing Conversion &amp; Customer Engagement, (2) Optimization, and (3) Operational Quality &amp; Reporting</p>
+</aside>
+<p>This workflow will benefit the following personas</p>
+<ul>
+<li>UX designers/developers</li>
+<li>Customer Experience Lead</li>
+<li>Web programmers/developers</li>
+</ul>
+<p>A few entry points to start the analysis:</p>
+<ul>
+<li>Overview of all the errors in a particular application</li>
+<li>Errors happening in a specific user action</li>
+<li>Errors happening to a specific group of user sessions</li>
+<li>Dashboard tiles</li>
+<li>etc.</li>
+</ul>
+<p>We will use 2 workflows as examples.</p>
+<h2 is-upgraded>Workflow #1 - Navigate from an overview of a specific application</h2>
+<ol type="1">
+<li>Go to Applications -&gt; Easy Travel Angular -&gt; Errors</li>
+<li>Click <strong>Analyze errors</strong></li>
+<li>You will see a small handful of errors, select one which shows <strong>HTTP 500</strong> under the <strong>HTTP request</strong> tabs</li>
+<li>You can modify the <strong>dectection rules</strong></li>
+<li>One of the rules cover detection of <strong>CSP errors</strong><img alt="BizDevOps Use case" src="img/ad202d43d623abe6.png"></li>
+</ol>
+<h2 is-upgraded>Workflow #2 - Navigate from User Sessions</h2>
+<ol type="1">
+<li>Got to <strong>User Sessions</strong></li>
+<li>Use the filters above</li>
+<li>Use USQL for a more granular manipulation of the data setting</li>
+</ol>
+<h2 is-upgraded>Reference</h2>
+<ul>
+<li><a href="https://www.dynatrace.com/news/blog/automatically-detect-potential-frontend-attacks-that-cause-content-security-policy-csp-violations/" target="_blank">Automatically detect potential frontend attacks that cause Content Security Policy (CSP) violations</a></li>
+<li><a href="https://www.dynatrace.com/news/blog/extended-davis-awareness-of-http-and-custom-errors/" target="_blank">Ensure unrivaled customer experience with Davis® AI-powered HTTP and custom error analytics</a></li>
+<li><a href="https://www.dynatrace.com/news/blog/abandoned-shopping-cart-minimizing-errors-maximizing-revenue/" target="_blank">Abandoned Shopping Cart – Minimizing errors, maximizing revenue</a></li>
+<li><a href="https://www.dynatrace.com/news/blog/how-to-detect-impacting-3rd-party-api-calls-with-dynatrace-real-user-monitoring/" target="_blank">How to detect impacting 3rd Party API calls with Dynatrace Real User Monitoring (RUM)</a></li>
+<li><a href="https://www.dynatrace.com/news/blog/optimize-your-marketing-campaign-investment-by-leveraging-bizdevops/" target="_blank">Optimize your marketing campaign investment by leveraging BizDevOps</a></li>
+<li><a href="https://www.dynatrace.com/news/blog/improve-user-experience-with-more-visibility-into-cdn-related-http-errors-part-1/" target="_blank">Improve user experience with more visibility into CDN-related HTTP errors</a></li>
+</ul>
+</google-codelab-step>
+<google-codelab-step label="Activity-4b - Peformance optimization to improve usability" duration="0">
+<p>Google introduced their <a href="https://web.dev/vitals/" target="_blank">Core Web Vitals</a> initiative last year.</p>
+<p>Goal is to <strong>standarize</strong> on the measurements to provide &#34;quality signals that are essential to delivering a great user experience on the web&#34;.</p>
+<p>Google recently <a href="https://developers.google.com/search/blog/2020/11/timing-for-page-experience" target="_blank">included these metrics as &#34;user experience signals&#34; in their search result rankings</a>, demonstrating that these metrics aren&#39;t just nice to have but are a necessity.</p>
+<p>Dynatrace complements Google Core Web Vital measurements with insights across your application front and back ends. With zero configuration, you can leverage all three Core Web Vital metrics in Dynatrace and get details with just a few clicks.</p>
+<h2 is-upgraded>Page and Page groups analysis workflow</h2>
+<ol type="1">
+<li>Start with the Application overview page (go to Applications and select an application name).</li>
+<li>The Application overview page displays a <strong>Top 3 pages</strong> section, which includes tabs for Page groups and Pages. Choose the tab that displays the granularity you want. <ul>
+<li>Select a group Name to go directly to the Page group overview for the selected group.</li>
+<li>Select View all page groups to display Multidimensional analysis for all page groups.</li>
+</ul>
+</li>
+</ol>
+<aside class="special"><p><strong><em>Tip!</em></strong> Multidimensional analysis offers a particularly useful overview of all pages or page groups, with answers to questions such as: Which are the most viewed?, Which are the most visited?, Which are busy pages, where lots of actions happen?, Which contain the most errors?, Which are slow on their initial page load?, Which are slow on a route change?</p>
+</aside>
+<h2 is-upgraded>Analysis workflow</h2>
+<ol type="1">
+<li>Select <strong>View all page groups</strong><img alt="BizDevOps Use case" src="img/a2f5e04fdcb27e93.png"></li>
+<li>In the <strong>Performance metric</strong> drop down, select <strong>Largest contenful paint</strong>. Leave the rest as defaults.</li>
+<li>Click on <strong>home</strong><img alt="BizDevOps Use case" src="img/dcc38545eb64e88a.png"></li>
+<li>Scroll down to the <strong>Performance</strong> section and click <strong>Perform waterfall analysis</strong><img alt="BizDevOps Use case" src="img/848bd8134c7ee6f0.png"></li>
+<li>The waterfall analysis allows you to analyze the underlying actions of the route change for these pages. Here you can put detailed performance and error information into context.</li>
+</ol>
+<p class="image-container"><img alt="BizDevOps Use case" src="img/21423ff7df3f8a5b.png"></p>
+<h2 is-upgraded>Dashboarding workflow</h2>
+<ol type="1">
+<li>Use the breadcrumbs on the top of the screen to go back one screen, i.e. Applications &gt; EasyTravel Angular &gt; Page groups &gt; home <img alt="BizDevOps Use case" src="img/d36983575f901234.png"></li>
+<li>Scroll down to the <strong>Performance</strong> section and click <strong>Analyze performance</strong><img alt="BizDevOps Use case" src="img/faaf49348f1de1f2.png"></li>
+<li>Scroll down to the <strong>Detailed analysis...</strong> section</li>
+<li>Select <strong>UTM source</strong> from the &#34;Analyze by&#34; drop-down.</li>
+<li>Select either <strong>Largest contenful paint</strong> or <strong>First contentful paint</strong> from the &#34;Performance metric&#34; drop-down.</li>
+<li>Click <strong>Create metric</strong></li>
+</ol>
+<p class="image-container"><img alt="BizDevOps Use case" src="img/b72225f7434a38e7.png"></p>
+<ol type="1">
+<li>Enable <strong>Split by UTM source</strong>, and enter the value <strong>5</strong>. <img alt="BizDevOps Use case" src="img/1ee612f1fe8b37fb.png"></li>
+<li>Click <strong>Create metric</strong> to complete the metric creation.</li>
+<li>You can chart this on a dashboard now.</li>
+</ol>
+<h2 is-upgraded>Reference</h2>
+<ul>
+<li><a href="https://www.dynatrace.com/news/blog/core-web-vitals-practical-metrics-for-optimal-user-experiences/" target="_blank">Core Web Vitals: Practical metrics for optimal user experiences</a></li>
+<li><a href="https://www.dynatrace.com/news/blog/full-support-for-googles-core-web-vitals-improves-your-user-experience-and-search-rankings/" target="_blank">Full support for Google&#39;s Core Web Vitals improves your user experience and search rankings</a></li>
+<li><a href="https://www.dynatrace.com/news/blog/optimize-modern-web-applications-with-automatic-insights-into-pages-and-page-groups/" target="_blank">Optimize modern web applications with automatic insights into pages and page groups</a></li>
+<li><a href="https://www.dynatrace.com/news/blog/business-insights-for-core-web-vitals/" target="_blank">Business Insights extends support for optimizing Core Web Vitals</a></li>
+</ul>
+</google-codelab-step>
+<google-codelab-step label="How to get CSS selectors?" duration="0">
+<ol type="1">
+<li>Assess the EasyTravel Angular homepage <img alt="CSS" src="img/4f30100251cd9994.png"></li>
+<li>Select any travel package, click on <strong>book</strong> and login with username: <strong>alex</strong> and password: <strong>alex</strong> and click <strong>Sign in</strong><img alt="CSS" src="img/22881b227a0c4fa6.png"></li>
+<li>Right click on the name <strong>Alex Elliot</strong> and click <strong>inspect</strong></li>
+<li>Click on the <strong>...</strong> on the highlighted row and select <strong>Copy</strong> &gt; <strong>Copy Selector</strong><img alt="CSS" src="img/75c89477e049fa8b.gif"></li>
+<li>You can do this for any DOM element that has been defined in your web application.</li>
+</ol>
+</google-codelab-step>
+<google-codelab-step label="How to make use of request attributes?" duration="0">
+<p>As we have shown earlier, 2 request attributes <strong>revenue</strong> and <strong>destination</strong> have been pre-created for you.</p>
+<h2 is-upgraded>Defining new request attributes</h2>
+<p>You can create request attributes from various data sources and in this part of the hands on, we will expose the <strong>loyalty status</strong> of customers who sign up for travel packages.</p>
+<p class="image-container"><img alt="RequestAttribute" src="img/c96b727ba9a6635d.png"></p>
+<ol type="1">
+<li>Go to Settings &gt; Server side service monitoring &gt; Under <strong>Deep monitoring</strong>, Request Attributes</li>
+<li>Click on the button <strong>Define a new request attribute</strong><img alt="RequestAttribute" src="img/9d70ec70632f3974.png"></li>
+<li>Fill in the <strong>Request attribute name</strong> as <code>loyalty status</code></li>
+<li>Leave the data type as <strong>text</strong></li>
+<li>Click on the button <strong>Add new data source</strong><img alt="RequestAttribute" src="img/6e5fbfe2c39814eb.png"></li>
+<li>Configure 1st source: <ul>
+<li>Request attribute source: <strong>Web request URL query parameter</strong></li>
+<li>Parameter name: <strong>loyalty</strong></li>
+<li>Remember to click on <strong>Save</strong><img alt="RequestAttribute" src="img/eb10aca56e9f9c56.png"></li>
+</ul>
+</li>
+<li>Click on the button <strong>Add new data source</strong></li>
+<li>Configure 2nd source: <ul>
+<li>Request attribute source: <strong>Java method parameter</strong></li>
+<li>Click on the button <strong>Select method sources</strong><img alt="RequestAttribute" src="img/ed0b437a9080a963.png"></li>
+<li>Select the process group: <strong>com.dynatrace.easytravel.business.backend.jar easytravel</strong><img alt="RequestAttribute" src="img/e7e979d91e073a35.png"></li>
+<li>Click on <strong>Continue</strong> button</li>
+<li>Enter this in the search box and click on <strong>Search</strong> <pre><code>com.dynatrace.easytravel.business.webservice.BookingService
+</code></pre>
+</li>
+<li>Select the class and click <strong>Continue</strong><img alt="RequestAttribute" src="img/2a9f790990cd695b.png"></li>
+<li>Click on the radio button beside <strong>Use the selected class</strong> and click <strong>Continue</strong><img alt="RequestAttribute" src="img/b7e742ece1af5159.png"></li>
+<li>Select the method: <strong>private void checkLoyaltyStatus</strong></li>
+<li>Click on the <strong>Finish</strong> button <img alt="RequestAttribute" src="img/fd7ef3b49c2aa748.png"></li>
+<li>In the Capture dropdown, select <strong>2: java.lang.String</strong></li>
+<li>Click <strong>Save</strong><img alt="RequestAttribute" src="img/bd457ceb07ec6b83.png"></li>
+</ul>
+</li>
+<li>Once done, the final configuration will look like the screen below</li>
+<li>Please remember to click on the final <strong>Save</strong> button on the <strong>top right hand</strong></li>
+</ol>
+<p class="image-container"><img alt="RequestAttribute" src="img/c38106f7ad4b5d2.png"></p>
+<h2 is-upgraded>Adding the request attribute in Session Properties</h2>
+<ol type="1">
+<li>Select Applications from the left navigation menu</li>
+<li>Select the <strong>EasyTravel Angular</strong> application</li>
+<li>Click the Browse button <strong>(...)</strong> and select <strong>Edit</strong></li>
+<li>Under the <strong>Capturing</strong> header, look for <strong>Session and action properties</strong></li>
+<li>Click on the button <strong>Add properties</strong></li>
+<li>Select the <strong>Custom defined property</strong> tab</li>
+<li>Select the Expression type: <strong>Server side request attribute</strong></li>
+<li>Request attribute name: <strong>loyalty status</strong></li>
+</ol>
+<ul>
+<li>Display name: <pre><code>Member Status
+</code></pre>
+</li>
+<li>(auto fill) Key: <strong>memberstatus</strong></li>
+<li>Storage type: <ul>
+<li>Store as <strong>session</strong> property</li>
+</ul>
+</li>
+<li>Click <strong>&#34;Save property&#34;</strong></li>
+</ul>
+<h2 is-upgraded>Visualizing the data via USQL</h2>
+<ol type="1">
+<li>Follow the Activity-2 steps on adding a <strong>USQL tile</strong> on a dashboard.</li>
+<li>Use the following USQL, and chose a <strong>pie chart</strong></li>
+</ol>
+<pre><code language="language-SQL" class="language-SQL">   select stringProperties.memberstatus, sum (doubleProperties.booking) as Revenue from usersession where stringProperties.memberstatus IS NOT NULL group by stringProperties.memberstatus order by sum(doubleProperties.booking) DESC
+</code></pre>
+<ol type="1">
+<li>You will get the following tile</li>
+</ol>
+<p class="image-container"><img alt="RequestAttribute" src="img/be415a431a83ec78.png"></p>
 </google-codelab-step>
 <google-codelab-step label="Feedback" duration="0">
 <p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
@@ -369,7 +566,7 @@
 <paper-radio-button>Learning Digital Business Analytics</paper-radio-button>
 <paper-radio-button>User Session Properties setup</paper-radio-button>
 <paper-radio-button>How to use Dynatrace to improve BizDevOps colloabration</paper-radio-button>
-<paper-radio-button>Advanced Dashboard Configurator Setup</paper-radio-button>
+<paper-radio-button>Using USQL</paper-radio-button>
 </paper-radio-group>
 </google-codelab-survey>
 <google-codelab-survey survey-id="biz-ops-3">

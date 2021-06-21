@@ -221,10 +221,10 @@ Below are the configurations done:
 * Management zones
 
 <!-- ------------------------ -->
-## SLO
-Duration: 15
+## Basic SLO
+Duration: 10
 
-In this exercise, we will cover the setting up Service Level Objectives (SLO). These objectives are based on a target of our measured Service Level Indicators (SLI) to fulfill the business's Service Level Agreement (SLA). 
+In this exercise, we will cover the setting up basic Service Level Objectives (SLO). These objectives are based on a target of our measured Service Level Indicators (SLI) to fulfill the business's Service Level Agreement (SLA). 
 
 ### Creating SLO
 
@@ -248,6 +248,12 @@ We will be creating a SLO for **Sockshop Frontend**. Use the following:
 * Click on **Save**
 
 ![SLO](assets/cloud-observe/slo.gif)
+
+<!-- ------------------------ -->
+## Advance SLO
+Duration: 10
+
+In this exercise, we will cover the setting up an advance Service Level Objectives (SLO). These objectives would require creating a custom metric first, followed by targeting the measured Service Level Indicators (SLI) to fulfill the business's Service Level Agreement (SLA). 
 
 ### Creating metrics for Catalogue page
 
@@ -312,6 +318,28 @@ On the left nav, go to **Service level objectives**
 You can use the **pin icon** to pin the dashboard to **Environment Overview Dashboard** 
 
 ![Session-properties](assets/cloud-observe/pin-SLO.png)
+
+### Adding a new custom metric widget
+
+Within the **Environment Overview Dashboard** dashboard, click on **Edit**
+
+Drag the **Custom Chart** widget onto the dashboard and click on **configure custom chart**
+
+* Use `Number of calls without server side errors` metric
+* With **Filter by**, use `Service: Tag: [Kubernetes]app: catalogue`
+* Click on **Run Query**
+* You can use other visualization methods such as **Single Value**
+* Click on **Pin to dashboard** and select **Environment Overview Dashboard**
+
+![Session-properties](assets/cloud-observe/custom-chart.png)
+
+### Adding a new custom metric widget
+
+Back at the dashboard view, click on the newly created widget to **clone another custom chart**
+
+On the new widget, click on **configure custom chart**
+
+
 
 <!-- ------------------------ -->
 ## Releases
