@@ -432,7 +432,7 @@ For the purpose of sending Cloudwatch, we will create a new Lambda function.
 1. Duplicate the tab and search for Lambda within the AWS Search Bar and go to **Lambda**
 2. Click on **Create Function**
 3. Use default option of **Author from scratch**
-4. Give a Function name `Demo`
+4. Give a Function name `firstname.lastname`
 5. Click on **Create Function**
 
 ### Subscribing to the Cloudwatch Logs
