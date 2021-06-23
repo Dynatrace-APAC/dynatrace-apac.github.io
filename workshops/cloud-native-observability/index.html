@@ -1,34 +1,22 @@
 
 <!doctype html>
-
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-  <meta name="theme-color" content="#4F7DC9">
-  <meta charset="UTF-8">
-  <title>Cloud-Native Observability with Dynatrace</title>
-  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
-  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
-  <style>
-    .success {
-      color: #1e8e3e;
-    }
-    .error {
-      color: red;
-    }
-  </style>
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+<meta name="theme-color" content="#4F7DC9">
+<meta charset="UTF-8">
+<title>Cloud-Native Observability with Dynatrace</title>
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+<style>
+.success{color:#1e8e3e}.error{color:red} </style>
 </head>
 <body>
-  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
-  <google-codelab codelab-gaid="UA-175467274-1"
-                  id="cloud-native-observability"
-                  title="Cloud-Native Observability with Dynatrace"
-                  environment="web"
-                  feedback-link="mailto:APAC-SE-Central@dynatrace.com">
-    
-      <google-codelab-step label="Introduction" duration="1">
-        <p>This repository contains the hands on for the Day 2 Operations - Cloud Native Observability Workshop.</p>
+<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+<google-codelab codelab-gaid="UA-175467274-1" id="cloud-native-observability" title="Cloud-Native Observability with Dynatrace" environment="web" feedback-link="mailto:APAC-SE-Central@dynatrace.com">
+<google-codelab-step label="Introduction" duration="1">
+<p>This repository contains the hands on for the Day 2 Operations - Cloud Native Observability Workshop.</p>
 <h2 is-upgraded>Prerequisites</h2>
 <ul>
 <li>Dynatrace SaaS/Managed Account. Get your free SaaS trial <a href="https://www.dynatrace.com/trial/" target="_blank">here</a>.</li>
@@ -39,7 +27,7 @@
 <h2 is-upgraded>Lab Setup</h2>
 <p>The following steps are used for this lab:</p>
 <ul>
-<li>Sample Application  <ul>
+<li>Sample Application <ul>
 <li>Sample App is based on <a href="https://github.com/dynatrace-sockshop" target="_blank">Sockshop</a></li>
 </ul>
 </li>
@@ -52,12 +40,9 @@
 <li>Site Reliability Engineering - Service Level Objectives</li>
 <li>Site Reliability Engineering - Releases</li>
 </ul>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Deploy OneAgent Operator" duration="15">
-        <p>In this exercise, we will deploy the OneAgent to a Linux instance running Kubernetes(Microk8s) and let the OneAgent discover what is running in that instance.</p>
+</google-codelab-step>
+<google-codelab-step label="Deploy OneAgent Operator" duration="15">
+<p>In this exercise, we will deploy the OneAgent to a Linux instance running Kubernetes(Microk8s) and let the OneAgent discover what is running in that instance.</p>
 <h2 is-upgraded>Using Terminal via Web Browser</h2>
 <p>To faciliate the labs, we will access the Linux instance <strong>via terminal through a web browser</strong>.</p>
 <p>Use the <strong>URL</strong> was provided in your email to access the SSH terminal. Make sure the URL looks like <code>Public IP Address:8080/wetty</code></p>
@@ -158,7 +143,7 @@ kubectl delete po --all -n production
 <li>Click on the <strong>hostname</strong> in the OneAgent deployment screen.</li>
 <li>Expand <strong>Properties and tag</strong> in Host view</li>
 <li><strong>Select and Copy</strong> Public Host name from the metadata</li>
-<li><strong>Amend the Public Host name</strong> to match the following format:  <ul>
+<li><strong>Amend the Public Host name</strong> to match the following format: <ul>
 <li>Sockshop Production <code>http://production.front-end.PUBLIC-IP.nip.io/</code></li>
 <li>Sockshop Dev <code>http://dev.front-end.PUBLIC-IP.nip.io</code></li>
 </ul>
@@ -170,12 +155,9 @@ kubectl delete po --all -n production
 <p>While waiting for Easy Travel to start, you can explore Dynatrace and using the Smartscape, Dynatrace will automatically discover the processes and dependencies that comprises the Easy Travel application!</p>
 <p><a href="https://www.dynatrace.com/support/help/get-started/4-things-youll-absolutely-love-about-dynatrace/" target="_blank">4 things</a> that you will love about Dynatrace!</p>
 <p class="image-container"><img alt="Smartscape" src="img/868e111ca8bd48bd.png"></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Monitoring-as-Code" duration="15">
-        <p>In this exercise, we will automate configuration of Dynatrace environment.</p>
+</google-codelab-step>
+<google-codelab-step label="Monitoring-as-Code" duration="15">
+<p>In this exercise, we will automate configuration of Dynatrace environment.</p>
 <p>Using <a href="https://github.com/dynatrace-oss/dynatrace-monitoring-as-code" target="_blank">Dynatrace Monitoring as Code (Monaco)</a>, you can automate the configuration of all global Dynatrace environments without human intervention. Various use cases include:</p>
 <ul>
 <li>Having the ability to templatize our configuration for reusability across multiple environments</li>
@@ -204,12 +186,9 @@ export DT_DASHBOARD_OWNER=&lt;your email address&gt;
 <li>Process naming rules</li>
 <li>Management zones</li>
 </ul>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Basic SLO" duration="10">
-        <p>In this exercise, we will cover the setting up basic Service Level Objectives (SLO). These objectives are based on a target of our measured Service Level Indicators (SLI) to fulfill the business&#39;s Service Level Agreement (SLA).</p>
+</google-codelab-step>
+<google-codelab-step label="Basic SLO" duration="10">
+<p>In this exercise, we will cover the setting up basic Service Level Objectives (SLO). These objectives are based on a target of our measured Service Level Indicators (SLI) to fulfill the business&#39;s Service Level Agreement (SLA).</p>
 <h2 is-upgraded>Creating SLO</h2>
 <p>On the left nav, go to <strong>Service level objectives &gt; Add new SLO</strong></p>
 <p>We will be creating a SLO for <strong>Sockshop Frontend</strong>. Use the following:</p>
@@ -230,12 +209,9 @@ export DT_DASHBOARD_OWNER=&lt;your email address&gt;
 <li>Click on <strong>Save</strong></li>
 </ul>
 <p class="image-container"><img alt="SLO" src="img/5c24475ae4c3320.gif"></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Advance SLO" duration="10">
-        <p>In this exercise, we will cover the setting up an advance Service Level Objectives (SLO). These objectives would require creating a custom metric first, followed by targeting the measured Service Level Indicators (SLI) to fulfill the business&#39;s Service Level Agreement (SLA).</p>
+</google-codelab-step>
+<google-codelab-step label="Advance SLO" duration="10">
+<p>In this exercise, we will cover the setting up an advance Service Level Objectives (SLO). These objectives would require creating a custom metric first, followed by targeting the measured Service Level Indicators (SLI) to fulfill the business&#39;s Service Level Agreement (SLA).</p>
 <h2 is-upgraded>Creating metrics for Catalogue page</h2>
 <p>Next, we will be creating a custom metric for successful requests count to Catalogue page</p>
 <ul>
@@ -272,12 +248,9 @@ export DT_DASHBOARD_OWNER=&lt;your email address&gt;
 <li>Click on <strong>Save</strong></li>
 </ul>
 <p class="image-container"><img alt="SLO" src="img/11bdd0bf01b71d76.gif"></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Dashboards" duration="15">
-        <p>Refer to the left navigation bar and go to <strong>Dashboards</strong>. Dynatrace has now prebuilt dashboard templates such as <strong>Kubernetes Dashboards</strong> and <strong>Real User Monitoring</strong> dashboards.</p>
+</google-codelab-step>
+<google-codelab-step label="Dashboards" duration="15">
+<p>Refer to the left navigation bar and go to <strong>Dashboards</strong>. Dynatrace has now prebuilt dashboard templates such as <strong>Kubernetes Dashboards</strong> and <strong>Real User Monitoring</strong> dashboards.</p>
 <p>As part of the Monaco rollout, you should also see dashboards created such as <strong>Environment Overview Dashboard</strong> and <strong>Prometheus - Environment Overview Dashboard</strong></p>
 <p class="image-container"><img alt="Session-properties" src="img/9b6febf21054b293.png"></p>
 <p>Drill down into each of these dashboards and explore the various dashboard widgets for App Owners and Business Users.</p>
@@ -307,7 +280,7 @@ export DT_DASHBOARD_OWNER=&lt;your email address&gt;
 <li>You can view the <strong>code equivalent</strong> of the earlier custom metric widget</li>
 <li>Amend the text to <code>((calc:service.cataloguesuccesscount) / (calc:service.cataloguecount)) * (100)</code></li>
 <li>This will get a <strong>percentage of the successful catalogue counts</strong></li>
-<li>On the left <strong>Settings</strong>, change the <strong>threshold</strong> on the below:  <ul>
+<li>On the left <strong>Settings</strong>, change the <strong>threshold</strong> on the below: <ul>
 <li>🟩 - <code>15</code></li>
 <li>🟨 - <code>10</code></li>
 <li>🟥 - <code>5</code></li>
@@ -317,23 +290,17 @@ export DT_DASHBOARD_OWNER=&lt;your email address&gt;
 <li>Click on <strong>Pin to dashboard</strong> and select <strong>Environment Overview Dashboard</strong></li>
 </ul>
 <p class="image-container"><img alt="Session-properties" src="img/9d2aef49a2daae2b.png"></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Releases" duration="15">
-        <p>Dynatrace also offers a built-in release-analysis solution that helps you determine the versions or stages of your deployed applications.</p>
+</google-codelab-step>
+<google-codelab-step label="Releases" duration="15">
+<p>Dynatrace also offers a built-in release-analysis solution that helps you determine the versions or stages of your deployed applications.</p>
 <p>On the left nav, go to <strong>Releases</strong></p>
 <p class="image-container"><img alt="Session-properties" src="img/76aa2a0dd6d7567f.png"></p>
 <p>This provides an overview of <strong>deployed component versions</strong> and their <strong>release events</strong>.</p>
 <p>Drilling into each component, you will find additional metadata from the respective component. This provides context to the monitored component as well as information regarding it&#39;s <strong>lifecycle</strong> and <strong>tracking issues</strong>.</p>
 <p class="image-container"><img alt="Session-properties" src="img/ffeb52ab88907fa8.png"></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Feedback" duration="3">
-        <p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
+</google-codelab-step>
+<google-codelab-step label="Feedback" duration="3">
+<p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
 <google-codelab-survey survey-id="cloud-native-observability-1">
 <h4>How was your overall experience with this lab?</h4>
 <paper-radio-group>
@@ -365,17 +332,12 @@ export DT_DASHBOARD_OWNER=&lt;your email address&gt;
 </google-codelab-survey>
 <aside class="special"><p>💡 For other ideas and suggestions, please <a href="mailto:APAC-SE-Central@dynatrace.com?subject=Kubernetes Workshop - Ideas and Suggestions" target="_blank"><strong>reach out via email</strong></a>.</p>
 </aside>
-
-
-      </google-codelab-step>
-    
-  </google-codelab>
-
-  <script src="../../elements/codelab-elements/native-shim.js"></script>
-  <script src="../../elements/codelab-elements/custom-elements.min.js"></script>
-  <script src="../../elements/codelab-elements/prettify.js"></script>
-  <script src="../../elements/codelab-elements/codelab-elements.js"></script>
-  <script src="//support.google.com/inapp/api.js"></script>
-
+</google-codelab-step>
+</google-codelab>
+<script src="../../elements/codelab-elements/native-shim.js"></script>
+<script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+<script src="../../elements/codelab-elements/prettify.js"></script>
+<script src="../../elements/codelab-elements/codelab-elements.js"></script>
+<script src="//support.google.com/inapp/api.js"></script>
 </body>
 </html>
