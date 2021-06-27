@@ -195,7 +195,10 @@ Using [Dynatrace Monitoring as Code (Monaco)](https://github.com/dynatrace-oss/d
 
 To faciliate the session, you can run the monaco code with the below:
 
-`./deploy-monaco.sh` 
+```bash
+cd sockshop
+./deploy-monaco.sh
+``` 
 
 After setting it up, configure the **DT_TENANT** and **DT_API_TOKEN** and **DT_DASHBOARD_OWNER** variables.
 These can be found within the lab registration email.
