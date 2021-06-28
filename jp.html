@@ -3,11 +3,11 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="description" content="Oct - Dec 2020 Every Thursday 1pm NZST. To register, please signup via this link - http://bit.ly/anzaiops">
+<meta name="description" content="Dynatrace APACワークショップは、ガイド付きのチュートリアルベースの実践的な学習体験を提供します。これらのラボは、Dynatrace APACエンジニアリングチームによって提示されるセッションを提供しますが、自己学習にも適しています。他にご不明な点がございましたら、APAC-SE-Central @ dynatrace.comまでお問い合わせください。">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="generator" content="AIOps Hands On Workshop Series">
-<meta name="application-name" content="AIOps Hands On Workshop Series">
-<link rel="canonical" href="https://dynatrace-apac.github.io/anz/">
+<meta name="generator" content="Dynatrace">
+<meta name="application-name" content="Dynatrace">
+<link rel="canonical" href="https://dynatrace-apac.github.io/jp/">
 <link rel="preconnect" href="https://www.google-analytics.com">
 <script>
 window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
@@ -15,14 +15,14 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
     ga('send', 'pageview');
 </script>
 <script async src="https://www.google-analytics.com/analytics.js"></script>
-<title>AIOps Hands On Workshop Series</title>
+<title>Dynatrace</title>
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="import" href="/elements/elements.html">
 <style is="custom-style">
 :root{--paper-tabs-selection-bar-color:currentcolor;--paper-input-container-underline:{display:none};--paper-input-container-underline-focus:{display:none};}.dropdown-filter{--paper-input-container:{background-color:#23282d;display:block;padding:4px}} </style>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="#455a64">
-<meta name="apple-mobile-web-app-title" content="AIOps Hands On Workshop Series">
+<meta name="apple-mobile-web-app-title" content="Dynatrace">
 <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="194x194" href="/images/favicons/favicon-194x194.png">
@@ -34,9 +34,9 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
 <meta name="theme-color" content="#455a64">
 <meta name="og:type" property="og:type" content="website">
-<meta name="og:title" property="og:title" content="AIOps Hands On Workshop Series">
-<meta name="og:description" property="og:description" content="Oct - Dec 2020 Every Thursday 1pm NZST. To register, please signup via this link - http://bit.ly/anzaiops">
-<meta name="og:url" property="og:url" content="https://dynatrace-apac.github.io/anz/">
+<meta name="og:title" property="og:title" content="Dynatrace">
+<meta name="og:description" property="og:description" content="Dynatrace APACワークショップは、ガイド付きのチュートリアルベースの実践的な学習体験を提供します。これらのラボは、Dynatrace APACエンジニアリングチームによって提示されるセッションを提供しますが、自己学習にも適しています。他にご不明な点がございましたら、APAC-SE-Central @ dynatrace.comまでお問い合わせください。">
+<meta name="og:url" property="og:url" content="https://dynatrace-apac.github.io/jp/">
 <meta name="og:site_name" property="og:site_name" content="APAC Tech Labs">
 <meta name="og:determiner" property="og:determiner" content="the">
 <meta name="og:locale" property="og:locale" content="en_US">
@@ -47,10 +47,10 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <meta name="og:image:height" property="og:image:height" content="1200">
 <meta name="og:image:alt" property="og:image:alt" content="Dynatrace">
 <meta name="twitter:card" property="twitter:card" content="summary_large_image">
-<meta name="twitter:title" property="twitter:title" content="AIOps Hands On Workshop Series">
-<meta name="twitter:description" property="twitter:description" content="Oct - Dec 2020 Every Thursday 1pm NZST. To register, please signup via this link - http://bit.ly/anzaiops">
+<meta name="twitter:title" property="twitter:title" content="Dynatrace">
+<meta name="twitter:description" property="twitter:description" content="Dynatrace APACワークショップは、ガイド付きのチュートリアルベースの実践的な学習体験を提供します。これらのラボは、Dynatrace APACエンジニアリングチームによって提示されるセッションを提供しますが、自己学習にも適しています。他にご不明な点がございましたら、APAC-SE-Central @ dynatrace.comまでお問い合わせください。">
 <meta name="twitter:image" property="twitter:image" content="/images/og-image.png">
-<meta name="twitter:url" property="twitter:url" content="https://dynatrace-apac.github.io/anz/">
+<meta name="twitter:url" property="twitter:url" content="https://dynatrace-apac.github.io/jp/">
 </head>
 <body id="app" is="body-bind" class="loading fullbleed view">
 <paper-header-panel id="main" mode="standard" main>
@@ -68,14 +68,19 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 </div>
 </div>
 </div>
-<header id="banner" down>
+<header id="banner" down$="[[_toBoolean(selectedFilter)]]">
 <div class="site-width">
-<div class="banner-description">
-<img id="logo" src="/anz/anz-logo.png" alt="Event logo">
-<div class="banner-meta">
-<h3>AIOps Hands On Workshop Series</h3>
-<p>Oct - Dec 2020 Every Thursday 1pm NZST. To register, please signup via this link - http://bit.ly/anzaiops</p>
-</div>
+<h2 class="banner-title">Dynatraceを使い始めて前進する</h2>
+<div class="banner-description" data-filter-selected$="[[_toBoolean(selectedFilter)]]">
+<p class="banner-info">
+インタラクティブなデモから、セルフガイドのマイクロラーニングラボ、さらには高度な仮想ハンズオンワークショップまで、そしてその間のすべて。ヘルプが必要な場合は、<a href="mailto:APAC-SE-Central@dynatrace.com">APAC-SE-Central@dynatrace.com</a>に連絡してください。
+<br>
+<a href="/" class="button">ホーム</a>
+<a href="/schedule" class="button">ワークショップ</a>
+<a href="/interactive-demo" class="button">デモ</a>
+<a href="https://www.dynatrace.com/request-demo/" class="button">デモをリクエストする</a>
+<a href="https://www.dynatrace.com/trial/" class="button">無料トライアル</a>
+</p>
 </div>
 </div>
 </header>
@@ -84,117 +89,63 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <div id="sortby">
 <paper-tabs selected="0" noink on-iron-activate="sortBy">
 <paper-tab>A-Z</paper-tab>
-<paper-tab>Recent</paper-tab>
-<paper-tab>Duration</paper-tab>
+<paper-tab>最新</paper-tab>
+<paper-tab>時間</paper-tab>
 </paper-tabs>
 </div>
-<div id="right-dropdown"><paper-dropdown-menu label="Category" class="dropdown-filter" no-label-float noink no-animations>
-<paper-listbox id="categorylist" slot="dropdown-content" class="dropdown-content" on-iron-activate="onCategoryActivate" attr-for-selected="filter">
-<paper-item filter="automate-delivery">automate-delivery</paper-item>
-<paper-item filter="automate-feedback">automate-feedback</paper-item>
-<paper-item filter="automate-operations">automate-operations</paper-item>
+<div id="right-dropdown">
+<paper-dropdown-menu label="言語" class="dropdown-filter" no-label-float noink no-animations>
+<paper-listbox id="eventList" slot="dropdown-content" class="dropdown-content">
+<a href="/" tabindex="-1">
+<paper-item>English</paper-item>
+</a>
 </paper-listbox>
-</paper-dropdown-menu>
-</div>
+</paper-dropdown-menu></div>
 </div>
 <card-sorter id="cards" class="site-width">
 <a href="https://interact.dynatrace.com/" on-tap="navigate" class="codelab-card category-apps-microservices" data-category="apps-microservices" data-title="Apps And Microservices Demo" data-duration="136" data-updated="2020-07-28T15:48:24+10:00" data-tags="apps-microservices" data-pin="1">
 <div class="description">Apps & Microservices</div>
 <div class="card-duration">
-<span>INTERACTIVE DEMO</span>
+<span>対話式デモ</span>
 <span></span>
 </div>
 <div class="card-footer">
 <div class="category-icon apps-microservices-icon"></div>
-<paper-button class="apps-microservices-bg">Start</paper-button>
+<paper-button class="apps-microservices-bg">開始</paper-button>
 </div>
 </a>
 <a href="https://interact.dynatrace.com/infrastructure-demo/p/1" on-tap="navigate" class="codelab-card category-infrastructure" data-category="apps-microservices" data-title="Apps And Microservices Demo" data-duration="136" data-updated="2020-07-28T15:48:24+10:00" data-tags="apps-microservices" data-pin="1">
 <div class="description">Infrastructure</div>
 <div class="card-duration">
-<span>INTERACTIVE DEMO</span>
+<span>対話式デモ</span>
 <span></span>
 </div>
 <div class="card-footer">
 <div class="category-icon infrastructure-icon"></div>
-<paper-button class="infrastructure-bg">Start</paper-button>
+<paper-button class="infrastructure-bg">開始</paper-button>
 </div>
 </a>
 <a href="https://interact.dynatrace.com/davis-explained/p/1" on-tap="navigate" class="codelab-card category-davis" data-category="apps-microservices" data-title="Apps And Microservices Demo" data-duration="136" data-updated="2020-07-28T15:48:24+10:00" data-tags="apps-microservices" data-pin="1">
 <div class="description">Dynatrace DAVIS Explained</div>
 <div class="card-duration">
-<span>INTERACTIVE DEMO</span>
+<span>対話式デモ</span>
 <span></span>
 </div>
 <div class="card-footer">
 <div class="category-icon davis-icon"></div>
-<paper-button class="davis-bg">Start</paper-button>
+<paper-button class="davis-bg">開始</paper-button>
 </div>
 </a>
-<a href="/workshops/automate-delivery-1/index.html?index=..%2F..anz" on-tap="navigate" class="codelab-card category-automate-delivery" data-category="automate-delivery" data-title="Automate Delivery - Session 1" data-duration="34" data-updated="2020-11-03T10:50:13+11:00" data-tags="anz" data-pin="">
-<div class="description">Automate Delivery - Session 1</div>
+<a href="/workshops/get-started-dt-jp/index.html?index=..%2F..jp" on-tap="navigate" class="codelab-card category-get-started" data-category="get-started" data-title="Dynatrace実践入門" data-duration="15" data-updated="2021-06-28T10:49:11+10:00" data-tags="getting-started-jp" data-pin="1">
+<div class="card-pin"></div>
+<div class="description">Dynatrace実践入門</div>
 <div class="card-duration">
-<span>34 min </span>
-<span>Updated Nov 2, 2020</span>
+<span>15 min </span>
+<span>Updated Jun 28, 2021</span>
 </div>
 <div class="card-footer">
-<div class="category-icon automate-delivery-icon"></div>
-<paper-button class="automate-delivery-bg">Start</paper-button>
-</div>
-</a>
-<a href="/workshops/automate-delivery-2/index.html?index=..%2F..anz" on-tap="navigate" class="codelab-card category-automate-delivery" data-category="automate-delivery" data-title="Automate Delivery - Session 2" data-duration="54" data-updated="2020-11-11T10:50:16+11:00" data-tags="anz" data-pin="">
-<div class="description">Automate Delivery - Session 2</div>
-<div class="card-duration">
-<span>54 min </span>
-<span>Updated Nov 10, 2020</span>
-</div>
-<div class="card-footer">
-<div class="category-icon automate-delivery-icon"></div>
-<paper-button class="automate-delivery-bg">Start</paper-button>
-</div>
-</a>
-<a href="/workshops/automate-feedback-1/index.html?index=..%2F..anz" on-tap="navigate" class="codelab-card category-automate-feedback" data-category="automate-feedback" data-title="Automate Feedback - Session 1" data-duration="54" data-updated="2020-10-08T16:58:49+11:00" data-tags="anz" data-pin="">
-<div class="description">Automate Feedback - Session 1</div>
-<div class="card-duration">
-<span>54 min </span>
-<span>Updated Oct 8, 2020</span>
-</div>
-<div class="card-footer">
-<div class="category-icon automate-feedback-icon"></div>
-<paper-button class="automate-feedback-bg">Start</paper-button>
-</div>
-</a>
-<a href="/workshops/automate-feedback-2/index.html?index=..%2F..anz" on-tap="navigate" class="codelab-card category-automate-feedback" data-category="automate-feedback" data-title="Automate Feedback - Session 2" data-duration="59" data-updated="2020-10-08T22:40:44+11:00" data-tags="anz" data-pin="">
-<div class="description">Automate Feedback - Session 2</div>
-<div class="card-duration">
-<span>59 min </span>
-<span>Updated Oct 8, 2020</span>
-</div>
-<div class="card-footer">
-<div class="category-icon automate-feedback-icon"></div>
-<paper-button class="automate-feedback-bg">Start</paper-button>
-</div>
-</a>
-<a href="/workshops/automate-operations-1/index.html?index=..%2F..anz" on-tap="navigate" class="codelab-card category-automate-operations" data-category="automate-operations" data-title="Automate Operations - Session 1" data-duration="1" data-updated="2020-12-02T16:11:16+11:00" data-tags="anz" data-pin="">
-<div class="description">Automate Operations - Session 1</div>
-<div class="card-duration">
-<span>1 min </span>
-<span>Updated Dec 2, 2020</span>
-</div>
-<div class="card-footer">
-<div class="category-icon automate-operations-icon"></div>
-<paper-button class="automate-operations-bg">Start</paper-button>
-</div>
-</a>
-<a href="/workshops/automate-operations-2/index.html?index=..%2F..anz" on-tap="navigate" class="codelab-card category-automate-operations" data-category="automate-operations" data-title="Automate Operations - Session 2" data-duration="49" data-updated="2020-09-23T14:45:13+10:00" data-tags="anz" data-pin="">
-<div class="description">Automate Operations - Session 2</div>
-<div class="card-duration">
-<span>49 min </span>
-<span>Updated Sep 23, 2020</span>
-</div>
-<div class="card-footer">
-<div class="category-icon automate-operations-icon"></div>
-<paper-button class="automate-operations-bg">Start</paper-button>
+<div class="category-icon get-started-icon"></div>
+<paper-button class="get-started-bg">開始</paper-button>
 </div>
 </a>
 </card-sorter>

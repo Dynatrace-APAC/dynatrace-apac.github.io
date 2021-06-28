@@ -93,7 +93,7 @@ From interactive demos, to self-guided microlearning labs or even advanced virtu
 <paper-tab>Duration</paper-tab>
 </paper-tabs>
 </div>
-<paper-dropdown-menu label="Filter by category" class="dropdown-filter" no-label-float noink no-animations>
+<div id="right-dropdown"><paper-dropdown-menu label="Category" class="dropdown-filter" no-label-float noink no-animations>
 <paper-listbox id="categorylist" slot="dropdown-content" class="dropdown-content" on-iron-activate="onCategoryActivate" attr-for-selected="filter">
 <paper-item filter="adv-obs">adv-obs</paper-item>
 <paper-item filter="autonomous-cloud">autonomous-cloud</paper-item>
@@ -104,7 +104,15 @@ From interactive demos, to self-guided microlearning labs or even advanced virtu
 <paper-item filter="kubernetes">kubernetes</paper-item>
 <paper-item filter="kubernetes-gke">kubernetes-gke</paper-item>
 </paper-listbox>
+</paper-dropdown-menu>
+<paper-dropdown-menu label="Language" class="dropdown-filter" no-label-float noink no-animations>
+<paper-listbox id="eventList" slot="dropdown-content" class="dropdown-content">
+<a href="/jp/" tabindex="-1">
+<paper-item>jp</paper-item>
+</a>
+</paper-listbox>
 </paper-dropdown-menu></div>
+</div>
 <card-sorter id="cards" class="site-width">
 <a href="https://interact.dynatrace.com/" on-tap="navigate" class="codelab-card category-apps-microservices" data-category="apps-microservices" data-title="Apps And Microservices Demo" data-duration="136" data-updated="2020-07-28T15:48:24+10:00" data-tags="apps-microservices" data-pin="1">
 <div class="description">Apps & Microservices</div>
@@ -184,11 +192,11 @@ From interactive demos, to self-guided microlearning labs or even advanced virtu
 <paper-button class="biz-ops-bg">Start</paper-button>
 </div>
 </a>
-<a href="/workshops/cloud-native-observability/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-cloud-obs" data-category="cloud-obs" data-title="Cloud-Native Observability with Dynatrace" data-duration="84" data-updated="2021-06-21T17:14:18+10:00" data-tags="cloud-obs" data-pin="">
+<a href="/workshops/cloud-native-observability/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-cloud-obs" data-category="cloud-obs" data-title="Cloud-Native Observability with Dynatrace" data-duration="84" data-updated="2021-06-28T09:23:05+10:00" data-tags="cloud-obs" data-pin="">
 <div class="description">Cloud-Native Observability with Dynatrace</div>
 <div class="card-duration">
 <span>84 min </span>
-<span>Updated Jun 21, 2021</span>
+<span>Updated Jun 27, 2021</span>
 </div>
 <div class="card-footer">
 <div class="category-icon cloud-obs-icon"></div>

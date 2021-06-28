@@ -1,0 +1,26 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "../../elements",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-06-28T10:49:11+10:00",
+  "id": "get-started-dt-jp",
+  "duration": 15,
+  "title": "Dynatrace実践入門",
+  "authors": "Brandon Neo",
+  "summary": "Dynatrace実践入門",
+  "source": "get-started-dt-jp.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "get-started"
+  ],
+  "tags": [
+    "getting-started-jp"
+  ],
+  "feedback": "mailto:APAC-SE-Central@dynatrace.com",
+  "ga": "UA-175467274-1",
+  "url": "get-started-dt-jp"
+}

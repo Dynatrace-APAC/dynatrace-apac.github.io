@@ -88,7 +88,7 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <paper-tab>Duration</paper-tab>
 </paper-tabs>
 </div>
-<paper-dropdown-menu label="Filter by category" class="dropdown-filter" no-label-float noink no-animations>
+<div id="right-dropdown"><paper-dropdown-menu label="Category" class="dropdown-filter" no-label-float noink no-animations>
 <paper-listbox id="categorylist" slot="dropdown-content" class="dropdown-content" on-iron-activate="onCategoryActivate" attr-for-selected="filter">
 <paper-item filter="actionable-infra">actionable-infra</paper-item>
 <paper-item filter="azure">azure</paper-item>
@@ -99,7 +99,9 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <paper-item filter="logmon-2">logmon-2</paper-item>
 <paper-item filter="opentel">opentel</paper-item>
 </paper-listbox>
-</paper-dropdown-menu></div>
+</paper-dropdown-menu>
+</div>
+</div>
 <card-sorter id="cards" class="site-width">
 <a href="https://interact.dynatrace.com/" on-tap="navigate" class="codelab-card category-apps-microservices" data-category="apps-microservices" data-title="Apps And Microservices Demo" data-duration="136" data-updated="2020-07-28T15:48:24+10:00" data-tags="apps-microservices" data-pin="1">
 <div class="description">Apps & Microservices</div>

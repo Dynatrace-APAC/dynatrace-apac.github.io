@@ -1,0 +1,129 @@
+
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+<meta name="theme-color" content="#4F7DC9">
+<meta charset="UTF-8">
+<title>Dynatrace実践入門</title>
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+<style>
+.success{color:#1e8e3e}.error{color:red} </style>
+</head>
+<body>
+<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+<google-codelab codelab-gaid="UA-175467274-1" id="get-started-dt-jp" title="Dynatrace実践入門" environment="web" feedback-link="mailto:APAC-SE-Central@dynatrace.com">
+<google-codelab-step label="はじめに" duration="0">
+<p>このラボでは、Dynatraceを使い始めるために必要な簡単な手順を紹介しています。</p>
+<aside class="special"><p>もし、 <strong>デモアプリケーション</strong> を使用する必要がある場合は、Dynatraceのサンプルアプリ <a href="https://community.dynatrace.com/community/display/DL/easyTravel" target="_blank">easyTravel</a> をご利用ください。</p>
+</aside>
+<h2 is-upgraded>ラボの内容</h2>
+<ul>
+<li>Dynatraceアカウントの作成</li>
+<li>OneAgentの展開</li>
+<li>Dynatrace UIの紹介</li>
+</ul>
+</google-codelab-step>
+<google-codelab-step label="Dynatraceアカウントの作成" duration="5">
+<h2 is-upgraded>アカウントの作成</h2>
+<ul>
+<li><a href="https://www.dynatrace.com/trial/" target="_blank">Dynatrace free trial page</a> へ行く。</li>
+<li><strong>business email address</strong> を入力し <strong>Start free trial</strong> を選択する。</li>
+<li>アカウント情報を入力し、規約に同意いただく。</li>
+<li>アカウント作成を選択する。</li>
+<li>作成に問題がなければ、以下のような画面が表示される。</li>
+</ul>
+<p class="image-container"><img alt="Deploy" src="img/67efe2625a6da3cd.png"></p>
+<p>これで終わりです。お客様専用のDynatrace SaaSテナントページに移動します。 (例 <strong>abc12345.live.dyntrace.com</strong>)</p>
+</google-codelab-step>
+<google-codelab-step label="OneAgentの展開" duration="5">
+<h2 is-upgraded>OneAgentのダウンロード</h2>
+<p>以下の手順に従って、OneAgentをホストにインストールします。</p>
+<ul>
+<li>左側のナビゲーションパネルから <strong>Dynatrace Hub</strong> を選びます。</li>
+<li><strong>OneAgent</strong> を選びます。</li>
+<li>右下にある <strong>Download OneAgent</strong> を選びます。</li>
+<li>インストールしたい <strong>OS</strong> もしくは <strong>プラットフォーム</strong> を選びます。</li>
+<li>画面の指示に従って、OneAgentのダウンロードとインストールを実行します。</li>
+</ul>
+<aside class="special"><p>Windowsの場合、追加のパラメータは必要ありません。OneAgentインストーラーをダウンロード」を選択すると、Windowsインストーラーがダウンロードされます。</p>
+</aside>
+<p>完了すると、インストーラーはDynatrace OneAgentがDynatraceクラスタノードに正常に接続されたことを伝えるメッセージを表示します。</p>
+<aside class="warning"><p>インストールに関して問題が起きた場合は、次のドキュメントサイトをご確認ください。 <a href="https://www.dynatrace.com/support/help/setup-and-configuration/dynatrace-oneagent/troubleshooting/troubleshoot-oneagent-installation/" target="_blank">help documentation page</a></p>
+</aside>
+<h2 is-upgraded>正しくデプロイメントされたか確認する</h2>
+<p>ホストとの接続性を確認するために、左側のナビゲーションパネルから <strong>Deployment status</strong> を選びます。</p>
+<p>下の画像のように、接続されたホストが表示されているはずです。</p>
+<p class="image-container"><img alt="Deploy" src="img/297084c8c0c99ffa.png"></p>
+</google-codelab-step>
+<google-codelab-step label="Dynatrace UIの紹介" duration="0">
+<p>Dynatraceは、お客様のアプリケーションのプロセスと依存関係を自動的に検出します。Dynatraceでは、以下のような様々な機能を利用することができます。</p>
+<ul>
+<li><a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/smartscape/" target="_blank">Smartscape</a></li>
+<li><a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/hosts/" target="_blank">Host view</a></li>
+<li><a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/process-groups/" target="_blank">Processes</a></li>
+<li><a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/networks/" target="_blank">Network</a></li>
+<li><a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/log-monitoring/" target="_blank">Logs</a></li>
+<li><a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/transactions-and-services/" target="_blank">Transactions and services</a></li>
+</ul>
+<aside class="warning"><p>なお、Dynatraceが<strong>サービスレベルコール</strong>を検出するためには、<strong>アプリケーションサービス</strong>を再起動する必要があります。</p>
+</aside>
+<p><strong>Smartscapeの表示例</strong></p>
+<p class="image-container"><img alt="Smartscape" src="img/868e111ca8bd48bd.png"></p>
+<h2 is-upgraded>デモ動画</h2>
+<p>この5分間のデモでは、Dynatraceがどのようにお客様のシングルソースオブトゥルースになるのか、AIインテリジェンスがどのようにお客様に必要な情報を提供するのかをご覧いただけます。</p>
+<iframe class="youtube-video" src="https://www.youtube.com/embed/0ihCziAJ07U?rel=0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<h2 is-upgraded>Dynatrace Davis</h2>
+<p>これらはすべて、決定論的なAIを使用して自動フォールトツリー分析を行うAIエンジン、<strong>Dynatrace DAVIS</strong>によって分析されます。これは単なる相関関係ではなく、問題の因果関係を示すものです。</p>
+<p>さらに詳しく知りたい方は <a href="/interactive-demo" target="_blank">Interactive Demos</a> を使って <a href="https://www.dynatrace.com/platform/" target="_blank">Dynatrace</a> がなぜ唯一のものなのか確認ください。</p>
+</google-codelab-step>
+<google-codelab-step label="さらなる活用について" duration="5">
+<p><a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/dashboards-and-charts/" target="_blank">ホームダッシュボード</a>にもアクセスできるようになりました。しかし、より高いオブザーバビリティを得るためには、デプロイ後にいくつかの追加手順が必要です。これらの手順は、<a href="https://www.dynatrace.com/support/help/shortlink/section-get-started#step-4-fine-tune-your-environment" target="_blank">ドキュメントページ</a>に記載されています。</p>
+<h2 is-upgraded>他のホストへの展開</h2>
+<p>1台のホストにDynatraceを導入し、すぐに監視を開始することがいかに簡単かがお分かりいただけると思います。しかし、これはDynatraceができることのほんの一例に過ぎません。</p>
+<h2 is-upgraded>その他のユースケース</h2>
+<p>Dynatraceは、幅広いユースケースに対応したオールインワンのプラットフォームです。</p>
+<p class="image-container"><img alt="Deploy" src="img/6bc1ded3f014cf01.png"></p>
+<p><strong>インフラ監視</strong></p>
+<ul>
+<li>Dynatraceは、ホスト、VM、コンテナ、ネットワーク、イベント、ログを幅広く可視化する、シンプルで自動化されたインフラストラクチャモニタリングを提供します。Dynatraceは、お客様のダイナミックな環境を継続的に自動検出し、インフラストラクチャのメトリクスをDavis®のAIエンジンに取り込むことで、ツールを統合し、MTTIを削減することができます。</li>
+</ul>
+<p><strong>アプリケーションとマイクロサービス</strong></p>
+<ul>
+<li>Dynatraceは、複雑なエンタープライズ・クラウド環境にまたがるアプリケーションに対して、コードレベルでの自動的な可視化と根本原因の解明を提供します。Dynatraceは、あらゆる階層のトランザクションのタイミングとコードレベルのコンテキストを自動的に取得します。また、モバイルからメインフレームまで、ハイブリッドクラウド全体でマイクロサービスを自動的に検出・監視します。</li>
+</ul>
+<p><strong>デジタルエクスペリエンス監視 (DEM)</strong></p>
+<ul>
+<li>Dynatrace DEMは、お客様の体験に対応するリアル・ユーザー・モニタリング（RUM）、グローバル・ネットワーク上のシンセティック・モニタリング、そして4Kムービーのようなセッション・リプレイを提供します。この強力な組み合わせにより、アプリケーションの最適化、ユーザーエクスペリエンスの向上、すべてのデジタルチャネルにおける優れたサポートの提供が可能になります。</li>
+</ul>
+<p><strong>デジタルビジネス分析</strong></p>
+<ul>
+<li>ビジネス指標やKPIを、アプリケーション・パフォーマンスやデジタル・エクスペリエンス・モジュールにすでに流れているデータに結びつけることで、ビジネス上の重要な質問に対するAIによるリアルタイムの回答を得ることができます。</li>
+</ul>
+<p><strong>クラウドオートメーション</strong></p>
+<ul>
+<li>Dynatrace AIOpsは、正確な答えを自動的に提供します。Dynatraceは、高忠実度のデータを収集し、リアルタイムに依存関係をマッピングすることで、Dynatraceの説明可能なAIエンジンであるDavis®が、問題や異常の正確な根本原因を示し、迅速な自動修復とインテリジェントなクラウドオーケストレーションを可能にします。</li>
+</ul>
+<p>上記のユースケースに関してもラボを提供しています。（英語のみ）</p>
+<ul>
+<li><a href="/workshops/dem" target="_blank">Digital Experience Management with Dynatrace</a></li>
+<li><a href="/workshops/advanced-observability" target="_blank">Advanced Observability with Dynatrace</a></li>
+<li><a href="/workshops/bizops" target="_blank">BizOps with Dynatrace</a></li>
+<li><a href="/workshops/autonomous-cloud" target="_blank">Autonomous Cloud with Dynatrace</a></li>
+</ul>
+<h2 is-upgraded>補足情報</h2>
+<ul>
+<li>Dynatraceの機能をもっと知りたい方は、以下のビデオをご覧ください。 <a href="https://www.dynatrace.com/news/free-trial-resources/" target="_blank">Dynatrace Free Trial Resources</a>.</li>
+<li>オンプレミス版については、以下をご覧ください。 <a href="https://www.dynatrace.com/support/help/get-started/get-started-with-dynatrace-managed/" target="_blank">Get started with Dynatrace Managed</a>.</li>
+</ul>
+</google-codelab-step>
+</google-codelab>
+<script src="../../elements/codelab-elements/native-shim.js"></script>
+<script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+<script src="../../elements/codelab-elements/prettify.js"></script>
+<script src="../../elements/codelab-elements/codelab-elements.js"></script>
+<script src="//support.google.com/inapp/api.js"></script>
+</body>
+</html>
