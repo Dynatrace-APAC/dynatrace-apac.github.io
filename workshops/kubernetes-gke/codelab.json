@@ -15,7 +15,8 @@
     "published"
   ],
   "category": [
-    "kubernetes-gke"
+    "kubernetes",
+    "gke"
   ],
   "tags": [
     "kubernetes"

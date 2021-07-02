@@ -25,7 +25,7 @@
 <li>Chrome Browser</li>
 </ul>
 <h2 class="checklist" is-upgraded>What You&#39;ll Learn</h2>
-<ul class="checklist">
+<ul>
 <li>Deploying Dynatrace Operator via Helm Chart on Kubernetes</li>
 <li>Setup Kubernetes integration on Dynatrace</li>
 <li>Enabling early access feature flags in Dynatrace</li>
@@ -52,7 +52,7 @@
 <h2 is-upgraded>3. Create your GKE Cluster</h2>
 <p class="image-container"><img alt="GKE-CLI" src="img/5bfc37b3282337b5.png"></p>
 <p>Create your GKE cluster named <strong>k8sworkshop</strong> running Ubuntu in GKE with the following command. We will also be creating a compute VM for a Dynatrace Activegate. We will use the Dynatrace Activegate for Kubernetes integration.</p>
-<pre><code>gcloud container clusters create k8sworkshop --image-type=ubuntu --zone australia-southeast1-a
+<pre><code language="language-bash" class="language-bash">gcloud container clusters create k8sworkshop --image-type=ubuntu --zone australia-southeast1-a
 gcloud compute instances create dynatrace-activegate --image-family ubuntu-1604-lts --image-project ubuntu-os-cloud --zone australia-southeast1-a
 </code></pre>
 <p>Once completed, you will have a running GKE Cluster!</p>
@@ -76,7 +76,7 @@ gcloud compute instances create dynatrace-activegate --image-family ubuntu-1604-
 <p>Go to Settings -&gt; Process and Containers -&gt; Process group detection -&gt; Enable Cloud Application and workload detection</p>
 <p class="image-container"><img alt="Enable Cloud Workload" src="img/82a117212e749ac6.png"></p>
 <p>Automating the steps from our offical <a href="https://www.dynatrace.com/support/help/technology-support/cloud-platforms/kubernetes/installation-and-operation/further-integrations/connect-your-kubernetes-clusters-to-dynatrace/" target="_blank">documentation page</a>, we provided the API URL and bearer token automatically via API. Back in your main Cloud Shell terminal, enter the below</p>
-<pre><code>wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/master/setup-k8s-ui.sh | bash
+<pre><code language="language-bash" class="language-bash">wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/master/setup-k8s-ui.sh | bash
 </code></pre>
 <p>With the above results, enter the values to <strong>Settings</strong> -&gt; <strong>Cloud and Virtualization</strong> -&gt; <strong>Kubernetes</strong></p>
 <p class="image-container"><img alt="K8S-integration" src="img/b2fead2e1021a73e.png"></p>
@@ -109,7 +109,7 @@ gcloud compute instances create dynatrace-activegate --image-family ubuntu-1604-
 </ol>
 <ul>
 <li>API URL <br> Copy your Dynatrace URL and append <strong>&#34;/api&#34;</strong> to the end<br><img alt="API-URL" src="img/7a0fa534c0ea0b7.png"></li>
-<li>API Token <br> Create one from Settings -&gt; Integration -&gt; Dynatrace API<ul>
+<li>API Token <br> Create one from Settings -&gt; Integration -&gt; Dynatrace API <ul>
 <li>Enable Access problem and event feed, metrics, and topology toggle</li>
 <li>Enable Write Configuration toggle (needed for Activegate setup for the next step)<br><img alt="API-Token" src="img/83e5adcd4f7a9641.png"></li>
 </ul>
@@ -126,7 +126,7 @@ gcloud compute instances create dynatrace-activegate --image-family ubuntu-1604-
 <google-codelab-step label="Setting up Hipster Shop" duration="5">
 <p>For our Hands-On, you will need to run <a href="https://github.com/GoogleCloudPlatform/microservices-demo" target="_blank">Hipster Shop</a> which is a Google sample application.</p>
 <h2 is-upgraded>Run the Hipster Shop</h2>
-<pre><code>wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/master/deploy.sh | bash
+<pre><code language="language-bash" class="language-bash">wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/master/deploy.sh | bash
 </code></pre>
 <p>Once deployed, you can locate the front-end endpoint from GCP (<strong>Kubernetes Engine -&gt; Services &amp; Ingress</strong>)</p>
 <p class="image-container"><img alt="JSON" src="img/9ebd7ee1a7508c25.png"></p>
@@ -145,7 +145,7 @@ gcloud compute instances create dynatrace-activegate --image-family ubuntu-1604-
 <p class="image-container"><img alt="Features" src="img/61bdb2a03a90f742.png"></p>
 <p>Make sure all the below features all enabled, including the 2 additional NodeJS feature flags. <img alt="All-Features" src="img/3633df8c61ae4677.png"></p>
 <p>Enabling OneAgents features requires a restart of the pods. Run the following command to restart the pods.</p>
-<pre><code>kubectl delete pods --all -n hipster-shop
+<pre><code language="language-bash" class="language-bash">kubectl delete pods --all -n hipster-shop
 </code></pre>
 <p class="image-container"><img alt="Restart" src="img/8dfdab2042c64ce1.png"></p>
 <p>Back in Dynatrace, go to and Transactions and Services to see the updated list of services. <img alt="Discovered Services" src="img/2a76911ba825632d.png"></p>

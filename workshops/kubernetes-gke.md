@@ -1,6 +1,6 @@
 summary: Dynatrace with Kubernetes on GKE
 id: kubernetes-gke
-categories: Tech Labs
+categories: kubernetes, gke
 tags: kubernetes
 status: Published 
 authors: Brandon Neo
