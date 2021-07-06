@@ -19,7 +19,8 @@
     "jenkins"
   ],
   "tags": [
-    "autonomous-cloud"
+    "autonomous-cloud",
+    "Advanced"
   ],
   "feedback": "mailto:APAC-SE-Central@dynatrace.com",
   "ga": "UA-175467274-1",

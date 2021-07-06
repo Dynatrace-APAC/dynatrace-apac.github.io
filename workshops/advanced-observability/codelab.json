@@ -19,7 +19,8 @@
     "ansible"
   ],
   "tags": [
-    "adv-obs"
+    "adv-obs",
+    "Intermediate"
   ],
   "feedback": "mailto:APAC-SE-Central@dynatrace.com",
   "ga": "UA-175467274-1",
