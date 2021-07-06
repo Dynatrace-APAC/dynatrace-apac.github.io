@@ -33,7 +33,7 @@
 </li>
 </ul>
 <h2 class="checklist" is-upgraded>What You&#39;ll Learn</h2>
-<ul class="checklist">
+<ul>
 <li>Install OneAgent using Ansible CLI</li>
 <li>Learn Request Attributes for deep code level capture</li>
 <li>Learn Session Properties for advanced dashboarding</li>
@@ -47,9 +47,9 @@
 <h2 is-upgraded>Installing Ansible</h2>
 <p>Use the command below to setup Ansible in your Linux host</p>
 <p><code>wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Advanced-Observability/master/setup_ansible.sh | bash</code></p>
-<p>Positive:Once it&#39;s finished, run the following command to check the status of ansible <code>ansible --version</code></p>
+<p>Positive:Once it&#39;s finished, run the following command to check the status of ansible <code>ansible --version</code> </p>
 <p>You should see that it&#39;s successfully installed along with it&#39;s dependencies</p>
-<pre><code>ansible 2.9.13
+<pre><code language="language-bash" class="language-bash">ansible 2.9.13
 config file = /etc/ansible/ansible.cfg
 configured module search path = [u&#39;/home/advanced-observability-workshop/.ansible/plugins/modules&#39;, u&#39;/usr/share/ansible/plugins/modules&#39;]
 ansible python module location = /usr/lib/python2.7/dist-packages/ansible
@@ -60,7 +60,7 @@ python version = 2.7.17 (default, Jul 20 2020, 15:37:01) [GCC 7.5.0]
 <p>Use the command below to setup Ansible in your Linux host</p>
 <p><code>wget https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Advanced-Observability/master/dt-oneagent-install-linux.yml</code></p>
 <p>Using the command<code>more dt-oneagent-install-linux.yml</code>, we can explore the file to preview the necessary variables that we need to provide. For the purposes of the lab, we will use only be using Ansible to rollout on a host. But in a real world context, you can run the playbook across multiple hosts or environments.</p>
-<pre><code># dynatrace oneagent install on linux
+<pre><code language="language-bash" class="language-bash"># dynatrace oneagent install on linux
 # hosts_group -&gt; inventory group of hosts to execute playbook on
 # dt_api_endpoint -&gt; dynatrace environment api endpoint (include trailing /)
 # dt_api_token -&gt; dynatrace api install token
@@ -89,7 +89,7 @@ python version = 2.7.17 (default, Jul 20 2020, 15:37:01) [GCC 7.5.0]
 <h2 is-upgraded>Running the playbook</h2>
 <p>Using the command below, make changes to the <strong>dt_api_token</strong> and <strong>dt_api_endpoint</strong> variables. You can tweak the command with a text editor eg. Notepad++</p>
 <p><strong>EXAMPLE</strong></p>
-<pre><code>ansible-playbook \
+<pre><code language="language-bash" class="language-bash">ansible-playbook \
 -e dt_api_token=&lt;PAAS-TOKEN&gt; \
 -e dt_host_group=tech-labs \
 -e dt_app_log_content_access=1 \
@@ -100,7 +100,7 @@ dt-oneagent-install-linux.yml
 <p><strong>Paste</strong> the command into your terminal window and tweak the <strong>dt_api_token</strong> and <strong>dt_api_endpoint</strong> variables. Replace from token you copied earlier. You can get your from within the Dynatrace environment from the browser.</p>
 <p class="image-container"><img alt="Deploy" src="img/82f926ac9a2f26e6.png"></p>
 <p><strong>OUTPUT EXAMPLE</strong></p>
-<pre><code>PLAY [dynatrace oneagent install on linux] ********************************************************************************************************************
+<pre><code language="language-bash" class="language-bash">PLAY [dynatrace oneagent install on linux] ********************************************************************************************************************
 
 TASK [Gathering Facts] ****************************************************************************************************************************************
 ok: [localhost]

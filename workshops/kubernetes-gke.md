@@ -1,5 +1,5 @@
-summary: Dynatrace with Kubernetes on GKE
 id: kubernetes-gke
+summary: Full Stack Observability with K8s on GKE
 categories: kubernetes, gke
 tags: kubernetes
 status: Published 

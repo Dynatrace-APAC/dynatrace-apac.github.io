@@ -1,5 +1,5 @@
-summary: Digital Experience Management with Dynatrace
 id: dem
+summary: Automatic Real User monitoring with Dynatrace
 categories: dem
 tags: dem
 status: Published 

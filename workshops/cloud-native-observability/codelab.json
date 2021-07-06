@@ -8,7 +8,7 @@
   "duration": 84,
   "title": "Cloud-Native Observability with Dynatrace",
   "authors": "Brandon Neo",
-  "summary": "Cloud-Native Observability with Dynatrace",
+  "summary": "Using Monitoring-As-Code techniques, obtain observability for SREs by leveraging SLOs",
   "source": "cloud-native-observability.md",
   "theme": "",
   "status": [

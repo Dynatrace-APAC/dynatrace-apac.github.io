@@ -8,14 +8,15 @@
   "duration": 64,
   "title": "Advanced Observability with Dynatrace",
   "authors": "Brandon Neo",
-  "summary": "Advanced Observability with Dynatrace",
+  "summary": "Learn how automation with Ansible allows automatic discovery and observability",
   "source": "advanced-observability.md",
   "theme": "",
   "status": [
     "published"
   ],
   "category": [
-    "adv-obs"
+    "adv-obs",
+    "ansible"
   ],
   "tags": [
     "adv-obs"

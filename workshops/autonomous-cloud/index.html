@@ -39,11 +39,11 @@
 </ul>
 <p class="image-container"><img alt="ACM-Setup" src="img/ca81ec4b81ba0389.jpg"></p>
 <h2 class="checklist" is-upgraded>What You&#39;ll Learn</h2>
-<ul class="checklist">
+<ul>
 <li>Deploy a pipeline (Sockshop) in Jenkins</li>
 <li>Installing Keptn</li>
 <li>Integrating Jenkins to Keptn and Dynatrace</li>
-<li>Using Jenkins + Keptn with Dynatrace for <ul class="checklist">
+<li>Using Jenkins + Keptn with Dynatrace for <ul>
 <li>Automate Quality with Quality Gates evaluation</li>
 <li>Automate Testing Load Testing and Performance Testing</li>
 <li>Automate Operations with Self-healing with Ansible</li>
@@ -69,7 +69,7 @@
 <p>Login to the Kubernetes server via a SSH terminal (eg. Putty, Terminal, MobaXterm)</p>
 <p>Access your Kubernetes environment with credentials from your email</p>
 <p>Once you logged in, you can issue the commands below to install Keptn<br> Part of the Keptn setup has been automated within the shell script below.</p>
-<pre><code>cd dtacmworkshop/keptn
+<pre><code language="language-bash" class="language-bash">cd dtacmworkshop/keptn
 sudo ./installKeptn.sh
 </code></pre>
 <p class="image-container"><img alt="Keptn-Setup" src="img/37c529b5234457af.png"></p>
@@ -158,7 +158,7 @@ sudo ./installKeptn.sh
 <p>Dynatrace integrates with many runbook automation tools such as Ansible. We&#39;ll be using Ansible to showcase self-healing problems and automate operations.</p>
 <h2 is-upgraded>Generate Load for Carts Service</h2>
 <p>Within the SSH terminal, run the following commands to trigger load for the carts service.</p>
-<pre><code>cd ~acm_student/dtacmworkshop/utils/
+<pre><code language="language-bash" class="language-bash">cd ~acm_student/dtacmworkshop/utils/
 sudo ./cartsLoadTest.sh
 </code></pre>
 <h2 is-upgraded>Login to Ansible Tower</h2>
@@ -172,7 +172,7 @@ sudo ./cartsLoadTest.sh
 <p>In your Dynatrace tenant, navigate to &#34;<strong>Transaction &amp; services</strong>&#34; and filter by tag &#34;<strong>[Kubernetes]stage:prod</strong>&#34; and select ItemsController Service<br> Within the ItemsController Service page, click on on the <strong>three dots ( ... )</strong> next to the service name. Click on <strong>Edit<br></strong> On the next screen, edit the <strong>anomaly detection settings</strong> as per below<br></p>
 <ul>
 <li>Disable <strong>Global anomaly detection</strong></li>
-<li>Detect increases in failure rate using <strong>fixed thresholds</strong></li>
+<li>Detect increases in failure rate using <strong>fixed thresholds </strong></li>
 <li>Alert if <strong>0 %</strong> custom failure rate threshold is exceed during any 5-minute period.</li>
 <li>Set Sensitivity to <strong>High</strong> and change less than the value to <strong>1 request/min</strong>.</li>
 </ul>

@@ -1,14 +1,14 @@
 {
   "environment": "web",
   "format": "html",
-  "prefix": "https://storage.googleapis.com",
+  "prefix": "../../elements",
   "mainga": "UA-49880327-14",
   "updated": "2021-04-20T10:59:28+10:00",
   "id": "dem",
   "duration": 79,
   "title": "Digital Experience Management with Dynatrace",
   "authors": "Brandon Neo",
-  "summary": "Digital Experience Management with Dynatrace",
+  "summary": "Automatic Real User monitoring while learning capabilities such as Synthetics and Session Replay",
   "source": "dem-v2.md",
   "theme": "",
   "status": [

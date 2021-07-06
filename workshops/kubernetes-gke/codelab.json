@@ -8,7 +8,7 @@
   "duration": 34,
   "title": "Dynatrace with Kubernetes on GKE",
   "authors": "Brandon Neo",
-  "summary": "Dynatrace with Kubernetes on GKE",
+  "summary": "Full Stack Observability with K8s on GKE while discovering automatic gRPC services",
   "source": "kubernetes-gke.md",
   "theme": "",
   "status": [

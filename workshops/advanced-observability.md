@@ -1,5 +1,5 @@
-summary: Advanced Observability with Dynatrace
 id: advanced-observability
+summary: Automatic discovery and observability 
 categories: adv-Obs
 tags: adv-Obs
 status: Published 

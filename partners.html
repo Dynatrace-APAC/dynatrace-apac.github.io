@@ -89,11 +89,17 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 </paper-tabs>
 </div>
 <div id="right-dropdown">
-</div>
+<paper-dropdown-menu label="Language" class="dropdown-filter" no-label-float noink no-animations>
+<paper-listbox id="eventList" slot="dropdown-content" class="dropdown-content">
+<a href="/jp/" tabindex="-1">
+<paper-item>jp</paper-item>
+</a>
+</paper-listbox>
+</paper-dropdown-menu></div>
 </div>
 <card-sorter id="cards" class="site-width">
 <a href="https://interact.dynatrace.com/" on-tap="navigate" class="codelab-card category-apps-microservices" data-category="apps-microservices" data-title="Apps And Microservices Demo" data-duration="136" data-updated="2020-07-28T15:48:24+10:00" data-tags="apps-microservices" data-pin="1">
-<div class="description">Apps & Microservices</div>
+<div class="title">Apps & Microservices</div>
 <div class="card-duration">
 <span>INTERACTIVE DEMO</span>
 <span></span>
@@ -104,7 +110,7 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 </div>
 </a>
 <a href="https://interact.dynatrace.com/infrastructure-demo/p/1" on-tap="navigate" class="codelab-card category-infrastructure" data-category="apps-microservices" data-title="Apps And Microservices Demo" data-duration="136" data-updated="2020-07-28T15:48:24+10:00" data-tags="apps-microservices" data-pin="1">
-<div class="description">Infrastructure</div>
+<div class="title">Infrastructure</div>
 <div class="card-duration">
 <span>INTERACTIVE DEMO</span>
 <span></span>
@@ -115,7 +121,7 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 </div>
 </a>
 <a href="https://interact.dynatrace.com/davis-explained/p/1" on-tap="navigate" class="codelab-card category-davis" data-category="apps-microservices" data-title="Apps And Microservices Demo" data-duration="136" data-updated="2020-07-28T15:48:24+10:00" data-tags="apps-microservices" data-pin="1">
-<div class="description">Dynatrace DAVIS Explained</div>
+<div class="title">Dynatrace DAVIS Explained</div>
 <div class="card-duration">
 <span>INTERACTIVE DEMO</span>
 <span></span>
@@ -126,7 +132,8 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 </div>
 </a>
 <a href="/workshops/azure-partner/index.html?index=..%2F..partners" on-tap="navigate" class="codelab-card category-azure" data-category="azure" data-title="Dynatrace with Azure" data-duration="75" data-updated="2021-04-27T11:41:11+10:00" data-tags="partner" data-pin="">
-<div class="description">Dynatrace with Azure</div>
+<div class="title">Dynatrace with Azure</div>
+<div class="summary">Azure Hands-On</div>
 <div class="card-duration">
 <span>75 min </span>
 <span>Updated Apr 27, 2021</span>

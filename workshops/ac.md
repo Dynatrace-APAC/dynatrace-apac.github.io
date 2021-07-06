@@ -1,6 +1,6 @@
-summary: Autonomous Cloud with Dynatrace
 id: autonomous-cloud
-categories: Tech Labs
+summary: Intelligence Quality Gates for App deployment
+categories: autonomous-cloud
 tags: autonomous-cloud
 status: Published 
 authors: Brandon Neo

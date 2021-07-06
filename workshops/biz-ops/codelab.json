@@ -5,9 +5,9 @@
   "mainga": "UA-49880327-14",
   "updated": "2021-06-21T16:22:43+10:00",
   "id": "biz-ops",
-  "duration": 0,
+  "duration": 135,
   "title": "BizOps with Dynatrace",
-  "summary": "BizOps with Dynatrace",
+  "summary": "Enhance the Real User Monitoring in Dynatrace to bringing business context to IT metrics",
   "source": "bizops2021.md",
   "theme": "",
   "status": [

@@ -1,6 +1,6 @@
-summary: Dynatrace with Kubernetes
 id: kubernetes
-categories: Tech Labs
+summary: Full Stack Observability with vanilla K8s
+categories: kubernetes
 tags: kubernetes
 status: Published 
 authors: Brandon Neo

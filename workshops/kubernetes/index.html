@@ -7,8 +7,8 @@
 <meta charset="UTF-8">
 <title>Dynatrace with Kubernetes</title>
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
-<link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
 <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
 <style>
 .success{color:#1e8e3e}.error{color:red} </style>
 </head>
@@ -25,7 +25,7 @@
 <li>Chrome Browser</li>
 </ul>
 <h2 class="checklist" is-upgraded>What You&#39;ll Learn</h2>
-<ul class="checklist">
+<ul>
 <li>Deploying Dynatrace Operator via Helm Chart on Kubernetes</li>
 <li>Setup Kubernetes integration on Dynatrace</li>
 <li>Explore Automatic Kubernetes Dashboards</li>
@@ -47,7 +47,7 @@
 <p class="image-container"><img alt="k8s-setup" src="img/ce4b0dd79940a999.gif"></p>
 <h2 is-upgraded>Add the OneAgent Helm Repo</h2>
 <p>Follow the setup steps and run the following commands.</p>
-<pre><code>helm repo add dynatrace https://raw.githubusercontent.com/Dynatrace/helm-charts/master/repos/stable
+<pre><code language="language-bash" class="language-bash">helm repo add dynatrace https://raw.githubusercontent.com/Dynatrace/helm-charts/master/repos/stable
 kubectl create namespace dynatrace
 </code></pre>
 <h2 is-upgraded>Create a and apply values.yaml</h2>
@@ -55,7 +55,7 @@ kubectl create namespace dynatrace
 <p><code>nano values.yaml</code></p>
 <p>Copy and paste in content in your Dyntrace tenant and save the file with <strong>Ctrl-X</strong> followed by <strong>Y</strong> and <strong>Enter</strong></p>
 <p><strong>EXAMPLE</strong></p>
-<pre><code>platform: &#34;kubernetes&#34;
+<pre><code language="language-bash" class="language-bash">platform: &#34;kubernetes&#34;
 
 oneagent:
   name: &#34;oneagent&#34;
@@ -70,12 +70,12 @@ secret:
   paasToken: &#34;&lt;PAAS KEY&gt;&#34;
 </code></pre>
 <p>Copy the next command to <strong>apply the values.yaml</strong> and <strong>deploy OneAgent on Kubernetes</strong>.</p>
-<pre><code>helm install dynatrace-oneagent-operator \
+<pre><code language="language-bash" class="language-bash">helm install dynatrace-oneagent-operator \
 dynatrace/dynatrace-oneagent-operator -n\
 dynatrace --values values.yaml
 </code></pre>
 <p>If successful, you should get a positive output with <strong>STATUS: deployed</strong> as per below.</p>
-<pre><code>NAME: dynatrace-oneagent-operator
+<pre><code language="language-bash" class="language-bash">NAME: dynatrace-oneagent-operator
 LAST DEPLOYED: Thu Aug 13 01:25:26 2020
 NAMESPACE: dynatrace
 STATUS: deployed
@@ -103,7 +103,7 @@ Your release is named dynatrace-oneagent-operator.
 <h2 is-upgraded>Restart Sockshop Sample App</h2>
 <p>You can see the various processes automatically detected but Dynatrace prompts you to restart them. This is required for us to automatically instrument them without code changes.</p>
 <p>Run the below command to cycle through your services for <strong>Dev</strong> and <strong>Production</strong>.</p>
-<pre><code>kubectl delete pods --all -n dev
+<pre><code language="language-bash" class="language-bash">kubectl delete pods --all -n dev
 kubectl delete pods --all -n production
 </code></pre>
 </google-codelab-step>
@@ -126,22 +126,22 @@ kubectl delete pods --all -n production
 <p class="image-container"><img alt="Enable Cloud Workload" src="img/82a117212e749ac6.png"></p>
 <h2 is-upgraded>Create a Service Account and Cluster role</h2>
 <p>Create a service account and cluster role for accessing the Kubernetes API. This creates the bearer token necessary to authenticate in the Kubernetes API. Use the following snippet in your shell terminal.</p>
-<pre><code>kubectl apply -f https://www.dynatrace.com/support/help/codefiles/kubernetes/kubernetes-monitoring-service-account.yaml
+<pre><code language="language-bash" class="language-bash">kubectl apply -f https://www.dynatrace.com/support/help/codefiles/kubernetes/kubernetes-monitoring-service-account.yaml
 </code></pre>
 <h2 is-upgraded>Setup your Kubernetes Integration</h2>
 <p>Go to <strong>Settings -&gt; Cloud and Virtualization -&gt; Kubernetes -&gt; Connect new cluster</strong></p>
 <h2 is-upgraded>Get the Kubernetes API URL</h2>
 <p>Enter the below command and copy it for the <strong>Kubernetes API URL</strong>.</p>
-<pre><code>kubectl get ing k8-api-ingress | grep -oP &#39;api.kubernetes[^[:blank:]]*&#39;
+<pre><code language="language-bash" class="language-bash">kubectl get ing k8-api-ingress | grep -oP &#39;api.kubernetes[^[:blank:]]*&#39;
 </code></pre>
 <h2 is-upgraded>Get the Bearer Token</h2>
 <p>Enter the below command and copy it for the <strong>Kubernetes Bearer Token</strong>.</p>
-<pre><code>kubectl get secret $(kubectl get sa dynatrace-monitoring -o jsonpath=&#39;{.secrets[0].name}&#39; -n dynatrace) -o jsonpath=&#39;{.data.token}&#39; -n dynatrace | base64 --decode &amp;
+<pre><code language="language-bash" class="language-bash">kubectl get secret $(kubectl get sa dynatrace-monitoring -o jsonpath=&#39;{.secrets[0].name}&#39; -n dynatrace) -o jsonpath=&#39;{.data.token}&#39; -n dynatrace | base64 --decode &amp;
 </code></pre>
 <p class="image-container"><img alt="K8S-integration" src="img/b2fead2e1021a73e.png"></p>
 <ul>
 <li>Give a name for the connection eg. <strong>Kubernetes</strong></li>
-<li>Enter in your <strong>Kubernetes API URL Target</strong><ul>
+<li>Enter in your <strong>Kubernetes API URL Target </strong><ul>
 <li>Append <strong>https://</strong> before your API URL</li>
 </ul>
 </li>
@@ -161,7 +161,7 @@ kubectl delete pods --all -n production
 <google-codelab-step label="Kubernetes Labels and Annotations" duration="5">
 <p>With the Sockshop app restarted, you should be able to see services in Dynatrace.</p>
 <p>Referring to <code>~/dtacmworkshop/manifests/sockshop-app/production/front-end.yml</code>, we will want to setup Dynatrace to automatically pick up the annotations and labels</p>
-<pre><code>apiVersion: extensions/v1beta1
+<pre><code language="language-bash" class="language-bash">apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: front-end.stable
@@ -188,10 +188,10 @@ spec:
 </code></pre>
 <h2 is-upgraded>Viewership role for service accounts</h2>
 <p>The OneAgent will use a pod service account to query for its metadata via the Kubernetes REST API. The service accounts must be granted <strong>viewer role</strong> in order to have access In the CLI, execute the following command for the <strong>production project</strong></p>
-<pre><code>kubectl create rolebinding serviceaccounts-view --clusterrole=view --group=system:serviceaccounts:production --namespace=production
+<pre><code language="language-bash" class="language-bash">kubectl create rolebinding serviceaccounts-view --clusterrole=view --group=system:serviceaccounts:production --namespace=production
 </code></pre>
 <p>You can repeat the procedure for the <strong>dev project</strong></p>
-<pre><code>kubectl create rolebinding serviceaccounts-view --clusterrole=view --group=system:serviceaccounts:dev --namespace=dev
+<pre><code language="language-bash" class="language-bash">kubectl create rolebinding serviceaccounts-view --clusterrole=view --group=system:serviceaccounts:dev --namespace=dev
 </code></pre>
 <p>Wait for the Dynatrace to pickup the change.</p>
 <aside class="warning"><p>⚠️ To manually recycle the apps, run command below. <code>wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/master/recycle-sockshop-frontend.sh | bash</code></p>
@@ -207,7 +207,7 @@ spec:
 <p>In shell terminal, add some Environment Variables with the following command</p>
 <p><code>nano ~/dtacmworkshop/manifests/sockshop-app/production/front-end.yml</code></p>
 <p><strong>Make sure that the indentation is correct and that they aren&#39;t any error promptings</strong></p>
-<pre><code>        env:
+<pre><code language="language-bash" class="language-bash">        env:
         - name: DT_TAGS
           value: &#34;product=sockshop&#34;
         - name: DT_CUSTOM_PROP
@@ -215,7 +215,7 @@ spec:
 </code></pre>
 <p class="image-container"><img alt="JSON" src="img/9073a73c860abc7.png"></p>
 <p>Save the amended file with <strong>Ctrl-X</strong>, followed by <strong>Y</strong> and <strong>Enter</strong> and run the below command to re-apply the change.</p>
-<pre><code>kubectl apply -f ~/dtacmworkshop/manifests/sockshop-app/production/front-end.yml
+<pre><code language="language-bash" class="language-bash">kubectl apply -f ~/dtacmworkshop/manifests/sockshop-app/production/front-end.yml
 wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/master/recycle-sockshop-frontend.sh | bash
 </code></pre>
 <h2 is-upgraded>Validate</h2>
@@ -251,7 +251,7 @@ wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/ma
 <google-codelab-step label="(Optional) Process Detection for Canary Deployment" duration="15">
 <h2 is-upgraded>Deploy the Canary Release</h2>
 <p>Run the command below to trigger the canary release</p>
-<pre><code>kubectl apply -f https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/master/manifests/sockshop-app/canary/front-end-canary.yml
+<pre><code language="language-bash" class="language-bash">kubectl apply -f https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/master/manifests/sockshop-app/canary/front-end-canary.yml
 </code></pre>
 <p>Execute <code>kubectl get pods -n production -o wide</code> and you will see you now have both <strong>stable and canary releases running for the front-end service</strong></p>
 <p class="image-container"><img alt="JSON" src="img/1309f5d8a96d63ea.png"></p>
@@ -270,7 +270,7 @@ wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/ma
 <p>Also, extract the identifier after the <strong>&#34;.&#34;</strong> in the pod name. Remember the pod names have <strong>&#34;.stable &#34;or &#34;.canary&#34;</strong> in their name to distinguish them</p>
 <p class="image-container"><img alt="JSON" src="img/b64bf745b5a8e7bc.png"></p>
 <p>Run the below command to <strong>recycle both stable and canary frontend pods</strong>. The process detection rules are applied on process startup.</p>
-<pre><code>wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/master/recycle-sockshop-frontend.sh | bash
+<pre><code language="language-bash" class="language-bash">wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/master/recycle-sockshop-frontend.sh | bash
 </code></pre>
 <p>Within Dynatrace, you can see that the Process Groups have been merged.</p>
 <p class="image-container"><img alt="Process-Group-Merged" src="img/b5bae69fd73c80c5.png"></p>

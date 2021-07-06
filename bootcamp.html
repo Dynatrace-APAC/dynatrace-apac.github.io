@@ -90,6 +90,7 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 </div>
 <div id="right-dropdown"><paper-dropdown-menu label="Category" class="dropdown-filter" no-label-float noink no-animations>
 <paper-listbox id="categorylist" slot="dropdown-content" class="dropdown-content" on-iron-activate="onCategoryActivate" attr-for-selected="filter">
+<paper-item filter="">all</paper-item>
 <paper-item filter="actionable-infra">actionable-infra</paper-item>
 <paper-item filter="azure">azure</paper-item>
 <paper-item filter="dem">dem</paper-item>
@@ -100,11 +101,17 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <paper-item filter="opentel">opentel</paper-item>
 </paper-listbox>
 </paper-dropdown-menu>
-</div>
+<paper-dropdown-menu label="Language" class="dropdown-filter" no-label-float noink no-animations>
+<paper-listbox id="eventList" slot="dropdown-content" class="dropdown-content">
+<a href="/jp/" tabindex="-1">
+<paper-item>jp</paper-item>
+</a>
+</paper-listbox>
+</paper-dropdown-menu></div>
 </div>
 <card-sorter id="cards" class="site-width">
 <a href="https://interact.dynatrace.com/" on-tap="navigate" class="codelab-card category-apps-microservices" data-category="apps-microservices" data-title="Apps And Microservices Demo" data-duration="136" data-updated="2020-07-28T15:48:24+10:00" data-tags="apps-microservices" data-pin="1">
-<div class="description">Apps & Microservices</div>
+<div class="title">Apps & Microservices</div>
 <div class="card-duration">
 <span>INTERACTIVE DEMO</span>
 <span></span>
@@ -115,7 +122,7 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 </div>
 </a>
 <a href="https://interact.dynatrace.com/infrastructure-demo/p/1" on-tap="navigate" class="codelab-card category-infrastructure" data-category="apps-microservices" data-title="Apps And Microservices Demo" data-duration="136" data-updated="2020-07-28T15:48:24+10:00" data-tags="apps-microservices" data-pin="1">
-<div class="description">Infrastructure</div>
+<div class="title">Infrastructure</div>
 <div class="card-duration">
 <span>INTERACTIVE DEMO</span>
 <span></span>
@@ -126,7 +133,7 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 </div>
 </a>
 <a href="https://interact.dynatrace.com/davis-explained/p/1" on-tap="navigate" class="codelab-card category-davis" data-category="apps-microservices" data-title="Apps And Microservices Demo" data-duration="136" data-updated="2020-07-28T15:48:24+10:00" data-tags="apps-microservices" data-pin="1">
-<div class="description">Dynatrace DAVIS Explained</div>
+<div class="title">Dynatrace DAVIS Explained</div>
 <div class="card-duration">
 <span>INTERACTIVE DEMO</span>
 <span></span>
@@ -137,7 +144,8 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 </div>
 </a>
 <a href="/workshops/Actionable-infra/index.html?index=..%2F..bootcamp" on-tap="navigate" class="codelab-card category-actionable-infra" data-category="actionable-infra" data-title="Actionable Infra Observability" data-duration="0" data-updated="2021-03-30T16:20:42+11:00" data-tags="bootcamp" data-pin="">
-<div class="description">Actionable Infra Observability</div>
+<div class="title">Actionable Infra Observability</div>
+<div class="summary">Actionable-Infra</div>
 <div class="card-duration">
 <span></span>
 <span>Updated Mar 30, 2021</span>
@@ -148,7 +156,8 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 </div>
 </a>
 <a href="/workshops/usql/index.html?index=..%2F..bootcamp" on-tap="navigate" class="codelab-card category-dem" data-category="dem,bizops" data-title="Advanced USQL" data-duration="18" data-updated="2020-10-17T21:20:37+11:00" data-tags="bootcamp" data-pin="">
-<div class="description">Advanced USQL</div>
+<div class="title">Advanced USQL</div>
+<div class="summary">How to use USQL in your POCs</div>
 <div class="card-duration">
 <span>18 min </span>
 <span>Updated Oct 17, 2020</span>
@@ -159,7 +168,8 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 </div>
 </a>
 <a href="/workshops/azure/index.html?index=..%2F..bootcamp" on-tap="navigate" class="codelab-card category-azure" data-category="azure" data-title="Dynatrace with Azure" data-duration="64" data-updated="2020-10-17T21:39:38+11:00" data-tags="bootcamp" data-pin="">
-<div class="description">Dynatrace with Azure</div>
+<div class="title">Dynatrace with Azure</div>
+<div class="summary">Azure Hands-On</div>
 <div class="card-duration">
 <span>64 min </span>
 <span>Updated Oct 17, 2020</span>
@@ -170,7 +180,8 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 </div>
 </a>
 <a href="/workshops/istio/index.html?index=..%2F..bootcamp" on-tap="navigate" class="codelab-card category-istio" data-category="istio" data-title="Dynatrace with Istio" data-duration="84" data-updated="2020-10-21T11:33:06+11:00" data-tags="bootcamp" data-pin="">
-<div class="description">Dynatrace with Istio</div>
+<div class="title">Dynatrace with Istio</div>
+<div class="summary">Istio Hands-On</div>
 <div class="card-duration">
 <span>84 min </span>
 <span>Updated Oct 21, 2020</span>
@@ -181,7 +192,8 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 </div>
 </a>
 <a href="/workshops/opentelemetry/index.html?index=..%2F..bootcamp" on-tap="navigate" class="codelab-card category-opentel" data-category="opentel" data-title="Dynatrace with OpenTelemetry" data-duration="0" data-updated="2021-03-30T15:51:20+11:00" data-tags="bootcamp" data-pin="">
-<div class="description">Dynatrace with OpenTelemetry</div>
+<div class="title">Dynatrace with OpenTelemetry</div>
+<div class="summary">OpenTelemetry</div>
 <div class="card-duration">
 <span></span>
 <span>Updated Mar 30, 2021</span>
@@ -192,7 +204,8 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 </div>
 </a>
 <a href="/workshops/logmon-2/index.html?index=..%2F..bootcamp" on-tap="navigate" class="codelab-card category-logmon-2" data-category="logmon-2" data-title="Log Monitoring 2.0" data-duration="44" data-updated="2021-06-22T14:00:44+10:00" data-tags="bootcamp" data-pin="">
-<div class="description">Log Monitoring 2.0</div>
+<div class="title">Log Monitoring 2.0</div>
+<div class="summary">Log Monitor 2.0</div>
 <div class="card-duration">
 <span>44 min </span>
 <span>Updated Jun 22, 2021</span>
@@ -203,7 +216,8 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 </div>
 </a>
 <a href="/workshops/mint/index.html?index=..%2F..bootcamp" on-tap="navigate" class="codelab-card category-infra" data-category="infra" data-title="Metric Ingestion" data-duration="23" data-updated="2020-10-20T08:20:07+11:00" data-tags="bootcamp" data-pin="">
-<div class="description">Metric Ingestion</div>
+<div class="title">Metric Ingestion</div>
+<div class="summary">The new Metric Ingestion Interface</div>
 <div class="card-duration">
 <span>23 min </span>
 <span>Updated Oct 19, 2020</span>
@@ -214,7 +228,8 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 </div>
 </a>
 <a href="/workshops/dt-love/index.html?index=..%2F..bootcamp" on-tap="navigate" class="codelab-card category-dt-love" data-category="dt-love" data-title="Why Devs Love Dynatrace" data-duration="0" data-updated="2021-03-01T13:45:25+11:00" data-tags="bootcamp" data-pin="">
-<div class="description">Why Devs Love Dynatrace</div>
+<div class="title">Why Devs Love Dynatrace</div>
+<div class="summary">DT-love</div>
 <div class="card-duration">
 <span></span>
 <span>Updated Mar 1, 2021</span>

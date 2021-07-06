@@ -1,5 +1,5 @@
-summary: Cloud-Native Observability with Dynatrace
 id: cloud-native-observability
+summary: Cloud Native observability for SREs
 categories: cloud-obs
 tags: cloud-Obs
 status: Published 

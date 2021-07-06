@@ -1,5 +1,5 @@
-summary: Get Started with Dynatrace
 id: get-started-dt
+summary: Start your free trial EASILY with Dynatrace 
 categories: get-started
 tags: microlab
 status: Published 

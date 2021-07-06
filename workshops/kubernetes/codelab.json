@@ -1,14 +1,14 @@
 {
   "environment": "web",
   "format": "html",
-  "prefix": "https://storage.googleapis.com",
+  "prefix": "../../elements",
   "mainga": "UA-49880327-14",
   "updated": "2020-08-26T14:45:15+10:00",
   "id": "kubernetes",
   "duration": 84,
   "title": "Dynatrace with Kubernetes",
   "authors": "Brandon Neo",
-  "summary": "Dynatrace with Kubernetes",
+  "summary": "Full Stack Observability with vanilla Kubernetes while integating with k8s for additional context",
   "source": "kubernetes.md",
   "theme": "",
   "status": [

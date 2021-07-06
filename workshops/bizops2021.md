@@ -1,5 +1,5 @@
-summary: BizOps with Dynatrace
 id: biz-ops
+summary: BizOps powered by Davis AI
 categories: biz-ops
 tags: biz-ops
 status: Published 
@@ -9,6 +9,7 @@ Analytics Account: UA-175467274-1
 # BizOps with Dynatrace
 <!-- ------------------------ -->
 ## Overview
+Duration: 15
 
 This Repo contains the labs we are going to work though as part of the BizOps – Bridging the Gap to the Business Hands On Workshop.
 
@@ -42,6 +43,7 @@ The following steps are used for this lab:
 
 <!-- ------------------------ -->
 ## Activity-1 - Bring business context to IT metrics
+Duration: 15
 
 The goal of this exercise is to enhance the basic Real User Monitoring configuration in Dynatrace to bring business context to IT metrics. As such, we will not be going through the basic configuration of Dynatrace and have pre-setup the environment with the configuration:
 * Organizing applications
@@ -94,6 +96,7 @@ Positive
 
 <!-- ------------------------ -->
 ## Activity-1b - Creating Conversion Rates
+Duration: 15
 
 Conversion goals are useful for understanding if users are meeting critical milestones in a user journey, for example, successful checkouts, newsletter signups, or demo signups
 
@@ -129,6 +132,7 @@ Check results aginst the application: **EasyTravel Angular** > **User behavior**
 
 <!-- ------------------------ -->
 ## Activity-1c - Session and User action Properties
+Duration: 15
 
 In this exercise, we will create session and user action properties to expose additional data to Dynatrace. This is useful for bringing additonal context regarding the users (e.g. campaign source, various items selected by users etc.) for analytics purposes.
 
@@ -230,6 +234,8 @@ Positive
 
 <!-- ------------------------ -->
 ## Activity-1d - Session Replay
+Duration: 15
+
 In this exercise, we will cover configuring Session Replay in Dynatrace.
 
 Follow the steps below to enable session Replay:
@@ -396,6 +402,7 @@ Positive
 <!-- ------------------------ -->
 
 ## Activity-3 - Action on the data
+Duration: 15
 
 Let's challange DAVIS™️!
 
@@ -470,6 +477,7 @@ By applying Business Analytics in Dynatrace, we could easily achieve the followi
 
 <!-- ------------------------ -->
 ## Activity-4a - Create a "friction-less" user experience by reducing errors
+Duration: 15
 
 The #1 cause of drop-outs/user frustration is errors!
 
@@ -525,6 +533,7 @@ We will use 2 workflows as examples.
 
 <!-- ------------------------ -->
 ## Activity-4b - Peformance optimization to improve usability
+Duration: 15
 
 Google introduced their [Core Web Vitals](https://web.dev/vitals/) initiative last year.
 
@@ -594,6 +603,7 @@ Positive
 
 <!-- ------------------------ -->
 ## How to make use of request attributes?
+Duration: 15
 
 As we have shown earlier, 2 request attributes **revenue** and **destination** have been pre-created for you.
 

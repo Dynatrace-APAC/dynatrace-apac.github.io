@@ -95,13 +95,14 @@ From interactive demos, to self-guided microlearning labs or even advanced virtu
 </div>
 <div id="right-dropdown"><paper-dropdown-menu label="Category" class="dropdown-filter" no-label-float noink no-animations>
 <paper-listbox id="categorylist" slot="dropdown-content" class="dropdown-content" on-iron-activate="onCategoryActivate" attr-for-selected="filter">
-<paper-item filter="adv-obs">adv-obs</paper-item>
-<paper-item filter="autonomous-cloud">autonomous-cloud</paper-item>
+<paper-item filter="">all</paper-item>
+<paper-item filter="ansible">ansible</paper-item>
 <paper-item filter="biz-ops">biz-ops</paper-item>
 <paper-item filter="cloud-obs">cloud-obs</paper-item>
 <paper-item filter="dem">dem</paper-item>
 <paper-item filter="get-started">get-started</paper-item>
 <paper-item filter="gke">gke</paper-item>
+<paper-item filter="jenkins">jenkins</paper-item>
 <paper-item filter="kubernetes">kubernetes</paper-item>
 </paper-listbox>
 </paper-dropdown-menu>
@@ -115,7 +116,7 @@ From interactive demos, to self-guided microlearning labs or even advanced virtu
 </div>
 <card-sorter id="cards" class="site-width">
 <a href="https://interact.dynatrace.com/" on-tap="navigate" class="codelab-card category-apps-microservices" data-category="apps-microservices" data-title="Apps And Microservices Demo" data-duration="136" data-updated="2020-07-28T15:48:24+10:00" data-tags="apps-microservices" data-pin="1">
-<div class="description">Apps & Microservices</div>
+<div class="title">Apps & Microservices</div>
 <div class="card-duration">
 <span>INTERACTIVE DEMO</span>
 <span></span>
@@ -126,7 +127,7 @@ From interactive demos, to self-guided microlearning labs or even advanced virtu
 </div>
 </a>
 <a href="https://interact.dynatrace.com/infrastructure-demo/p/1" on-tap="navigate" class="codelab-card category-infrastructure" data-category="apps-microservices" data-title="Apps And Microservices Demo" data-duration="136" data-updated="2020-07-28T15:48:24+10:00" data-tags="apps-microservices" data-pin="1">
-<div class="description">Infrastructure</div>
+<div class="title">Infrastructure</div>
 <div class="card-duration">
 <span>INTERACTIVE DEMO</span>
 <span></span>
@@ -137,7 +138,7 @@ From interactive demos, to self-guided microlearning labs or even advanced virtu
 </div>
 </a>
 <a href="https://interact.dynatrace.com/davis-explained/p/1" on-tap="navigate" class="codelab-card category-davis" data-category="apps-microservices" data-title="Apps And Microservices Demo" data-duration="136" data-updated="2020-07-28T15:48:24+10:00" data-tags="apps-microservices" data-pin="1">
-<div class="description">Dynatrace DAVIS Explained</div>
+<div class="title">Dynatrace DAVIS Explained</div>
 <div class="card-duration">
 <span>INTERACTIVE DEMO</span>
 <span></span>
@@ -149,7 +150,8 @@ From interactive demos, to self-guided microlearning labs or even advanced virtu
 </a>
 <a href="/workshops/get-started-dt/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-get-started" data-category="get-started" data-title="Get Started with Dynatrace" data-duration="15" data-updated="2021-04-30T11:51:49+10:00" data-tags="microlab" data-pin="1">
 <div class="card-pin"></div>
-<div class="description">Get Started with Dynatrace</div>
+<div class="title">Get Started with Dynatrace</div>
+<div class="summary">Discover how EASY it is start a Free Trial and have Dynatrace observe your environment.</div>
 <div class="card-duration">
 <span>15 min </span>
 <span>Updated Apr 30, 2021</span>
@@ -160,34 +162,24 @@ From interactive demos, to self-guided microlearning labs or even advanced virtu
 <paper-button class="get-started-bg">Start</paper-button>
 </div>
 </a>
-<a href="/workshops/advanced-observability/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-adv-obs" data-category="adv-obs" data-title="Advanced Observability with Dynatrace" data-duration="64" data-updated="2020-10-02T11:58:04+10:00" data-tags="adv-obs" data-pin="">
-<div class="description">Advanced Observability with Dynatrace</div>
+<a href="/workshops/advanced-observability/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-adv-obs" data-category="adv-obs,ansible" data-title="Advanced Observability with Dynatrace" data-duration="64" data-updated="2020-10-02T11:58:04+10:00" data-tags="adv-obs" data-pin="">
+<div class="title">Advanced Observability with Dynatrace</div>
+<div class="summary">Learn how automation with Ansible allows automatic discovery and observability</div>
 <div class="card-duration">
 <span>64 min </span>
 <span>Updated Oct 2, 2020</span>
 </div>
 <div class="card-footer">
 <div class="category-icon adv-obs-icon"></div>
-<div class="category-icon category-icon2 undefined-icon"></div>
+<div class="category-icon category-icon2 ansible-icon"></div>
 <paper-button class="adv-obs-bg">Start</paper-button>
 </div>
 </a>
-<a href="/workshops/autonomous-cloud/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-autonomous-cloud" data-category="autonomous-cloud" data-title="Autonomous Cloud with Dynatrace" data-duration="119" data-updated="2020-07-23T16:32:52+10:00" data-tags="autonomous-cloud" data-pin="">
-<div class="description">Autonomous Cloud with Dynatrace</div>
+<a href="/workshops/biz-ops/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-biz-ops" data-category="biz-ops" data-title="BizOps with Dynatrace" data-duration="135" data-updated="2021-06-21T16:22:43+10:00" data-tags="biz-ops" data-pin="">
+<div class="title">BizOps with Dynatrace</div>
+<div class="summary">Enhance the Real User Monitoring in Dynatrace to bringing business context to IT metrics</div>
 <div class="card-duration">
-<span>119 min </span>
-<span>Updated Jul 23, 2020</span>
-</div>
-<div class="card-footer">
-<div class="category-icon autonomous-cloud-icon"></div>
-<div class="category-icon category-icon2 undefined-icon"></div>
-<paper-button class="autonomous-cloud-bg">Start</paper-button>
-</div>
-</a>
-<a href="/workshops/biz-ops/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-biz-ops" data-category="biz-ops" data-title="BizOps with Dynatrace" data-duration="0" data-updated="2021-06-21T16:22:43+10:00" data-tags="biz-ops" data-pin="">
-<div class="description">BizOps with Dynatrace</div>
-<div class="card-duration">
-<span></span>
+<span>135 min </span>
 <span>Updated Jun 21, 2021</span>
 </div>
 <div class="card-footer">
@@ -197,7 +189,8 @@ From interactive demos, to self-guided microlearning labs or even advanced virtu
 </div>
 </a>
 <a href="/workshops/cloud-native-observability/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-cloud-obs" data-category="cloud-obs" data-title="Cloud-Native Observability with Dynatrace" data-duration="84" data-updated="2021-06-28T09:23:05+10:00" data-tags="cloud-obs" data-pin="">
-<div class="description">Cloud-Native Observability with Dynatrace</div>
+<div class="title">Cloud-Native Observability with Dynatrace</div>
+<div class="summary">Using Monitoring-As-Code techniques, obtain observability for SREs by leveraging SLOs</div>
 <div class="card-duration">
 <span>84 min </span>
 <span>Updated Jun 27, 2021</span>
@@ -209,7 +202,8 @@ From interactive demos, to self-guided microlearning labs or even advanced virtu
 </div>
 </a>
 <a href="/workshops/dem/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-dem" data-category="dem" data-title="Digital Experience Management with Dynatrace" data-duration="79" data-updated="2021-04-20T10:59:28+10:00" data-tags="dem" data-pin="">
-<div class="description">Digital Experience Management with Dynatrace</div>
+<div class="title">Digital Experience Management with Dynatrace</div>
+<div class="summary">Automatic Real User monitoring while learning capabilities such as Synthetics and Session Replay</div>
 <div class="card-duration">
 <span>79 min </span>
 <span>Updated Apr 20, 2021</span>
@@ -221,7 +215,8 @@ From interactive demos, to self-guided microlearning labs or even advanced virtu
 </div>
 </a>
 <a href="/workshops/kubernetes-gke/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-kubernetes" data-category="kubernetes,gke" data-title="Dynatrace with Kubernetes on GKE" data-duration="34" data-updated="2020-08-26T14:45:15+10:00" data-tags="kubernetes" data-pin="">
-<div class="description">Dynatrace with Kubernetes on GKE</div>
+<div class="title">Dynatrace with Kubernetes on GKE</div>
+<div class="summary">Full Stack Observability with K8s on GKE while discovering automatic gRPC services</div>
 <div class="card-duration">
 <span>34 min </span>
 <span>Updated Aug 26, 2020</span>
@@ -232,8 +227,22 @@ From interactive demos, to self-guided microlearning labs or even advanced virtu
 <paper-button class="kubernetes-bg">Start</paper-button>
 </div>
 </a>
+<a href="/workshops/autonomous-cloud/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-keptn" data-category="keptn,jenkins" data-title="Autonomous Cloud with Dynatrace" data-duration="119" data-updated="2020-07-23T16:32:52+10:00" data-tags="autonomous-cloud" data-pin="">
+<div class="title">Autonomous Cloud with Dynatrace</div>
+<div class="summary">Intelligence Quality Gates powered by Keptn with Jenkins for Automated App deployment and even allowing Self-healing</div>
+<div class="card-duration">
+<span>119 min </span>
+<span>Updated Jul 23, 2020</span>
+</div>
+<div class="card-footer">
+<div class="category-icon keptn-icon"></div>
+<div class="category-icon category-icon2 jenkins-icon"></div>
+<paper-button class="keptn-bg">Start</paper-button>
+</div>
+</a>
 <a href="/workshops/kubernetes/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-kubernetes" data-category="kubernetes" data-title="Dynatrace with Kubernetes" data-duration="84" data-updated="2020-08-26T14:45:15+10:00" data-tags="kubernetes" data-pin="">
-<div class="description">Dynatrace with Kubernetes</div>
+<div class="title">Dynatrace with Kubernetes</div>
+<div class="summary">Full Stack Observability with vanilla Kubernetes while integating with k8s for additional context</div>
 <div class="card-duration">
 <span>84 min </span>
 <span>Updated Aug 26, 2020</span>
