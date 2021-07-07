@@ -3,14 +3,14 @@
   "format": "html",
   "prefix": "../../elements",
   "mainga": "UA-49880327-14",
-  "updated": "2020-10-02T11:58:04+10:00",
-  "id": "advanced-observability",
+  "updated": "2021-07-07T17:28:28+10:00",
+  "id": "advanced-observability-jp",
   "duration": 64,
-  "title": "Advanced Observability with Dynatrace",
+  "title": "Dynatraceによる高度な可観測性",
   "authors": "Brandon Neo",
-  "summary": "Learn how automation with Ansible allows automatic discovery and observability",
-  "source": "advanced-observability.md",
-  "theme": "",
+  "summary": "自動発見と可観測性",
+  "source": "advanced-observability-jp.md",
+  "theme": "jp",
   "status": [
     "published"
   ],
@@ -24,5 +24,5 @@
   ],
   "feedback": "mailto:APAC-SE-Central@dynatrace.com",
   "ga": "UA-175467274-1",
-  "url": "advanced-observability"
+  "url": "advanced-observability-jp"
 }

@@ -8,9 +8,9 @@
   "duration": 15,
   "title": "Dynatrace実践入門",
   "authors": "Brandon Neo",
-  "summary": "Dynatrace実践入門",
+  "summary": "無料トライアルを開始するのがいかに簡単であるかを発見し、Dynatraceに環境を監視させます。",
   "source": "get-started-dt-jp.md",
-  "theme": "",
+  "theme": "jp",
   "status": [
     "published"
   ],
@@ -18,7 +18,8 @@
     "get-started"
   ],
   "tags": [
-    "getting-started-jp"
+    "getting-started-jp",
+    "Introduction"
   ],
   "feedback": "mailto:APAC-SE-Central@dynatrace.com",
   "ga": "UA-175467274-1",

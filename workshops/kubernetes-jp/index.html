@@ -1,0 +1,399 @@
+
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+<meta name="theme-color" content="#4F7DC9">
+<meta charset="UTF-8">
+<title>DynatraceとKubernetes</title>
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+<style>
+.success{color:#1e8e3e}.error{color:red} </style>
+</head>
+<body>
+<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+<google-codelab codelab-gaid="UA-175467274-1" id="kubernetes-jp" title="DynatraceとKubernetes" environment="web" feedback-link="mailto:APAC-SE-Central@dynatrace.com">
+<google-codelab-step label="はじめに" duration="1">
+<p>このリポジトリには、Hands-On Kubernetes Sessionのラボが含まれています。今回のハンズオンでは、AWSで動作するKubernetesインスタンスを使用しますが、他のプラットフォームでも動作します。</p>
+<p>ハンズオンのために、参加者のためにステップを自動化し、シームレスにします。</p>
+<h2 is-upgraded>事前準備</h2>
+<ul>
+<li>DynatraceのAccount. フリートライアルの申し込み <a href="https://www.dynatrace.com/trial/" target="_blank">here</a></li>
+<li>Chrome ブラウザ</li>
+<li>SSH クライアント <a href="https://mobaxterm.mobatek.net/" target="_blank">mobaxterm</a></li>
+</ul>
+<h2 is-upgraded>学習内容</h2>
+<ul>
+<li>Helm Chartを介したDynatrace OperatorのKubernetesへの展開</li>
+<li>DynatraceにKubernetesを統合する</li>
+<li>Kubernetesの自動ダッシュボードを見る</li>
+<li>Kubernetesのラベルとアノテーション</li>
+<li>Kubernetesのプロセスグループネーミングとサービスネーミング</li>
+<li>DynatraceでKubernetesビューを見る</li>
+</ul>
+</google-codelab-step>
+<google-codelab-step label="Dynatrace ワンエージェントオペレーターのインストール" duration="15">
+<p>メール内のリンクをクリックして、割り当てられたDynatraceテナントにログインします。</p>
+<p><strong>Deploy Dynatrace -&gt; Start installation -&gt; Kubernetes</strong>を開きます。</p>
+<p class="image-container"><img alt="k8s-setup" src="img/e0ad295b815cadc7.png"></p>
+<h2 is-upgraded>Helm 3のインストール</h2>
+<p>OneAgent Operatorは、様々なkubernetesのデプロイメント戦略によってインストールすることができます。UIからの指示に従って、まずHelm 3をセットアップします。</p>
+<p>以下のコマンドを使用して、Helm 3をインストールします。プロンプトが表示されたら、ウェルカムメールに記載されている<strong>adminパスワード</strong>を入力します。</p>
+<p><code>sudo snap install helm --classic</code></p>
+<h2 is-upgraded>DynatraceでAPIとPaaSのトークンの取得</h2>
+<p>画面の指示に従って、APIトークンとPaaSトークンを作成してください。 APIトークンには必要なパーミッションが自動的に設定されています。 作成後、両方の<strong>drop-down fields</strong>から<strong>newly created tokens</strong>を選択してください。 その他のコマンドにも必要なステップがあらかじめ入力されています。</p>
+<p class="image-container"><img alt="k8s-setup" src="img/ce4b0dd79940a999.gif"></p>
+<h2 is-upgraded>OneAgent Helm Repoの追加</h2>
+<p>セットアップの手順に従って、以下のコマンドを実行してください。</p>
+<pre><code language="language-bash" class="language-bash">helm repo add dynatrace https://raw.githubusercontent.com/Dynatrace/helm-charts/master/repos/stable
+kubectl create namespace dynatrace
+</code></pre>
+<h2 is-upgraded>values.yamlの作成と適用</h2>
+<p>以下のコマンドを実行して、<strong>values.yaml</strong>という新しいファイルを作成します。</p>
+<p><code>nano values.yaml</code></p>
+<p>内容をコピーしてDyntraceのテナントに貼り付け、<strong>Ctrl-X</strong>の後に<strong>Y</strong>と<strong>Enter</strong>でファイルを保存します。</p>
+<p><strong>EXAMPLE</strong></p>
+<pre><code language="language-bash" class="language-bash">platform: &#34;kubernetes&#34;
+
+oneagent:
+  name: &#34;oneagent&#34;
+  apiUrl: &#34;https://mou612.managed-sprint.dynalabs.io/e/&lt;ENVIRONMENT ID&gt;/api&#34;
+  args:
+    - --set-app-log-content-access=true
+  skipCertCheck: false
+  enableIstio: true
+
+secret:
+  apiToken: &#34;&lt;API KEY&gt;&#34;
+  paasToken: &#34;&lt;PAAS KEY&gt;&#34;
+</code></pre>
+<p>次のコマンドをコピーして、<strong>values.yaml</strong>を適用し、<strong>OneAgentをKubernetesにデプロイ</strong>します。</p>
+<pre><code language="language-bash" class="language-bash">helm install dynatrace-oneagent-operator \
+dynatrace/dynatrace-oneagent-operator -n\
+dynatrace --values values.yaml
+</code></pre>
+<p>成功すれば、以下のように<strong>STATUS: deployed</strong>というポジティブな出力が得られるはずです。</p>
+<pre><code language="language-bash" class="language-bash">NAME: dynatrace-oneagent-operator
+LAST DEPLOYED: Thu Aug 13 01:25:26 2020
+NAMESPACE: dynatrace
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+Thank you for installing dynatrace-oneagent-operator.
+
+Your release is named dynatrace-oneagent-operator.
+</code></pre>
+<aside class="special"><p>また、他のインストール手段については、<a href="https://www.dynatrace.com/support/help/technology-support/cloud-platforms/google-cloud-platform/google-kubernetes-engine/deploy-oneagent-on-google-kubernetes-engine-clusters/" target="_blank">公式ドキュメントページ</a>で確認できます。</p>
+</aside>
+<h2 is-upgraded>⚠️ トラブルシューティングの手順</h2>
+<aside class="warning"><p><strong>check status of pods</strong>, 次のコマンドを実行してください。戻り値として<strong>Running</strong>が得られるはずです。<br><code>kubectl get pods -n dynatrace</code></p>
+</aside>
+<aside class="warning"><p><strong>check the logs</strong>, 次のコマンドを実行してください。<br><code>kubectl logs -f deployment/dynatrace-oneagent-operator -n dynatrace</code></p>
+</aside>
+<aside class="warning"><p><strong>delete secrets</strong>, 次のコマンドを実行してください。以前、間違ったシークレットを入れてしまったかもしれません。<br><code>kubectl delete secret --all -n dynatrace</code></p>
+</aside>
+<aside class="warning"><p><strong>delete all pods</strong>, 次のコマンドを実行してください。これでポッドが循環して、新しいポッドインスタンスができあがります。 <br><code>kubectl delete --all pods -n dynatrace</code></p>
+</aside>
+<aside class="warning"><p>公式トラブルシューティング <a href="https://www.dynatrace.com/support/help/technology-support/cloud-platforms/google-cloud-platform/google-kubernetes-engine/installation-and-operation/full-stack/troubleshoot-oneagent-on-google-kubernetes-engine/" target="_blank">here</a></p>
+</aside>
+<p>すべてがうまくいっていれば、<strong>Show Deployment status</strong>をクリックすると、ホストが表示されます。</p>
+<h2 is-upgraded>Sockshopサンプルアプリの再起動</h2>
+<p>様々なプロセスが自動的に検出されているのがわかりますが、Dynatraceはそれらを再起動するよう促します。これは、コードを変更せずに自動的にインストルメントを行うために必要です。</p>
+<p>以下のコマンドを実行して、<strong>Dev</strong>と<strong>Production</strong>のサービスを循環させます。</p>
+<pre><code language="language-bash" class="language-bash">kubectl delete pods --all -n dev
+kubectl delete pods --all -n production
+</code></pre>
+</google-codelab-step>
+<google-codelab-step label="Kubernetesインテグレーションの設定" duration="15">
+<aside class="special"><p>公式の指示によると <a href="https://www.dynatrace.com/support/help/technology-support/cloud-platforms/kubernetes/monitoring/connect-kubernetes-clusters-to-dynatrace/" target="_blank">here</a> Kubernetesとの統合のためには、まず、<strong>Environment Activegate</strong>を設定する必要があります。</p>
+</aside>
+<h2 is-upgraded>アクティブゲートの設定</h2>
+<ul>
+<li>Dynatraceの左メニューにある<strong>Deploy Dynatrace</strong>をクリックします。</li>
+<li>ページの下部にある<strong>Install Activegate</strong>をクリックします。</li>
+<li><strong>Linux</strong>をクリックします。</li>
+<li><strong>ステップ2</strong>をコピーして、シェルターミナルにペーストします。</li>
+<li><strong>ステップ4</strong>をコピーし、&#34;<strong>sudo</strong>&#34;を追加します。(rootとしてインストール)をシェルターミナルに追加します。 プロンプトが表示されたら、ウェルカムメールに記載されている<strong>adminパスワード</strong>を入力します。</li>
+</ul>
+<p class="image-container"><img alt="Copy-AG-Commands" src="img/59b203467afcdf73.png"></p>
+<p>完了すると、<strong>Deployment Status</strong>にActivegateが表示されます。</p>
+<p class="image-container"><img alt="Activegate-connected" src="img/17fa631de624d993.png"></p>
+<h2 is-upgraded>K8S概要ダッシュボードの設定</h2>
+<p><strong>Settings -&gt; Process and Containers -&gt; Process group detection -&gt; Enable Cloud Application and workload detection</strong>を開きます。</p>
+<p class="image-container"><img alt="Enable Cloud Workload" src="img/82a117212e749ac6.png"></p>
+<h2 is-upgraded>サービス・アカウントとクラスタ・ロールの作成</h2>
+<p>Kubernetes APIにアクセスするためのサービスアカウントとクラスタロールを作成します。これにより、Kubernetes APIでの認証に必要なベアラートークンが作成されます。シェルターミナルで以下のスニペットを使用します。</p>
+<pre><code language="language-bash" class="language-bash">kubectl apply -f https://www.dynatrace.com/support/help/codefiles/kubernetes/kubernetes-monitoring-service-account.yaml
+</code></pre>
+<h2 is-upgraded>Kubernetesインテグレーションのセットアップ</h2>
+<p><strong>Settings -&gt; Cloud and Virtualization -&gt; Kubernetes -&gt; Connect new cluster</strong>を開きます。</p>
+<h2 is-upgraded>Kubernetes APIのURLの取得</h2>
+<p>以下のコマンドを入力し、それをコピーして<strong>Kubernetes API URL</strong>に設定します。</p>
+<pre><code language="language-bash" class="language-bash">kubectl get ing k8-api-ingress | grep -oP &#39;api.kubernetes[^[:blank:]]*&#39;
+</code></pre>
+<h2 is-upgraded>Bearer Tokenの取得</h2>
+<p>Kubernetes Bearer Token**のために、以下のコマンドを入力し、コピーしてください。</p>
+<pre><code language="language-bash" class="language-bash">kubectl get secret $(kubectl get sa dynatrace-monitoring -o jsonpath=&#39;{.secrets[0].name}&#39; -n dynatrace) -o jsonpath=&#39;{.data.token}&#39; -n dynatrace | base64 --decode &amp;
+</code></pre>
+<p class="image-container"><img alt="K8S-integration" src="img/b2fead2e1021a73e.png"></p>
+<ul>
+<li>接続の名前を入力します。例：<strong>Kubernetes</strong>。</li>
+<li>Kubernetes API URL Target**」を入力します。 <ul>
+<li>API URLの前に <strong>https://</strong> を付けます。</li>
+</ul>
+</li>
+<li>Kubernetes Bearer Token**を入力します。</li>
+<li>APIサーバーとの通信に有効な証明書を要求する」を無効にします。</li>
+<li>別のイベントフィールドセレクターを追加します。</li>
+<li>フィールドセレクターの名前には <code>Non-node</code> を使用します。</li>
+<li>フィールドセレクターの式には <code>involvedObject.kind!=Node</code> を使用し、 <strong>Save</strong> します。</li>
+<li>イベントの監視**をオンにする</li>
+<li>Connect**」をクリックします。</li>
+</ul>
+<p>接続に成功したら、左メニューの「Kubernetes」をクリックし、KubernetesのUIを見てみましょう。</p>
+<p class="image-container"><img alt="K8S-integration" src="img/7d6c347024a69961.png"></p>
+<aside class="special"><p>上記の手順は、私たちの<a href="https://www.dynatrace.com/support/help/technology-support/cloud-platforms/kubernetes/installation-and-operation/further-integrations/connect-your-kubernetes-clusters-to-dynatrace/" target="_blank">offical documentation page</a>から引用しています。APIコマンドを実験用にアレンジしています。</p>
+</aside>
+</google-codelab-step>
+<google-codelab-step label="Kubernetesのラベルとアノテーション" duration="5">
+<p>Sockshopアプリを再起動すると、Dynatraceにサービスが表示されるようになります。</p>
+<p><code>~/dtacmworkshop/manifests/sockshop-app/production/front-end.yml</code>を参考にして、Dynatraceが自動的にアノテーションとラベルをピックアップするように設定したいと思います。</p>
+<pre><code language="language-bash" class="language-bash">apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: front-end.stable
+  namespace: production
+spec:
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: &#34;false&#34;
+        dynatrace/instrument: &#34;true&#34;
+        pipeline.stage: prod-stable
+        pipeline.build: 1.4.0.7424
+        pipeline.project: sockshop
+        support.contact: &#34;jane.smith@sockshop.com&#34;
+        support.channel: &#34;#support-sockshop-frontend&#34;
+      labels:
+        app: front-end.stable
+        stage: prod
+        release: stable
+        version: &#34;1.4&#34;
+        tier: &#34;frontend&#34;
+        product: &#34;sockshop&#34;
+</code></pre>
+<h2 is-upgraded>サービスアカウントの視聴者の役割</h2>
+<p>OneAgentはポッドサービスアカウントを使用して、Kubernetes REST APIを介してそのメタデータを照会します。 サービスアカウントにアクセスするには、<strong>viewer role</strong>が付与されている必要があります。 CLIで、<strong>production project</strong>に対して以下のコマンドを実行します。</p>
+<pre><code language="language-bash" class="language-bash">kubectl create rolebinding serviceaccounts-view --clusterrole=view --group=system:serviceaccounts:production --namespace=production
+</code></pre>
+<p>この手順を <strong>dev プロジェクト</strong> にも繰り返してください。</p>
+<pre><code language="language-bash" class="language-bash">kubectl create rolebinding serviceaccounts-view --clusterrole=view --group=system:serviceaccounts:dev --namespace=dev
+</code></pre>
+<p>Dynatraceが変更をピックアップするのを待ちます。</p>
+<aside class="warning"><p>⚠️ アプリを手動でリサイクルするには、以下のコマンドを実行してください。 <code>wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/master/recycle-sockshop-frontend.sh | bash</code></p>
+</aside>
+<h2 is-upgraded>検証</h2>
+<p>作業が完了したら、Dynatraceで変更を検証することができます。</p>
+<p class="image-container"><img alt="JSON" src="img/b6395fda1489ac5c.png"></p>
+<aside class="special"><p>上記の手順は、<a href="https://www.dynatrace.com/support/help/technology-support/cloud-platforms/kubernetes/other-deployments-and-configurations/leverage-tags-defined-in-kubernetes-deployments/" target="_blank">当社の公式ドキュメントページ</a>から引用しています。</p>
+</aside>
+</google-codelab-step>
+<google-codelab-step label="コンテナの環境変数" duration="5">
+<h2 is-upgraded>環境変数の追加</h2>
+<p>シェルターミナルで以下のコマンドを実行して、環境変数を追加します。</p>
+<p><code>nano ~/dtacmworkshop/manifests/sockshop-app/production/front-end.yml</code></p>
+<p><strong>インデントが正しく行われているか、エラープロンプトが表示されていないかを確認してください。</strong></p>
+<pre><code language="language-bash" class="language-bash">        env:
+        - name: DT_TAGS
+          value: &#34;product=sockshop&#34;
+        - name: DT_CUSTOM_PROP
+          value: &#34;SERVICE_TYPE=FRONTEND&#34;
+</code></pre>
+<p class="image-container"><img alt="JSON" src="img/9073a73c860abc7.png"></p>
+<p>修正したファイルを<strong>Ctrl-X</strong>、<strong>Y</strong>、<strong>Enter</strong>で保存し、以下のコマンドを実行して変更を再適用します。</p>
+<pre><code language="language-bash" class="language-bash">kubectl apply -f ~/dtacmworkshop/manifests/sockshop-app/production/front-end.yml
+wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/master/recycle-sockshop-frontend.sh | bash
+</code></pre>
+<h2 is-upgraded>検証</h2>
+<p>作業が完了したら、Dynatraceで変更を検証することができます。</p>
+<p class="image-container"><img alt="JSON" src="img/7fa97a4869eaf4d4.png"></p>
+</google-codelab-step>
+<google-codelab-step label="K8sのプロセスグループとサービスのネーミングルール" duration="10">
+<h2 is-upgraded>プロセスグループのネーミングルール</h2>
+<p><strong>Settings -&gt; Processes and containers -&gt; Process group naming</strong>を開き、<strong>Add a new rule</strong>をクリックします。</p>
+<p>ルールに名前を付けてください。例: <strong>Kubernetes Project.Namespace.Container</strong></p>
+<p>フォーマットの入力: <code>k8s-{ProcessGroup:Kubernetes:pipeline.project}.{ProcessGroup:KubernetesNamespace}.{ProcessGroup:KubernetesContainerName}</code></p>
+<p>条件のドロップダウンで、プロパティの<strong>Kubernetes namespace</strong>と条件の<strong>exists</strong>を選択します。</p>
+<p class="image-container"><img alt="JSON" src="img/b64b28b68e82847d.png"></p>
+<p><strong>Preview</strong>をクリックすると、マッチングしたエンティティが表示されます。</p>
+<p class="image-container"><img alt="JSON" src="img/df4ba84f25ca514.png"></p>
+<p>ポップアップの<strong>Create Rule</strong>と<strong>Save Changes</strong>をクリックします。</p>
+<h2 is-upgraded>検証</h2>
+<p>作業が完了したら、Dynatraceで変更を検証することができます。</p>
+<p class="image-container"><img alt="JSON" src="img/346bd172f9f61b64.png"></p>
+<h2 is-upgraded>サービス名の命名規則</h2>
+<p><strong>Settings -&gt; Server-side service monitoring -&gt; Service naming rules</strong>を開き、<strong>Add a new rule</strong>をクリックします。</p>
+<p>ルールに名前を付けてください。例: <strong>Kubernetes Project.Namespace.Container</strong></p>
+<p>フォーマットの入力: <code>{Service:DetectedName}.{ProcessGroup:KubernetesNamespace}</code></p>
+<p>条件のドロップダウンで、プロパティの<strong>Kubernetes namespace</strong>と条件の<strong>exists</strong>を選択します。</p>
+<p class="image-container"><img alt="JSON" src="img/b5c4b783606dafd4.png"></p>
+<p><strong>Preview</strong>をクリックすると、マッチングしたエンティティが表示されます。</p>
+<p class="image-container"><img alt="JSON" src="img/3cde4d9d4e7bab4d.png"></p>
+<p>ポップアップの<strong>Create Rule</strong>と<strong>Save Changes</strong>をクリックします。</p>
+<h2 is-upgraded>検証</h2>
+<p>作業が完了したら、Dynatraceで変更を検証することができます。</p>
+<p class="image-container"><img alt="JSON" src="img/922b9bc9a538fb9b.png"></p>
+</google-codelab-step>
+<google-codelab-step label="(オプション) カナリア展開のためのプロセス検出" duration="15">
+<h2 is-upgraded>カナリア・リリースのデプロイ</h2>
+<p>以下のコマンドを実行して、カナリアのリリースを開始します。</p>
+<pre><code language="language-bash" class="language-bash">kubectl apply -f https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/master/manifests/sockshop-app/canary/front-end-canary.yml
+</code></pre>
+<p><code>kubectl get pods -n production -o wide</code>を実行すると、フロントエンドサービスの<strong>stableとcanaryの両方のリリースが実行されていることがわかります</strong>。</p>
+<p class="image-container"><img alt="JSON" src="img/1309f5d8a96d63ea.png"></p>
+<p>1-2分待ってから、Dynatraceでサービスを確認します。本番環境では、<strong>安定版</strong>と<strong>限定版</strong>の2つのサービスがあります。 モニタリングのためには、同じサービスを使用する必要があります。</p>
+<p class="image-container"><img alt="JSON" src="img/541a18456643b56e.png"></p>
+<h2 is-upgraded>プロセス検出ルール設定</h2>
+<p>Dynatraceコンソールで、<strong>設定-&gt;プロセスとコンテナ-&gt;プロセスグループ検出</strong>に入ります。</p>
+<p><strong>Cloud Application and Workload Detection</strong>セクションを展開します。</p>
+<p><a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/process-groups/configuration/adapt-the-composition-of-default-process-groups/#cloud-applications-and-workload-detection" target="_blank">ドキュメント</a>によると、プロセスグループを選択するためには、<code>DT-ContainerBoundariesAffected</code>を使用して、<strong>クラウドアプリケーションとワークロードの検出を無効にし</strong>、<strong>ルールベースのタグ機能を有効にする</strong>必要があります。</p>
+<p class="image-container"><img alt="Disable-cloud-apps" src="img/1a5122cda57c0179.png"></p>
+<p>プロセスグループ検出ルール**セクションを展開します。</p>
+<p>検出ルールの追加」をクリックします。</p>
+<p><strong>process property</strong> を選択して、プロセスを分離します。</p>
+<p class="image-container"><img alt="JSON" src="img/3cdd3aa899fd8ef4.png"></p>
+<p>このルールは、<strong>production only (namespace=production)</strong>で動作するポッドに適用したいと思います。</p>
+<p>また、ポッド名の <strong>&#34;.&#34;</strong>の後の識別子を抽出します。 ポッド名には、区別するために <strong>&#34;.stable &#34;</strong>または <strong>&#34;.canary &#34;</strong>が付いていることを覚えておいてください。</p>
+<p class="image-container"><img alt="JSON" src="img/b64bf745b5a8e7bc.png"></p>
+<p>以下のコマンドを実行して、安定版とカナリア版のフロントエンドポッドをリサイクルしてください。プロセス検出ルールは、プロセス起動時に適用されます。</p>
+<pre><code language="language-bash" class="language-bash">wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/master/recycle-sockshop-frontend.sh | bash
+</code></pre>
+<p>Dynatrace内では、プロセスグループが統合されていることがわかります。</p>
+<p class="image-container"><img alt="Process-Group-Merged" src="img/b5bae69fd73c80c5.png"></p>
+<p>サービスはまだ個々のサービスとして検出されており、同様にマージすることができます。</p>
+<p><strong>設定</strong> -&gt; <strong>サービスのマージ</strong> -&gt; <strong>マージされたサービスの作成</strong>を選択します。</p>
+<p class="image-container"><img alt="Service-Merged" src="img/5835d2bb5f8719fa.png"></p>
+<h2 is-upgraded>検証</h2>
+<p class="image-container"><img alt="JSON" src="img/7992092879479d73.png"></p>
+<p>サービスが1つに統合されたことで、モニターのStableとCanaryの応答を表示できるようになりました。</p>
+<p><strong>Create Chart</strong>を選択して、多次元解析ビューを作成します。</p>
+<p class="image-container"><img alt="JSON" src="img/288b43e1a2543dcc.png"></p>
+<p><strong>Response Time - Server</strong>を選択し、Dimension Splittingとして<strong>Service Instance</strong>を選択します。</p>
+<p class="image-container"><img alt="JSON" src="img/d481a75092eec9f9.png"></p>
+</google-codelab-step>
+<google-codelab-step label="Kubernetes ダッシュボード" duration="10">
+<h2 is-upgraded>BizOps Configuratorによるダッシュボードの設定</h2>
+<p><a href="https://dynatrace.github.io/BizOpsConfigurator/" target="_blank">BizOps Configurator</a>によるKubernetes Dashboardsの自動作成を利用する予定です。</p>
+<p>トークンに以下のような<strong>パーミッション</strong>を設定します。</p>
+<ul>
+<li><strong>問題およびイベントフィード、メトリクス、トポロジーへのアクセス</strong></li>
+<li><strong>設定の読み込み</strong></li>
+<li><strong>設定の書き出し</strong></li>
+<li><strong>ユーザーセッション</strong></li>
+</ul>
+<p class="image-container"><img alt="K8S-Dashboards" src="img/7847c59cb9f67867.png"></p>
+<p>Follow the preloaded setup at <a href="https://dynatrace.github.io/BizOpsConfigurator/#deploy/persona/Ops/Platform%20Overview/K8s%20Overview" target="_blank"><paper-button class="colored" raised>BizOps Configurator</paper-button></a></p>
+<ul>
+<li><strong>tenantUrl</strong>と <strong>API-Token</strong>の入力</li>
+<li>クリック <strong>Next</strong>. <em>(The persona, usecase and workflow are already selected for you.)</em></li>
+<li>クリック <strong>Done</strong>.</li>
+</ul>
+<p class="image-container"><img alt="K8S-Dashboards" src="img/adb4d77660176128.gif"></p>
+<aside class="special"><p>⚠️ エンティティを適切にフィルタリングするためには、サービス/ポッドに <strong>[Kubernetes]namespace</strong>というタグを追加する必要があります。これにより、パフォーマンスエンジニアリングダッシュボードで適切にフィルタリングできるようになります。これは後で製品のOOTBになる予定です。</p>
+</aside>
+<aside class="special"><p>⚠️ Dynatrace 196+で動作します。</p>
+</aside>
+<h2 is-upgraded>Kubernetes Overview</h2>
+<p class="image-container"><img alt="#" src="img/d43554f07eeb86b1.png"></p>
+<h2 is-upgraded>クラスターの使用率</h2>
+<p>Kubernetesのクラスタ使用率をご覧ください。全ノードのCPUとMemoryのRequestと制限を時間軸で、ネームスペースで分割しています。</p>
+<p class="image-container"><img alt="#" src="img/cbc33314ebc71953.png"></p>
+<h2 is-upgraded>リソースクオータ</h2>
+<p>ネームスペースに割り当てられているKubernetesのリソースクォータ（MemoryとCPU）の概要と使用状況を把握できます。 <img alt="#" src="img/781aad1caf0a3651.png"></p>
+<h2 is-upgraded>コンテナの使用状況と健康状態</h2>
+<p>クラスタ内のPodの健全性とフェーズを把握します。メモリやCPUの使用率、どのポッドがスロットルされているか、障害が発生しているか、スケジュールが保留されているかなどを確認します。また、Out-of-memory killed コンテナがあるかどうかも確認します。</p>
+<p class="image-container"><img alt="#" src="img/da0f3468894b69c.png"></p>
+<h2 is-upgraded>パフォーマンスエンジニアリング</h2>
+<p>開発者や SRE エンジニアが、クラスター上の各アプリ、ポッド、各トランザクションのパフォーマンスを理解し、改善するために必要な情報を提供します。応答時間のパーセンタイル、低速トランザクション、マイクロサービスごとのデータベース実行、ネットワーク使用率などを表示します。アプリのラベルや名前空間などでトランザクションをフィルタリングできます。</p>
+<p class="image-container"><img alt="#" src="img/d6a668cc6a8dcfdf.png"></p>
+<h2 is-upgraded>ユーザーエクスペリエンス</h2>
+<p>エンドユーザーは満足していますか？アプリケーションのエンゲージメント、エクスペリエンス、ユーザー行動はどうですか？すべてのアプリケーションとユーザーのインサイトを1つのインスタンスで取得できます。</p>
+<p class="image-container"><img alt="#" src="img/d436fa8f38e53637.png"></p>
+</google-codelab-step>
+<google-codelab-step label="Exploring Kubernetes View" duration="5">
+<p>Kubernetes Viewの様々な機能（Cluster Utilization、Cluster Workloads、K8S Eventsなど）について説明します。</p>
+<p class="image-container"><img alt="KubernetesUI" src="img/7de1f55ad62c8ff8.png"></p>
+<h2 is-upgraded>Kubernetes Clusterの利用状況を分析する</h2>
+<ul>
+<li>マウスオーバーして、CPUとMemoryの使用率をMin / Maxで表示します。</li>
+<li>Analyze Nodesをクリックすると、各ノードの詳細が表示されます。</li>
+</ul>
+<p class="image-container"><img alt="KubernetesUI" src="img/c60567287e19d7e0.png"></p>
+<h2 is-upgraded>Kubernetes Cluster Workloadsの分析</h2>
+<ul>
+<li>Kubernetesコントローラに分散して実行されているワークロードとポッドに注目してください</li>
+</ul>
+<p class="image-container"><img alt="KubernetesUI" src="img/bd0a8e59082e9f66.png"></p>
+<h2 is-upgraded>Kubernetesのイベントを分析する</h2>
+<ul>
+<li>イベントの種類に注目 BackOff, Unhealthy</li>
+</ul>
+<p class="image-container"><img alt="KubernetesUI" src="img/f2c4d581cfc51e33.png"></p>
+<h2 is-upgraded>Kubernetesの名前空間を分析する</h2>
+<ul>
+<li>hipster-shop**をクリックして、各種kubernetesサービス（クラウドアプリケーション）にドリルダウンします。</li>
+</ul>
+<p class="image-container"><img alt="KubernetesUI" src="img/f7172d8068080035.png"></p>
+<h2 is-upgraded>クラウドアプリケーションをクリックして探索</h2>
+<ul>
+<li>各アプリケーションをクリックすると、それを支える技術が見えてきます。</li>
+</ul>
+<p class="image-container"><img alt="KubernetesUI" src="img/ed7feb15b6cd5b5b.png"></p>
+<p>www.DeepL.com/Translator（無料版）で翻訳しました。 </p>
+</google-codelab-step>
+<google-codelab-step label="アンケート" duration="3">
+<p>このラボを楽しんでいただき、お役に立てれば幸いです。ご意見、ご感想をお待ちしております。 </p>
+<google-codelab-survey survey-id="kubernetes-jp-1">
+<h4>このラボでの全体的な経験はどうでしたか？</h4>
+<paper-radio-group>
+<paper-radio-button>とても良い</paper-radio-button>
+<paper-radio-button>良い</paper-radio-button>
+<paper-radio-button>普通</paper-radio-button>
+<paper-radio-button>悪い</paper-radio-button>
+<paper-radio-button>とても悪い</paper-radio-button>
+</paper-radio-group>
+</google-codelab-survey>
+<google-codelab-survey survey-id="kubernetes-jp-2">
+<h4>このラボで最も役立ったことは何ですか？</h4>
+<paper-radio-group>
+<paper-radio-button>OneAgent Operatorを使ってKubernetesにデプロイする方法</paper-radio-button>
+<paper-radio-button>Kubernetesの統合の設定</paper-radio-button>
+<paper-radio-button>Kubernetesのプロセスグループネーミングとサービスネーミング</paper-radio-button>
+<paper-radio-button>DynatraceにおけるKubernetesの理解</paper-radio-button>
+</paper-radio-group>
+</google-codelab-survey>
+<google-codelab-survey survey-id="kubernetes-jp-3">
+<h4>このラボを友人や同僚に勧める可能性はどの程度ありますか？</h4>
+<paper-radio-group>
+<paper-radio-button>強く勧めたい</paper-radio-button>
+<paper-radio-button>勧めたい</paper-radio-button>
+<paper-radio-button>わからない</paper-radio-button>
+<paper-radio-button>勧めない</paper-radio-button>
+<paper-radio-button>全く勧めない</paper-radio-button>
+</paper-radio-group>
+</google-codelab-survey>
+<aside class="special"><p>💡 その他のアイデアや提案については、[メールでのお問い合わせ](mailto:APAC-SE-Central@dynatrace.com?subject=Kubernetes Workshop - Ideas and Suggestions）をお願いします。</p>
+</aside>
+</google-codelab-step>
+</google-codelab>
+<script src="../../elements/codelab-elements/native-shim.js"></script>
+<script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+<script src="../../elements/codelab-elements/prettify.js"></script>
+<script src="../../elements/codelab-elements/codelab-elements.js"></script>
+<script src="//support.google.com/inapp/api.js"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "../../elements",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-07-07T17:29:47+10:00",
+  "id": "kubernetes-jp",
+  "duration": 84,
+  "title": "DynatraceとKubernetes",
+  "authors": "Brandon Neo",
+  "summary": "K8sのフルスタック・オブザバリティ",
+  "source": "kubernetes-jp.md",
+  "theme": "jp",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "kubernetes"
+  ],
+  "tags": [
+    "Beginner",
+    "kubernetes"
+  ],
+  "feedback": "mailto:APAC-SE-Central@dynatrace.com",
+  "ga": "UA-175467274-1",
+  "url": "kubernetes-jp"
+}

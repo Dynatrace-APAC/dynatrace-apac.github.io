@@ -1,7 +1,7 @@
 id: kubernetes-gke
 summary: Full Stack Observability with K8s on GKE
 categories: kubernetes, gke
-tags: kubernetes
+tags: kubernetes, Beginner
 status: Published 
 authors: Brandon Neo
 Feedback Link: mailto:APAC-SE-Central@dynatrace.com

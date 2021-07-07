@@ -1,6 +1,6 @@
 id: advanced-observability
 summary: Automatic discovery and observability 
-categories: adv-Obs
+categories: adv-Obs, ansible
 tags: adv-Obs
 status: Published 
 authors: Brandon Neo
@@ -345,4 +345,4 @@ We hope you enjoyed this lab and found it useful. We would love your feedback!
 </form>
 
 Positive
-: 💡 For other ideas and suggestions, please **[reach out via email](mailto:APAC-SE-Central@dynatrace.com?subject=Kubernetes Workshop - Ideas and Suggestions")**.
+: 💡 For other ideas and suggestions, please **[reach out via email](mailto:APAC-SE-Central@dynatrace.com?subject=Kubernetes Workshop - Ideas and Suggestions)**.
