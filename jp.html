@@ -95,12 +95,13 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 </div>
 <div id="right-dropdown"><paper-dropdown-menu label="種別" class="dropdown-filter" no-label-float noink no-animations>
 <paper-listbox id="categorylist" slot="dropdown-content" class="dropdown-content" on-iron-activate="onCategoryActivate" attr-for-selected="filter">
-<paper-item filter="adv-obs">adv-obs</paper-item>
+<paper-item filter="ansible">ansible</paper-item>
 <paper-item filter="biz-ops">biz-ops</paper-item>
 <paper-item filter="cloud-obs">cloud-obs</paper-item>
 <paper-item filter="dem">dem</paper-item>
 <paper-item filter="get-started">get-started</paper-item>
-<paper-item filter="keptn">keptn</paper-item>
+<paper-item filter="gke">gke</paper-item>
+<paper-item filter="jenkins">jenkins</paper-item>
 <paper-item filter="kubernetes">kubernetes</paper-item>
 </paper-listbox>
 </paper-dropdown-menu>
@@ -155,6 +156,7 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 </div>
 <div class="card-footer">
 <div class="category-icon get-started-icon"></div>
+<div class="category-icon category-icon2 undefined-icon"></div>
 <paper-button class="get-started-bg">開始</paper-button>
 </div>
 </a>
@@ -167,6 +169,7 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 </div>
 <div class="card-footer">
 <div class="category-icon adv-obs-icon"></div>
+<div class="category-icon category-icon2 ansible-icon"></div>
 <paper-button class="adv-obs-bg">開始</paper-button>
 </div>
 </a>
@@ -179,6 +182,7 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 </div>
 <div class="card-footer">
 <div class="category-icon kubernetes-icon"></div>
+<div class="category-icon category-icon2 undefined-icon"></div>
 <paper-button class="kubernetes-bg">開始</paper-button>
 </div>
 </a>
