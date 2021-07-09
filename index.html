@@ -19,7 +19,7 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="import" href="/elements/elements.html">
 <style is="custom-style">
-:root{--paper-tabs-selection-bar-color:currentcolor;--paper-input-container-underline:{display:none};--paper-input-container-underline-focus:{display:none};}.Beginner{--iron-icon-fill-color:#00b9cc;--iron-icon-height:20px;--iron-icon-width:20px}.Beginner,.Intermediate{font-size:1rem;margin-right:5px;vertical-align:top}.Intermediate{--iron-icon-fill-color:#006bba;--iron-icon-height:20px;--iron-icon-width:20px}.Advanced{--iron-icon-fill-color:#9355b7;--iron-icon-height:20px;--iron-icon-width:20px;font-size:1rem;margin-right:5px;vertical-align:top}.dropdown-filter{--paper-input-container:{background-color:#23282d;display:block;padding:4px}} </style>
+:root{--paper-tabs-selection-bar-color:currentcolor;--primary-text-color:#fff;--paper-input-container-underline:{display:none};--paper-input-container-underline-focus:{display:none};--paper-input-container-label:{color:#ccced1};}.Beginner{--iron-icon-fill-color:#00b9cc;--iron-icon-height:20px;--iron-icon-width:20px}.Beginner,.Intermediate{font-size:1rem;margin-right:5px;vertical-align:top}.Intermediate{--iron-icon-fill-color:#006bba;--iron-icon-height:20px;--iron-icon-width:20px}.Advanced{--iron-icon-fill-color:#9355b7;--iron-icon-height:20px;--iron-icon-width:20px;font-size:1rem;margin-right:5px;vertical-align:top}.dropdown-filter{--paper-input-container:{background-color:#23282d;display:block;padding:4px}} </style>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="#455a64">
 <meta name="apple-mobile-web-app-title" content="Dynatrace">
@@ -104,6 +104,7 @@ From interactive demos, to self-guided microlearning labs or even advanced virtu
 <paper-item filter="gke">gke</paper-item>
 <paper-item filter="jenkins">jenkins</paper-item>
 <paper-item filter="kubernetes">kubernetes</paper-item>
+<paper-item filter="openshift">openshift</paper-item>
 </paper-listbox>
 </paper-dropdown-menu>
 <paper-dropdown-menu label="Language" class="dropdown-filter" no-label-float noink no-animations>
@@ -250,6 +251,18 @@ From interactive demos, to self-guided microlearning labs or even advanced virtu
 <div class="category-icon kubernetes-icon"></div>
 <div class="category-icon category-icon2 undefined-icon"></div>
 <paper-button class="kubernetes-bg">Start</paper-button>
+</div>
+</a>
+<a href="/workshops/get-started-openshift/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-openshift" data-category="openshift" data-title="Get Started with Openshift" data-duration="30" data-updated="2021-07-08T16:43:49+10:00" data-tags="microlab" data-pin="">
+<div class="title">Get Started with Openshift</div>
+<div class="summary">Get started with Redhat Openshift and getting full observability with Dynatrace</div>
+<div class="card-duration">
+<span>Updated Jul 8, 2021</span>
+</div>
+<div class="card-footer">
+<div class="category-icon openshift-icon"></div>
+<div class="category-icon category-icon2 undefined-icon"></div>
+<paper-button class="openshift-bg">Start</paper-button>
 </div>
 </a>
 </card-sorter>

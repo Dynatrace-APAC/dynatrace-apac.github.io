@@ -1,0 +1,26 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "../../elements",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-07-08T16:43:49+10:00",
+  "id": "get-started-openshift",
+  "duration": 30,
+  "title": "Get Started with Openshift",
+  "authors": "Brandon Neo",
+  "summary": "Get started with Redhat Openshift and getting full observability with Dynatrace",
+  "source": "get-started-openshift.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "openshift"
+  ],
+  "tags": [
+    "microlab"
+  ],
+  "feedback": "mailto:APAC-SE-Central@dynatrace.com",
+  "ga": "UA-175467274-1",
+  "url": "get-started-openshift"
+}
