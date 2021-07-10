@@ -15,6 +15,7 @@
     "published"
   ],
   "category": [
+    "application-microservices-monitoring",
     "kubernetes",
     "gke"
   ],

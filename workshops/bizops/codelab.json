@@ -3,21 +3,24 @@
   "format": "html",
   "prefix": "../../elements",
   "mainga": "UA-49880327-14",
-  "updated": "2021-06-15T16:15:09+10:00",
+  "updated": "2021-07-09T17:50:53+10:00",
   "id": "bizops",
   "duration": 136,
-  "title": "BizOps with Dynatrace",
+  "title": "Digital Business Analytics with Dynatrace",
   "authors": "Brandon Neo",
-  "summary": "BizOps with Dynatrace",
+  "summary": "Understanding Digital Business Analytics with PowerBI",
   "source": "bizops.md",
   "theme": "",
   "status": [
     "published"
   ],
   "category": [
-    "bizops"
+    "business-analytics",
+    "bizops",
+    "powerbi"
   ],
   "tags": [
+    "advanced",
     "bizops"
   ],
   "feedback": "mailto:APAC-SE-Central@dynatrace.com",

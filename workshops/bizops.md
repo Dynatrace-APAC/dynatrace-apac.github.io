@@ -1,13 +1,13 @@
-summary: BizOps with Dynatrace
 id: bizops
-categories: bizops
-tags: bizops
+summary: Understanding Digital Business Analytics with PowerBI
+categories: bizops, powerBI
+tags: bizops, Advanced
 status: Published 
 authors: Brandon Neo
 Feedback Link: mailto:APAC-SE-Central@dynatrace.com
 Analytics Account: UA-175467274-1
 
-# BizOps with Dynatrace
+# Digital Business Analytics with Dynatrace
 <!-- ------------------------ -->
 ## Bridging the Gap to the Business
 Duration: 1

@@ -1,6 +1,6 @@
 id: get-started-openshift
 summary: Get started with Redhat Openshift and getting full observability with Dynatrace
-categories: openshift
+categories: get-started, openshift
 tags: microlab 
 status: Published 
 authors: Brandon Neo
