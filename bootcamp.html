@@ -88,16 +88,7 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <paper-tab>Duration</paper-tab>
 </paper-tabs>
 </div>
-<div id="right-dropdown"><paper-dropdown-menu label="Category" class="dropdown-filter" no-label-float noink no-animations>
-<paper-listbox id="categorylist" slot="dropdown-content" class="dropdown-content" on-iron-activate="onCategoryActivate" attr-for-selected="filter">
-<paper-item filter="">all</paper-item>
-<paper-item filter="infrastructure-monitoring">Infrastructure Monitoring</paper-item>
-<paper-item filter="application-microservices-monitoring">Application & Microservices Monitoring</paper-item>
-<paper-item filter="digital-experience">Digital Experience</paper-item>
-<paper-item filter="business-analytics">Business Analytics</paper-item>
-<paper-item filter="cloud-automation">Cloud Automation</paper-item>
-</paper-listbox>
-</paper-dropdown-menu>
+<div id="right-dropdown">
 <paper-dropdown-menu label="Language" class="lang-dropdown-filter" no-label-float noink no-animations>
 <paper-listbox id="eventList" slot="dropdown-content" class="dropdown-content">
 <a href="/jp/" tabindex="-1">
@@ -147,18 +138,19 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <span>Updated Mar 30, 2021</span>
 </div>
 <div class="card-footer">
-<div class="category-icon undefined-icon"></div>
-<paper-button class="undefined-bg">Start</paper-button>
+<div class="category-icon actionable-infra-icon"></div>
+<paper-button class="actionable-infra-bg">Start</paper-button>
 </div>
 </a>
-<a href="/workshops/usql/index.html?index=..%2F..bootcamp" on-tap="navigate" class="codelab-card category-dem" data-category="dem,bizops" data-title="Advanced USQL" data-duration="18" data-updated="2020-10-17T21:20:37+11:00" data-tags="bootcamp" data-pin="">
+<a href="/workshops/usql/index.html?index=..%2F..bootcamp" on-tap="navigate" class="codelab-card category-bizops" data-category="dem,bizops" data-title="Advanced USQL" data-duration="18" data-updated="2020-10-17T21:20:37+11:00" data-tags="bootcamp" data-pin="">
 <div class="title">Advanced USQL</div>
 <div class="summary">How to use USQL in your POCs</div>
 <div class="card-duration">
 <span>Updated Oct 17, 2020</span>
 </div>
 <div class="card-footer">
-<div class="category-icon bizops-icon"></div>
+<div class="category-icon dem-icon"></div>
+<div class="category-icon category-icon2 bizops-icon"></div>
 <paper-button class="bizops-bg">Start</paper-button>
 </div>
 </a>
@@ -169,8 +161,8 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <span>Updated Oct 17, 2020</span>
 </div>
 <div class="card-footer">
-<div class="category-icon undefined-icon"></div>
-<paper-button class="undefined-bg">Start</paper-button>
+<div class="category-icon azure-icon"></div>
+<paper-button class="azure-bg">Start</paper-button>
 </div>
 </a>
 <a href="/workshops/istio/index.html?index=..%2F..bootcamp" on-tap="navigate" class="codelab-card category-istio" data-category="istio" data-title="Dynatrace with Istio" data-duration="84" data-updated="2020-10-21T11:33:06+11:00" data-tags="bootcamp" data-pin="">
@@ -180,8 +172,8 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <span>Updated Oct 21, 2020</span>
 </div>
 <div class="card-footer">
-<div class="category-icon undefined-icon"></div>
-<paper-button class="undefined-bg">Start</paper-button>
+<div class="category-icon istio-icon"></div>
+<paper-button class="istio-bg">Start</paper-button>
 </div>
 </a>
 <a href="/workshops/opentelemetry/index.html?index=..%2F..bootcamp" on-tap="navigate" class="codelab-card category-opentel" data-category="opentel" data-title="Dynatrace with OpenTelemetry" data-duration="0" data-updated="2021-03-30T15:51:20+11:00" data-tags="bootcamp" data-pin="">
@@ -191,8 +183,8 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <span>Updated Mar 30, 2021</span>
 </div>
 <div class="card-footer">
-<div class="category-icon undefined-icon"></div>
-<paper-button class="undefined-bg">Start</paper-button>
+<div class="category-icon opentel-icon"></div>
+<paper-button class="opentel-bg">Start</paper-button>
 </div>
 </a>
 <a href="/workshops/logmon-2/index.html?index=..%2F..bootcamp" on-tap="navigate" class="codelab-card category-logmon-2" data-category="logmon-2" data-title="Log Monitoring 2.0" data-duration="44" data-updated="2021-06-22T14:00:44+10:00" data-tags="bootcamp" data-pin="">
@@ -202,8 +194,8 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <span>Updated Jun 22, 2021</span>
 </div>
 <div class="card-footer">
-<div class="category-icon undefined-icon"></div>
-<paper-button class="undefined-bg">Start</paper-button>
+<div class="category-icon logmon-2-icon"></div>
+<paper-button class="logmon-2-bg">Start</paper-button>
 </div>
 </a>
 <a href="/workshops/dt-love/index.html?index=..%2F..bootcamp" on-tap="navigate" class="codelab-card category-dt-love" data-category="dt-love" data-title="Why Devs Love Dynatrace" data-duration="0" data-updated="2021-03-01T13:45:25+11:00" data-tags="bootcamp" data-pin="">
@@ -213,8 +205,8 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <span>Updated Mar 1, 2021</span>
 </div>
 <div class="card-footer">
-<div class="category-icon undefined-icon"></div>
-<paper-button class="undefined-bg">Start</paper-button>
+<div class="category-icon dt-love-icon"></div>
+<paper-button class="dt-love-bg">Start</paper-button>
 </div>
 </a>
 </card-sorter>

@@ -15,9 +15,9 @@
     "published"
   ],
   "category": [
-    "business-analytics",
     "bizops",
-    "powerbi"
+    "powerbi",
+    "business-analytics"
   ],
   "tags": [
     "advanced",

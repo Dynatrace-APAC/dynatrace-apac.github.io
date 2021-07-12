@@ -15,9 +15,11 @@
     "published"
   ],
   "category": [
-    "cloud-automation",
     "keptn",
-    "jenkins"
+    "jenkins",
+    "ansible",
+    "cloud-automation",
+    "application-microservices-monitoring"
   ],
   "tags": [
     "autonomous-cloud",

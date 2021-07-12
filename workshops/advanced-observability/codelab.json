@@ -15,9 +15,10 @@
     "published"
   ],
   "category": [
-    "infrastructure-monitoring",
     "adv-obs",
-    "ansible"
+    "ansible",
+    "cloud-automation",
+    "infrastructure-monitoring"
   ],
   "tags": [
     "adv-obs",
