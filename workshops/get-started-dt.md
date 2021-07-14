@@ -1,7 +1,7 @@
 id: get-started-dt
 summary: Start your free trial EASILY with Dynatrace 
-categories: get-started
-tags: microlab
+categories: dyntrace, get-started
+tags: microlab, Introduction
 status: Published 
 authors: Brandon Neo
 Feedback Link: mailto:APAC-SE-Central@dynatrace.com

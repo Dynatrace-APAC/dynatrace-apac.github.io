@@ -1,7 +1,7 @@
 id: get-started-openshift
 summary: Get started with Redhat Openshift and getting full observability with Dynatrace
-categories: get-started, openshift
-tags: microlab 
+categories: openshift, get-started
+tags: microlab, Introduction
 status: Published 
 authors: Brandon Neo
 Feedback Link: mailto:APAC-SE-Central@dynatrace.com
@@ -23,7 +23,7 @@ Positive
 
 <!-- ------------------------ -->
 ## Setting up Openshift 
-Duration: 15
+Duration: 5
 
 ### Choosing your deployment approach
 
@@ -38,21 +38,44 @@ There are various ways to setting up a [free Red Hat Openshift trial](https://ww
 
 ![Deploy](assets/get-started-openshift/redhat-options.png)
 
-* For the purposes on this lab, we will be running the setup with **Red Hat Dedicated Trial**
+* For the purposes on this lab, we will be running the lab with **Red Hat Dedicated Trial**
 
 <!-- ------------------------ -->
-## Deploy Dynatrace Operator
+## Deploy Dynatrace Operator via OperatorHub
 Duration: 15
 
 We will now log into the Cluster and deploy Dynatrace OneAgent. Dynatrace supports various Openshift deployment approaches with the various rollouts. There are different ways to activate Dynatrace on OpenShift and each way has its own advantages. 
 We recommend these deployment strategies in terms of feature completeness and lack of constraints.
 Our [documentation link](https://www.dynatrace.com/support/help/technology-support/container-platforms/openshift/openshift-deployment-overview/) contains the various approaches.
 
-### Download the OneAgent
+We will be following the steps based on our following [documentation](https://www.dynatrace.com/support/help/technology-support/container-platforms/openshift/other-deployments-and-configurations/deploy-with-operatorhub/) 
 
-Open your browser and access the Dynatrace URL.
+### Deploy the Dynatrace Operator via OperatorHub
 
-Follow these steps below:
+* Create a new project and deploy the operator.
+
+![CreateProject](assets/get-started-openshift/OpenShiftDedicated-CreateProject.png)
+
+* Within the Openshift dashboard, go to **Operators > OperatorHub**
+
+![OperatorHub](assets/get-started-openshift/dynatrace-operatorhub.png)
+
+* We will select the **Dynatrace Operator** and click on **Install**
+
+![Selected](assets/get-started-openshift/dynatrace-operator-selected.png)
+
+* Once installed, click on **View Operator**.
+
+![Installed](assets/get-started-openshift/dynatrace-operator-installed.png)
+
+### Create a Key/Value secret
+
+To create an instance the Operator, we will need first need to create **key/value secret.**
+
+Positive
+: You can sign up for a [FREE Dynatrace trial](https://www.dynatrace.com/trial/) to get a SaaS instance. 
+
+Within Dynatrace, use the following steps to get your **apiToken** and **paasToken**. 
 
 * Select **Dynatrace Hub** from the navigation menu.
 * Select **Openshift**
@@ -64,84 +87,89 @@ Within the **Monitor Kubernetes / Openshift** page, follow these steps below:
 
 * Enter a **Name** for the connection Eg. `openshift`
 * Click on **Create tokens** to create PaaS and API tokens with appropriate permissions
-* **Toggle ON** Skip SSL Certificate Check
-* Click **Copy** button to copy the commands. 
-* **Paste** the command into your terminal window and execute it.
+* Copy both **API and PaaS tokens** and use them in Openshift 
 
 ![Deploy](assets/get-started-openshift/deploy-openshift.gif)
 
-Example:
+* Back in Openshift, go to **Workload > Secrets**
+* Name the key **dynakube**
+* Click on **Add Key/Value** and 
+    * Name the first Key as **apiToken** and paste the token value from Dynatrace
+    * Name the second Key as **paasToken** and paste the token value from Dynatrace
+* Click on **Save**
 
-```bash
-Connecting to github-releases.githubusercontent.com (github-releases.githubusercontent.com)|185.199.108.154|:443... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: 7310 (7.1K) [application/octet-stream]
-Saving to: ‘install.sh’
+![Deploy](assets/get-started-openshift/OpenShiftDedicated-secret.png)
 
-install.sh                      100%[=====================================================>]   7.14K  --.-KB/s    in 0s      
+### Create an instance of Dynatrace Dynakube
 
-2021-06-01 05:46:36 (40.7 MB/s) - ‘install.sh’ saved [7310/7310]
+Dynatrace Dynakube is the schema which is used for Dynatrace Operator.
 
+* In Openshift, go to **Operators > Installed Operators** and select **Dynatrace Operator**
+* Click on **Create Instance**
+* Fill up the **API URL** based on your Dynatrace environment
+* Use your newly created **Dynakube** secret under API and PaaS Tokens
+* Use the default values and click on **Create** at the bottom
 
-Check for token scopes...
-
-Check if cluster already exists...
-
-Creating Dynatrace namespace...
-
-Applying Dynatrace Operator...
-Warning: apiextensions.k8s.io/v1beta1 CustomResourceDefinition is deprecated in v1.16+, unavailable in v1.22+; use apiextensions.k8s.io/v1 CustomResourceDefinition
-customresourcedefinition.apiextensions.k8s.io/dynakubes.dynatrace.com created
-serviceaccount/dynatrace-dynakube-oneagent created
-serviceaccount/dynatrace-dynakube-oneagent-unprivileged created
-serviceaccount/dynatrace-kubernetes-monitoring created
-serviceaccount/dynatrace-operator created
-serviceaccount/dynatrace-routing created
-podsecuritypolicy.policy/dynatrace-dynakube-oneagent created
-podsecuritypolicy.policy/dynatrace-dynakube-oneagent-unprivileged created
-podsecuritypolicy.policy/dynatrace-kubernetes-monitoring created
-podsecuritypolicy.policy/dynatrace-operator created
-podsecuritypolicy.policy/dynatrace-routing created
-role.rbac.authorization.k8s.io/dynatrace-dynakube-oneagent created
-role.rbac.authorization.k8s.io/dynatrace-dynakube-oneagent-unprivileged created
-role.rbac.authorization.k8s.io/dynatrace-kubernetes-monitoring created
-role.rbac.authorization.k8s.io/dynatrace-operator created
-role.rbac.authorization.k8s.io/dynatrace-routing created
-clusterrole.rbac.authorization.k8s.io/dynatrace-kubernetes-monitoring created
-clusterrole.rbac.authorization.k8s.io/dynatrace-operator created
-rolebinding.rbac.authorization.k8s.io/dynatrace-dynakube-oneagent created
-rolebinding.rbac.authorization.k8s.io/dynatrace-dynakube-oneagent-unprivileged created
-rolebinding.rbac.authorization.k8s.io/dynatrace-kubernetes-monitoring created
-rolebinding.rbac.authorization.k8s.io/dynatrace-operator created
-rolebinding.rbac.authorization.k8s.io/dynatrace-routing created
-clusterrolebinding.rbac.authorization.k8s.io/dynatrace-kubernetes-monitoring created
-clusterrolebinding.rbac.authorization.k8s.io/dynatrace-operator created
-deployment.apps/dynatrace-operator created
-W0601 05:46:39.025776   29593 helpers.go:553] --dry-run is deprecated and can be replaced with --dry-run=client.
-secret/dynakube configured
-
-Applying DynaKube CustomResource...
-dynakube.dynatrace.com/dynakube created
-
-Adding cluster to Dynatrace...
-Kubernetes monitoring successfully setup.
-$
-
-```
+![Dynakube](assets/get-started-openshift/OpenShiftDedicated-CreateDynakube.png)
 
 Negative
-: Note that it will take about 5 mins for data to appear within Dynatrace
+: You can easily fine tune your setup based changing the options within this form
 
 Positive
-: Dynatrace handles automatic deployment of OneAgents as well as automatic k8s integration. 
+: Dynatrace will also handle automatic deployment of OneAgents through Operator as well as automatic k8s integration. 
 
 ### Validate the installation in Deployment status
 
 Click on **Show deployment status** to check the status of the connected host. 
 
-You should be able to see a connected host as per the image below.
+You should be able to see a connected Openshift nodes as per the image below.
 
-![Deploy](assets/dem/download-deployment-status-1.png)
+![Dynakube](assets/get-started-openshift/deployment-status.png)
+
+<!-- ------------------------ -->
+## Advance Observability on Openshift
+
+With your setup done, explore what Dynatrace monitors automatically.
+
+* On the left menu, filter for **Dashboards** to view the preset Kubernetes dashboards
+
+![Cluster-overview](assets/get-started-openshift/kubernetes-cluster-overview.png)
+
+![Workload-overview](assets/get-started-openshift/kubernetes-workload-overview.png)
+
+### Exploring Kubernetes View
+
+Explore the various functionalities within the Kubernetes View such as Cluster Utilization, Cluster Workloads, K8S Events
+
+* On the left menu, filter for **Kubernetes** to view the Kubernetes dashboards
+
+![KubernetesUI](assets/get-started-openshift/k8s-ui.png)
+
+### Analyze the Kubernetes Cluster utilization
+   -  Mouseover and note the CPU and Memory usage with the Min / Max
+   -  Click on Analyze Nodes to drill deeper into each node
+   
+![KubernetesUI](assets/get-started-openshift/cluster-util.png)
+
+### Analyze the Kubernetes Cluster Workloads 
+   -  Notice the Workloads and Pods running spilt between Kubernetes controllers
+
+![KubernetesUI](assets/k8s/cluster-workload.png)
+
+### Analyze the Kubernetes Events
+   -  Notice the different types of events BackOff, Unhealthy
+
+![KubernetesUI](assets/k8s/events.png)
+
+### Explore Kubernetes Workloads by clicking onto them
+   - Click onto each of them and discover their supporting technologies
+   
+![KubernetesUI](assets/get-started-openshift/kubernetes-workloads.png)
+
+### Explore Kubernetes Namespaces and their workloads
+   - Click onto each of them and discover their utilization and workloads
+   
+![KubernetesUI](assets/get-started-openshift/kubernetes-namespace.png)
 
 <!-- ------------------------ -->
 ## Extending Observability
