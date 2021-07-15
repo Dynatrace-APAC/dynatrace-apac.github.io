@@ -1,0 +1,29 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "../../elements",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-07-15T11:54:10+10:00",
+  "id": "kubernetes-gke-jp",
+  "duration": 34,
+  "title": "GKEにおけるKubernetesのフルスタック・オブザーバリティ",
+  "authors": "Brandon Neo",
+  "summary": "GKEにおけるKubernetesのフルスタック・オブザーバリティ",
+  "source": "kubernetes-gke-jp.md",
+  "theme": "jp",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "kubernetes",
+    "gke",
+    "application-microservices-monitoring"
+  ],
+  "tags": [
+    "beginner",
+    "kubernetes"
+  ],
+  "feedback": "mailto:APAC-SE-Central@dynatrace.com",
+  "ga": "UA-175467274-1",
+  "url": "kubernetes-gke-jp"
+}

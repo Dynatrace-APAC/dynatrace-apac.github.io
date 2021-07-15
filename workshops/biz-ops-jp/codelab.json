@@ -1,0 +1,27 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "../../elements",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-07-15T12:13:10+10:00",
+  "id": "biz-ops-jp",
+  "duration": 135,
+  "title": "DynatraceによるBizOps",
+  "summary": "Davis AIによるBizOpsの実現",
+  "source": "bizops2021-jp.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "biz-ops",
+    "business-analytics"
+  ],
+  "tags": [
+    "biz-ops",
+    "intermediate"
+  ],
+  "feedback": "mailto:APAC-SE-Central@dynatrace.com",
+  "ga": "UA-175467274-1",
+  "url": "biz-ops-jp"
+}

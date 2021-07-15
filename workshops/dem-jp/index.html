@@ -1,0 +1,409 @@
+
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+<meta name="theme-color" content="#4F7DC9">
+<meta charset="UTF-8">
+<title>Dynatraceによるデジタルエクスペリエンスマネジメント</title>
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+<style>
+.success{color:#1e8e3e}.error{color:red} </style>
+</head>
+<body>
+<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+<google-codelab codelab-gaid="UA-175467274-1" id="dem-jp" title="Dynatraceによるデジタルエクスペリエンスマネジメント" environment="web" feedback-link="mailto:APAC-SE-Central@dynatrace.com">
+<google-codelab-step label="はじめに" duration="1">
+<p>このリポジトリには、Dynatrace Digital Experience Management (DEM)ワークショップのハンズオンが含まれています。</p>
+<h2 is-upgraded>事前準備</h2>
+<ul>
+<li>DynatraceのAccount. フリートライアルの申し込み <a href="https://www.dynatrace.com/trial/" target="_blank">here</a></li>
+<li>Chrome ブラウザ</li>
+</ul>
+<h2 is-upgraded>セットアップ</h2>
+<p>このラボでは、以下のサンプルアプリケーションを使用します。</p>
+<ul>
+<li>サンプルアプリケーション <ul>
+<li><a href="https://community.dynatrace.com/community/display/DL/easyTravel" target="_blank">easyTravel</a></li>
+</ul>
+</li>
+</ul>
+<aside class="warning"><p>このワークショップで使用するEasytravelアプリケーションを作成するには、<a href="https://github.com/Dynatrace-APAC/Workshop-DEM/tree/master/Prerequisite%20Actions" target="_blank">Prerequisite Actions</a>に従ってください。なお、<strong>Dynatrace</strong>と<strong>AWS</strong>へのアクセスが必要です。</p>
+</aside>
+<h2 is-upgraded>学習内容</h2>
+<ul>
+<li>easyTravelアプリを使ったリアルユーザーモニタリングの設定を理解する</li>
+<li>Dynatraceでの合成について</li>
+<li>Dynatraceのセッションリプレイについて</li>
+<li>ユーザーセッション問い合わせ言語（USQL）について</li>
+</ul>
+</google-codelab-step>
+<google-codelab-step label="基本設定" duration="15">
+<p>この演習では、OneAgentをLinuxインスタンスにデプロイし、OneAgentにそのインスタンスで実行されているものを検出させます。</p>
+<h2 is-upgraded>Webブラウザでターミナルを使う</h2>
+<p>実験を円滑に進めるために、Linuxインスタンスに<strong>Webブラウザを介したターミナル</strong>でアクセスします。</p>
+<p>メールに記載されている<strong>URL</strong>を使って、SSHターミナルにアクセスします。URLが <code>Public IP Address/wetty</code> のようになっていることを確認してください。</p>
+<p>メールに記載されている<strong>ログイン名</strong>と<strong>パスワード</strong>を使用してください。</p>
+<p class="image-container"><img alt="Deploy" src="img/e609666e1c136993.png"></p>
+<h2 is-upgraded>OneAgentのダウンロード</h2>
+<p>ブラウザを開き、DynatraceのURLにアクセスします。</p>
+<p>以下の手順に従ってください。</p>
+<ul>
+<li>ナビゲーションメニューから <strong>Dynatrace Hub</strong> を選択します。</li>
+<li><strong>OneAgent</strong> を選択します。</li>
+<li>右下の <strong>Download OneAgent</strong> ボタンを選択します。</li>
+<li><strong>Linux</strong> をクリックしてください。</li>
+</ul>
+<p class="image-container"><img alt="Deploy" src="img/14d79aaf42698c68.gif"></p>
+<p>Dynatrace OneAgent for Linuxのページ内で、以下の手順を行います。</p>
+<ul>
+<li>「Download the installer」テキストフィールドの横にある <strong>Copy</strong> ボタンをクリックしてください。</li>
+<li>ターミナルウィンドウにコマンドを<strong>Paste</strong>して実行してください。</li>
+</ul>
+<p class="image-container"><img alt="Deploy" src="img/f40ee289ed53f964.png"></p>
+<p>例:</p>
+<pre><code language="language-bash" class="language-bash">$  wget  -O Dynatrace-OneAgent-Linux-1.171.252.sh &lt;follow screen shot above&gt;
+--2019-08-07 10:17:45--  https://&lt;URL&gt;
+Resolving &lt;URL&gt;... &lt;IP&gt;
+Connecting to &lt;URL&gt; | &lt;IP&gt;|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 139134801 (133M) [application/octet-stream]
+Saving to: ‘Dynatrace-OneAgent-Linux-1.171.252.sh&#39;
+
+100%[======================================&gt;] 139,134,801 84.3MB/s   in 1.6s
+
+2019-08-07 10:17:47 (84.3 MB/s) - ‘Dynatrace-OneAgent-Linux-1.171.252.sh&#39; saved [139134801/139134801]
+</code></pre>
+<h2 is-upgraded>インストールスクリプトの実行</h2>
+<aside class="warning"><p>署名の検証（ステップ2）は、オプションのステップです。これを実行するには、システムが最新の状態になっていること、特にSSLと関連する証明書ライブラリが最新の状態になっていることを確認してください。</p>
+</aside>
+<ul>
+<li>Run the installer &#34;テキストフィールドの横にある <strong>Copy</strong>ボタンをクリックします。</li>
+</ul>
+<p class="image-container"><img alt="Deploy" src="img/4ecbdd0b4cf96fda.png"></p>
+<ul>
+<li>Append the copy with <code>sudo</code> command to make the script executable before you can run it.</li>
+<li><strong>Paste</strong> the command into your terminal window and execute it.</li>
+<li><strong>Use</strong> the password provided in your email</li>
+<li>コピーに <code>sudo</code> コマンドを付加して、スクリプトを実行可能な状態にしてから実行してください。</li>
+<li>コマンドをターミナルウィンドウに<strong>貼り付けて</strong>実行してください。</li>
+<li>メールに記載されている<strong>パスワードを使用</strong>してください。</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">$ sudo /bin/sh Dynatrace-OneAgent-Linux-1.171.252.sh
+10:21:42 Checking root privileges...
+10:21:42 OK
+10:21:42 Installation started ...
+...
+10:22:14 Starting agents...
+10:22:14 oneagent service started
+10:22:14 Checking if agent is connected to the server...
+10:22:16 Dynatrace OneAgent has successfully connected to Dynatrace Cluster Node. After completing Dynatrace OneAgent installation on this machine, please return to your browser to complete the remainder of the installation.
+$
+
+</code></pre>
+<h2 is-upgraded>Deployment status でインストールを検証する</h2>
+<p>Show deployment status**をクリックすると、接続されているホストの状態が確認できます。</p>
+<p class="image-container"><img alt="Deploy" src="img/9825fbe8b461aa40.png"></p>
+<p>下の画像のように、接続されたホストが表示されているはずです。</p>
+<p class="image-container"><img alt="Deploy" src="img/297084c8c0c99ffa.png"></p>
+<aside class="special"><p>Dynatraceのドキュメントは<a href="https://www.dynatrace.com/support/help/technology-support/operating-systems/linux/" target="_blank">こちら</a>を参照しています。</p>
+</aside>
+<h2 is-upgraded>Easytravelアプリケーションの再起動</h2>
+<p>Easy Travelを再起動するには、以下のコマンドを実行してください。</p>
+<p><code>/restart_easyTravel.sh</code></p>
+<pre><code language="language-bash" class="language-bash">$ ./restart_easyTravel.sh
+Restarting easyTravel ....
+Stopping easyTravel ....
+OKeasyTravel scenario stopped
+Please wait...
+Starting easyTravel ....
+OKeasyTravel scenario started
+Done.
+</code></pre>
+<h2 is-upgraded>Easytravelアプリケーションを見る</h2>
+<p>Dynatrace内で、以下の手順でEasytravelのURLを取得します。</p>
+<ul>
+<li>OneAgentのデプロイメント画面で<strong>hostname</strong>をクリックします。</li>
+<li><strong>Properties and tag</strong> を Host view で展開します。</li>
+<li>メタデータからパブリックホスト名を<strong>選択してコピー</strong>します。</li>
+<li>ブラウザの新しいタブを開きます。</li>
+<li>アドレスバーに<strong>貼り付け</strong> パブリック・ホスト名の最後に <code>:8080</code> を <strong>追加</strong> します。</li>
+<li>Easytravelアプリへのアクセス</li>
+</ul>
+<p class="image-container"><img alt="Deploy" src="img/1d1331e2af04b7bc.gif"></p>
+<h2 is-upgraded>Smartscapeを探る</h2>
+<p>Easy Travelが起動するのを待っている間、Dynatraceを探索し、Smartscapeを使って、DynatraceがEasy Travelアプリケーションを構成するプロセスと依存関係を自動的に発見することができます。</p>
+<p><a href="https://www.dynatrace.com/support/help/get-started/4-things-youll-absolutely-love-about-dynatrace/" target="_blank">4 things</a> Dynatraceの魅力をご紹介します。</p>
+<p class="image-container"><img alt="Smartscape" src="img/868e111ca8bd48bd.png"></p>
+</google-codelab-step>
+<google-codelab-step label="リアルユーザーモニタリングの設定" duration="15">
+<p>このラボでは、Real User Monitoring の設定の基本を説明します。これらは、自動注入であれ手動注入であれ、DynatraceのJavaScriptエージェントが展開されるたびに従うべきベストプラクティスの一部です。</p>
+<aside class="special"><p>Dynatraceのドキュメントは<a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/setup-and-configuration/web-applications/" target="_blank">こちら</a>を参照しています。</p>
+</aside>
+<h2 is-upgraded>学ぶべきこと</h2>
+<ul>
+<li><strong>タスク1: アプリケーションの定義</strong>。</li>
+<li><strong>タスク2：適切なJavaScriptフレームワークの選択</strong></li>
+<li><strong>タスク3：ユーザーセッションのタグ付け</strong></li>
+</ul>
+<h2 is-upgraded>その他のDEM設定</h2>
+<ul>
+<li>ユーザーアクションのネーミング</li>
+<li>セッションプロパティ</li>
+<li>コンバージョンゴール</li>
+<li>主なユーザーアクション</li>
+<li>エラー</li>
+<li>カスタムメトリクス</li>
+</ul>
+<p>上記のいくつかは、APIを介して自動化され、お客様の環境に設定されています。</p>
+<h2 is-upgraded>タスク1: アプリケーションの定義</h2>
+<p>以下の手順でアプリケーションを定義します。</p>
+<ul>
+<li>左側のナビゲーションメニューから <strong>Applications</strong> を選択します。</li>
+<li><strong>My web application</strong> プレースホルダーアプリケーションをクリックします。</li>
+<li><strong>スクロールダウン</strong>して、「Top 3 included domains」パネルを見つけます。</li>
+<li><strong>View full details</strong>をクリックします。</li>
+<li>1つ目のドメイン（例：ip-address.ap-southeast-2.compute.internal<strong>）の</strong>arrow**をクリックしてドロップダウンさせます。</li>
+<li><strong>+ Create new application</strong> をクリックしてください。 <ul>
+<li>アプリケーションが作成され、Applicationsページに表示されます。</li>
+<li>このドメインで監視されているすべてのユーザーアクションは、新しく作成されたアプリケーションにマッピングされます。</li>
+</ul>
+</li>
+<li><strong>Create</strong> をクリックします。</li>
+</ul>
+<p class="image-container"><img alt="Define App" src="img/c30c02242a01f041.gif"></p>
+<p>これで内部ドメインのマッピングが完了したので、外部ドメインについても同様の作業を行います。</p>
+<ul>
+<li>2つ目のドメイン（例：<strong>external-ip.ap-southeast-2.compute.amazonaws.com</strong>）の<strong>arrow</strong>をクリックしてドロップダウンさせます。</li>
+<li><strong>Transfer</strong>をクリックします。</li>
+</ul>
+<p class="image-container"><img alt="Define App" src="img/1e375b63a08a06be.png"></p>
+<p>新しく作成したアプリケーションの名前を変更するには</p>
+<ul>
+<li>ナビゲーションメニューから <strong>Applications</strong> を選択します。</li>
+<li>.ap-southeast-2.compute.internal アプリケーションをクリックします。</li>
+<li><strong>Browse button (...)</strong>をクリックし、<strong>Edit</strong>を選択します。</li>
+<li>このワークショップでは、アプリケーション名に <strong>Easytravel</strong> を使用してください。</li>
+</ul>
+<p class="image-container"><img alt="Naming App" src="img/7991bc933f984766.gif"></p>
+<aside class="special"><p>Dynatraceのドキュメントは<a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/setup-and-configuration/web-applications/initial-configuration/define-your-applications-via-the-my-web-application-placeholder" target="_blank">こちら</a>を参照しています。</p>
+</aside>
+<h2 is-upgraded>タスク2：適切なJavaScriptフレームワークの選択</h2>
+<p>Javascriptのフレームワークを選択するには</p>
+<ul>
+<li><strong>Framework settings</strong> をクリックします。</li>
+<li>検出されたフレームワークを確認する</li>
+<li>検出されたフレームワークをトグルオンする（例：<strong>Icefaces, jQuery, Prototype</strong>）。</li>
+<li><strong>Capture XmlHttpRequest (XHR)</strong> をトグルオンする。</li>
+<li><strong>Save</strong> をクリック</li>
+</ul>
+<p class="image-container"><img alt="Enable-framework" src="img/3ad794910f0e86c4.gif"></p>
+<aside class="special"><p>Dynatraceのドキュメントは<a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/setup-and-configuration/web-applications/initial-configuration/configure-dynatrace-real-user-monitoring-to-capture-xhr-actions/" target="_blank">こちら</a>を参照しています。</p>
+</aside>
+<h2 is-upgraded>タスク3：ユーザーセッションのタグ付け</h2>
+<p>次は、ページのメタデータに基づいてユーザーをタグ付けする方法です。このユーザータグ付けのアプローチは、アプリケーションのページソースで利用可能なデータを取り込むことで機能します。ユーザー名は、DOM要素のテキスト、metaタグ、JavaScript変数、あるいはcookie属性に含まれているかもしれません。例えば、DynatraceのデモアプリケーションであるeasyTravelでは、ホームページの右上にあるウェルカムメッセージにユーザー名が含まれています（下の画像参照）。ほとんどのブラウザに搭載されている開発ツールを使って、この特定の要素のために固有のCSSセレクタを生成することができます。</p>
+<p class="image-container"><img alt="User tagging based on page metadata" src="img/89b5122e1cec4525.png"></p>
+<p>ページソースのどこにユーザー名があるかを確認したら、そのユーザー名に基づいてユーザータグを作成することができます。これを行うには、Dynatraceに戻り、以下の手順を実行します。</p>
+<ul>
+<li><strong>Capturing</strong>の<strong>User tag</strong>を選択します。</li>
+<li><strong>Add tag (identifier) rule</strong> をクリックします。</li>
+<li>ドロップダウンの <strong>CSS Selector</strong> を選択します。</li>
+<li><strong>ブラウザの開発者ツールからコピーしたCSSセレクタをコピー＆ペースト</strong>してください。 <ul>
+<li>CSSセレクタを使用する <code>#loginForm\:j_idt39</code> 。</li>
+<li>CSSセレクタは、追加のテキストも拾ってしまうので、クリーンアップルールを適用します。</li>
+</ul>
+</li>
+<li>Toggle ON <strong>Apply cleanup rule</strong>.</li>
+<li>Regex Text Fieldで<code>Hello ([^!]*+)</code>を使用します。</li>
+<li><strong>Add tag (identifier) rule</strong> をクリックします。</li>
+<li><strong>Save</strong> をクリック</li>
+</ul>
+<p class="image-container"><img alt="Enable-framework" src="img/f44b43654f55d857.gif"></p>
+<aside class="special"><p>Dynatraceのドキュメントは<a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/how-to-use-real-user-monitoring/cross-application-user-session-analytics/identify-individual-users-for-session-analysis/" target="_blank">こちら</a>を参照しています。</p>
+</aside>
+</google-codelab-step>
+<google-codelab-step label="Synthetic Testの設定" duration="15">
+<p>この演習では、Dynatraceで単一のURLの合成テストを作成することを取り上げます。 Dynatraceには、3種類の合成モニタリングがあります。</p>
+<ul>
+<li><strong>シングルURLのブラウザモニター</strong></li>
+<li><strong>ブラウザのクリックパスの監視</strong></li>
+<li><strong>HTTPモニター</strong></li>
+</ul>
+<aside class="special"><p>Dynatraceのドキュメントは<a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/synthetic-monitoring" target="_blank">こちら</a>を参照しています。</p>
+</aside>
+<h2 is-upgraded>1. Easytravelのブラウザモニターをワンクリックで作成する。</h2>
+<ul>
+<li>Easytravel Applicationの右欄にある<strong>Monitor from private locations</strong>をクリックしてください。 <ul>
+<li>エントリーアクションの選択は、上位3つのエントリーアクションに基づいて行われます。</li>
+<li>オプション）必要に応じてトップ3エントリーアクションを編集することができます。</li>
+</ul>
+</li>
+</ul>
+<p>これで<strong>3つのブラウザクリックパス合成モニター</strong>を作成しました。</p>
+<p class="image-container"><img alt="OneClick-Synthetic" src="img/36d8c4da8e004a34.png"></p>
+<h2 is-upgraded>2. Easytravelのブラウザクリックパス合成モニターの作成</h2>
+<p>以下の手順に従ってください。</p>
+<ul>
+<li><strong>Create a synthetic monitor</strong>をクリック</li>
+<li><strong>Create a browser monitor</strong>をクリック</li>
+<li><strong>EasytravelのURL</strong>をコピーして、URLブラウザモニタに<strong>ペースト</strong>してください。</li>
+<li>モニターに名前を付けてください - <strong>Easytravel</strong>。</li>
+<li>スクロールダウンして、<strong>Record clickpath</strong>をクリックしてください。</li>
+<li><strong>Pop-up Browser</strong> が表示されます。クリックパスを以下のように記録します。 <ul>
+<li><strong>Login</strong> (top right)をクリック</li>
+<li><strong>小さい錠前アイコン</strong>をクリックし、<strong>いずれかの名前を選ぶ</strong></li>
+<li><strong>Book Now</strong>をクリック</li>
+<li><strong>Next</strong>をクリック</li>
+<li><strong>小さい錠前アイコン</strong>をクリック</li>
+<li><strong>Next</strong>をクリック</li>
+<li><strong>Finish</strong>をクリック</li>
+<li><strong>ポップアップされたブラウザウィンドウを閉じる</strong></li>
+</ul>
+</li>
+<li>記録されたクリックパスがDynatraceに記録されるようになりました。</li>
+<li><strong>Next</strong>をクリック</li>
+<li><strong>場所としてシドニー（AWS）</strong>を選択してください。 <ul>
+<li>シドニーノードは、実際にはクラスターのエンドポイントであることに注意してください。</li>
+</ul>
+</li>
+<li><strong>Next</strong>をクリック</li>
+<li><strong>Create browser monitor</strong>をクリック</li>
+</ul>
+<p class="image-container"><img alt="OneClick-Synthetic" src="img/f93ab6d4cf2c99cc.gif"></p>
+<aside class="warning"><p>初めてご利用になる方は、Chromeプラグインのインストールを求められます。ページ下部の「Install Dynatrace Synthetic Recorder」をクリックします。</p>
+</aside>
+<aside class="special"><p>Dynatraceのドキュメントは<a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/synthetic-monitoring/browser-monitors/record-a-browser-clickpath/" target="_blank">こちら</a>を参照しています。</p>
+</aside>
+<h2 is-upgraded>3. HTTPモニター</h2>
+<p>以下の手順に従ってください。</p>
+<ul>
+<li><strong>Create a synthetic monitor</strong>をクリックします。</li>
+<li><strong>Create an HTTP monitor</strong> をクリックします。</li>
+<li>HTTPモニターの名前 - <strong>Easytravel</strong>.</li>
+<li><strong>Add HTTP request</strong> をクリックしてください。</li>
+<li><strong>EasytravelのURL</strong>をコピーして、HTTPリクエストのURLテキストフィールドに<strong>ペースト</strong>してください。</li>
+<li><strong>名前のテキストフィールドに</strong>を貼り付けます。</li>
+<li><strong>HTTPリクエストの追加</strong>をクリック</li>
+<li>スクロールダウンして <strong>次へ</strong> をクリック</li>
+<li>Scroll down and <strong>Select Sydney (AWS)</strong> as location. <ul>
+<li>Sydneyノードは実際にはクラスタのエンドポイントであることに注意してください。</li>
+</ul>
+</li>
+<li><strong>Next</strong> をクリックします。</li>
+<li><strong>Create HTTP monitor</strong> をクリックします。</li>
+</ul>
+<p class="image-container"><img alt="OneClick-Synthetic" src="img/e81bb07f484e335f.gif"></p>
+<aside class="special"><p>Dynatraceのドキュメントは<a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/synthetic-monitoring/http-monitors/create-an-http-monitor/" target="_blank">こちら</a>を参照しています。</p>
+</aside>
+</google-codelab-step>
+<google-codelab-step label="セッションリプレイの設定" duration="15">
+<p>この演習では、Dynatraceの<strong>セッションリプレイ</strong>の設定を取り上げます。</p>
+<h2 is-upgraded>セッションリプレイの有効化</h2>
+<p>以下の手順でセッションリプレイを有効にしてください。</p>
+<ul>
+<li>左のナビゲーションメニューから<strong>Applications</strong>を選択します。</li>
+<li><strong>Easytravel</strong>アプリケーションをクリックします。</li>
+<li><strong>Browse button (...)</strong>をクリックし、<strong>Edit</strong>を選択します。</li>
+<li><strong>Session Replay and behavior</strong>と<strong>Session Replay</strong>をクリックします。</li>
+<li><strong>Enable Session Replay</strong>をオンにします。</li>
+<li>スクロールダウンして <strong>Save</strong> をクリックします。</li>
+</ul>
+<p class="image-container"><img alt="Enable-Session-Replay" src="img/45be209f81b548d1.gif"></p>
+<aside class="special"><p>Dynatraceのドキュメントは<a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/basic-concepts/session-replay/" target="_blank">こちら</a>を参照しています。</p>
+</aside>
+<h2 is-upgraded>セッションリプレイを撮影するための負荷をシミュレート</h2>
+<aside class="special"><p>セッションリプレイを有効にして、Webブラウザ上の<strong>Easytravelアプリ</strong>に戻し、<strong>ロードをシミュレート</strong>します。 合成クリックパスと同じユーザージャーニーをたどることができます。</p>
+</aside>
+<h2 is-upgraded>セッション・リプレイの確認</h2>
+<p>数分後、Dynatraceの左ナビゲーションバーにある<strong>User Sessions</strong>の下で、自分のセッションを見つけることができます。</p>
+<ul>
+<li>Replayを有効にしているセッションのフィルタリング</li>
+</ul>
+<p class="image-container"><img alt="SR" src="img/75eab961d667a94c.png"></p>
+<ul>
+<li>セッションの再生</li>
+</ul>
+<p class="image-container"><img alt="SR" src="img/d85fc98930fb3a94.png"></p>
+<p class="image-container"><img alt="SR" src="img/2c7e2af9da9c95cd.png"></p>
+<p class="image-container"><img alt="SR" src="img/e82e0184ea3dbe44.png"></p>
+<h2 is-upgraded>個人情報保護のための追加設定</h2>
+<p class="image-container"><img alt="SR" src="img/909e1f4f0d38a89d.png"></p>
+<aside class="special"><p>Dynatraceのドキュメントは<a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/setup-and-configuration/web-applications/additional-configuration/configure-session-replay-for-personal-data-protection/" target="_blank">こちら</a>を参照しています。</p>
+</aside>
+</google-codelab-step>
+<google-codelab-step label="USQLの紹介" duration="15">
+<p>Dynatraceは、ユーザーが監視対象のアプリケーションにアクセスするたびに、詳細なユーザーセッションデータを取得します。このデータには、すべてのユーザーアクションとハイレベルなパフォーマンスデータが含まれます。Dynatrace APIまたは<strong>Dynatrace User Sessions Query Language (USQL)</strong>を使用すると、キャプチャしたデータに対して<strong>強力なクエリ、セグメンテーション、アグリゲーション</strong>を簡単に実行できます。 User Sessions Query Languageは<strong>Dynatrace専用のクエリ言語</strong>ですが、いくつかのSQLの概念に基づいており、構文も似ているため、簡単に使い始めることができます。</p>
+<p>USQLを使用する典型的なユースケースは、ビジネス指標を視覚化するダッシュボードを構築することです。</p>
+<p class="image-container"><img alt="USQL" src="img/33cf7ff5803c3dfb.png"></p>
+<aside class="special"><p>Dynatraceのドキュメントは<a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/how-to-use-real-user-monitoring/cross-application-user-session-analytics/custom-queries-segmentation-and-aggregation-of-session-data/" target="_blank">こちら</a>を参照しています。</p>
+</aside>
+<h2 is-upgraded>1. USQLを知る</h2>
+<p>以下の手順でご確認ください。</p>
+<ul>
+<li>ナビゲーションメニューから <strong>ユーザーセッション</strong> を選択します。</li>
+<li>トップバーの<strong>フィルター</strong>を使用し、<strong>アプリケーション</strong>として<strong>Easytravel</strong>を選択します。</li>
+<li><strong>ユーザーセッションクエリ</strong> をクリックします。</li>
+</ul>
+<p class="image-container"><img alt="USQL" src="img/2d867123a395b5d2.png"></p>
+<p><strong>サンプルクエリ</strong></p>
+<p><strong>ユーザージャーニーのためのファネルの作成</strong></p>
+<pre><code language="language-sql" class="language-sql">SELECT FUNNEL(useraction.name=&#34;loading of page /special-offers.jsp&#34; AS &#34;Special Offers landing page&#34;, useraction.name = &#34;loading of page /orange-booking-review.jsf&#34; AS &#34;Review package&#34;, useraction.name = &#34;loading of page /orange-booking-payment.jsf&#34; AS &#34;Payment&#34;) FROM usersession
+</code></pre>
+<p><strong>特定の場所からのページパフォーマンスの把握</strong></p>
+<pre><code language="language-sql" class="language-sql">SELECT DATETIME(starttime, &#39;MM/dd/yyyy hh:mm&#39;, &#39;30m&#39;),AVG(useraction.visuallyCompleteTime)
+FROM usersession
+WHERE country IS &#34;United States&#34; GROUP BY DATETIME(starttime, &#39;MM/dd/yyyy hh:mm&#39;, &#39;30m&#39;)
+</code></pre>
+<p><strong>どのユーザーにエラーが発生しているかを把握する</strong></p>
+<pre><code language="language-sql" class="language-sql">SELECT userId, SUM(totalErrorCount) FROM usersession
+WHERE totalErrorCount IS NOT NULL
+GROUP BY userId ORDER BY SUM(totalErrorCount) DESC
+</code></pre>
+<p><strong>統計・分析の収集</strong></p>
+<pre><code language="language-sql" class="language-sql">SELECT COUNT(*) FROM usersession WHERE useraction.name = &#34;loading of page /orange.jsf&#34;
+</code></pre>
+</google-codelab-step>
+<google-codelab-step label="アンケート" duration="3">
+<p>このラボを楽しんでいただき、お役に立てれば幸いです。ご意見、ご感想をお待ちしております。 </p>
+<google-codelab-survey survey-id="dem-jp-1">
+<h4>このラボでの全体的な経験はどうでしたか？</h4>
+<paper-radio-group>
+<paper-radio-button>とても良い</paper-radio-button>
+<paper-radio-button>良い</paper-radio-button>
+<paper-radio-button>普通</paper-radio-button>
+<paper-radio-button>悪い</paper-radio-button>
+<paper-radio-button>とても悪い</paper-radio-button>
+</paper-radio-group>
+</google-codelab-survey>
+<google-codelab-survey survey-id="dem-jp-2">
+<h4>このラボで最も役立ったことは何ですか？</h4>
+<paper-radio-group>
+<paper-radio-button>Real User Monitoringの設定について</paper-radio-button>
+<paper-radio-button>Syntheticの学習</paper-radio-button>
+<paper-radio-button>Session Replayの学習</paper-radio-button>
+<paper-radio-button>User Session Query Languageの学習</paper-radio-button>
+</paper-radio-group>
+</google-codelab-survey>
+<google-codelab-survey survey-id="dem-jp-3">
+<h4>このラボを友人や同僚に勧める可能性はどの程度ありますか？</h4>
+<paper-radio-group>
+<paper-radio-button>強く勧めたい</paper-radio-button>
+<paper-radio-button>勧めたい</paper-radio-button>
+<paper-radio-button>わからない</paper-radio-button>
+<paper-radio-button>勧めない</paper-radio-button>
+<paper-radio-button>全く勧めない</paper-radio-button>
+</paper-radio-group>
+</google-codelab-survey>
+<aside class="special"><p>💡 その他のアイデアや提案については、<a href="mailto:APAC-SE-Central@dynatrace.com?subject=DEM Workshop - Ideas and Suggestions" target="_blank">メールでのお問い合わせ</a> をお願いします。</p>
+</aside>
+</google-codelab-step>
+</google-codelab>
+<script src="../../elements/codelab-elements/native-shim.js"></script>
+<script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+<script src="../../elements/codelab-elements/prettify.js"></script>
+<script src="../../elements/codelab-elements/codelab-elements.js"></script>
+<script src="//support.google.com/inapp/api.js"></script>
+</body>
+</html>

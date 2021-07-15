@@ -1,7 +1,7 @@
 id: biz-ops
 summary: BizOps powered by Davis AI
-categories: biz-ops
-tags: biz-ops
+categories: biz-ops, business-analytics
+tags: biz-ops, Intermediate
 status: Published 
 Feedback Link: mailto:APAC-SE-Central@dynatrace.com
 Analytics Account: UA-175467274-1

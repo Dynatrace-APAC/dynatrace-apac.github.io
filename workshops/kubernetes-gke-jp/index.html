@@ -1,0 +1,228 @@
+
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+<meta name="theme-color" content="#4F7DC9">
+<meta charset="UTF-8">
+<title>GKEにおけるKubernetesのフルスタック・オブザーバリティ</title>
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+<style>
+.success{color:#1e8e3e}.error{color:red} </style>
+</head>
+<body>
+<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+<google-codelab codelab-gaid="UA-175467274-1" id="kubernetes-gke-jp" title="GKEにおけるKubernetesのフルスタック・オブザーバリティ" environment="web" feedback-link="mailto:APAC-SE-Central@dynatrace.com">
+<google-codelab-step label="はじめに" duration="1">
+<p>このリポジトリには、Hands-On Kubernetes Sessionのラボが含まれています。このハンズオンでは、Google Kubernetes Engine (GKE)を使用しますが、他のPaaSプラットフォームでも使用可能です。</p>
+<p>ハンズオンの目的は、参加者のためにステップを自動化し、シームレスにすることです。</p>
+<h2 is-upgraded>事前準備</h2>
+<ul>
+<li>DynatraceのAccount. フリートライアルの申し込み <a href="https://www.dynatrace.com/trial/" target="_blank">here</a></li>
+<li>Google Cloud アカウント</li>
+<li>Chrome ブラウザ</li>
+</ul>
+<h2 is-upgraded>学習内容</h2>
+<ul>
+<li>Helm Chartを介したDynatrace OperatorのKubernetesへの展開</li>
+<li>DynatraceでのKubernetes統合のセットアップ</li>
+<li>Dynatraceでのアーリーアクセス機能フラグの有効化</li>
+<li>DynatraceでのKubernetesビューの発見</li>
+</ul>
+</google-codelab-step>
+<google-codelab-step label="Google Kubernetes Engine (GKE)の設定" duration="5">
+<h2 is-upgraded>Google Cloud Platform アカウントの登録</h2>
+<p>https://cloud.google.com/free/ にアクセスして、既存のGoogleアカウントで無料のGCPアカウントを登録してください。</p>
+<p>Googleアカウントをお持ちでない方は、新規にご登録いただくことも可能です。</p>
+<p>サインアップすると、GCPアカウントに関連付けられた無料のクレジットが得られます。12ヶ月分＋30,000円</p>
+<p>GCPコンソールへのログインは<a href="https://console.cloud.google.com/home/" target="_blank">こちら</a>から行えます。</p>
+<p class="image-container"><img alt="GCP-Homepage" src="img/1f9711d41bd92133.png"></p>
+<h2 is-upgraded>Kubernetes Engine APIの有効化</h2>
+<p>また、Kubernetes Engine APIで<strong>API Billing</strong>を有効にする必要があります。</p>
+<p class="image-container"><img alt="k8s-Engine" src="img/70bde55b634a381a.png"></p>
+<p>GKEインスタンスをセットアップする際に、請求書作成ページが表示されるはずです。</p>
+<p>表示されない場合は、<a href="https://support.google.com/googleapi/answer/6158867?hl=en" target="_blank">こちら</a>の手順に従ってください。</p>
+<h2 is-upgraded>クラウドシェルの起動</h2>
+<p class="image-container"><img alt="GKE-Menu" src="img/64aaa2f325ae3dd3.png"></p>
+<p>右上の「ターミナル」アイコンをクリックします。</p>
+<p>クラウドベースのターミナルのようなものがページの下に表示されます。</p>
+<p>GKEクラスタの設定を開始します。</p>
+<h2 is-upgraded>3. GKE クラスタの作成</h2>
+<p class="image-container"><img alt="GKE-CLI" src="img/5bfc37b3282337b5.png"></p>
+<p>以下のコマンドで、Ubuntuが動作する<strong>k8sworkshop</strong>という名前のGKEクラスターをGKEで作成します。 また、Dynatrace Activegate用のコンピュートVMも作成します。Dynatrace ActivegateはKubernetesとの連携に使用します。</p>
+<pre><code language="language-bash" class="language-bash">gcloud container clusters create k8sworkshop --image-type=ubuntu --zone australia-southeast1-a
+gcloud compute instances create dynatrace-activegate --image-family ubuntu-1604-lts --image-project ubuntu-os-cloud --zone australia-southeast1-a
+</code></pre>
+<p>これで、GKEクラスタが動作するようになります。</p>
+<p><img alt="GKE-CLI" src="img/442599f267abdfe5.png"><strong>kubectl get nodes</strong>を実行すると、ノードの数が表示されます。</p>
+</google-codelab-step>
+<google-codelab-step label="Kubernetesインテグレーションの設定" duration="5">
+<p>Kubernetesインテグレーションの公式説明書<a href="https://www.dynatrace.com/support/help/technology-support/cloud-platforms/kubernetes/monitoring/connect-kubernetes-clusters-to-dynatrace/" target="_blank">こちら</a>の通り、まずEnvironment Activegateをセットアップする必要があります。</p>
+<h2 is-upgraded>Dynatrace-Activegate ターミナルに SSH で入り、Activegate をインストールする。</h2>
+<ol type="1">
+<li>Google Cloud の左のナビゲーションバーで、<strong>Compute Engine</strong> -&gt; <strong>VM instances</strong> に移動します。 <img alt="Activegate-connected" src="img/913f1f2f9a48fb05.png"></li>
+<li>dynatrace-activegate**の行にあるSSHボタンをクリックして、インスタンスにSSH接続します。 <img alt="Activate-connected" src="img/f87ae0de334c4442.png"></li>
+<li>Dynatrace内で、左メニューの「Deploy Dynatrace」をクリックします。</li>
+<li>ページ下部の「Install Activegate」をクリックします。</li>
+<li>&#34;Linux &#34;をクリックします。</li>
+<li>手順2をコピーし、ターミナルに貼り付ける。</li>
+<li><ol type="1">
+<li>手順4をコピーして、&#34;sudo&#34;(rootとしてインストール)をターミナルに追加する <img alt="Copy-AG-Commands" src="img/59b203467afcdf73.png"></li>
+</ol>
+</li>
+</ol>
+<p>インストールが完了すると、「Deployment Status」にActivegateが表示されます。</p>
+<p class="image-container"><img alt="Activegate-connected" src="img/17fa631de624d993.png"></p>
+<h2 is-upgraded>K8S概要ダッシュボードの設定</h2>
+<p>[設定] -&gt; [プロセスとコンテナ] -&gt; [プロセスグループの検出] -&gt; [クラウドアプリケーションとワークロードの検出の有効化]に進みます。</p>
+<p class="image-container"><img alt="Enable Cloud Workload" src="img/82a117212e749ac6.png"></p>
+<p>公式の<a href="https://www.dynatrace.com/support/help/technology-support/cloud-platforms/kubernetes/installation-and-operation/further-integrations/connect-your-kubernetes-clusters-to-dynatrace/" target="_blank">documentation page</a>に記載されている手順を自動化し、API URLとベアラートークンをAPI経由で自動的に提供しました。メインのCloud Shellターミナルに戻り、以下を入力します。</p>
+<pre><code language="language-bash" class="language-bash">wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/master/setup-k8s-ui.sh | bash
+</code></pre>
+<p>上記の結果を受けて、<strong>Settings</strong> -&gt; <strong>Cloud and Virtualization</strong> -&gt; <strong>Kubernetes</strong>に値を入力します。</p>
+<p class="image-container"><img alt="K8S-integration" src="img/b2fead2e1021a73e.png"></p>
+<ol type="1">
+<li>GKE K8S」など、接続の名前を付けます。</li>
+<li>Kubernetes APIのURLを入力してください。 <ul>
+<li>SSHターミナルからKubernetes APIのURLをコピーします。</li>
+</ul>
+</li>
+<li>3.Kubernetes Bearer Tokenの入力 <ul>
+<li>SSHターミナルからBearer Tokenをコピーします。</li>
+</ul>
+</li>
+<li>&#34;Require valid certificates for communication with API server &#34;を無効にする。</li>
+<li>別のイベントフィールドセレクタを追加</li>
+<li>フィールドセレクターの名前を以下のようにしてください。 <code>Hipster shop</code></li>
+<li>フィールドセレクタの式を以下のようにしてください。 <code>metadata.namespace=hipster-shop</code></li>
+<li>Save and Click on Connect</li>
+</ol>
+<p>接続に成功したら、左メニューの「Kubernetes」をクリックし、KubernetesのUIを見てみましょう。</p>
+<p class="image-container"><img alt="K8S-integration" src="img/7d6c347024a69961.png"></p>
+</google-codelab-step>
+<google-codelab-step label="Dynatrace OneAgent Operator for Kubernetesのインストール" duration="5">
+<ol type="1">
+<li>Google Cloud Consoleの左のナビゲーションバーにあるKubernetes Engine -&gt; Applicationsに進みます。</li>
+<li>&#34;Deploy From Marketplace &#34;をクリックします。</li>
+<li>上記の検索欄で「Dynatrace」と検索します。 <img alt="Activegate-connected" src="img/a11eaaa5dc8d5690.png"></li>
+<li>Dynatrace OneAgent Operator」をクリックし、「Configure」をクリックします。</li>
+<li>以下のフィールドに入力します。</li>
+</ol>
+<ul>
+<li>API URL DynatraceのURLをコピーして、最後に <strong>&#34;/api &#34;</strong>を追加します。 <img alt="API-URL" src="img/7a0fa534c0ea0b7.png"></li>
+<li>API Token Settings -&gt; Integration -&gt; Dynatrace APIから作成します。 <ul>
+<li>Access problem and event feed, metrics, and topology toggle を有効にする。</li>
+<li>設定情報の書き込みを有効にするのトグル（次のステップのActivegateの設定に必要）。 <img alt="API-Token" src="img/83e5adcd4f7a9641.png"></li>
+</ul>
+</li>
+<li>PaaS token Settings -&gt; Integration -&gt; Platform as a Service から作成します。 <img alt="PaaS-Token" src="img/6aa9322934da4fc0.png"></li>
+</ul>
+<p>GCPコンソールに値をコピーする <img alt="Activegate-connected" src="img/e70265b335ba5725.png"></p>
+<ol type="1">
+<li>Deployをクリックします。 <img alt="Activegate-connected" src="img/e92f844631fe0442.png"></li>
+</ol>
+<p>完了したら、左パネルの「ホスト」をクリックすると、接続されているK8Sノード（3ノード）が表示されます。</p>
+<p class="image-container"><img alt="GKE-Hosts" src="img/e43e9fd3988f5a76.png"></p>
+<p># Hipster Shopの立ち上げ</p>
+<p>今回のハンズオンでは、Googleのサンプルアプリケーションである<a href="https://github.com/GoogleCloudPlatform/microservices-demo" target="_blank">Hipster Shop</a>を起動する必要があります。</p>
+<h2 is-upgraded>Hipster Shopの実行</h2>
+<pre><code language="language-bash" class="language-bash">wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/master/deploy.sh | bash
+</code></pre>
+<p>デプロイされたら、GCPからフロントエンドのエンドポイントを見つけることができます（<strong>Kubernetes Engine -&gt; Services &amp; Ingress</strong>）。</p>
+<p class="image-container"><img alt="JSON" src="img/9ebd7ee1a7508c25.png"></p>
+<p>実行すると、露出したfrontend-external IPにアクセスしてHipster Shopに行くことができます。</p>
+<p class="image-container"><img alt="JSON" src="img/3bffdebd7d75da1.png"></p>
+</google-codelab-step>
+<google-codelab-step label="Dynatraceを知る" duration="5">
+<h2 is-upgraded>サービスの自動検出</h2>
+<p>Dynatraceの「トランザクションとサービス」で、自動検出された5つのサービスを見ることができます。 <img alt="Discovered Services" src="img/9fdbb936919835e2.png"></p>
+<p>いくつかのサービスは発見されていますが、<a href="https://github.com/GoogleCloudPlatform/microservices-demo#service-architecture" target="_blank">Hipster Shop&#39;s Service architecture</a>と一致しないものもあることがわかります。 Hipster Shopは最先端のテクノロジー（GPRCなど）を使用しており、Dynatraceはクラウドの絶え間ない進化をサポートしています。</p>
+<p class="image-container"><img alt="Architecture" src="img/a216cf5c52b7fca0.png"></p>
+<h2 is-upgraded>OneAgentでの追加機能の利用</h2>
+<p>OneAgentは急速に変化しているため、アーリーアクセスの機能はデフォルトでは自動的に有効になっていません。 これは、本番環境に影響を与えるような不測の事態を避けるためです。今回のワークショップでは、これらの機能を有効にすることができます。<strong>Settings -&gt; Service-side service monitoring -&gt; Deep Monitoring -&gt; New Oneagent Features</strong>にアクセスします。</p>
+<p>Global Settingsで、以下の機能フラグを有効にします。これらは異なるページにあるので、ページを切り替える必要があります。</p>
+<p>検索フィルターバーを使用して、<strong>&#34;GRPC &#34;</strong>を検索することができます。 <img alt="GRPC-Features" src="img/42aac0b7b99d0a8a.png"></p>
+<p class="image-container"><img alt="Features" src="img/61bdb2a03a90f742.png"></p>
+<p>2つの追加NodeJS機能フラグを含め、以下の機能がすべて有効になっていることを確認してください。 <img alt="All-Features" src="img/3633df8c61ae4677.png"></p>
+<p>OneAgents の機能を有効にするには、ポッドの再起動が必要です。以下のコマンドを実行して、ポッドを再起動します。</p>
+<pre><code language="language-bash" class="language-bash">kubectl delete pods --all -n hipster-shop
+</code></pre>
+<p class="image-container"><img alt="Restart" src="img/8dfdab2042c64ce1.png"></p>
+<p>Dynatraceに戻り、「トランザクションとサービス」にアクセスして、更新されたサービスのリストを確認します。 <img alt="Discovered Services" src="img/2a76911ba825632d.png"></p>
+<p>&#34;:8080 &#34;をクリックし、続いてService Flowをクリックすると、サービスが自動的に検出され、上のアーキテクチャ図と一致することがわかります。</p>
+<p class="image-container"><img alt="Service Flow" src="img/5f4b25c1b42e6a7d.png"></p>
+</google-codelab-step>
+<google-codelab-step label="Kubernetes Viewを探る" duration="5">
+<p>Kubernetes View内の様々な機能（Cluster Utilization、Cluster Workloads、K8S Eventsなど）を確認できます。</p>
+<p class="image-container"><img alt="KubernetesUI" src="img/7de1f55ad62c8ff8.png"></p>
+<h2 is-upgraded>Kubernetes Clusterの利用状況を分析する</h2>
+<ul>
+<li>マウスオーバーして、CPUとMemoryの使用率をMin / Maxで表示します。</li>
+<li>Analyze Nodesをクリックすると、各ノードの詳細が表示されます。</li>
+</ul>
+<p class="image-container"><img alt="KubernetesUI" src="img/c60567287e19d7e0.png"></p>
+<h2 is-upgraded>Kubernetes Cluster Workloadsの分析</h2>
+<ul>
+<li>Kubernetesコントローラに分散して実行されているワークロードとポッドに注目してください</li>
+</ul>
+<p class="image-container"><img alt="KubernetesUI" src="img/bd0a8e59082e9f66.png"></p>
+<h2 is-upgraded>Kubernetesのイベントを分析する</h2>
+<ul>
+<li>イベントの種類に注目 BackOff, Unhealthy</li>
+</ul>
+<p class="image-container"><img alt="KubernetesUI" src="img/f2c4d581cfc51e33.png"></p>
+<h2 is-upgraded>Kubernetesの名前空間を分析する</h2>
+<ul>
+<li>hipster-shop**をクリックして、各種kubernetesサービス（クラウドアプリケーション）にドリルダウンします。</li>
+</ul>
+<p class="image-container"><img alt="KubernetesUI" src="img/f7172d8068080035.png"></p>
+<h2 is-upgraded>クラウドアプリケーションをクリックして探索</h2>
+<ul>
+<li>それぞれのサービスをクリックすると、そのサービスを支える技術が見えてきます。</li>
+</ul>
+<p class="image-container"><img alt="KubernetesUI" src="img/ed7feb15b6cd5b5b.png"></p>
+</google-codelab-step>
+<google-codelab-step label="アンケート" duration="3">
+<p>このラボを楽しんでいただき、お役に立てれば幸いです。ご意見、ご感想をお待ちしております。 </p>
+<google-codelab-survey survey-id="kubernetes-gke-jp-1">
+<h4>このラボでの全体的な経験はどうでしたか？</h4>
+<paper-radio-group>
+<paper-radio-button>とても良い</paper-radio-button>
+<paper-radio-button>良い</paper-radio-button>
+<paper-radio-button>普通</paper-radio-button>
+<paper-radio-button>悪い</paper-radio-button>
+<paper-radio-button>とても悪い</paper-radio-button>
+</paper-radio-group>
+</google-codelab-survey>
+<google-codelab-survey survey-id="kubernetes-gke-jp-2">
+<h4>このラボで最も役立ったことは何ですか？</h4>
+<paper-radio-group>
+<paper-radio-button>OneAgent Operatorを使ってKubernetesにデプロイする方法</paper-radio-button>
+<paper-radio-button>Kubernetesの統合の設定</paper-radio-button>
+<paper-radio-button>Kubernetesのプロセスグループネーミングとサービスネーミング</paper-radio-button>
+<paper-radio-button>DynatraceにおけるKubernetesの理解</paper-radio-button>
+</paper-radio-group>
+</google-codelab-survey>
+<google-codelab-survey survey-id="kubernetes-gke-jp-3">
+<h4>このラボを友人や同僚に勧める可能性はどの程度ありますか？</h4>
+<paper-radio-group>
+<paper-radio-button>強く勧めたい</paper-radio-button>
+<paper-radio-button>勧めたい</paper-radio-button>
+<paper-radio-button>わからない</paper-radio-button>
+<paper-radio-button>勧めない</paper-radio-button>
+<paper-radio-button>全く勧めない</paper-radio-button>
+</paper-radio-group>
+</google-codelab-survey>
+<aside class="special"><p>💡 その他のアイデアや提案については、[メールでのお問い合わせ](mailto:APAC-SE-Central@dynatrace.com?subject=Kubernetes GKE - Ideas and Suggestions）をお願いします。</p>
+</aside>
+</google-codelab-step>
+</google-codelab>
+<script src="../../elements/codelab-elements/native-shim.js"></script>
+<script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+<script src="../../elements/codelab-elements/prettify.js"></script>
+<script src="../../elements/codelab-elements/codelab-elements.js"></script>
+<script src="//support.google.com/inapp/api.js"></script>
+</body>
+</html>

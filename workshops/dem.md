@@ -1,7 +1,7 @@
-summary: Digital Experience Management with Dynatrace
 id: dem
-categories: Tech Labs
-tags: dem
+summary: Automatic Real User monitoring with Dynatrace
+categories: dem, digital-experience
+tags: dem, Beginner
 status: Published 
 authors: Brandon Neo
 Feedback Link: mailto:APAC-SE-Central@dynatrace.com
@@ -15,17 +15,15 @@ Duration: 1
 This repository contains the hands on for the Dynatrace Digital Experience Management (DEM) Workshop.
 
 ### Prerequisites
-
-* Dynatrace SaaS/Managed Account. Get your free SaaS trial [here](https://www.dynatrace.com/trial/).
-* AWS account, with the ability to create an EC2 instance from a public AMI. Signup to a free trial [here](https://aws.amazon.com/free/).
 * Chrome Browser
-* SSH client such as [mobaxterm](https://mobaxterm.mobatek.net/).
 
 ### Lab Setup
 The following steps are used for this lab:
 - Sample Application 
-    * Sample App is based on [easyTravel Docker](https://github.com/Dynatrace/easyTravel-Docker)
-    * Follow the [Prerequisite Actions](https://github.com/Dynatrace-APAC/Workshop-DEM/tree/master/Prerequisite%20Actions) to create the application that will be used throughout this workshop.
+    * Sample App is based on [easyTravel](https://community.dynatrace.com/community/display/DL/easyTravel)
+
+Negative
+: **For Self-paced training**, follow the [Prerequisite Actions](https://github.com/Dynatrace-APAC/Workshop-DEM/tree/master/Prerequisite%20Actions) to create Easytravel application that will be used throughout this workshop. Note that you'll need access to **Dynatrace** and **AWS**.
 
 ### What You’ll Learn
 - Understand Real User Monitoring setup with easyTravel App 
@@ -39,29 +37,35 @@ Duration: 15
 
 In this exercise, we will deploy the OneAgent to a Linux instance and let the OneAgent discover what is running in that instance.
 
-### Download the OneAgent
+### Using Terminal via Web Browser
 
-Use PuTTy (Windows) or Terminal (Mac), ssh into the instance (IP address using the your PEM Key)
+To faciliate the labs, we will access the Linux instance **via terminal through a web browser**.
+
+Use the **URL** was provided in your email to access the SSH terminal. Make sure the URL looks like `Public IP Address/wetty`
+
+Use the **login name** and **password** as provided in your email.
+
+![Deploy](assets/dem/wetty.png)
+
+### Download the OneAgent
 
 Open your browser and access the Dynatrace URL.
 
-Select Deploy Dynatrace from the navigation menu.
+Follow these steps below:
 
-![Deploy](assets/dem/101-DeployDynatrace.jpg)
+* Select **Dynatrace Hub** from the navigation menu.
+* Select **OneAgent**
+* Select **Download OneAgent** button from the bottom right.  
+* Click on **Linux**
 
-Click the Start installation button and select Linux.
+![Deploy](assets/dem/installation-1.gif)
 
-![Deploy](assets/dem/102-StartInstallation.jpg)
+Within the Dynatrace OneAgent for Linux page, follow these steps below:
 
-![Deploy](assets/dem/103-Linux.jpg)
+* Click **Copy** button next to "Download the installer" text field.
+* **Paste** the command into your terminal window and execute it.
 
-
-Choose the installer type from the drop-down list (we'll use the default x86/64). 
-Use the Linux shell script installer on any Linux system that's supported by Dynatrace, regardless of the packaging system your distribution depends on.
-
-**Copy** the command provided in the "Use this command on the target host" text field. **Paste** the command into your terminal window and execute it.
-
-![Deploy](assets/dem/104-Download.jpg)
+![Deploy](assets/dem/download-copy-1.png)
 
 Example: 
 
@@ -77,21 +81,20 @@ Saving to: ‘Dynatrace-OneAgent-Linux-1.171.252.sh’
 100%[======================================>] 139,134,801 84.3MB/s   in 1.6s
 
 2019-08-07 10:17:47 (84.3 MB/s) - ‘Dynatrace-OneAgent-Linux-1.171.252.sh’ saved [139134801/139134801]
-
-$
 ```
 
 ### Execute the installation script
 
-(Optional) Once the download is complete, you can verify the signature by copying the command from the "Verify signature" text field, then pasting the command into your terminal window and executing it. Make sure your system is up to date, especially SSL and related certificate libraries.
+Negative
+: Verify signature (step 2) is an optional step. To run that, make sure your system is up to date, especially SSL and related certificate libraries.
 
-**Copy** the command that's provided in the text box "And run the installer with root rights" text field.
+* Click **Copy** button next to "Run the installer" text field.
 
-![Deploy](assets/dem/105-Install.jpg)
+![Deploy](assets/dem/download-copy-2.png)
 
-**Paste** the command into your terminal window and execute it. You’ll need to make the script executable before you can run it.
-
-**Note that you’ll need root access.**  You can use sudo to run the installation script. To do this, type the following command into the directory where you downloaded the installation script.
+* Append the copy with `sudo` command to make the script executable before you can run it.
+* **Paste** the command into your terminal window and execute it. 
+* **Use** the password provided in your email
 
 Example:
 
@@ -111,61 +114,46 @@ $
 
 ### Validate the installation in Deployment status
 
-![Deploy](assets/dem/106-Status.jpg)
+Click on **Show deployment status** to check the status of the connected host. 
 
-Reference: https://www.dynatrace.com/support/help/technology-support/operating-systems/linux/
+![Deploy](assets/dem/download-deployment-status.png)
 
-### Start Easy Travel application
+You should be able to see a connected host as per the image below.
 
-To start Easy Travel execute the following command:
+![Deploy](assets/dem/download-deployment-status-1.png)
 
-```
-$ cd ~
+Positive
+: Dynatrace Documentation is referenced [here](https://www.dynatrace.com/support/help/technology-support/operating-systems/linux/)
+
+### Restart Easytravel application
+
+To restart Easy Travel execute the following command:
+
+`/restart_easyTravel.sh`
+
+```bash
 $ ./restart_easyTravel.sh
-Stopping loadgen  ... done
-Stopping www      ... done
-Stopping frontend ... done
-Stopping backend  ... done
-Stopping mongodb  ... done
-Removing loadgen  ... done
-Removing www      ... done
-Removing frontend ... done
-Removing backend  ... done
-Removing mongodb  ... done
-ip-172-31-7-147
-APM
-Creating mongodb ... done
-Creating backend ... done
-Creating frontend ... done
-Creating www      ... done
-Creating loadgen  ... done
-$
-
+Restarting easyTravel ....
+Stopping easyTravel ....
+OKeasyTravel scenario stopped
+Please wait...
+Starting easyTravel ....
+OKeasyTravel scenario started
+Done.
 ```
 
-Easy Travel will take about 5 minutes to complete starting up. If you would like to check the status, you can enter this command:
+### Explore the Easytravel Application
 
-```bash
-$ sudo docker ps
-CONTAINER ID        IMAGE                           COMMAND                  CREATED             STATUS              PORTS                                                NAMES
-0f9cb477bcf0        dynatrace/easytravel-loadgen    "/bin/sh -c /run-pro…"   19 minutes ago      Up 19 minutes                                                            loadgen
-a3d241d88ecf        dynatrace/easytravel-nginx      "/bin/sh -c /run-pro…"   19 minutes ago      Up 19 minutes       443/tcp, 0.0.0.0:80->80/tcp, 8080/tcp                www
-82300947a19a        dynatrace/easytravel-frontend   "/bin/sh -c /run-pro…"   19 minutes ago      Up 19 minutes       0.0.0.0:32771->8080/tcp                              frontend
-3dc6e8e3f468        dynatrace/easytravel-backend    "/bin/sh -c /run-pro…"   19 minutes ago      Up 19 minutes       0.0.0.0:32770->8080/tcp                              backend
-f88098f89e90        dynatrace/easytravel-mongodb    "/bin/sh -c ${SCRIPT…"   19 minutes ago      Up 19 minutes       0.0.0.0:32769->27017/tcp, 0.0.0.0:32768->28017/tcp   mongodb
+Within Dynatrace, follow the steps below to get Easytravel URL:
 
-```
+* Click on the **hostname** in the OneAgent deployment screen.
+* Expand **Properties and tag** in Host view
+* **Select and Copy** Public Host name from the metadata
+* **Open** a new web browser tab
+* **Paste** the Public Host name and **append** `:8080` at the end
+* Access Easytravel App
 
-If you see the above 5 containers, it would mean that Easy Travel containers have started. If you do not see the 5 conatiners, it means that Easy Travel is still starting and you might want to wait a few minutes more. 
-
-To access the Easy Travel portal, use the Public DNS of your instance. Copy / paste the Public DNS into your browser.
-
-Get the Public DNS for your instance from the AWS Console or execute this command:
-
-```bash
-$ curl http://169.254.169.254/latest/meta-data/public-hostname
-ec2-xxx-xxx-xxx-xxx.ap-southeast-2.compute.amazonaws.com
-```
+![Deploy](assets/dem/easytravel-url.gif)
 
 ### Explore the Smartscape
 
@@ -179,160 +167,217 @@ While waiting for Easy Travel to start, you can explore Dynatrace and using the 
 ## Configure Real User Monitoring
 Duration: 15
 
-In this exercise, we will cover the basics of configuring Real User Monitoring. These are some of the best practices that should be followed every time the Dynatrace JavaScript agent is deployed, be it an automated or manual injection. 
+In this lab, we will cover the basics of configuring Real User Monitoring. These are some of the best practices that should be followed every time the Dynatrace JavaScript agent is deployed, be it an automated or manual injection. 
 
-More information can be found here: [How to use Dynatrace > Real User Monitoring > Setup and configuration > Web applications](https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/setup-and-configuration/web-applications/)
+Positive
+: Dynatrace Documentation is referenced [here](https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/setup-and-configuration/web-applications/)
 
-There are 3 tasks in this exercise:
-- [ ] Task 1: Defining an application
-- [ ] Task 2: Selecting the appropriate JavaScript frameworks
-- [ ] Task 3: Tagging a user session
 
-### Task 1. Defining an application
+### What You’ll Learn
 
-Reference: https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/setup-and-configuration/web-applications/initial-configuration/define-your-applications-via-the-my-web-application-placeholder
+- **Task 1: Defining an application**
+- **Task 2: Selecting the appropriate JavaScript frameworks**
+- **Task 3: Tagging a user session**
 
-1. Select **Applications** from the navigation menu.
-2. Click the **My web application** placeholder application.
-3. Scroll down to find the Top 3 included domains panel. This panel includes the domains that contain the largest number of actions that have been automatically detected by OneAgent in your environment.
-4. Click **View full details**.
+### Other DEM Setup
 
-   ![Deploy](assets/dem/201-Define.png)
+- User Actions Naming
+- Session Properties
+- Conversion Goals
+- Key User Actions
+- Errors
+- Custom Metrics
 
-5. Select a domain from the list appearing under Top domains and expand it by clicking the **arrow under Transfer domain**.
-6. Click **Create new application**. 
-Your application will be created and listed on the Applications page. From now on, all user actions that are monitored on this domain will be mapped onto the newly created application. Alternatively, you may want to add the domain to an existing application, in case some applications have already been created. To do this, expand the list box, select an application and click Transfer.
+Some of the above have been automated via API and configured into your environments.
 
-   ![Deploy](assets/dem/201-Create.png)
+### Task 1: Defining an application
 
-As you may want to use a more intuitive name for your application, you can easily rename it. To rename an application:
-1. Select **Applications** from the navigation menu.
-2. Click your newly created application to access the application's overview page.
-3. Click the Browse button (...) and select **Edit**.
-4. Type in the name you prefer in the text box appearing on top of the page. For this workshop please use **easyTravel** as the application name. Note that application names must be unique.
+Follow the steps below to define your application:
 
-### Task 2. Selecting the appropriate JavaScript frameworks
+* Select **Applications** from the left navigation menu.
+* Click the **My web application** placeholder application.
+* **Scroll down** to find the Top 3 included domains panel. 
+* Click **View full details**.
+* Click on **arrow** on the 1st domain (internal domain eg. **ip-address.ap-southeast-2.compute.internal**) to drop down.
+* Click on **+ Create new application**
+   - Your application will be created and listed on the Applications page. 
+   - All user actions that are monitored on this domain will be mapped onto the newly created application. 
+* Click on **Create**
 
-1. Select **Applications** from the navigation menu.
-2. Select the newly created application (the entry in your Dynatrace console will be different from the screen shot)
+![Define App](assets/dem/define-application.gif)
 
-   ![Deploy](assets/dem/202-ModifyJSFramework.png)
+Now that the internal domain is mapped, do the same for the external domain.
 
-3. Click the Browse button (...) and select **Edit**.
-4. Select **Async requests and single page apps**
-5. Enable the following frameworks as shown in the screen below
-6. Click on **Save**
+* Click on **arrow** on the 2nd domain (external domain eg. **external-ip.ap-southeast-2.compute.amazonaws.com**) to drop down.
+* Click on **Transfer**
 
-   ![Deploy](assets/dem/202-ConfigFramework.png)
+![Define App](assets/dem/app-transfer.png)
+
+To rename the newly created application:
+
+* Select **Applications** from the navigation menu.
+* Click on **<ip.address>.ap-southeast-2.compute.internal** application
+* Click the **Browse button (...)** and select **Edit**.
+* For this workshop please use **Easytravel** as the application name. 
+
+![Naming App](assets/dem/naming-application.gif)
+
+Positive
+: Dynatrace Documentation is referenced [here](https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/setup-and-configuration/web-applications/initial-configuration/define-your-applications-via-the-my-web-application-placeholder)
+
+### Task 2: Selecting the appropriate JavaScript frameworks
+
+To select Javascript frameworks:
+
+* Click on **Framework settings** 
+* Note the detected frameworks
+* Toggle On the detected frameworks (Eg. **Icefaces, jQuery, Prototype**)
+* Toggle On **Capture XmlHttpRequest (XHR)**
+* Click On **Save**
+
+![Enable-framework](assets/dem/enable-framework.gif)
+
+Positive
+: Dynatrace Documentation is referenced [here](https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/setup-and-configuration/web-applications/initial-configuration/configure-dynatrace-real-user-monitoring-to-capture-xhr-actions/)
 
 ### Task 3. Tagging a user session
 
-Reference: https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/how-to-use-real-user-monitoring/cross-application-user-session-analytics/identify-individual-users-for-session-analysis/
-
-We will be tagging users based on page metadata.
-
-This approach to user tagging works by capturing available data in your application’s page source. If you take a close look at your application’s page source, you’ll likely find that usernames are already included somewhere. Usernames may be included in the text of a DOM element, a meta tag, a JavaScript variable, or even a cookie attribute. For example, easyTravel, the Dynatrace demo application, includes the user name in a welcome message in the upper-right corner of the home page (see image below). Using the development tools that are built into most browsers, you can generate a unique CSS selector for this particular element.
+Next, we will be tagging users based on page metadata. This approach to user tagging works by capturing available data in your application’s page source. Usernames may be included in the text of a DOM element, a meta tag, a JavaScript variable, or even a cookie attribute. For example, easyTravel, the Dynatrace demo application, includes the user name in a welcome message in the upper-right corner of the home page (see image below). Using the development tools that are built into most browsers, you can generate a unique CSS selector for this particular element.
 
 ![User tagging based on page metadata](assets/dem/usertags.png)
 
 Once you’ve identified where usernames are located in your page source, you can create user tags based on the usernames. To do this, return to Dynatrace and execute the following steps:
 
-1. Select **User tag**
-2. Click on **Add tag (identifier) rule**
-3. Select the drop down **CSS Selector**
-4. Paste the CSS Selector which you copied earlier from your browser's Developer Tool. Since the CSS Selector also picks up some additional text, we can apply a clean up rule.
-5. Click **Add tag (identifier) rule**
-5. Click on **Save**
+* Select **User tag** under **Capturing**
+* Click on **Add tag (identifier) rule**
+* Select the drop down **CSS Selector**
+* **Copy and Paste** the CSS Selector which you copied earlier from your browser's Developer Tool. 
+   - Use the CSS Selector `#loginForm\:j_idt39`
+   - Since the CSS Selector also picks up some additional text, we can apply a clean up rule.
+* Toggle ON **Apply cleanup rule**
+* Use `Hello ([^!]*+)` on the Regex Text Field
+* Click on **Add tag (identifier) rule**
+* Click on **Save**
 
-   ![Deploy](assets/dem/204-TaggingUserSession.png)
+![Enable-framework](assets/dem/user-tag.gif)
 
-**Hint:**
- * CSS Selector
- 
-```bash
-#loginForm\:j_idt39
-```
- 
- * Clean up rule
- 
-```bash 
-Hello (.*)!
-```
+Positive
+: Dynatrace Documentation is referenced [here](https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/how-to-use-real-user-monitoring/cross-application-user-session-analytics/identify-individual-users-for-session-analysis/)
 
 <!-- ------------------------ -->
 ## Configure Synthetic Test
 Duration: 15
 
-In this exercise, we will cover creating a single URL synthetic test in Dynatrace. Dynatrace offers three types of synthetic monitoring: single-URL browser monitors, browser clickpaths, and HTTP monitors.
+In this exercise, we will cover creating a single URL synthetic test in Dynatrace. 
+Dynatrace offers three types of synthetic monitoring: 
 
-More information can be found here: [How to use Dynatrace > Syntheic Monitoring](https://www.dynatrace.com/support/help/how-to-use-dynatrace/synthetic-monitoring)
+- **Single-URL browser monitors** 
+- **Browser clickpaths**
+- **HTTP monitors**
 
-### 1. Create a simple browser monitors for Easy Travel
+Positive
+: Dynatrace Documentation is referenced [here](https://www.dynatrace.com/support/help/how-to-use-dynatrace/synthetic-monitoring)
 
-1. Select **Synthetic** from the navigation menu.
-2. Click the **Create a synthetic monitor** button at top right.
-3. Click **Create a browser monitor**.
+### 1. Use One-click creation of browser monitors for Easytravel
 
-![SR](assets/dem/301-SYN-01.png)
+* Click on **Monitor from private locations** on the right column in Easytravel Application
+   - Selection of Entry Actions is based on the Top 3 Entry Actions
+   - (Optional) You can edit the Top 3 Entry Actions if needed
 
-4. On the Configure a synthetic monitor page, type in the URL (Public DNS) of your Easy Travel application and name the monitor **easyTravel Homepage**.
-5. For Device profile, leave it as the default (i.e. Desktop)
+**That's it!** You have created **3 browser clickpaths Synthetic monitors**
 
-![SR](assets/dem/301-SYN-02.png)
+![OneClick-Synthetic](assets/dem/auto-synthetic.png)
 
-6. Click on **Select Frequency & Locations**. For Frequency, select **5** mins
-7. Use the following 2 locations
-   * Sydney
-   * Canbarra
+### 2. Create a browser clickpath synthetic monitor for Easytravel
 
-![SR](assets/dem/301-SYN-03.png)
+Following the instructions below:
+* Click on **Create a synthetic monitor**
+* Click on **Create a browser monitor**
+* **Copy URL** of Easytravel and **Paste** into URL Browser Monitor
+* Name the monitor - **Easytravel**
+* Scroll down and click on **Record clickpath**
+* **Pop-up Browser** appears. Record clickpath as follows:
+   - Click on **Login** (top right)
+   - Click on **small lock icon** in pop-up and **choose any name**
+   - Click on any **Book Now** icon
+   - Click on **Next**
+   - Click on **small lock icon** to **complete credit card information**
+   - Click on **Next**
+   - Click on **Finish**
+   - **Close Pop-up browser**
+* Recorded clickpath is now recorded in Dynatrace
+* Click on **Next**
+* **Select Sydney (AWS)** as location.
+   - Note that Sydney node is actually a cluster endpoint. 
+* Click on **Next**
+* Click on **Create browser monitor**
 
-8. Click on **View monitor summary** to advance in the wizard
-9. Click on **Create browser monitor** to complete the creation of the synthetic monitor
+![OneClick-Synthetic](assets/dem/browser-clickpath.gif)
 
-Reference: https://www.dynatrace.com/support/help/how-to-use-dynatrace/synthetic-monitoring/browser-monitors/create-a-single-url-browser-monitor/
+Negative
+: First-time users are asked to install the Chrome plugin. Click Install Dynatrace Synthetic Recorder at the bottom of the page.
 
-### 2. (Optional) Create a browser clickpath synthetic monitor for Easy Travel
+Positive
+: Dynatrace Documentation is referenced [here](https://www.dynatrace.com/support/help/how-to-use-dynatrace/synthetic-monitoring/browser-monitors/record-a-browser-clickpath/)
 
- * You will need to install the **Dynatrace recorder (chrome plugin)**
- * Only **Chrome** is supported due to the requirement to run a plugin
+### 3. HTTP Monitor
 
-1. Select **Synthetic** from the navigation menu.
-2. Click **Create a synthetic monitor** > **Create a browser monitor**.
-3. First-time users are asked to install the Chrome plugin. Click **Install Dynatrace Synthetic Recorder** at the bottom of the page.
-4. On the extension page, click Add to Chrome > Add Extension.
+Following the instructions below:
+* Click on **Create a synthetic monitor**
+* Click on **Create an HTTP monitor**
+* Name HTTP Monitor - **Easytravel**
+* Click on **Add HTTP request**
+* **Copy URL** of Easytravel and **Paste** into HTTP request URL Text Field
+* **Paste** into Name Text Field
+* Click on **Add HTTP request**
+* Scroll down and click **Next**
+* Scroll down and **Select Sydney (AWS)** as location.
+   - Note that Sydney node is actually a cluster endpoint. 
+* Click on **Next**
+* Click on **Create HTTP monitor**
 
-Reference: https://www.dynatrace.com/support/help/how-to-use-dynatrace/synthetic-monitoring/browser-monitors/record-a-browser-clickpath/
+![OneClick-Synthetic](assets/dem/http-monitor.gif)
 
-### 3. DISABLE or DELETE all tests when done!
-
-![SR](assets/dem/303-Delete.png)
+Positive
+: Dynatrace Documentation is referenced [here](https://www.dynatrace.com/support/help/how-to-use-dynatrace/synthetic-monitoring/http-monitors/create-an-http-monitor/)
 
 <!-- ------------------------ -->
 ## Configure Session Replay
 Duration: 15
 
-This exercise covers configuring Session Replay in Dynatrace.
+In this exercise, we will cover **configuring Session Replay** in Dynatrace.
 
-Read about Session Replay here: [How to use Dynatrace > Real User Monitoring > Basic RUM concepts > Session Replay](https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/basic-concepts/session-replay/)
+### Enable Session Replay
 
-### 1. Enable Session Replay
+Follow the steps below to enable session Replay:
 
-1. Select **Applications** from the navigation menu.
-2. Select the application you want to configure.
-3. Click the Browse \[...\] menu button and select **Edit**.
-4. From the Application settings menu, select **Session Replay**.
-5. Turn the **Enable Session Replay** button on.
+* Select **Applications** from the left navigation menu.
+* Click the **Easytravel** application.
+* Click the **Browse button (...)** and select **Edit**.
+* Click on **Session Replay and behavior** and **Session Replay**
+* Toggle ON **Enable Session Replay**
+* Scroll down and Click on **Save**
 
-   ![SR](assets/dem/401-Configure.png)
+![Enable-Session-Replay](assets/dem/enable-session-replay.gif)
 
-6. Click on **Save** and then access the Easy Travel application using your browser and navigate around the application.
-7. After a couple minutes, find your session under **User Sessions**
-   * Hint: You can filter for sessions that have Replay enabled
+Positive
+: Dynatrace Documentation is referenced [here](https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/basic-concepts/session-replay/)
+
+### Simulate load for capturing Session Replay
+
+Positive
+: With Session Replay enabled, revert to your **Easytravel app on your web browser** and **simulate load**.
+You can follow the same user journey as the Synthetic clickpath.
+
+### Verify Session Replay
+
+After a couple minutes, you can find your session under **User Sessions** on Dynatrace's left navigation bar.
+
+* Filter for sessions that have Replay enabled 
 
    ![SR](assets/dem/403-ViewSR1.png)
 
-8. Replay your session
+* Replay your session
 
 ![SR](assets/dem/403-ViewSR2.png)
 
@@ -340,62 +385,60 @@ Read about Session Replay here: [How to use Dynatrace > Real User Monitoring > B
 
 ![SR](assets/dem/403-ViewSR4.png)
 
-
-### 2. Additional configuration for for personal data protection
-
-Reference: https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/setup-and-configuration/web-applications/additional-configuration/configure-session-replay-for-personal-data-protection/
+### Additional configuration for for personal data protection
 
 ![SR](assets/dem/402-Privacy.png)
+
+Positive
+: Dynatrace Documentation is referenced [here](https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/setup-and-configuration/web-applications/additional-configuration/configure-session-replay-for-personal-data-protection/)
 
 <!-- ------------------------ -->
 ## Introduction to USQL
 Duration: 15
 
-Dynatrace captures detailed user session data each time a user interacts with your monitored application. This data includes all user actions and high level performance data. Using either the Dynatrace API or Dynatrace User Sessions Query Language (USQL), you can easily run powerful queries, segmentations, and aggregations on this captured data. 
-
-User Sessions Query Language isn't SQL and Dynatrace doesn't store user session data in a relational database. User Sessions Query Language is a Dynatrace-specific query language, though it does rely on some SQL concepts and the syntax is similar, which makes it easy to get started.
+Dynatrace captures detailed user session data each time a user interacts with your monitored application. This data includes all user actions and high level performance data. Using either the Dynatrace API or **Dynatrace User Sessions Query Language (USQL)**, you can easily run **powerful queries, segmentations, and aggregations** on this captured data.  User Sessions Query Language is a **Dynatrace-specific query language**, though it does rely on some SQL concepts and the syntax is similar, which makes it easy to get started.
 
 A typical use case for using USQL is to build dashboards to visualize business metrics.
 
-![USQL](assets/dem/500-USQL.png)
+![USQL](assets/dem/USQL-Dashboard.png)
 
-Reference: https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/how-to-use-real-user-monitoring/cross-application-user-session-analytics/custom-queries-segmentation-and-aggregation-of-session-data/
+Positive
+: Dynatrace Documentation is referenced [here](https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/how-to-use-real-user-monitoring/cross-application-user-session-analytics/custom-queries-segmentation-and-aggregation-of-session-data/)
 
-### 1. Explore USQL
+### 1. Exploring USQL
 
-1. Select User Sessions from the navigation menu
-2. Use the Filter at the top bar, select your application's name 
-3. Click on "User Session queries"
+Follow the steps below:
+* Select **User Sessions** from the navigation menu
+* Use the **Filter** at the top bar, select **Easytravel** as **Application**
+* Click on **User sessions query**
 
-   ![USQL](assets/dem/502-USQL1.png)
-
-4. A default USQL query is automatically created for you based on the application you selected
-
-   ![USQL](assets/dem/502-USQL2.png)
+![USQL](assets/dem/502-USQL2.png)
 
 **Sample queries**
 
-Sample 1
+**Create a funnel for user journey**
+```sql
+SELECT FUNNEL(useraction.name="loading of page /special-offers.jsp" AS "Special Offers landing page", useraction.name = "loading of page /orange-booking-review.jsf" AS "Review package", useraction.name = "loading of page /orange-booking-payment.jsf" AS "Payment") FROM usersession
 ```
+
+**Understand page performance from a specific location**
+```sql
 SELECT DATETIME(starttime, 'MM/dd/yyyy hh:mm', '30m'),AVG(useraction.visuallyCompleteTime)
 FROM usersession
 WHERE country IS "United States" GROUP BY DATETIME(starttime, 'MM/dd/yyyy hh:mm', '30m')
 ```
 
-Sample 2
-```
+**Understand which users are experiecing errors**
+```sql
 SELECT userId, SUM(totalErrorCount) FROM usersession
 WHERE totalErrorCount IS NOT NULL
 GROUP BY userId ORDER BY SUM(totalErrorCount) DESC
 ```
 
-Sample 3
+**Gather statistics/analaysis**
+```sql
+SELECT COUNT(*) FROM usersession WHERE useraction.name = "loading of page /orange.jsf"
 ```
-SELECT COUNT(*) FROM usersession WHERE useraction.name = "Loading of page /orange.jsf"
-```
-
-Are you able to describe what each sample query is trying to visualize?
-
 <!-- ------------------------ -->
 
 ## Feedback
@@ -429,4 +472,4 @@ We hope you enjoyed this lab and found it useful. We would love your feedback!
 </form>
 
 Positive
-: 💡 For other ideas and suggestions, please **[reach out via email](mailto:APAC-SE-Central@dynatrace.com?subject=Kubernetes Workshop - Ideas and Suggestions")**.
+: 💡 For other ideas and suggestions, please **[reach out via email](mailto:APAC-SE-Central@dynatrace.com?subject=DEM Workshop - Ideas and Suggestions")**.

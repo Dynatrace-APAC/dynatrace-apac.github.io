@@ -1,0 +1,31 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "../../elements",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-07-15T11:39:50+10:00",
+  "id": "autonomous-cloud-jp",
+  "duration": 119,
+  "title": "アプリ展開のためのインテリジェンス・クオリティー・ゲート",
+  "authors": "Brandon Neo",
+  "summary": "アプリ展開のためのインテリジェンス・クオリティー・ゲート",
+  "source": "autonomous-cloud-jp.md",
+  "theme": "jp",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "keptn",
+    "jenkins",
+    "ansible",
+    "cloud-automation",
+    "application-microservices-monitoring"
+  ],
+  "tags": [
+    "advanced",
+    "autonomous-cloud"
+  ],
+  "feedback": "mailto:APAC-SE-Central@dynatrace.com",
+  "ga": "UA-175467274-1",
+  "url": "autonomous-cloud-jp"
+}

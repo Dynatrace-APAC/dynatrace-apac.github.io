@@ -1,0 +1,345 @@
+
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+<meta name="theme-color" content="#4F7DC9">
+<meta charset="UTF-8">
+<title>Dynatraceによるクラウドネイティブな可観測性</title>
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+<style>
+.success{color:#1e8e3e}.error{color:red} </style>
+</head>
+<body>
+<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+<google-codelab codelab-gaid="UA-175467274-1" id="cloud-native-observability-jp" title="Dynatraceによるクラウドネイティブな可観測性" environment="web" feedback-link="mailto:APAC-SE-Central@dynatrace.com">
+<google-codelab-step label="はじめに" duration="1">
+<p>このリポジトリには、「Day 2 Operations - Cloud Native Observability Workshop」のハンズオンが含まれています。</p>
+<h2 is-upgraded>事前準備</h2>
+<ul>
+<li>DynatraceのAccount. フリートライアルの申し込み <a href="https://www.dynatrace.com/trial/" target="_blank">here</a></li>
+<li>AWS アカウント <a href="https://aws.amazon.com/free/" target="_blank">here</a></li>
+<li>Chrome ブラウザ</li>
+<li>SSH クライアント</li>
+</ul>
+<h2 is-upgraded>セットアップ</h2>
+<p>このラボでは、以下のサンプルアプリケーションを使用します。</p>
+<ul>
+<li>サンプルアプリケーション <ul>
+<li><a href="https://github.com/dynatrace-sockshop" target="_blank">Sockshop</a></li>
+</ul>
+</li>
+</ul>
+<h2 is-upgraded>学習内容</h2>
+<ul>
+<li>OneAgentをKubernetes/Microservice環境に導入する</li>
+<li>GitOps／Monitoring as Codeアプローチによるアプリケーション設定のプッシュ</li>
+<li>メトリクス・インジェスチョンを学ぶことで、すべてのエンティティのベースラインを自動化することができます。</li>
+<li>サイトリライアビリティエンジニアリング - サービスレベル目標</li>
+<li>サイト・リライアビリティ・エンジニアリング - リリース</li>
+</ul>
+</google-codelab-step>
+<google-codelab-step label="OneAgent Operatorの導入" duration="15">
+<p>この演習では、Kubernetes(Microk8s)を実行しているLinuxインスタンスにOneAgentをデプロイし、そのインスタンスで実行されているものをOneAgentに発見させます。</p>
+<h2 is-upgraded>Webブラウザでターミナルを使う</h2>
+<p>実験を円滑に進めるために、Linuxインスタンスに<strong>Webブラウザを介したターミナル</strong>でアクセスします。</p>
+<p>メールに記載されている<strong>URL</strong>を使用して、SSHターミナルにアクセスします。URLが <code>Public IP Address:8080/wetty</code> のようになっていることを確認してください。</p>
+<p>メールに記載されている<strong>ログイン名</strong>と<strong>パスワード</strong>を使用します。</p>
+<p class="image-container"><img alt="Deploy" src="img/e609666e1c136993.png"></p>
+<h2 is-upgraded>OneAgentのダウンロード</h2>
+<p>ブラウザを開き、DynatraceのURLにアクセスします。</p>
+<p>以下の手順で行います。</p>
+<ul>
+<li>ナビゲーションメニューから <strong>Dynatrace Hub</strong> を選択します。</li>
+<li><strong>Kubernetes</strong> を選択します。</li>
+<li>右下の <strong>Monitor Kubernetes</strong> ボタンを選択します。</li>
+</ul>
+<p class="image-container"><img alt="Deploy" src="img/45b66680fc9a6e5f.gif"></p>
+<p>Monitor Kubernetes / Openshift**ページ内で、以下の手順を行います。</p>
+<ul>
+<li>接続の<strong>名前</strong>を入力してください 例：<code>k8s</code></li>
+<li><strong>Create tokens</strong>をクリックして、適切なパーミッションでPaaSトークンとAPIトークンを作成します。</li>
+<li><strong>Toggle ON</strong> Skip SSL Certificate Check</li>
+<li><strong>Copy</strong> ボタンをクリックして、コマンドをコピーします。</li>
+<li><strong>Copy</strong> ボタンをクリックしてコマンドをコピーしてください。 * <strong>Paste</strong> コマンドをターミナルウィンドウに貼り付けて実行してください。</li>
+</ul>
+<p class="image-container"><img alt="Deploy" src="img/c6fc346f07810836.gif"></p>
+<p>例:</p>
+<pre><code language="language-bash" class="language-bash">Connecting to github-releases.githubusercontent.com (github-releases.githubusercontent.com)|185.199.108.154|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 7310 (7.1K) [application/octet-stream]
+Saving to: ‘install.sh&#39;
+
+install.sh                      100%[=====================================================&gt;]   7.14K  --.-KB/s    in 0s      
+
+2021-06-01 05:46:36 (40.7 MB/s) - ‘install.sh&#39; saved [7310/7310]
+
+
+Check for token scopes...
+
+Check if cluster already exists...
+
+Creating Dynatrace namespace...
+
+Applying Dynatrace Operator...
+Warning: apiextensions.k8s.io/v1beta1 CustomResourceDefinition is deprecated in v1.16+, unavailable in v1.22+; use apiextensions.k8s.io/v1 CustomResourceDefinition
+customresourcedefinition.apiextensions.k8s.io/dynakubes.dynatrace.com created
+serviceaccount/dynatrace-dynakube-oneagent created
+serviceaccount/dynatrace-dynakube-oneagent-unprivileged created
+serviceaccount/dynatrace-kubernetes-monitoring created
+serviceaccount/dynatrace-operator created
+serviceaccount/dynatrace-routing created
+podsecuritypolicy.policy/dynatrace-dynakube-oneagent created
+podsecuritypolicy.policy/dynatrace-dynakube-oneagent-unprivileged created
+podsecuritypolicy.policy/dynatrace-kubernetes-monitoring created
+podsecuritypolicy.policy/dynatrace-operator created
+podsecuritypolicy.policy/dynatrace-routing created
+role.rbac.authorization.k8s.io/dynatrace-dynakube-oneagent created
+role.rbac.authorization.k8s.io/dynatrace-dynakube-oneagent-unprivileged created
+role.rbac.authorization.k8s.io/dynatrace-kubernetes-monitoring created
+role.rbac.authorization.k8s.io/dynatrace-operator created
+role.rbac.authorization.k8s.io/dynatrace-routing created
+clusterrole.rbac.authorization.k8s.io/dynatrace-kubernetes-monitoring created
+clusterrole.rbac.authorization.k8s.io/dynatrace-operator created
+rolebinding.rbac.authorization.k8s.io/dynatrace-dynakube-oneagent created
+rolebinding.rbac.authorization.k8s.io/dynatrace-dynakube-oneagent-unprivileged created
+rolebinding.rbac.authorization.k8s.io/dynatrace-kubernetes-monitoring created
+rolebinding.rbac.authorization.k8s.io/dynatrace-operator created
+rolebinding.rbac.authorization.k8s.io/dynatrace-routing created
+clusterrolebinding.rbac.authorization.k8s.io/dynatrace-kubernetes-monitoring created
+clusterrolebinding.rbac.authorization.k8s.io/dynatrace-operator created
+deployment.apps/dynatrace-operator created
+W0601 05:46:39.025776   29593 helpers.go:553] --dry-run is deprecated and can be replaced with --dry-run=client.
+secret/dynakube configured
+
+Applying DynaKube CustomResource...
+dynakube.dynatrace.com/dynakube created
+
+Adding cluster to Dynatrace...
+Kubernetes monitoring successfully setup.
+$
+
+</code></pre>
+<aside class="warning"><p>なお、Dynatraceにデータが表示されるまで約5分かかります。</p>
+</aside>
+<aside class="special"><p>Dynatraceは、OneAgentsの自動展開や、k8sの自動統合を行います。</p>
+</aside>
+<h2 is-upgraded>Deployment statusでインストールを検証する</h2>
+<p><strong>Show deployment status</strong>をクリックして、接続されているホストの状態を確認します。</p>
+<p>下の画像のように、接続されたホストが表示されているはずです。</p>
+<p class="image-container"><img alt="Deploy" src="img/297084c8c0c99ffa.png"></p>
+<aside class="special"><p>Dynatraceのドキュメントは<a href="https://www.dynatrace.com/support/help/technology-support/operating-systems/linux/" target="_blank">こちら</a> を参照しています。</p>
+</aside>
+<h2 is-upgraded>Sockshopアプリケーションの再起動</h2>
+<p>サンプルアプリSockshopを再起動するには、以下のコマンドを実行します。</p>
+<pre><code language="language-bash" class="language-bash">kubectl delete po --all -n dev
+kubectl delete po --all -n production
+</code></pre>
+<h2 is-upgraded>Sockshopアプリケーションの探索</h2>
+<p>Dynatrace上で、以下の手順でSockshopのURLを取得します。</p>
+<ul>
+<li>OneAgent のデプロイ画面で <strong>hostname</strong> をクリックします。</li>
+<li>ホストビューで <strong>hostname</strong> を展開します。</li>
+<li>メタデータからパブリックホスト名を<strong>Select and Copy</strong>します。</li>
+<li><strong>the Public Host name</strong> を以下の形式に合わせて修正します。 <ul>
+<li>Sockshop Production <code>http://production.front-end.PUBLIC-IP.nip.io/</code></li>
+<li>Sockshop Dev <code>http://dev.front-end.PUBLIC-IP.nip.io</code></li>
+</ul>
+</li>
+</ul>
+<aside class="special"><p>なお、ワークショップに参加される方は、これらのリンクがワークショップのメールに含まれています。</p>
+</aside>
+<h2 is-upgraded>Smartscapeを探る</h2>
+<p>Easy Travel の起動を待っている間に、Dynatrace を探索し、Smartscape を使用して、Dynatrace が Easy Travel アプリケーションを構成するプロセスと依存関係を自動的に発見することができます。</p>
+<p>Dynatraceの<a href="https://www.dynatrace.com/support/help/get-started/4-things-youll-absolutely-love-about-dynatrace/" target="_blank">4つの魅力</a>をご紹介します。</p>
+<p class="image-container"><img alt="Smartscape" src="img/868e111ca8bd48bd.png"></p>
+</google-codelab-step>
+<google-codelab-step label="コードとしての監視" duration="15">
+<p>この演習では、Dynatrace環境の設定を自動化します。</p>
+<p><a href="https://github.com/dynatrace-oss/dynatrace-monitoring-as-code" target="_blank">Dynatrace Monitoring as Code (Monaco)</a>を使うと、人の手を介さずに、グローバルなDynatrace環境すべての設定を自動化することができます。様々な使用例があります。</p>
+<ul>
+<li>複数の環境で再利用できるように構成をテンプレート化する機能を持つこと。</li>
+<li>コンフィグレーション間の相互依存性を、一意の識別子を追跡することなく処理すること。</li>
+<li>同じコンフィグレーションを何百ものDynatrace環境に簡単に適用・更新できる機能を導入し、特定の環境にロールアウトできるようにする。</li>
+<li>アプリケーション固有の構成をある環境から別の環境へと促進するための簡単な方法を特定し、開発からハードニング、本番までのデプロイメントを追跡します。</li>
+<li>プルリクエスト、マージ、承認など、gitベースのワークフローのすべてのメカニズムとベストプラクティスをサポートする。</li>
+<li>設定は、開発からハードニング、本番へのデプロイメント後に、ある環境から別の環境へと簡単に移行できなければなりません。</li>
+</ul>
+<p>セッションを円滑に進めるために、monacoのコードを以下のように実行することができます。</p>
+<pre><code language="language-bash" class="language-bash">cd sockshop
+./deploy-monaco.sh
+</code></pre>
+<p>設定後、<strong>DT_TENANT</strong>と<strong>DT_API_TOKEN</strong>と<strong>DT_DASHBOARD_OWNER</strong>の変数を設定します。 これらは、ラボの登録メール内に記載されています。</p>
+<pre><code language="language-bash" class="language-bash">export DT_TENANT= https://mou612.managed-sprint.dynalabs.io/e/&lt;ENV&gt;
+export DT_API_TOKEN=dt0c01.IH6********************************************
+export DT_DASHBOARD_OWNER=&lt;your email address&gt;
+</code></pre>
+<p>設定後、以下のコマンドを実行してDynatraceの設定を行います。</p>
+<p><code>./push-monaco.sh</code></p>
+<p>以下の設定を行いました。</p>
+<ul>
+<li>シンセティック・モニタリング</li>
+<li>サービスネーミングルール</li>
+<li>カートSLO</li>
+<li>アプリケーション定義</li>
+<li>ダッシュボード</li>
+<li>プロセスのネーミングルール</li>
+<li>管理ゾーン</li>
+</ul>
+</google-codelab-step>
+<google-codelab-step label="基礎SLO" duration="10">
+<p>この演習では、基本的なサービスレベル目標(SLO)の設定について説明します。これらの目標は、ビジネスのサービスレベル合意（SLA）を満たすために測定されたサービスレベル指標（SLI）の目標に基づいています。</p>
+<h2 is-upgraded>SLOの作成</h2>
+<p>左側のナビで<strong>Service level objectives &gt; Add new SLO</strong>に進みます。</p>
+<p>ここでは、<strong>Sockshop Frontend</strong>のSLOを作成します。以下のように使用します。</p>
+<ul>
+<li>このSLOに名前を付けます：<code>Sockshop Frontend Error SLO</code>（ソックスショップフロントエンドエラーSLO</li>
+<li>Select tab <strong>Calculate success rate using two metrics</strong> （2つのメトリクスを使って成功率を計算する）。</li>
+<li><strong>numerator</strong> ドロップダウンで、<code>builtin:service.errors.server.successCount</code> を使用します。</li>
+<li>選択したフィールドをクリックします - <strong>number of calls without server side errors</strong></li>
+<li><strong>denominator</strong> ドロップダウンでは、<code>builtin:service.requestCount.server</code> を使用します。</li>
+<li>選択されたフィールドをクリックします - <strong>Request count - server</strong></li>
+<li><strong>Next</strong> をクリックしてください。</li>
+<li><strong>Entity selector</strong> で、<code>type("SERVICE"),tag("[Kubernetes]tier:frontend"),tag("[Kubernetes]stage:prod")</code>を使用します。</li>
+<li><strong>Preview</strong> をクリックしてください。</li>
+<li><strong>front-end.production</strong> の <strong>1 entityID</strong> が選択されているはずです。</li>
+<li><strong>Next</strong> をクリックしてください。</li>
+<li><strong>Failure, Warning, Good</strong> にはデフォルトのしきい値を使用します。</li>
+<li>Timeframeに<code>-1h</code>を使用します。</li>
+<li><strong>Save</strong> をクリックしてください。</li>
+</ul>
+<p class="image-container"><img alt="SLO" src="img/5c24475ae4c3320.gif"></p>
+</google-codelab-step>
+<google-codelab-step label="アドバンスSLO" duration="10">
+<p>この演習では、事前にサービスレベル目標（SLO）を設定する方法を説明します。この目標を達成するためには、まずカスタム指標を作成し、次に測定されたサービスレベル指標（SLI）をターゲットにして、ビジネスのサービスレベルアグリーメント（SLA）を達成する必要があります。</p>
+<h2 is-upgraded>カタログページのメトリクス作成</h2>
+<p>次に、カタログページへのリクエスト成功数のカスタム指標を作成します。</p>
+<ul>
+<li>左側のナビで、<code>Transactions and services</code>に移動します。</li>
+<li><code>front-end</code> service をクリックしてください。</li>
+<li><strong>View dynamic requests</strong> をクリックしてください。</li>
+<li>スクロールダウンして、<strong>/catalogue</strong>リクエストで、<strong>graphアイコンを選択します（Create analysis view）</strong>。</li>
+<li><strong>Metric</strong> の下で、<strong>Successful request count</strong> を選択します。</li>
+<li><strong>Create metric</strong> をクリックします。</li>
+<li>* Metric name の下で、<code>cataloguesuccesscount</code> を使用します。</li>
+<li><strong>Create metric</strong> をクリックしてください。</li>
+</ul>
+<p class="image-container"><img alt="SLO" src="img/11bdd0bf01b71d76.gif"></p>
+<ul>
+<li><strong>Metric</strong> の下のドロップダウンメニューで、<strong>request count</strong> を変更して選択します。</li>
+<li><strong>Create metric</strong> をクリックしてください。</li>
+<li>Metric nameのところで、<code>cataloguecount</code>とします。</li>
+<li><strong>Create metric</strong> をクリックしてください。</li>
+</ul>
+<p class="image-container"><img alt="SLO" src="img/ace8dd41fd325c91.png"></p>
+<h2 is-upgraded>カタログ掲載用SLOの作成</h2>
+<ul>
+<li>このSLOに名前を付ける：<code>Catalogue Availability SLO</code>。</li>
+<li>Select tab <strong>Calculate success rate using two metrics</strong> （2つのメトリクスを使って成功率を計算する）。</li>
+<li><strong>numerator</strong> ドロップダウンで、<code>calc:service.cataloguesuccesscount</code> を使用します。</li>
+<li>選択されたフィールドをクリックしてください - <strong>Catalogue Success Count</strong> 。</li>
+<li><strong>denominator</strong> ドロップダウンでは、<code>calc:service.cataloguecount</code> を使用します。</li>
+<li>選択されたフィールドをクリックしてください - <strong>Catalogue Count</strong> * 選択されたフィールドをクリックしてください。</li>
+<li><strong>Next</strong> をクリックしてください。</li>
+<li><strong>次へ</strong>をクリックしてください</li>
+<li><strong>Failure</strong> には <code>85</code> を使用してください。</li>
+<li><strong>Warning</strong> には <code>90</code> を使用してください。</li>
+<li>Timeframeには<code>-15m</code>を使用してください。</li>
+<li><strong>Save</strong> をクリックしてください。</li>
+</ul>
+<p class="image-container"><img alt="SLO" src="img/11bdd0bf01b71d76.gif"></p>
+</google-codelab-step>
+<google-codelab-step label="ダッシュボード" duration="15">
+<p>左のナビゲーションバーを参照し、<strong>Dashboards</strong>に進みます。Dynatraceには、<strong>Kubernetes Dashboards</strong>や<strong>Real User Monitoring</strong>といったダッシュボードのテンプレートがあらかじめ用意されています。</p>
+<p>モナコのロールアウトの一環として、以下のようなダッシュボードも作成されています。 <strong>Environment Overview Dashboard</strong>と<strong>Prometheus - Environment Overview Dashboard</strong>です。</p>
+<p class="image-container"><img alt="Session-properties" src="img/9b6febf21054b293.png"></p>
+<p>それぞれのダッシュボードにドリルダウンして、アプリオーナーやビジネスユーザー向けの様々なダッシュボードウィジェットをご覧いただけます。</p>
+<p class="image-container"><img alt="Session-properties" src="img/12ab9db79d53522.png"></p>
+<h2 is-upgraded>SLOウィジェットの追加</h2>
+<p>これから、作成した新しいSLOに基づいて、新しいSLOウィジェットを追加します。</p>
+<p>左のナビで、<strong>Service level objectives</strong>に進みます。</p>
+<p><strong>pin icon</strong>を使って、<strong>Environment Overview Dashboard</strong>に固定することができます。</p>
+<p class="image-container"><img alt="Session-properties" src="img/964dde397728e3e9.png"></p>
+<h2 is-upgraded>カスタム・メトリック・ウィジェットの追加</h2>
+<p>環境概要ダッシュボード<strong>の中で、</strong>編集**をクリックします。</p>
+<p>カスタム・チャート」ウィジェットをダッシュボードにドラッグし、「カスタム・チャートの設定」をクリックします。</p>
+<ul>
+<li><code>Number of calls without server side errors</code> metric を使用します。</li>
+<li><strong>Filter by</strong> で、<code>Service: Tag: [Kubernetes]app: catalog</code>を使用します。</li>
+<li><strong>Run Query</strong> をクリックしてください。</li>
+<li><strong>Single Value</strong> などの他の可視化方法も使用可能です。</li>
+<li><strong>Pin to dashboard</strong> をクリックし、<strong>Environment Overview Dashboard</strong> を選択します。</li>
+</ul>
+<p class="image-container"><img alt="Session-properties" src="img/71aa1afdf1218a2a.png"></p>
+<h2 is-upgraded>CODEでカスタムメトリックウィジェットを追加する</h2>
+<p>ダッシュボード・ビューに戻り、新しく作成したウィジェットをクリックして、<strong>別のカスタムチャートをクローン化</strong>します。</p>
+<p>新しいウィジェットで、<strong>カスタムチャートを設定</strong>をクリックします。</p>
+<p>データエクスプローラービューに戻り、以下のようにします。</p>
+<ul>
+<li><strong>Code</strong> タブをクリックしてください。</li>
+<li>以前のカスタム・メトリック・ウィジェットと同等の <strong>Code</strong> が表示されます。</li>
+<li>テキストを <code>((calc:service.cataloguesuccesscount) / (calc:service.cataloguecount)) * (100)</code> に修正します。</li>
+<li>これは、成功したカタログ数の<strong>percentage of the successful catalogue counts</strong>。</li>
+<li>左側の<strong>Settings</strong>で、<strong>threshold</strong>を以下のように変更します。 <ul>
+<li>🟩 - <code>15</code></li>
+<li>🟨 - <code>10</code></li>
+<li>🟥 - <code>5</code></li>
+</ul>
+</li>
+<li><strong>Run query</strong> をクリックします。</li>
+<li><strong>Pin to dashboard</strong> をクリックし、<strong>Environment Overview Dashboard</strong> を選択します。</li>
+</ul>
+<p class="image-container"><img alt="Session-properties" src="img/9d2aef49a2daae2b.png"></p>
+</google-codelab-step>
+<google-codelab-step label="リリース" duration="15">
+<p>また、Dynatraceにはリリース分析ソリューションが組み込まれており、導入したアプリケーションのバージョンやステージを判断するのに役立ちます。</p>
+<p>左のナビで<strong>Releases</strong>に移動します。</p>
+<p class="image-container"><img alt="Session-properties" src="img/76aa2a0dd6d7567f.png"></p>
+<p>これは、<strong>展開されたコンポーネントのバージョン</strong>とその<strong>リリースイベント</strong>の概要を示しています。</p>
+<p>各コンポーネントの詳細を見ると、それぞれのコンポーネントの追加メタデータが表示されます。 これにより、監視対象のコンポーネントのコンテキストや、コンポーネントの<strong>ライフサイクル</strong>および<strong>問題の追跡</strong>に関する情報が提供されます。</p>
+<p class="image-container"><img alt="Session-properties" src="img/ffeb52ab88907fa8.png"></p>
+</google-codelab-step>
+<google-codelab-step label="アンケート" duration="3">
+<p>このラボを楽しんでいただき、お役に立てれば幸いです。ご意見、ご感想をお待ちしております。 </p>
+<google-codelab-survey survey-id="cloud-native-observability-jp-1">
+<h4>このラボでの全体的な経験はどうでしたか？</h4>
+<paper-radio-group>
+<paper-radio-button>とても良い</paper-radio-button>
+<paper-radio-button>良い</paper-radio-button>
+<paper-radio-button>普通</paper-radio-button>
+<paper-radio-button>悪い</paper-radio-button>
+<paper-radio-button>とても悪い</paper-radio-button>
+</paper-radio-group>
+</google-codelab-survey>
+<google-codelab-survey survey-id="cloud-native-observability-jp-2">
+<h4>このラボから最も恩恵を受けたことは何ですか？</h4>
+<paper-radio-group>
+<paper-radio-button>KubernetesへのOneAgentの導入</paper-radio-button>
+<paper-radio-button>GitOps / コードとしてのモニタリング</paper-radio-button>
+<paper-radio-button>サービスレベル目標</paper-radio-button>
+<paper-radio-button>Releases</paper-radio-button>
+</paper-radio-group>
+</google-codelab-survey>
+<google-codelab-survey survey-id="cloud-native-observability-jp-3">
+<h4>このラボを友人や同僚に勧める可能性はどの程度ありますか？</h4>
+<paper-radio-group>
+<paper-radio-button>強く勧めたい</paper-radio-button>
+<paper-radio-button>勧めたい</paper-radio-button>
+<paper-radio-button>わからない</paper-radio-button>
+<paper-radio-button>勧めない</paper-radio-button>
+<paper-radio-button>全く勧めない</paper-radio-button>
+</paper-radio-group>
+</google-codelab-survey>
+<aside class="special"><p>💡 その他のアイデアや提案については、[メールでのお問い合わせ](mailto:APAC-SE-Central@dynatrace.com?subject=Cloud Native Observability - Ideas and Suggestions）をお願いします。</p>
+</aside>
+</google-codelab-step>
+</google-codelab>
+<script src="../../elements/codelab-elements/native-shim.js"></script>
+<script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+<script src="../../elements/codelab-elements/prettify.js"></script>
+<script src="../../elements/codelab-elements/codelab-elements.js"></script>
+<script src="//support.google.com/inapp/api.js"></script>
+</body>
+</html>

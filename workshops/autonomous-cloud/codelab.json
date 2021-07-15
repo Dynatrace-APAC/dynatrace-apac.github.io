@@ -8,8 +8,8 @@
   "duration": 119,
   "title": "Autonomous Cloud with Dynatrace",
   "authors": "Brandon Neo",
-  "summary": "Intelligence Quality Gates powered by Keptn with Jenkins for Automated App deployment and even allowing Self-healing",
-  "source": "ac.md",
+  "summary": "Intelligence Quality Gates for App deployment",
+  "source": "autonomous-cloud.md",
   "theme": "",
   "status": [
     "published"
@@ -22,8 +22,8 @@
     "application-microservices-monitoring"
   ],
   "tags": [
-    "autonomous-cloud",
-    "Advanced"
+    "advanced",
+    "autonomous-cloud"
   ],
   "feedback": "mailto:APAC-SE-Central@dynatrace.com",
   "ga": "UA-175467274-1",

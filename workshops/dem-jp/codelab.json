@@ -1,0 +1,28 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "../../elements",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-07-15T12:14:11+10:00",
+  "id": "dem-jp",
+  "duration": 79,
+  "title": "Dynatraceによるデジタルエクスペリエンスマネジメント",
+  "authors": "Brandon Neo",
+  "summary": "Dynatraceによるリアルユーザーの自動監視",
+  "source": "dem-jp.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "dem",
+    "digital-experience"
+  ],
+  "tags": [
+    "beginner",
+    "dem"
+  ],
+  "feedback": "mailto:APAC-SE-Central@dynatrace.com",
+  "ga": "UA-175467274-1",
+  "url": "dem-jp"
+}

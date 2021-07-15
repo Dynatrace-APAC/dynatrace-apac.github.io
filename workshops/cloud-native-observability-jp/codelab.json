@@ -1,0 +1,28 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "../../elements",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-07-15T11:43:46+10:00",
+  "id": "cloud-native-observability-jp",
+  "duration": 84,
+  "title": "Dynatraceによるクラウドネイティブな可観測性",
+  "authors": "Brandon Neo",
+  "summary": "SREのためのクラウドネイティブな可観測性",
+  "source": "cloud-native-observability-jp.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "cloud-obs",
+    "cloud-automation"
+  ],
+  "tags": [
+    "cloud-obs",
+    "intermediate"
+  ],
+  "feedback": "mailto:APAC-SE-Central@dynatrace.com",
+  "ga": "UA-175467274-1",
+  "url": "cloud-native-observability-jp"
+}

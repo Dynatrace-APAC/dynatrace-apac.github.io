@@ -1,7 +1,7 @@
 id: autonomous-cloud
 summary: Intelligence Quality Gates for App deployment
-categories: autonomous-cloud
-tags: autonomous-cloud
+categories: keptn, jenkins, ansible, cloud-automation, application-microservices-monitoring
+tags: autonomous-cloud, Advanced
 status: Published 
 authors: Brandon Neo
 Feedback Link: mailto:APAC-SE-Central@dynatrace.com

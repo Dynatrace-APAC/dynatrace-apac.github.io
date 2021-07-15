@@ -1,34 +1,22 @@
 
 <!doctype html>
-
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-  <meta name="theme-color" content="#4F7DC9">
-  <meta charset="UTF-8">
-  <title>Get Started with Openshift</title>
-  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
-  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
-  <style>
-    .success {
-      color: #1e8e3e;
-    }
-    .error {
-      color: red;
-    }
-  </style>
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+<meta name="theme-color" content="#4F7DC9">
+<meta charset="UTF-8">
+<title>Get Started with Openshift</title>
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+<style>
+.success{color:#1e8e3e}.error{color:red} </style>
 </head>
 <body>
-  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
-  <google-codelab codelab-gaid="UA-175467274-1"
-                  id="get-started-openshift"
-                  title="Get Started with Openshift"
-                  environment="web"
-                  feedback-link="mailto:APAC-SE-Central@dynatrace.com">
-    
-      <google-codelab-step label="Introduction" duration="0">
-        <p>This section contains the simple steps required to get started with Redhat Openshift.</p>
+<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+<google-codelab codelab-gaid="UA-175467274-1" id="get-started-openshift" title="Get Started with Openshift" environment="web" feedback-link="mailto:APAC-SE-Central@dynatrace.com">
+<google-codelab-step label="Introduction" duration="0">
+<p>This section contains the simple steps required to get started with Redhat Openshift.</p>
 <aside class="special"><p>If you need to use a <strong>demo application</strong>, you can use Dynatrace&#39;s sample app <a href="https://community.dynatrace.com/community/display/DL/easyTravel" target="_blank">easyTravel</a></p>
 </aside>
 <h2 class="checklist" is-upgraded>What You&#39;ll Learn</h2>
@@ -37,15 +25,12 @@
 <li>Deploy Dynatrace Operator</li>
 <li>Discover and Explore Dynatrace</li>
 </ul>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Setting up Openshift" duration="5">
-        <h2 is-upgraded>Choosing your deployment approach</h2>
+</google-codelab-step>
+<google-codelab-step label="Setting up Openshift" duration="5">
+<h2 is-upgraded>Choosing your deployment approach</h2>
 <p>There are various ways to setting up a <a href="https://www.openshift.com/try" target="_blank">free Red Hat Openshift trial</a>. You can also find other DIY apporaches on <strong>Github via Terraform / Ansible</strong>. The various approaches to creating the Openshift clusters are provided as <strong>one-click options</strong> with the <a href="https://cloud.redhat.com/" target="_blank">Redhat Hybrid Cloud Console</a></p>
 <ul>
-<li>Go to the <a href="https://cloud.redhat.com/" target="_blank">Redhat Hybrid Cloud Console</a>.  <ul>
+<li>Go to the <a href="https://cloud.redhat.com/" target="_blank">Redhat Hybrid Cloud Console</a>. <ul>
 <li>You can login with an existing account or create a new account</li>
 </ul>
 </li>
@@ -58,12 +43,9 @@
 <ul>
 <li>For the purposes on this lab, we will be running the lab with <strong>Red Hat Dedicated Trial</strong></li>
 </ul>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Deploy Dynatrace Operator via OperatorHub" duration="15">
-        <p>We will now log into the Cluster and deploy Dynatrace OneAgent. Dynatrace supports various Openshift deployment approaches with the various rollouts. There are different ways to activate Dynatrace on OpenShift and each way has its own advantages. We recommend these deployment strategies in terms of feature completeness and lack of constraints. Our <a href="https://www.dynatrace.com/support/help/technology-support/container-platforms/openshift/openshift-deployment-overview/" target="_blank">documentation link</a> contains the various approaches.</p>
+</google-codelab-step>
+<google-codelab-step label="Deploy Dynatrace Operator via OperatorHub" duration="15">
+<p>We will now log into the Cluster and deploy Dynatrace OneAgent. Dynatrace supports various Openshift deployment approaches with the various rollouts. There are different ways to activate Dynatrace on OpenShift and each way has its own advantages. We recommend these deployment strategies in terms of feature completeness and lack of constraints. Our <a href="https://www.dynatrace.com/support/help/technology-support/container-platforms/openshift/openshift-deployment-overview/" target="_blank">documentation link</a> contains the various approaches.</p>
 <p>We will be following the steps based on our following <a href="https://www.dynatrace.com/support/help/technology-support/container-platforms/openshift/other-deployments-and-configurations/deploy-with-operatorhub/" target="_blank">documentation</a></p>
 <h2 is-upgraded>Deploy the Dynatrace Operator via OperatorHub</h2>
 <ul>
@@ -103,7 +85,7 @@
 <ul>
 <li>Back in Openshift, go to <strong>Workload &gt; Secrets</strong></li>
 <li>Name the key <strong>dynakube</strong></li>
-<li>Click on <strong>Add Key/Value</strong> and  <ul>
+<li>Click on <strong>Add Key/Value</strong> and <ul>
 <li>Name the first Key as <strong>apiToken</strong> and paste the token value from Dynatrace</li>
 <li>Name the second Key as <strong>paasToken</strong> and paste the token value from Dynatrace</li>
 </ul>
@@ -129,12 +111,9 @@
 <p>Click on <strong>Show deployment status</strong> to check the status of the connected host.</p>
 <p>You should be able to see a connected Openshift nodes as per the image below.</p>
 <p class="image-container"><img alt="Dynakube" src="img/8bd91d73533d6cbd.png"></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Advance Observability on Openshift" duration="0">
-        <p>With your setup done, explore what Dynatrace monitors automatically.</p>
+</google-codelab-step>
+<google-codelab-step label="Advance Observability on Openshift" duration="0">
+<p>With your setup done, explore what Dynatrace monitors automatically.</p>
 <ul>
 <li>On the left menu, filter for <strong>Dashboards</strong> to view the preset Kubernetes dashboards</li>
 </ul>
@@ -172,12 +151,9 @@
 <li>Click onto each of them and discover their utilization and workloads</li>
 </ul>
 <p class="image-container"><img alt="KubernetesUI" src="img/9cb31ee126ec197.png"></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Extending Observability" duration="0">
-        <p>Dynatrace allows multiple ways to extend the observability of your environment.</p>
+</google-codelab-step>
+<google-codelab-step label="Extending Observability" duration="0">
+<p>Dynatrace allows multiple ways to extend the observability of your environment.</p>
 <h2 is-upgraded>Setup etcd for Openshift</h2>
 <p>To get deeper insights into your self-managed OpenShift control plane, you can also use an extension to <strong>extract the etcd metrics</strong> exposed on your cluster.</p>
 <ul>
@@ -195,12 +171,9 @@
 <li>Select <strong>Prometheus</strong></li>
 <li>Select <strong>Activate Prometheus</strong> button from the bottom right.</li>
 </ul>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Advanced Use Cases" duration="0">
-        <p>Dynatrace is an all-in-one platform that&#39;s purpose-built for a wide range of use cases.</p>
+</google-codelab-step>
+<google-codelab-step label="Advanced Use Cases" duration="0">
+<p>Dynatrace is an all-in-one platform that&#39;s purpose-built for a wide range of use cases.</p>
 <p class="image-container"><img alt="Deploy" src="img/6bc1ded3f014cf01.png"></p>
 <p><strong>Infrastructure Monitoring</strong></p>
 <ul>
@@ -235,17 +208,12 @@
 <li>To learn more about what Dynatrace can do for you, watch the videos on <a href="https://www.dynatrace.com/news/free-trial-resources/" target="_blank">Dynatrace Free Trial Resources</a>.</li>
 <li>To learn about our on-premises alternative, read <a href="https://www.dynatrace.com/support/help/get-started/get-started-with-dynatrace-managed/" target="_blank">Get started with Dynatrace Managed</a>.</li>
 </ul>
-
-
-      </google-codelab-step>
-    
-  </google-codelab>
-
-  <script src="../../elements/codelab-elements/native-shim.js"></script>
-  <script src="../../elements/codelab-elements/custom-elements.min.js"></script>
-  <script src="../../elements/codelab-elements/prettify.js"></script>
-  <script src="../../elements/codelab-elements/codelab-elements.js"></script>
-  <script src="//support.google.com/inapp/api.js"></script>
-
+</google-codelab-step>
+</google-codelab>
+<script src="../../elements/codelab-elements/native-shim.js"></script>
+<script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+<script src="../../elements/codelab-elements/prettify.js"></script>
+<script src="../../elements/codelab-elements/codelab-elements.js"></script>
+<script src="//support.google.com/inapp/api.js"></script>
 </body>
 </html>

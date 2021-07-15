@@ -1,0 +1,248 @@
+
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+<meta name="theme-color" content="#4F7DC9">
+<meta charset="UTF-8">
+<title>アプリ展開のためのインテリジェンス・クオリティー・ゲート</title>
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+<style>
+.success{color:#1e8e3e}.error{color:red} </style>
+</head>
+<body>
+<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+<google-codelab codelab-gaid="UA-175467274-1" id="autonomous-cloud-jp" title="アプリ展開のためのインテリジェンス・クオリティー・ゲート" environment="web" feedback-link="mailto:APAC-SE-Central@dynatrace.com">
+<google-codelab-step label="はじめに" duration="1">
+<p>このリポジトリには、Hands-On Autonomous Cloud Sessionのラボが含まれています。あなたの環境にアクセスするために必要な情報を提供します。</p>
+<p>ハンズオンのために、参加者のために手順を自動化し、シームレスにします。</p>
+<p>以下のものが提供されます。</p>
+<ul>
+<li>Dynatrace環境</li>
+<li>稼働中のKubernetesサーバー <ul>
+<li>Sockshopアプリケーション(サンプルアプリ) <ul>
+<li>Dev環境とProd環境と</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Jenkins環境</li>
+<li>Ansible環境</li>
+</ul>
+<p class="image-container"><img alt="ACM-Setup" src="img/9ecb67fdf8435db9.png"></p>
+<h2 is-upgraded>事前準備</h2>
+<ul>
+<li>Chromeブラウザ</li>
+<li>認証情報を含むAutonmous Workshopメール</li>
+</ul>
+<p class="image-container"><img alt="ACM-Setup" src="img/ca81ec4b81ba0389.jpg"></p>
+<h2 is-upgraded>学習内容</h2>
+<ul>
+<li>パイプライン（Sockshop）をJenkinsでデプロイする</li>
+<li>Keptnのインストール</li>
+<li>JenkinsとKeptnおよびDynatraceの統合</li>
+<li>Jenkins＋KeptnとDynatraceを使って <ul>
+<li>Quality Gatesの評価による品質の自動化</li>
+<li>テストの自動化 負荷テストとパフォーマンステスト</li>
+<li>Ansibleによるセルフヒーリングで運用を自動化する</li>
+</ul>
+</li>
+<li>サービスとしてのセルフヒーリング</li>
+</ul>
+</google-codelab-step>
+<google-codelab-step label="JenkinsでSampleAppをデプロイ" duration="5">
+<h2 is-upgraded>Jenkinsへのログイン</h2>
+<p>メールに記載されている認証情報を使って、WebブラウザでJenkins環境にアクセスします。</p>
+<p class="image-container"><img alt="Jenkins-Setup" src="img/93fcfae690e6c21d.png"></p>
+<h2 is-upgraded>パイプラインの構築</h2>
+<p>ログインしたら、リストの中の &#34;<strong>DeploySockShop</strong>&#34;にマウスオーバーし、下矢印をクリックして &#34;<strong>Build Now</strong>&#34;を選択します。</p>
+<p class="image-container"><img alt="Jenkins-Setup" src="img/47ef1758e20bf421.png"></p>
+<p>このプロセスは1～2分程度かかりますので、そのまま実行させます。</p>
+<p>終了後、再び「<strong>DeploySockshop</strong>」をクリックすると、パイプラインビルドの様々な段階を確認することができます。</p>
+<p class="image-container"><img alt="Jenkins-Setup" src="img/74d62559d3576931.png"></p>
+<p>これはあくまでもパイプラインが動作しているデモなので、完了するまで待つ必要はありません。</p>
+</google-codelab-step>
+<google-codelab-step label="Keptnの設定" duration="5">
+<h2 is-upgraded>Kubernetes インスタンスへのログイン</h2>
+<p>SSHターミナル（Putty、Terminal、MobaXtermなど）を使ってKubernetesサーバーにログインします。</p>
+<p>メールに記載されている認証情報を使って、Kubernetes環境にアクセスします。</p>
+<p>ログイン後、以下のコマンドを実行してKeptnをインストールします<br>。 Keptnのセットアップの一部は、以下のシェルスクリプトで自動化されています。</p>
+<pre><code language="language-bash" class="language-bash">cd dtacmworkshop/keptn
+sudo ./installKeptn.sh
+</code></pre>
+<p class="image-container"><img alt="Keptn-Setup" src="img/37c529b5234457af.png"></p>
+<p>Keptnは、セットアップに必要なコンポーネントをインストールします。 セットアップには2～3分かかります。</p>
+<p class="image-container"><img alt="Keptn-Setup" src="img/d86150e79b8bed.png"></p>
+<p>セットアップが完了したら、次のステップで必要となる<strong>keptn API token</strong>をメモしてください。 また、Keptn BridgeとAPI Endpointを使用することもできます。</p>
+<p>例e:<br> KEPTN BRIDGE: http://bridge.keptn.<strong><em>YOUR-IP-ADDRESS</em></strong>.nip.io<br> KEPTN ENDPOINT: https://api.keptn.<strong><em>YOUR-IP-ADDRESS</em></strong>.nip.io/<strong>swagger-ui</strong>/</p>
+<p><img alt="Keptn-Setup" src="img/9f667dd2fececa10.png"> Keptn APIのSwagger UIを表示するには、最後に「<strong>/swagger-ui/</strong>」を付けることに注意してください。</p>
+<p><img alt="Keptn-Setup" src="img/cc17d4a8ba873695.png"> 現在、Keptnのブリッジではプロジェクトは動いていませんが、次のステップで作成する予定です。</p>
+</google-codelab-step>
+<google-codelab-step label="Jenkins内でのKeptnの設定" duration="5">
+<h2 is-upgraded>Jenkins内でのKeptnプラグインの設定</h2>
+<p>Jenkinsに戻って、<strong>Jenkins（左上から）&gt; Manage Jenkins &gt; Configure System</strong>を選択します。</p>
+<p class="image-container"><img alt="Plugin-Setup" src="img/3f3d2f28032c118f.png"></p>
+<p>スクロールダウンして、「<strong>Global Properties</strong>」の下にあるフィールドに、ターミナルからのKEPTN API Tokenを入力します<br>。 Save**&#34;をクリックして設定を保存します。</p>
+<p class="image-container"><img alt="Plugin-Setup" src="img/15bb2746e0c893c9.png"></p>
+<p>ステップはラボの前に事前に設定されています。プラグインの詳細については、Githubの<a href="https://github.com/keptn-sandbox/keptn-jenkins-library" target="_blank">Keptn Jenkins Shared Library</a>を参照してください。</p>
+</google-codelab-step>
+<google-codelab-step label="KeptnのSLI/SLOベースのクオリティーゲート" duration="20">
+<p>今回はJenkins Pipelineを使って、KeptnでSLI/SLOベースのQuality Gate Evaluationを誘発します。 これは、KeptnのCLIやAPIを使って行うこともできます。</p>
+<p class="image-container"><img alt="SLI-quality-gate" src="img/ae7293f03464a97e.gif"></p>
+<p>Jenkins内で、リスト内の &#34;<strong>01-qualitygate-evaluation</strong>&#34;にマウスオーバーし、下矢印をクリックして &#34;<strong>Build Now</strong>&#34;を選択します。</p>
+<p class="image-container"><img alt="Quality-Gate" src="img/8a8502059a80bd64.png"></p>
+<p>Jenkinsのデフォルトでは、パイプラインのパラメータをスキャンしていないため、最初のビルドは失敗します。01-qualitygate-evaluation**&#34;をクリックして、パイプラインを掘り下げます。</p>
+<p class="image-container"><img alt="Quality-Gate" src="img/120dd8f82562e73e.png"></p>
+<p>01-qualitygate-evaluation &#34;<strong>をクリックし、左メニューの</strong>&#34;Build with Parameters &#34;**を選択します。</p>
+<p class="image-container"><img alt="Quality-Gate" src="img/a8d166e230de069.png"></p>
+<p>事前に設定したフォームと同様に、Dynatrace内の<strong>&#34;evalservice &#34;</strong>タグを使用して、SLIとSLOを検証する適切なサービスを特定します。このタグの名前は、Jenkinsパイプラインにパラメータとして渡すことができます。そこで、まずDynatrace内でサービスにタグを付ける必要があります。</p>
+<h2 is-upgraded>Dynatrace環境にログイン</h2>
+<p>メールに記載されている認証情報を使って、WebブラウザでJenkins環境にアクセスします。<br>。 初めてDynatraceテナントにアクセスする際には、パスワードを設定する必要があります。<br>。</p>
+<p class="image-container"><img alt="Quality-Gate" src="img/3b39f8380e527051.png"></p>
+<p>Dynatraceにログインすると、あらかじめ設定されたダッシュボードが表示されます。</p>
+<h2 is-upgraded>Dynatrace内でのタグの設定</h2>
+<p class="image-container"><img alt="Quality-Gate" src="img/485d63efe3c7d03c.png"></p>
+<p>このプレビルドダッシュボードには、様々なポータルに素早くアクセスできるリンクも含まれています。</p>
+<p>左側のナビゲーションバーで「<strong>Transactions and Services</strong>」を選択し、「<strong>front-end</strong>」サービスを選択します。<br>。 これは開発または生産サービスのいずれかになります。</p>
+<p class="image-container"><img alt="Quality-Gate" src="img/aadc32346ffd9c82.gif"></p>
+<p>ドロップダウンメニューの &#34;<strong>プロパティとタグ</strong>&#34;から &#34;<strong>タグの追加</strong>&#34;をクリックし、タグとして &#34;<strong>evalservice</strong>&#34;を入力します。</p>
+<h2 is-upgraded>Jenkinsでパイプラインを構築する</h2>
+<p>Jenkinsで &#34;<strong>Build</strong>&#34;ボタンをクリックしてパイプラインを実行します。</p>
+<p class="image-container"><img alt="Quality-Gate" src="img/1585be2772adc9e7.png"></p>
+<p>パイプラインが完了すると、KeptnのブリッジとDynatraceに変更が反映されているのがわかります。 Dynatrace内では、新しいカスタム情報イベントも発見できます。<br>。 この新しいイベントには、JenkinsからのJobURLやJobName、KeptnのソースやKeptnのブリッジなど、品質ゲートの結果の詳細が含まれています。<br>。 また、リンクからはJenkinのポータルとKeptnのポータルに移動し、それぞれの詳細情報が表示されます。</p>
+<p class="image-container"><img alt="Quality-Gate" src="img/4af0bea58fda670d.gif"></p>
+<p>このハンズオンのセットアップについては、チュートリアルの全文を<a href="https://github.com/keptn-sandbox/jenkins-tutorial/blob/master/README.md#11-integrate-keptns-slislo-based-quality-gates" target="_blank">こちら</a>でご覧いただけます。</p>
+</google-codelab-step>
+<google-codelab-step label="Jenkinsのシンプルな負荷テスト" duration="20">
+<h2 is-upgraded>パイプラインでの負荷テスト</h2>
+<p>これは、前回のビルドの拡張バージョンで、パイプラインにはステージの1つに非常にシンプルなロードテスト機能が組み込まれています。</p>
+<p class="image-container"><img alt="load-test" src="img/874863104272faea.gif"></p>
+<p>&#34;<strong>Transactions and Services</strong>&#34;にアクセスし、&#34;<strong>[Kubernetes]stage:dev</strong>&#34;タグと &#34;<strong>testservice</strong>&#34;タグでフィルタリングしてサービスを識別します。</p>
+<p class="image-container"><img alt="load-test" src="img/78c1d5868c11ecfd.gif"></p>
+<p>Jenkinsに戻り、「<strong>Back to Dashboard</strong>」をクリックすると、Jenkinのパイプラインの一覧に戻ります。<br>。 リストの中の「<strong>02-simpletest-qualitygate</strong>」にマウスオーバーし、下矢印をクリックして「<strong>Build Now</strong>」を選択します。 先ほどの実験のように、最初のビルドは失敗しますが、2回目の試行では「<strong>Build with parameters</strong>」にドリルインすることができます。</p>
+<p class="image-container"><img alt="load-test" src="img/7252dfeec2bde69a.png"></p>
+<p>フォームを次の詳細で変更します:<br>。 サービスです。<strong>テストサービス<br></strong> DeploymentURI: <strong>WebサイトのデプロイメントURL</strong>（メールに記載されているもの）<br>。 URLパスを <strong>/:homepage;/category.html:Category<br> <br></strong></p>
+<p>完了したら、&#34;<strong>Build</strong>&#34;ボタンをクリックして、パイプラインを開始します。</p>
+<p class="image-container"><img alt="load-test" src="img/a06dbafdb907f8fb.png"></p>
+<p>また、ダッシュボードからCarts DevのURLを取得することもできます。<br>。 単に右クリックして、リンクアドレスをコピーするだけです。</p>
+<p class="image-container"><img alt="load-test" src="img/eb26148763b7ab4c.png"></p>
+<p>完成したら、Keptnのブリッジ/DynatraceのFrontend Service/Jenkinsで変更点を見てみましょう。<br> 計算されたサービスメトリクスに基づいて、追加のSLIを見つけることができます。</p>
+<p class="image-container"><img alt="load-test" src="img/4a335a7fd9880a7f.png"></p>
+<p>このハンズオンのセットアップの詳細については、完全なチュートリアルを<a href="https://github.com/keptn-sandbox/jenkins-tutorial/blob/master/README.md#12-integrate-keptns-slislo-based-quality-gates---with-simple-testing-tool-in-pipeline" target="_blank">こちら</a>でご覧いただけます。</p>
+</google-codelab-step>
+<google-codelab-step label="Keptnのパフォーマンステストクオリティーゲート" duration="20">
+<h2 is-upgraded>パイプラインでのパフォーマンステスト</h2>
+<p>このラボは前回のラボを発展させたもので、Jenkinsのパイプラインの一部としてJenkinsに簡単なテストを実行させました。KeptnはSLI/SLOベースの品質ゲート評価に使用されました。このチュートリアルでは、Keptn を使用して、JMeter を使用した実際のテストの実行も行います。</p>
+<p class="image-container"><img alt="perf-test" src="img/2bcf8b34937f9f8f.gif"></p>
+<p>また、テストの実行には、定義されたSLIとして計算されたサービスメトリクスを使用します。 これらのサービスメトリクスの作成は、ラボのセットアップの一部として作成しました。<br>。 これらのメトリクスは、<strong>Settings &gt; Server-side service monitoring &gt; Calculated Service metrics<br></strong>にあります。</p>
+<p class="image-container"><img alt="perf-test" src="img/f9b6eb1c09a0c8ec.png"></p>
+<p>これらのメトリクスとその寸法は、SLI の実行中に使用されます。<br>。 すでに「<strong>testservice</strong>」タグを追加しているので、Jenkins内で3つ目のパイプラインを実行するだけです。<br>。 Jenkinsに戻り、「<strong>03-performancetest-qualitygate</strong>」をクリックします。<br><br>以下のようになります。 以下の詳細でフォームを変更します:<br>。 サービス。<strong>テストサービス<br></strong> DeploymentURI: <strong>WebサイトのデプロイメントURL</strong>（メールに記載されているもの</p>
+<p class="image-container"><img alt="perf-test" src="img/853e3bf96d381d02.png"></p>
+<p>完了したら、&#34;<strong>Build</strong>&#34;ボタンをクリックしてパイプラインを開始します。</p>
+<p>ダッシュボードからCarts DevのURLを取得することもできます。<br>。 右クリックしてリンクアドレスをコピーするだけです。</p>
+<p class="image-container"><img alt="perf-test" src="img/d23f7359d88397fa.png"></p>
+<p>完了したら、Keptnのブリッジ/DynatraceのFrontend Service/Jenkinsで変更点を確認できます。<br>。 Dynatrace内では、品質ゲートのパス結果を生成した自動化されたパフォーマンステストを見ることができます。<br>。 また、Jenkinsだけでなく、Keptn&#39;s bridgeにもコンテキストを掘り下げることができます。</p>
+<p class="image-container"><img alt="perf-test" src="img/b4d6d670bfd63c1a.gif"></p>
+</google-codelab-step>
+<google-codelab-step label="SampleAppのデプロイの自動化" duration="20">
+<p>ここでは、KeptnのSLI/SLOベースのQuality Gatesを使って自動化することで、SampleApp Sockshopを修正します。</p>
+<p class="image-container"><img alt="deploy-app" src="img/73d9583fc386d2a5.png"></p>
+<p>Jenkinsの中で、リストの中の「<strong>DeploySockShop</strong>」にマウスオーバーし、下矢印をクリックして「<strong>Configure</strong>」を選択します<br>。 別のブラウザタブを開き、<a href="https://github.com/Dynatrace-APAC/Workshop-Autonomous-Cloud/blob/master/jenkins/DeploySockShop_Keptn_LoadTest_and_QualityGate.Jenkinsfile" target="_blank">Dynatrace APAC&#39;s Autonomous Cloud&#39;s Git Repo</a>にアクセスします。<br>。 修正したSockShop Jenkinsfile raw file**をコピーして、JenkinsのPipelineセクション内に置き換えます。</p>
+<p class="image-container"><img alt="deploy-app" src="img/565ac2a88279616.gif"></p>
+<p>「<strong>保存</strong>」をクリックし、「<strong>Build with Parameters</strong>」のページで「<strong>Build Two</strong>」を選択してビルドを開始します。</p>
+<p class="image-container"><img alt="deploy-app" src="img/cd0aaacd25e6ba4a.png"></p>
+</google-codelab-step>
+<google-codelab-step label="サービスとしてのセルフヒーリング" duration="20">
+<p>Dynatraceは、Ansibleなどの多くのランブック自動化ツールと統合されています。今回は、Ansibleを使って自己修復問題を紹介し、運用を自動化します。</p>
+<h2 is-upgraded>カートサービスのための負荷の生成</h2>
+<p>SSHターミナル内で以下のコマンドを実行し、カートサービスのロードを開始します。</p>
+<pre><code language="language-bash" class="language-bash">cd ~acm_student/dtacmworkshop/utils/
+sudo ./cartsLoadTest.sh
+</code></pre>
+<h2 is-upgraded>Ansible Towerへのログイン</h2>
+<p>メールに記載されている認証情報を使って、WebブラウザでAnsible環境にアクセスします。</p>
+<p class="image-container"><img alt="Ansible" src="img/2fd8f373915b372b.png"></p>
+<h2 is-upgraded>Dynatrace問題通知の設定</h2>
+<p>Ansible内で、左ナビゲーションの「<strong>Templates</strong>」をクリックし、<strong>Remediation</strong> Job templateのURLをコピーします。<br> DynatraceのUIで、<strong>設定 &gt; 統合 &gt; 問題通知 &gt; 設定通知 &gt; Ansible Tower</strong>に移動します<br>。 コピーした<strong>Ansible TowerジョブテンプレートのURL</strong>を入力します<br>。 Ansibleにアクセスするための認証情報を入力する（メールで提供されたもの）<br>。 Sent test notification（テスト通知の送信）」ボタンをクリックして、設定を検証します<br>。 成功すると、緑色の確認メッセージが表示されます<br>。 設定の保存</p>
+<p class="image-container"><img alt="Ansible" src="img/29f86ae4b544ea8b.gif"></p>
+<h2 is-upgraded>異常検知の調整</h2>
+<p>Dynatraceの問題検知と異常検知には、DynatraceのAI技術「DAVIS」が活用されています。つまり、DAVISは一つ一つのマイクロサービスがどのように振る舞うかを学習し、それらをベースラインとしています。そのため、現在のようなデモシナリオでは、AIエンジンをユーザー定義の値でオーバーライドして、故障率を人為的に増加させることで問題を発生させる必要があります。(注意：アプリケーションを実行し、エンドユーザートラフィックを数時間/数日シミュレートする場合は、このステップは必要ありません)</p>
+<p>Dynatraceのテナントで、「<strong>Transaction &amp; services</strong>」に移動し、タグ「<strong>[Kubernetes]stage:prod</strong>」でフィルタリングし、ItemsController Serviceを選択します<br>。 ItemsController Serviceのページで、サービス名の横にある<strong>3つのドット（ ... ）</strong>をクリックします。Edit<br><strong>をクリックします。 次の画面で、</strong>anomaly detection settings**を以下のように編集します<br>。</p>
+<ul>
+<li>Global anomaly detection**を無効にする</li>
+<li>固定しきい値**を使用して故障率の増加を検出する</li>
+<li>任意の5分間に<strong>0 %</strong>のカスタム故障率のしきい値を超えた場合に警告する。</li>
+<li>感度を<strong>High</strong>に設定し、*1リクエスト/分**未満の値を変更する。</li>
+</ul>
+<p class="image-container"><img alt="Ansible" src="img/60b06e9a63493c4f.gif"></p>
+<h2 is-upgraded>リメディエーション・プレイブックの起動</h2>
+<p>Ansible Tower の UI に戻ります。サイドメニューから、<strong>Resources -&gt; Templates</strong>に移動します。<br>。 ロケットアイコン**をクリックして、start-campaign playbookを起動します。<br>。 プロンプトのポップアップウィンドウで <strong>Next</strong> をクリックし、<strong>Launch</strong> をクリックします。<br>。 プレイブックが実行されると、ステータスが成功したことを確認します。</p>
+<p class="image-container"><img alt="Ansible" src="img/ef93d54be88c554a.gif"></p>
+<h2 is-upgraded>リメディエーションの観察</h2>
+<p>ItemsControllerに戻って、サービスイベントを見てみましょう。プロモーションレートが50％に変更されたときに、プレイブックがDynatraceに通知しています。</p>
+<p class="image-container"><img alt="Ansible" src="img/81d58e51c4edbf01.png"></p>
+<p>失敗率が増加し、最終的には Dynatrace が問題を検出していることがわかります。 何度かブラウザを更新する必要があるかもしれません。</p>
+<p class="image-container"><img alt="Ansible" src="img/93789cb6cd9a0e46.png"></p>
+<p>新たな問題が発生したことを確認してください。コメント欄には、Ansible Towerによって行われた修復アクションが表示されます</p>
+<p class="image-container"><img alt="Ansible" src="img/7c489032e7a5b792.png"></p>
+<p>問題をドリルダウンします。 Ansible Tower によって報告された新しい構成変更イベントが表示されます。 プロモーションレートが0%に戻され、トランザクションの失敗に修正されました</p>
+<p class="image-container"><img alt="Ansible" src="img/5a9b939ace65bffa.png"></p>
+<p>Ansible Tower で実行されたジョブ</p>
+<ul>
+<li>start-campaign (レートを50%に設定)</li>
+<li>修復 <ul>
+<li>Dynatrace Problemにコメントをプッシュ</li>
+<li>問題の詳細を取得</li>
+<li>問題のコンテクストに関連する修復アクションの開始</li>
+<li>Dynatrace Problemの更新 キャンペーンの停止（レートを0％に設定</li>
+</ul>
+</li>
+</ul>
+<p class="image-container"><img alt="Ansible" src="img/431e1b170415ed37.png"></p>
+<p>** 問題解決 - 問題は自動的に解決されました</p>
+<p class="image-container"><img alt="Ansible" src="img/f14e1b698d1dde7e.png"></p>
+</google-codelab-step>
+<google-codelab-step label="アンケート" duration="3">
+<p>このラボを楽しんでいただき、お役に立てれば幸いです。ご意見、ご感想をお待ちしております。 </p>
+<google-codelab-survey survey-id="autonomous-cloud-jp-1">
+<h4>このラボでの全体的な経験はどうでしたか？</h4>
+<paper-radio-group>
+<paper-radio-button>とても良い</paper-radio-button>
+<paper-radio-button>良い</paper-radio-button>
+<paper-radio-button>普通</paper-radio-button>
+<paper-radio-button>悪い</paper-radio-button>
+<paper-radio-button>とても悪い</paper-radio-button>
+</paper-radio-group>
+</google-codelab-survey>
+<google-codelab-survey survey-id="autonomous-cloud-jp-2">
+<h4>このラボで最も役立ったことは何ですか？</h4>
+<paper-radio-group>
+<paper-radio-button>Keptnの設定</paper-radio-button>
+<paper-radio-button>JenkinsとDynatrace間のKeptnの統合</paper-radio-button>
+<paper-radio-button>自律型クラウドの原理を理解する</paper-radio-button>
+<paper-radio-button>サービスとしての自己治癒力</paper-radio-button>
+</paper-radio-group>
+</google-codelab-survey>
+<google-codelab-survey survey-id="autonomous-cloud-jp-3">
+<h4>このラボを友人や同僚に勧める可能性はどの程度ありますか？</h4>
+<paper-radio-group>
+<paper-radio-button>強く勧めたい</paper-radio-button>
+<paper-radio-button>勧めたい</paper-radio-button>
+<paper-radio-button>わからない</paper-radio-button>
+<paper-radio-button>勧めない</paper-radio-button>
+<paper-radio-button>全く勧めない</paper-radio-button>
+</paper-radio-group>
+</google-codelab-survey>
+<aside class="special"><p>💡 その他のアイデアや提案については、[メールでのお問い合わせ](mailto:APAC-SE-Central@dynatrace.com?subject=Autonomous Cloud - Ideas and Suggestions）をお願いします。</p>
+</aside>
+</google-codelab-step>
+</google-codelab>
+<script src="../../elements/codelab-elements/native-shim.js"></script>
+<script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+<script src="../../elements/codelab-elements/prettify.js"></script>
+<script src="../../elements/codelab-elements/codelab-elements.js"></script>
+<script src="//support.google.com/inapp/api.js"></script>
+</body>
+</html>

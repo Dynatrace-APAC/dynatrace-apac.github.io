@@ -1,7 +1,7 @@
 id: cloud-native-observability
 summary: Cloud Native observability for SREs
-categories: cloud-obs
-tags: cloud-Obs
+categories: cloud-obs, cloud-automation
+tags: cloud-Obs, Intermediate
 status: Published 
 authors: Brandon Neo
 Feedback Link: mailto:APAC-SE-Central@dynatrace.com
