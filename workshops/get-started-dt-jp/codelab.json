@@ -3,14 +3,14 @@
   "format": "html",
   "prefix": "../../elements",
   "mainga": "UA-49880327-14",
-  "updated": "2021-06-28T10:49:11+10:00",
+  "updated": "2021-07-19T15:32:24+10:00",
   "id": "get-started-dt-jp",
   "duration": 15,
-  "title": "Dynatrace実践入門",
+  "title": "はじめてのDynatrace",
   "authors": "Brandon Neo",
-  "summary": "無料トライアルを開始するのがいかに簡単であるかを発見し、Dynatraceに環境を監視させます。",
+  "summary": "これからDynatraceによる監視を始める方向けの無料トライアルの登録方法と監視の始め方",
   "source": "get-started-dt-jp.md",
-  "theme": "jp",
+  "theme": "",
   "status": [
     "published"
   ],
@@ -19,10 +19,10 @@
     "get-started"
   ],
   "tags": [
-    "microlab",
-    "Introduction"
+    "introduction",
+    "microlab"
   ],
-  "feedback": "mailto:APAC-SE-Central@dynatrace.com",
+  "feedback": "mailto:DT-TYO-SE@dynatrace.com",
   "ga": "UA-175467274-1",
   "url": "get-started-dt-jp"
 }

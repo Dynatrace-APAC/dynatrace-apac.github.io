@@ -3,12 +3,12 @@
   "format": "html",
   "prefix": "../../elements",
   "mainga": "UA-49880327-14",
-  "updated": "2021-07-15T12:14:11+10:00",
+  "updated": "2021-07-19T15:16:24+10:00",
   "id": "dem-jp",
   "duration": 79,
-  "title": "Dynatraceによるデジタルエクスペリエンスマネジメント",
+  "title": "Dynatraceによるデジタル・エクスペリエンス・マネジメント",
   "authors": "Brandon Neo",
-  "summary": "Dynatraceによるリアルユーザーの自動監視",
+  "summary": "Dynatraceによるリアルユーザーモニタリングの実現方法",
   "source": "dem-jp.md",
   "theme": "",
   "status": [
@@ -22,7 +22,7 @@
     "beginner",
     "dem"
   ],
-  "feedback": "mailto:APAC-SE-Central@dynatrace.com",
+  "feedback": "mailto:DT-TYO-SE@dynatrace.com",
   "ga": "UA-175467274-1",
   "url": "dem-jp"
 }

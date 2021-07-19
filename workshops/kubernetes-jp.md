@@ -1,10 +1,10 @@
 id: kubernetes-jp
-summary: K8sのフルスタック・オブザバリティ
-categories: kubernetes
-tags: kubernetes, Beginner
+summary: kubernetes環境のフルスタック・オブザーバリティの実現方法
+categories: kubernetes, application-microservices-monitoring
+tags: kubernetes, beginner
 status: Published 
 authors: Brandon Neo
-Feedback Link: mailto:APAC-SE-Central@dynatrace.com
+Feedback Link: mailto:DT-TYO-SE@dynatrace.com
 Analytics Account: UA-175467274-1
 
 # DynatraceとKubernetes
@@ -584,4 +584,4 @@ Duration: 3
 </form>
 
 Positive
-: 💡 その他のアイデアや提案については、[メールでのお問い合わせ](mailto:APAC-SE-Central@dynatrace.com?subject=Kubernetes Workshop - Ideas and Suggestions）をお願いします。
+: 💡 その他のアイデアや提案については、[メールでのお問い合わせ](mailto:DT-TYO-SE@dynatrace.com?subject=DynatraceとKubernetes - アイデア、提案) をお願いします。

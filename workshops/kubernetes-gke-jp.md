@@ -1,13 +1,13 @@
 id: kubernetes-gke-jp
-summary: GKEにおけるKubernetesのフルスタック・オブザーバリティ
+summary: Dynatraceを用いたGKEにおけるフルスタック・オブザーバリティの実現方法
 categories: kubernetes, gke, application-microservices-monitoring
 tags: kubernetes, Beginner
 status: Published 
 authors: Brandon Neo
-Feedback Link: mailto:APAC-SE-Central@dynatrace.com
+Feedback Link: mailto:DT-TYO-SE@dynatrace.com
 Analytics Account: UA-175467274-1
 
-# GKEにおけるKubernetesのフルスタック・オブザーバリティ
+# GKEにおけるKubernetesのフルスタック・オブザーバビリティ
 <!-- ------------------------ -->
 ## はじめに
 Duration: 1
@@ -299,4 +299,4 @@ Duration: 3
 </form>
 
 Positive
-: 💡 その他のアイデアや提案については、[メールでのお問い合わせ](mailto:APAC-SE-Central@dynatrace.com?subject=Kubernetes GKE - Ideas and Suggestions）をお願いします。
+: 💡 その他のアイデアや提案については、[メールでのお問い合わせ](mailto:DT-TYO-SE@dynatrace.com?subject=GKEにおけるKubernetesのフルスタック・オブザーバビリティ - アイデア、提案) をお願いします。

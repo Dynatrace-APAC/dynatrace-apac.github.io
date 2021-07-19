@@ -3,14 +3,14 @@
   "format": "html",
   "prefix": "../../elements",
   "mainga": "UA-49880327-14",
-  "updated": "2021-07-15T11:39:50+10:00",
+  "updated": "2021-07-19T15:08:14+10:00",
   "id": "autonomous-cloud-jp",
   "duration": 119,
-  "title": "アプリ展開のためのインテリジェンス・クオリティー・ゲート",
+  "title": "アプリデプロイ時の品質の安定化と自動テスト",
   "authors": "Brandon Neo",
-  "summary": "アプリ展開のためのインテリジェンス・クオリティー・ゲート",
+  "summary": "アプリケーションデプロイにおけるJenkinsとKeptnによるテストの自動化と品質の安定化を実現する方法",
   "source": "autonomous-cloud-jp.md",
-  "theme": "jp",
+  "theme": "",
   "status": [
     "published"
   ],
@@ -25,7 +25,7 @@
     "advanced",
     "autonomous-cloud"
   ],
-  "feedback": "mailto:APAC-SE-Central@dynatrace.com",
+  "feedback": "mailto:DT-TYO-SE@dynatrace.com",
   "ga": "UA-175467274-1",
   "url": "autonomous-cloud-jp"
 }

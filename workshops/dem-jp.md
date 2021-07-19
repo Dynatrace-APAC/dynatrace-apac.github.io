@@ -1,13 +1,13 @@
 id: dem-jp
-summary: Dynatraceによるリアルユーザーの自動監視
+summary: Dynatraceによるリアルユーザーモニタリングの実現方法
 categories: dem, digital-experience
 tags: dem, Beginner
 status: Published 
 authors: Brandon Neo
-Feedback Link: mailto:APAC-SE-Central@dynatrace.com
+Feedback Link: mailto:DT-TYO-SE@dynatrace.com
 Analytics Account: UA-175467274-1
 
-# Dynatraceによるデジタルエクスペリエンスマネジメント
+# Dynatraceによるデジタル・エクスペリエンス・マネジメント
 <!-- ------------------------ -->
 ## はじめに
 Duration: 1
@@ -476,4 +476,4 @@ Duration: 3
 </form>
 
 Positive
-: 💡 その他のアイデアや提案については、[メールでのお問い合わせ](mailto:APAC-SE-Central@dynatrace.com?subject=DEM Workshop - Ideas and Suggestions") をお願いします。
+: 💡 その他のアイデアや提案については、[メールでのお問い合わせ](mailto:DT-TYO-SE@dynatrace.com?subject=Dynatraceによるデジタル・エクスペリエンス・マネジメント - アイデア、提案) をお願いします。

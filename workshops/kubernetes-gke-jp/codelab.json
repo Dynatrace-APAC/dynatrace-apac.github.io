@@ -3,14 +3,14 @@
   "format": "html",
   "prefix": "../../elements",
   "mainga": "UA-49880327-14",
-  "updated": "2021-07-15T11:54:10+10:00",
+  "updated": "2021-07-19T15:13:27+10:00",
   "id": "kubernetes-gke-jp",
   "duration": 34,
-  "title": "GKEにおけるKubernetesのフルスタック・オブザーバリティ",
+  "title": "GKEにおけるKubernetesのフルスタック・オブザーバビリティ",
   "authors": "Brandon Neo",
-  "summary": "GKEにおけるKubernetesのフルスタック・オブザーバリティ",
+  "summary": "Dynatraceを用いたGKEにおけるフルスタック・オブザーバリティの実現方法",
   "source": "kubernetes-gke-jp.md",
-  "theme": "jp",
+  "theme": "",
   "status": [
     "published"
   ],
@@ -23,7 +23,7 @@
     "beginner",
     "kubernetes"
   ],
-  "feedback": "mailto:APAC-SE-Central@dynatrace.com",
+  "feedback": "mailto:DT-TYO-SE@dynatrace.com",
   "ga": "UA-175467274-1",
   "url": "kubernetes-gke-jp"
 }

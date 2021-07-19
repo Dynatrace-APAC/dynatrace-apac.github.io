@@ -3,14 +3,14 @@
   "format": "html",
   "prefix": "../../elements",
   "mainga": "UA-49880327-14",
-  "updated": "2021-07-07T17:28:28+10:00",
+  "updated": "2021-07-19T15:19:35+10:00",
   "id": "advanced-observability-jp",
   "duration": 64,
-  "title": "Dynatraceによる高度な可観測性",
+  "title": "Dynatraceによる高度なオブザーバビリティ",
   "authors": "Brandon Neo",
-  "summary": "自動発見と可観測性",
+  "summary": "AnsibleによるOneAgentの自動デプロイと高度なオブザーバビリティの実現",
   "source": "advanced-observability-jp.md",
-  "theme": "jp",
+  "theme": "",
   "status": [
     "published"
   ],
@@ -20,9 +20,9 @@
   ],
   "tags": [
     "adv-obs",
-    "Intermediate"
+    "intermediate"
   ],
-  "feedback": "mailto:APAC-SE-Central@dynatrace.com",
+  "feedback": "mailto:DT-TYO-SE@dynatrace.com",
   "ga": "UA-175467274-1",
   "url": "advanced-observability-jp"
 }

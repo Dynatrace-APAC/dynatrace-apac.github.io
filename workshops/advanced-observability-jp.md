@@ -1,13 +1,13 @@
 id: advanced-observability-jp
-summary: 自動発見と可観測性 
+summary: AnsibleによるOneAgentの自動デプロイと高度なオブザーバビリティの実現
 categories: adv-Obs, ansible
 tags: adv-Obs, Intermediate
 status: Published 
 authors: Brandon Neo
-Feedback Link: mailto:APAC-SE-Central@dynatrace.com
+Feedback Link: mailto:DT-TYO-SE@dynatrace.com
 Analytics Account: UA-175467274-1
 
-# Dynatraceによる高度な可観測性
+# Dynatraceによる高度なオブザーバビリティ
 <!-- ------------------------ -->
 ## はじめに
 Duration: 1
@@ -344,4 +344,4 @@ Duration: 3
 </form>
 
 Positive
-: 💡 その他のアイデアや提案については、[メールでのお問い合わせ](mailto:APAC-SE-Central@dynatrace.com?subject=Kubernetes Workshop - Ideas and Suggestions）をお願いします。
+: 💡 その他のアイデアや提案については、[メールでのお問い合わせ](mailto:DT-TYO-SE@dynatrace.com?subject=Dynatraceによる高度なオブザーバビリティ - アイデア、提案) をお願いします。

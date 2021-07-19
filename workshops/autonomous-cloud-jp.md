@@ -1,13 +1,13 @@
 id: autonomous-cloud-jp
-summary: アプリ展開のためのインテリジェンス・クオリティー・ゲート
+summary: アプリケーションデプロイにおけるJenkinsとKeptnによるテストの自動化と品質の安定化を実現する方法
 categories: keptn, jenkins, ansible, cloud-automation, application-microservices-monitoring
 tags: autonomous-cloud, Advanced
 status: Published 
 authors: Brandon Neo
-Feedback Link: mailto:APAC-SE-Central@dynatrace.com
+Feedback Link: mailto:DT-TYO-SE@dynatrace.com
 Analytics Account: UA-175467274-1
 
-# アプリ展開のためのインテリジェンス・クオリティー・ゲート
+# アプリデプロイ時の品質の安定化と自動テスト
 <!-- ------------------------ -->
 ## はじめに
 Duration: 1
@@ -403,4 +403,4 @@ Duration: 3
 </form>
 
 Positive
-: 💡 その他のアイデアや提案については、[メールでのお問い合わせ](mailto:APAC-SE-Central@dynatrace.com?subject=Autonomous Cloud - Ideas and Suggestions）をお願いします。
+: 💡 その他のアイデアや提案については、[メールでのお問い合わせ](mailto:DT-TYO-SE@dynatrace.com?subject=アプリデプロイ時の品質の安定化と自動テスト - アイデア、提案) をお願いします。

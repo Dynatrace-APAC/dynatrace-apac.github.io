@@ -70,10 +70,10 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 </div>
 <header id="banner" down$="[[_toBoolean(selectedFilter)]]">
 <div class="site-width">
-<h2 class="banner-title">Dynatraceを始めよう、進めよう</h2>
+<h2 class="banner-title">Dynatrace実践入門</h2>
 <div class="banner-description" data-filter-selected$="[[_toBoolean(selectedFilter)]]">
 <p class="banner-info">
-インタラクティブなデモから、セルフガイドのマイクロラーニングラボ、さらには高度な仮想ハンズオンワークショップまで、そしてその間のすべて。ヘルプが必要な場合は、<a href="mailto:APAC-SE-Central@dynatrace.com">APAC-SE-Central@dynatrace.com</a>に連絡してください。
+インタラクティブデモからセルフペースのラボ、さらにはハンズオンワークショップまでDynatraceの様々な機能に関して紹介しています。ご質問等は<a href="mailto:DT-TYO-SE@dynatrace.com">DT-TYO-SE@dynatrace.com</a>にご連絡ください。
 <br>
 <a href="/" class="button">ホーム</a>
 <a href="/schedule" class="button">ワークショップ</a>
@@ -88,9 +88,9 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <div id="filters" class="site-width layout horizontal center justified">
 <div id="sortby">
 <paper-tabs selected="0" noink on-iron-activate="sortBy">
-<paper-tab>名前順（昇順）</paper-tab>
-<paper-tab>新しい順</paper-tab>
-<paper-tab>存続</paper-tab>
+<paper-tab>名前順</paper-tab>
+<paper-tab>更新日</paper-tab>
+<paper-tab>ラボ時間</paper-tab>
 </paper-tabs>
 </div>
 <div id="right-dropdown">
@@ -146,36 +146,37 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <paper-button class="davis-bg">開始</paper-button>
 </div>
 </a>
-<a href="/workshops/get-started-dt-jp/index.html?index=..%2F..jp" on-tap="navigate" class="codelab-card category-dynatrace" data-category="dynatrace,get-started" data-title="Dynatrace実践入門" data-duration="15" data-updated="2021-06-28T10:49:11+10:00" data-tags="microlab,Introduction" data-pin="1">
+<a href="/workshops/get-started-dt-jp/index.html?index=..%2F..jp" on-tap="navigate" class="codelab-card category-dynatrace" data-category="dynatrace,get-started" data-title="はじめてのDynatrace" data-duration="15" data-updated="2021-07-19T15:32:24+10:00" data-tags="introduction,microlab" data-pin="1">
 <div class="card-pin"></div>
-<div class="title">Dynatrace実践入門</div>
-<div class="summary">無料トライアルを開始するのがいかに簡単であるかを発見し、Dynatraceに環境を監視させます。</div>
+<div class="title">はじめてのDynatrace</div>
+<div class="summary">これからDynatraceによる監視を始める方向けの無料トライアルの登録方法と監視の始め方</div>
 <div class="card-duration">
-15 min<span>更新 Jun 28, 2021</span>
+15 min
+<span>更新 Jul 19, 2021</span>
 </div>
 <div class="card-footer">
 <div class="category-icon dynatrace-icon"></div>
 <paper-button class="dynatrace-bg">開始</paper-button>
 </div>
 </a>
-<a href="/workshops/advanced-observability-jp/index.html?index=..%2F..jp" on-tap="navigate" class="codelab-card category-adv-obs" data-category="adv-obs,ansible" data-title="Dynatraceによる高度な可観測性" data-duration="64" data-updated="2021-07-07T17:28:28+10:00" data-tags="adv-obs,Intermediate" data-pin="">
-<div class="title">Dynatraceによる高度な可観測性</div>
-<div class="summary">自動発見と可観測性</div>
+<a href="/workshops/advanced-observability-jp/index.html?index=..%2F..jp" on-tap="navigate" class="codelab-card category-adv-obs" data-category="adv-obs,ansible" data-title="Dynatraceによる高度なオブザーバビリティ" data-duration="64" data-updated="2021-07-19T15:19:35+10:00" data-tags="adv-obs,intermediate" data-pin="">
+<div class="title">Dynatraceによる高度なオブザーバビリティ</div>
+<div class="summary">AnsibleによるOneAgentの自動デプロイと高度なオブザーバビリティの実現</div>
 <div class="card-duration">
 <span class="IntermediateText"><iron-icon icon="av:equalizer" class="Intermediate"></iron-icon>中級 - 64 min</span>
-<span>更新 Jul 7, 2021</span>
+<span>更新 Jul 19, 2021</span>
 </div>
 <div class="card-footer">
 <div class="category-icon adv-obs-icon"></div>
 <paper-button class="adv-obs-bg">開始</paper-button>
 </div>
 </a>
-<a href="/workshops/kubernetes-gke-jp/index.html?index=..%2F..jp" on-tap="navigate" class="codelab-card category-gke" data-category="kubernetes,gke,application-microservices-monitoring" data-title="GKEにおけるKubernetesのフルスタック・オブザーバリティ" data-duration="34" data-updated="2021-07-15T11:54:10+10:00" data-tags="beginner,kubernetes" data-pin="">
-<div class="title">GKEにおけるKubernetesのフルスタック・オブザーバリティ</div>
-<div class="summary">GKEにおけるKubernetesのフルスタック・オブザーバリティ</div>
+<a href="/workshops/kubernetes-gke-jp/index.html?index=..%2F..jp" on-tap="navigate" class="codelab-card category-gke" data-category="kubernetes,gke,application-microservices-monitoring" data-title="GKEにおけるKubernetesのフルスタック・オブザーバビリティ" data-duration="34" data-updated="2021-07-19T15:13:27+10:00" data-tags="beginner,kubernetes" data-pin="">
+<div class="title">GKEにおけるKubernetesのフルスタック・オブザーバビリティ</div>
+<div class="summary">Dynatraceを用いたGKEにおけるフルスタック・オブザーバリティの実現方法</div>
 <div class="card-duration">
-<span class="BeginnerText"><iron-icon icon="av:equalizer" class="Beginner"></iron-icon>初心者 - 34 min</span>
-<span>更新 Jul 15, 2021</span>
+<span class="BeginnerText"><iron-icon icon="av:equalizer" class="Beginner"></iron-icon>初級 - 34 min</span>
+<span>更新 Jul 19, 2021</span>
 </div>
 <div class="card-footer">
 <div class="category-icon kubernetes-icon"></div>
@@ -183,36 +184,36 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <paper-button class="gke-bg">開始</paper-button>
 </div>
 </a>
-<a href="/workshops/kubernetes-jp/index.html?index=..%2F..jp" on-tap="navigate" class="codelab-card category-kubernetes" data-category="kubernetes,application-microservices-monitoring" data-title="DynatraceとKubernetes" data-duration="84" data-updated="2021-07-07T17:29:47+10:00" data-tags="kubernetes,Beginner" data-pin="">
+<a href="/workshops/kubernetes-jp/index.html?index=..%2F..jp" on-tap="navigate" class="codelab-card category-kubernetes" data-category="kubernetes,application-microservices-monitoring" data-title="DynatraceとKubernetes" data-duration="84" data-updated="2021-07-19T15:35:53+10:00" data-tags="kubernetes,Beginner" data-pin="">
 <div class="title">DynatraceとKubernetes</div>
-<div class="summary">K8sのフルスタック・オブザバリティ</div>
+<div class="summary">kubernetes環境のフルスタック・オブザーバリティの実現方法</div>
 <div class="card-duration">
-<span class="BeginnerText"><iron-icon icon="av:equalizer" class="Beginner"></iron-icon>初心者 - 84 min</span>
-<span>更新 Jul 7, 2021</span>
+<span class="BeginnerText"><iron-icon icon="av:equalizer" class="Beginner"></iron-icon>初級 - 84 min</span>
+<span>更新 Jul 19, 2021</span>
 </div>
 <div class="card-footer">
 <div class="category-icon kubernetes-icon"></div>
 <paper-button class="kubernetes-bg">開始</paper-button>
 </div>
 </a>
-<a href="/workshops/biz-ops-jp/index.html?index=..%2F..jp" on-tap="navigate" class="codelab-card category-biz-ops" data-category="biz-ops,business-analytics" data-title="DynatraceによるBizOps" data-duration="135" data-updated="2021-07-15T12:13:10+10:00" data-tags="biz-ops,intermediate" data-pin="">
-<div class="title">DynatraceによるBizOps</div>
-<div class="summary">Davis AIによるBizOpsの実現</div>
+<a href="/workshops/biz-ops-jp/index.html?index=..%2F..jp" on-tap="navigate" class="codelab-card category-biz-ops" data-category="biz-ops,business-analytics" data-title="DynatraceによるBizDevOps" data-duration="135" data-updated="2021-07-19T15:18:38+10:00" data-tags="biz-ops,intermediate" data-pin="">
+<div class="title">DynatraceによるBizDevOps</div>
+<div class="summary">Davis AIによるBizDevOpsの実現</div>
 <div class="card-duration">
 <span class="IntermediateText"><iron-icon icon="av:equalizer" class="Intermediate"></iron-icon>中級 - 135 min</span>
-<span>更新 Jul 15, 2021</span>
+<span>更新 Jul 19, 2021</span>
 </div>
 <div class="card-footer">
 <div class="category-icon biz-ops-icon"></div>
 <paper-button class="biz-ops-bg">開始</paper-button>
 </div>
 </a>
-<a href="/workshops/autonomous-cloud-jp/index.html?index=..%2F..jp" on-tap="navigate" class="codelab-card category-ansible" data-category="keptn,jenkins,ansible,cloud-automation,application-microservices-monitoring" data-title="アプリ展開のためのインテリジェンス・クオリティー・ゲート" data-duration="119" data-updated="2021-07-15T11:39:50+10:00" data-tags="advanced,autonomous-cloud" data-pin="">
-<div class="title">アプリ展開のためのインテリジェンス・クオリティー・ゲート</div>
-<div class="summary">アプリ展開のためのインテリジェンス・クオリティー・ゲート</div>
+<a href="/workshops/autonomous-cloud-jp/index.html?index=..%2F..jp" on-tap="navigate" class="codelab-card category-ansible" data-category="keptn,jenkins,ansible,cloud-automation,application-microservices-monitoring" data-title="アプリデプロイ時の品質の安定化と自動テスト" data-duration="119" data-updated="2021-07-19T15:08:14+10:00" data-tags="advanced,autonomous-cloud" data-pin="">
+<div class="title">アプリデプロイ時の品質の安定化と自動テスト</div>
+<div class="summary">アプリケーションデプロイにおけるJenkinsとKeptnによるテストの自動化と品質の安定化を実現する方法</div>
 <div class="card-duration">
-<span class="AdvancedText"><iron-icon icon="av:equalizer" class="Advanced"></iron-icon>高度 - 119 min</span>
-<span>更新 Jul 15, 2021</span>
+<span class="AdvancedText"><iron-icon icon="av:equalizer" class="Advanced"></iron-icon>上級 - 119 min</span>
+<span>更新 Jul 19, 2021</span>
 </div>
 <div class="card-footer">
 <div class="category-icon keptn-icon"></div>
@@ -221,24 +222,24 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <paper-button class="ansible-bg">開始</paper-button>
 </div>
 </a>
-<a href="/workshops/cloud-native-observability-jp/index.html?index=..%2F..jp" on-tap="navigate" class="codelab-card category-cloud-obs" data-category="cloud-obs,cloud-automation" data-title="Dynatraceによるクラウドネイティブな可観測性" data-duration="84" data-updated="2021-07-15T11:43:46+10:00" data-tags="cloud-obs,intermediate" data-pin="">
-<div class="title">Dynatraceによるクラウドネイティブな可観測性</div>
-<div class="summary">SREのためのクラウドネイティブな可観測性</div>
+<a href="/workshops/cloud-native-observability-jp/index.html?index=..%2F..jp" on-tap="navigate" class="codelab-card category-cloud-obs" data-category="cloud-obs,cloud-automation" data-title="Dynatraceによるクラウドネイティブなオブザーバビリティ" data-duration="84" data-updated="2021-07-19T15:17:34+10:00" data-tags="cloud-obs,intermediate" data-pin="">
+<div class="title">Dynatraceによるクラウドネイティブなオブザーバビリティ</div>
+<div class="summary">SREのためのクラウドネイティブなオブザーバビリティを実現するDynatraceの使い方</div>
 <div class="card-duration">
 <span class="IntermediateText"><iron-icon icon="av:equalizer" class="Intermediate"></iron-icon>中級 - 84 min</span>
-<span>更新 Jul 15, 2021</span>
+<span>更新 Jul 19, 2021</span>
 </div>
 <div class="card-footer">
 <div class="category-icon cloud-obs-icon"></div>
 <paper-button class="cloud-obs-bg">開始</paper-button>
 </div>
 </a>
-<a href="/workshops/dem-jp/index.html?index=..%2F..jp" on-tap="navigate" class="codelab-card category-dem" data-category="dem,digital-experience" data-title="Dynatraceによるデジタルエクスペリエンスマネジメント" data-duration="79" data-updated="2021-07-15T12:14:11+10:00" data-tags="beginner,dem" data-pin="">
-<div class="title">Dynatraceによるデジタルエクスペリエンスマネジメント</div>
-<div class="summary">Dynatraceによるリアルユーザーの自動監視</div>
+<a href="/workshops/dem-jp/index.html?index=..%2F..jp" on-tap="navigate" class="codelab-card category-dem" data-category="dem,digital-experience" data-title="Dynatraceによるデジタル・エクスペリエンス・マネジメント" data-duration="79" data-updated="2021-07-19T15:16:24+10:00" data-tags="beginner,dem" data-pin="">
+<div class="title">Dynatraceによるデジタル・エクスペリエンス・マネジメント</div>
+<div class="summary">Dynatraceによるリアルユーザーモニタリングの実現方法</div>
 <div class="card-duration">
-<span class="BeginnerText"><iron-icon icon="av:equalizer" class="Beginner"></iron-icon>初心者 - 79 min</span>
-<span>更新 Jul 15, 2021</span>
+<span class="BeginnerText"><iron-icon icon="av:equalizer" class="Beginner"></iron-icon>初級 - 79 min</span>
+<span>更新 Jul 19, 2021</span>
 </div>
 <div class="card-footer">
 <div class="category-icon dem-icon"></div>

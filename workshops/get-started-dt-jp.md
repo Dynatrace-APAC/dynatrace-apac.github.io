@@ -1,13 +1,13 @@
-summary: Dynatrace実践入門
+summary: これからDynatraceによる監視を始める方向けの無料トライアルの登録方法と監視の始め方
 id: get-started-dt-jp
-categories: get-started
-tags: getting-started-jp
+categories: dynatrace, get-started
+tags: microlab, Introduction
 status: Published 
 authors: Brandon Neo
-Feedback Link: mailto:APAC-SE-Central@dynatrace.com
+Feedback Link: mailto:DT-TYO-SE@dynatrace.com
 Analytics Account: UA-175467274-1
 
-# Dynatrace実践入門
+# はじめてのDynatrace
 <!-- ------------------------ -->
 ## はじめに
 

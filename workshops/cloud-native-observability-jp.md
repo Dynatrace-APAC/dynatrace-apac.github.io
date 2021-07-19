@@ -1,13 +1,13 @@
 id: cloud-native-observability-jp
-summary: SREのためのクラウドネイティブな可観測性
+summary: SREのためのクラウドネイティブなオブザーバビリティを実現するDynatraceの使い方
 categories: cloud-obs, cloud-automation
 tags: cloud-Obs, Intermediate
 status: Published 
 authors: Brandon Neo
-Feedback Link: mailto:APAC-SE-Central@dynatrace.com
+Feedback Link: mailto:DT-TYO-SE@dynatrace.com
 Analytics Account: UA-175467274-1
 
-# Dynatraceによるクラウドネイティブな可観測性
+# Dynatraceによるクラウドネイティブなオブザーバビリティ
 <!-- ------------------------ -->
 ## はじめに
 Duration: 1
@@ -409,4 +409,4 @@ Duration: 3
 </form>
 
 Positive
-: 💡 その他のアイデアや提案については、[メールでのお問い合わせ](mailto:APAC-SE-Central@dynatrace.com?subject=Cloud Native Observability - Ideas and Suggestions）をお願いします。
+: 💡 その他のアイデアや提案については、[メールでのお問い合わせ](mailto:DT-TYO-SE@dynatrace.com?subject=Dynatraceによるクラウドネイティブなオブザーバビリティ - アイデア、提案) をお願いします。

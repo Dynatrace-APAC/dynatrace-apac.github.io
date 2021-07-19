@@ -1,12 +1,12 @@
 id: biz-ops-jp
-summary: Davis AIによるBizOpsの実現
+summary: Davis AIによるBizDevOpsの実現
 categories: biz-ops, business-analytics
 tags: biz-ops, Intermediate
 status: Published 
-Feedback Link: mailto:APAC-SE-Central@dynatrace.com
+Feedback Link: mailto:DT-TYO-SE@dynatrace.com
 Analytics Account: UA-175467274-1
 
-# DynatraceによるBizOps
+# DynatraceによるBizDevOps
 <!-- ------------------------ -->
 ## はじめに
 Duration: 15
@@ -715,4 +715,4 @@ Duration: 15
 </form>
 
 Positive
-: 💡 その他のアイデアや提案については、[メールでのお問い合わせ](mailto:APAC-SE-Central@dynatrace.com?subject=BizOps - Ideas and Suggestions")をお願いします。
+: 💡 その他のアイデアや提案については、[メールでのお問い合わせ](mailto:DT-TYO-SE@dynatrace.com?subject=DynatraceによるBizDevOps - アイデア、提案)をお願いします。
