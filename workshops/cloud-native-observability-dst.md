@@ -1,5 +1,5 @@
 id: cloud-native-observability-dst
-summary: DAY 2, Aug 11th (tentative). Cloud Native observability for SREs
+summary: DAY 1, July 21st 1330-1530 – Cloud Native Observability - Part 1 (K8s and Monitoring-as-code)
 categories: cloud-obs, cloud-automation
 tags: dst, cloud-Obs, Intermediate
 status: Published 
@@ -179,6 +179,222 @@ While waiting for Easy Travel to start, you can explore Dynatrace and using the 
 ![Smartscape](assets/dem/smartscape.png)
 
 <!-- ------------------------ -->
+
+## Kubernetes Labels and Annotations
+Duration: 5
+
+With the Sockshop app restarted, you should be able to see services in Dynatrace.
+
+Referring to `~/sockshop/manifests/sockshop-app/production/front-end.yml`, we will want to setup Dynatrace to automatically pick up the annotations and labels
+
+```bash
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: front-end.stable
+  namespace: production
+spec:
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "false"
+        dynatrace/instrument: "true"
+        pipeline.stage: prod-stable
+        pipeline.build: 1.4.0.7424
+        pipeline.project: sockshop
+        support.contact: "jane.smith@sockshop.com"
+        support.channel: "#support-sockshop-frontend"
+      labels:
+        app: front-end.stable
+        stage: prod
+        release: stable
+        version: "1.4"
+        tier: "frontend"
+        product: "sockshop"
+```
+
+### Validate
+
+Once working, you can validate the change in Dynatrace
+
+![JSON](assets/k8s/Picture12.png)
+
+Positive
+: The above steps are taken from [our official documentation page](https://www.dynatrace.com/support/help/technology-support/cloud-platforms/kubernetes/other-deployments-and-configurations/leverage-tags-defined-in-kubernetes-deployments/)
+
+<!-- ------------------------ -->
+## Container Environment Variables
+Duration: 5
+
+### Adding Environment variables
+
+In shell terminal, add some Environment Variables with the following command
+
+`nano ~/sockshop/manifests/sockshop-app/production/front-end.yml`
+
+**Make sure that the indentation is correct and that they aren't any error promptings**
+
+```bash
+        env:
+        - name: DT_TAGS
+          value: "product=sockshop"
+        - name: DT_CUSTOM_PROP
+          value: "SERVICE_TYPE=FRONTEND"
+```
+![JSON](assets/k8s/Picture13.png)
+
+Save the amended file with **Ctrl-X**, followed by **Y** and **Enter** and run the below command to re-apply the change.
+
+```bash
+kubectl apply -f ~/sockshop/manifests/sockshop-app/production/front-end.yml
+kubectl delete pods -n production
+```
+
+### Validate
+
+Once working, you can validate the change in Dynatrace
+
+![JSON](assets/k8s//Picture14.png)
+
+<!-- ------------------------ -->
+
+## (Optional) Process Detection for Canary Deployment 
+Duration: 15
+
+### Deploy the Canary Release 
+
+Run the command below to trigger the canary release
+```bash
+kubectl apply -f https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/master/manifests/sockshop-app/canary/front-end-canary.yml
+```
+
+Execute `kubectl get pods -n production -o wide` and you will see you now have both **stable and canary releases running for the front-end service**
+
+![JSON](assets/k8s/Picture21.png)
+
+Wait 1-2 minutes then look the Services in Dynatrace. You have **2 services in production**, one for **stable** and one for **canary** release.
+For monitoring purposes, it should be the same service
+
+![JSON](assets/k8s/Picture22.png)
+
+### Process Detection Rule Config
+
+In the Dynatrace console, go in **Settings -> Processes and containers -> Process group detection**.
+
+Expand the **Cloud application and workload detection** section. 
+
+As per our [documentation](https://www.dynatrace.com/support/help/how-to-use-dynatrace/process-groups/configuration/adapt-the-composition-of-default-process-groups/#cloud-applications-and-workload-detection), you will need to use the **disable Cloud application and workload detection** while **enabling the rule based tag feature** with `DT-ContainerBoundariesAffected` to select the process groups. 
+
+![Disable-cloud-apps](assets/k8s/disable-cloud-workload.png)
+
+Expand the **Process group detection rules** section. 
+
+Click **Add detection** rule.
+
+Select Use a **process property** to seperate processes
+
+![JSON](assets/k8s/Picture23.png)
+
+We want to apply this rule for pods running in **production only (namespace=production)**
+
+Also, extract the identifier after the **"."** in the pod name. 
+Remember the pod names have **".stable "or ".canary"** in their name to distinguish them
+
+![JSON](assets/k8s/Picture24.png)
+
+Run the below command to **recycle both stable and canary frontend pods**. The process detection rules are applied on process startup.
+
+```bash
+wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/master/recycle-sockshop-frontend.sh | bash
+```
+
+Within Dynatrace, you can see that the Process Groups have been merged.
+
+![Process-Group-Merged](assets/k8s/Picture24.1.png)
+
+The services are still detected as individual services and can be merged as well.
+
+Go to **Settings -> Merge Service monitoring -> Create merged service**
+
+![Service-Merged](assets/k8s/Picture24.2.png)
+
+### Validate
+
+![JSON](assets/k8s/Picture25.png)
+
+With the services merged as one, you can now view monitor Stable vs Canary response
+
+Create Multi-dimensional Analysis view by selecting **Create Chart**
+
+![JSON](assets/k8s/Picture26.png)
+
+Choose **Response Time - Server** and select **Service Instance** as Dimension Splitting
+
+![JSON](assets/k8s/Picture27.png)
+
+<!-- ------------------------ -->
+## Exploring Kubernetes Views
+Duration: 10
+
+Explore the various functionalities within the Kubernetes View such as Cluster Utilization, Cluster Workloads, K8S Events
+
+![KubernetesUI](assets/k8s/k8s-ui.png)
+
+### Analyze the Kubernetes Cluster utilization
+   -  Mouseover and note the CPU and Memory usage with the Min / Max
+   -  Click on Analyze Nodes to drill deeper into each node
+   
+![KubernetesUI](assets/k8s/cluster-util.png)
+
+### Analyze the Kubernetes Cluster Workloads 
+   -  Notice the Workloads and Pods running spilt between Kubernetes controllers
+
+![KubernetesUI](assets/k8s/cluster-workload.png)
+
+### Analyze the Kubernetes Events
+   -  Notice the different types of events BackOff, Unhealthy
+
+![KubernetesUI](assets/k8s/events.png)
+
+### Analyze the Kubernetes Namespace
+   -  Click on **hipster-shop** and drill down into various kubernetes services (Cloud applications)
+
+![KubernetesUI](assets/k8s/namespace.png)
+
+### Explore Cloud Applications by clicking onto them
+   - Click onto each of them and discover their supporting technologies
+   
+![KubernetesUI](assets/k8s/cloud-apps.png)
+
+### Kubernetes Overview
+![#](assets/k8s/overview.png)
+
+### Cluster Overview
+_____________________
+See the Kubernetes cluster utilization. CPU and Memory Request and limits over time for all nodes and splitted by namespaces.
+
+![#](assets/k8s/cluster-utilization.png)
+
+### Namespace Resource Quotas
+_____________________
+Get an overview and understanding of the Kubernetes resource quotas (Memory and CPU) assigned to your namespaces and its usage. 
+![#](assets/k8s/quotas.png)
+
+### Workload Overview
+_____________________
+Understand the health and phases of your Pods in your clusters. Their memory and cpu usage, which pods are throttled, have failed or are pending to be scheduled. Also check if you have Out-of-memory killed containers.
+
+![#](assets/k8s/containers.png)
+
+### User Experience
+_____________________
+Are your endusers satisfied? how is the engagement, experience and user behaviour of your applications? Get the insights of all your applications and users in an instance.
+
+![#](assets/k8s/userexperience.png)
+
+<!-- ------------------------ -->
+
 ## Monitoring-as-Code
 Duration: 15
 
@@ -209,9 +425,30 @@ export DT_API_TOKEN=dt0c01.IH6********************************************
 export DT_DASHBOARD_OWNER=<your email address>
 ```
 
-After setting up, run the following command to configure Dynatrace:
+### Part 1) Push config from command line using Monaco CLI
 
-`./push-monaco.sh` 
+Set environment variable: `APPNAME=DST-workshop`
+Modify application.yaml to define Dynatrace web application name using new env variable, $APPNAME.
+
+
+### Part 2) Push config from Jenkins pipeline
+
+Before starting, set Kubernetes Ingress class to "nginx" and deploy Jenkins:
+
+```
+export INGRESSCLASS=nginx
+./deploy-jenkins.sh
+```
+
+Login to Jenkins at `http://jenkins.<PUBLIC-IP>.nip.io` using the following credentials:
+username = admin
+password = (see install log)
+
+Go to Manage Jenkins > Configure System and define the Dynatrace API token and Tenant token (issued via email) as environment variables .
+
+![Monaco](assets/dst-cloud-o11y/jenkins-config.png)
+
+After setting up, go into the 'sockshop-monaco' pipeline and click 'Build Now' to push config into Dynatrace: 
 
 Below are the configurations done:
 
@@ -356,24 +593,6 @@ Back in the Data Explorer view, following the below:
 * Click on **Pin to dashboard** and select **Environment Overview Dashboard**
 
 ![Session-properties](assets/cloud-observe/code-custom-chart.png)
-
-<!-- ------------------------ -->
-## Releases
-Duration: 15
-
-Dynatrace also offers a built-in release-analysis solution that helps you determine the versions or stages of your deployed applications.
-
-On the left nav, go to **Releases**
-
-![Session-properties](assets/cloud-observe/releases.png)
-
-This provides an overview of **deployed component versions** and their **release events**.
-
-Drilling into each component, you will find additional metadata from the respective component.
-This provides context to the monitored component as well as information regarding it's **lifecycle** and **tracking issues**.
-
-![Session-properties](assets/cloud-observe/releases-detail.png)
-
 
 <!-- ------------------------ -->
 
