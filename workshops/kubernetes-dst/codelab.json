@@ -1,0 +1,29 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "../../elements",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-07-20T14:14:59+10:00",
+  "id": "kubernetes-dst",
+  "duration": 84,
+  "title": "Kubernetes Best Practices",
+  "authors": "Brandon Neo",
+  "summary": "DAY 1, July 21st 1330-1530. Best Practices to obtain Full Stack Observability with K8s",
+  "source": "kubernetes-dst.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "kubernetes",
+    "application-microservices-monitoring"
+  ],
+  "tags": [
+    "beginner",
+    "dst",
+    "kubernetes"
+  ],
+  "feedback": "mailto:APAC-SE-Central@dynatrace.com",
+  "ga": "UA-175467274-1",
+  "url": "kubernetes-dst"
+}

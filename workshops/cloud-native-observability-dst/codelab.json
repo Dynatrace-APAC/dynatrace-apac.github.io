@@ -1,0 +1,29 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "../../elements",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-07-20T14:15:38+10:00",
+  "id": "cloud-native-observability-dst",
+  "duration": 84,
+  "title": "Cloud-Native Observability with Dynatrace",
+  "authors": "Brandon Neo",
+  "summary": "DAY 2, Aug 11th (tentative). Cloud Native observability for SREs",
+  "source": "cloud-native-observability-dst.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "cloud-obs",
+    "cloud-automation"
+  ],
+  "tags": [
+    "cloud-obs",
+    "dst",
+    "intermediate"
+  ],
+  "feedback": "mailto:APAC-SE-Central@dynatrace.com",
+  "ga": "UA-175467274-1",
+  "url": "cloud-native-observability-dst"
+}

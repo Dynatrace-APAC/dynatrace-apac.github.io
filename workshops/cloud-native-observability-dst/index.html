@@ -1,0 +1,345 @@
+
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+<meta name="theme-color" content="#4F7DC9">
+<meta charset="UTF-8">
+<title>Cloud-Native Observability with Dynatrace</title>
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+<style>
+.success{color:#1e8e3e}.error{color:red} </style>
+</head>
+<body>
+<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+<google-codelab codelab-gaid="UA-175467274-1" id="cloud-native-observability-dst" title="Cloud-Native Observability with Dynatrace" environment="web" feedback-link="mailto:APAC-SE-Central@dynatrace.com">
+<google-codelab-step label="Introduction" duration="1">
+<p>This repository contains the hands on for the Day 2 Operations - Cloud Native Observability Workshop.</p>
+<h2 is-upgraded>Prerequisites</h2>
+<ul>
+<li>Dynatrace SaaS/Managed Account. Get your free SaaS trial <a href="https://www.dynatrace.com/trial/" target="_blank">here</a>.</li>
+<li>AWS account, with the ability to create an EC2 instance from a public AMI. Signup to a free trial <a href="https://aws.amazon.com/free/" target="_blank">here</a>.</li>
+<li>Chrome Browser</li>
+<li>SSH client such as <a href="https://mobaxterm.mobatek.net/" target="_blank">mobaxterm</a>.</li>
+</ul>
+<h2 is-upgraded>Lab Setup</h2>
+<p>The following steps are used for this lab:</p>
+<ul>
+<li>Sample Application <ul>
+<li>Sample App is based on <a href="https://github.com/dynatrace-sockshop" target="_blank">Sockshop</a></li>
+</ul>
+</li>
+</ul>
+<h2 class="checklist" is-upgraded>What You&#39;ll Learn</h2>
+<ul>
+<li>Deploy OneAgent to a Kubernetes / Microservice Environment</li>
+<li>GitOps / Monitoring as code approach to push application config</li>
+<li>Learn Metric Ingestion for automated baselines across all entities</li>
+<li>Site Reliability Engineering - Service Level Objectives</li>
+<li>Site Reliability Engineering - Releases</li>
+</ul>
+</google-codelab-step>
+<google-codelab-step label="Deploy OneAgent Operator" duration="15">
+<p>In this exercise, we will deploy the OneAgent to a Linux instance running Kubernetes(Microk8s) and let the OneAgent discover what is running in that instance.</p>
+<h2 is-upgraded>Using Terminal via Web Browser</h2>
+<p>To faciliate the labs, we will access the Linux instance <strong>via terminal through a web browser</strong>.</p>
+<p>Use the <strong>URL</strong> was provided in your email to access the SSH terminal. Make sure the URL looks like <code>Public IP Address:8080/wetty</code></p>
+<p>Use the <strong>login name</strong> and <strong>password</strong> as provided in your email.</p>
+<p class="image-container"><img alt="Deploy" src="img/e609666e1c136993.png"></p>
+<h2 is-upgraded>Download the OneAgent</h2>
+<p>Open your browser and access the Dynatrace URL.</p>
+<p>Follow these steps below:</p>
+<ul>
+<li>Select <strong>Dynatrace Hub</strong> from the navigation menu.</li>
+<li>Select <strong>Kubernetes</strong></li>
+<li>Select <strong>Monitor Kubernetes</strong> button from the bottom right.<br></li>
+</ul>
+<p class="image-container"><img alt="Deploy" src="img/45b66680fc9a6e5f.gif"></p>
+<p>Within the <strong>Monitor Kubernetes / Openshift</strong> page, follow these steps below:</p>
+<ul>
+<li>Enter a <strong>Name</strong> for the connection Eg. <code>k8s</code></li>
+<li>Click on <strong>Create tokens</strong> to create PaaS and API tokens with appropriate permissions</li>
+<li><strong>Toggle ON</strong> Skip SSL Certificate Check</li>
+<li>Click <strong>Copy</strong> button to copy the commands.</li>
+<li><strong>Paste</strong> the command into your terminal window and execute it.</li>
+</ul>
+<p class="image-container"><img alt="Deploy" src="img/c6fc346f07810836.gif"></p>
+<p>Example:</p>
+<pre><code language="language-bash" class="language-bash">Connecting to github-releases.githubusercontent.com (github-releases.githubusercontent.com)|185.199.108.154|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 7310 (7.1K) [application/octet-stream]
+Saving to: ‘install.sh&#39;
+
+install.sh                      100%[=====================================================&gt;]   7.14K  --.-KB/s    in 0s      
+
+2021-06-01 05:46:36 (40.7 MB/s) - ‘install.sh&#39; saved [7310/7310]
+
+
+Check for token scopes...
+
+Check if cluster already exists...
+
+Creating Dynatrace namespace...
+
+Applying Dynatrace Operator...
+Warning: apiextensions.k8s.io/v1beta1 CustomResourceDefinition is deprecated in v1.16+, unavailable in v1.22+; use apiextensions.k8s.io/v1 CustomResourceDefinition
+customresourcedefinition.apiextensions.k8s.io/dynakubes.dynatrace.com created
+serviceaccount/dynatrace-dynakube-oneagent created
+serviceaccount/dynatrace-dynakube-oneagent-unprivileged created
+serviceaccount/dynatrace-kubernetes-monitoring created
+serviceaccount/dynatrace-operator created
+serviceaccount/dynatrace-routing created
+podsecuritypolicy.policy/dynatrace-dynakube-oneagent created
+podsecuritypolicy.policy/dynatrace-dynakube-oneagent-unprivileged created
+podsecuritypolicy.policy/dynatrace-kubernetes-monitoring created
+podsecuritypolicy.policy/dynatrace-operator created
+podsecuritypolicy.policy/dynatrace-routing created
+role.rbac.authorization.k8s.io/dynatrace-dynakube-oneagent created
+role.rbac.authorization.k8s.io/dynatrace-dynakube-oneagent-unprivileged created
+role.rbac.authorization.k8s.io/dynatrace-kubernetes-monitoring created
+role.rbac.authorization.k8s.io/dynatrace-operator created
+role.rbac.authorization.k8s.io/dynatrace-routing created
+clusterrole.rbac.authorization.k8s.io/dynatrace-kubernetes-monitoring created
+clusterrole.rbac.authorization.k8s.io/dynatrace-operator created
+rolebinding.rbac.authorization.k8s.io/dynatrace-dynakube-oneagent created
+rolebinding.rbac.authorization.k8s.io/dynatrace-dynakube-oneagent-unprivileged created
+rolebinding.rbac.authorization.k8s.io/dynatrace-kubernetes-monitoring created
+rolebinding.rbac.authorization.k8s.io/dynatrace-operator created
+rolebinding.rbac.authorization.k8s.io/dynatrace-routing created
+clusterrolebinding.rbac.authorization.k8s.io/dynatrace-kubernetes-monitoring created
+clusterrolebinding.rbac.authorization.k8s.io/dynatrace-operator created
+deployment.apps/dynatrace-operator created
+W0601 05:46:39.025776   29593 helpers.go:553] --dry-run is deprecated and can be replaced with --dry-run=client.
+secret/dynakube configured
+
+Applying DynaKube CustomResource...
+dynakube.dynatrace.com/dynakube created
+
+Adding cluster to Dynatrace...
+Kubernetes monitoring successfully setup.
+$
+
+</code></pre>
+<aside class="warning"><p>Note that it will take about 5 mins for data to appear within Dynatrace</p>
+</aside>
+<aside class="special"><p>Dynatrace handles automatic deployment of OneAgents as well as automatic k8s integration.</p>
+</aside>
+<h2 is-upgraded>Validate the installation in Deployment status</h2>
+<p>Click on <strong>Show deployment status</strong> to check the status of the connected host.</p>
+<p>You should be able to see a connected host as per the image below.</p>
+<p class="image-container"><img alt="Deploy" src="img/297084c8c0c99ffa.png"></p>
+<aside class="special"><p>Dynatrace Documentation is referenced <a href="https://www.dynatrace.com/support/help/technology-support/operating-systems/linux/" target="_blank">here</a></p>
+</aside>
+<h2 is-upgraded>Restart Sockshop application</h2>
+<p>To restart the sample app Sockshop execute the following command:</p>
+<pre><code language="language-bash" class="language-bash">kubectl delete po --all -n dev
+kubectl delete po --all -n production
+</code></pre>
+<h2 is-upgraded>Explore the Sockshop Application</h2>
+<p>Within Dynatrace, follow the steps below to get Sockshop URL:</p>
+<ul>
+<li>Click on the <strong>hostname</strong> in the OneAgent deployment screen.</li>
+<li>Expand <strong>Properties and tag</strong> in Host view</li>
+<li><strong>Select and Copy</strong> Public Host name from the metadata</li>
+<li><strong>Amend the Public Host name</strong> to match the following format: <ul>
+<li>Sockshop Production <code>http://production.front-end.PUBLIC-IP.nip.io/</code></li>
+<li>Sockshop Dev <code>http://dev.front-end.PUBLIC-IP.nip.io</code></li>
+</ul>
+</li>
+</ul>
+<aside class="special"><p>Note that if you&#39;re attending a workshop, these links will be included as part of your workshop email</p>
+</aside>
+<h2 is-upgraded>Explore the Smartscape</h2>
+<p>While waiting for Easy Travel to start, you can explore Dynatrace and using the Smartscape, Dynatrace will automatically discover the processes and dependencies that comprises the Easy Travel application!</p>
+<p><a href="https://www.dynatrace.com/support/help/get-started/4-things-youll-absolutely-love-about-dynatrace/" target="_blank">4 things</a> that you will love about Dynatrace!</p>
+<p class="image-container"><img alt="Smartscape" src="img/868e111ca8bd48bd.png"></p>
+</google-codelab-step>
+<google-codelab-step label="Monitoring-as-Code" duration="15">
+<p>In this exercise, we will automate configuration of Dynatrace environment.</p>
+<p>Using <a href="https://github.com/dynatrace-oss/dynatrace-monitoring-as-code" target="_blank">Dynatrace Monitoring as Code (Monaco)</a>, you can automate the configuration of all global Dynatrace environments without human intervention. Various use cases include:</p>
+<ul>
+<li>Having the ability to templatize our configuration for reusability across multiple environments</li>
+<li>Interdependencies between configurations should be handled without keeping track of unique identifiers</li>
+<li>Introducing the capability to easily apply – and update – the same configuration to hundreds of Dynatrace environments as well as being able to roll out to specific environments</li>
+<li>Identify an easy way to promote application specific configurations from one environment to another – following their deployments from development, to hardening to production.</li>
+<li>Support all the mechanisms and best-practices of git-based workflows such as pull requests, merging and approvals</li>
+<li>Configurations should be easily promoted from one environment to another following their deployment from development to hardening to production</li>
+</ul>
+<p>To faciliate the session, you can run the monaco code with the below:</p>
+<pre><code language="language-bash" class="language-bash">cd sockshop
+./deploy-monaco.sh
+</code></pre>
+<p>After setting it up, configure the <strong>DT_TENANT</strong> and <strong>DT_API_TOKEN</strong> and <strong>DT_DASHBOARD_OWNER</strong> variables. These can be found within the lab registration email.</p>
+<pre><code language="language-bash" class="language-bash">export DT_TENANT= https://mou612.managed-sprint.dynalabs.io/e/&lt;ENV&gt;
+export DT_API_TOKEN=dt0c01.IH6********************************************
+export DT_DASHBOARD_OWNER=&lt;your email address&gt;
+</code></pre>
+<p>After setting up, run the following command to configure Dynatrace:</p>
+<p><code>./push-monaco.sh</code></p>
+<p>Below are the configurations done:</p>
+<ul>
+<li>Synthetic monitoring</li>
+<li>Service naming rules</li>
+<li>Carts SLO</li>
+<li>Application definitions</li>
+<li>Dashboards</li>
+<li>Process naming rules</li>
+<li>Management zones</li>
+</ul>
+</google-codelab-step>
+<google-codelab-step label="Basic SLO" duration="10">
+<p>In this exercise, we will cover the setting up basic Service Level Objectives (SLO). These objectives are based on a target of our measured Service Level Indicators (SLI) to fulfill the business&#39;s Service Level Agreement (SLA).</p>
+<h2 is-upgraded>Creating SLO</h2>
+<p>On the left nav, go to <strong>Service level objectives &gt; Add new SLO</strong></p>
+<p>We will be creating a SLO for <strong>Sockshop Frontend</strong>. Use the following:</p>
+<ul>
+<li>Name this SLO: <code>Sockshop Frontend Error SLO</code></li>
+<li>Select tab <strong>Calculate success rate using two metrics</strong></li>
+<li>Under <strong>numerator</strong> dropdown, use <code>builtin:service.errors.server.successCount</code></li>
+<li>Click on the selected field - <strong>number of calls without server side errors</strong></li>
+<li>Under <strong>denominator</strong> dropdown, use <code>builtin:service.requestCount.server</code></li>
+<li>Click on the selected field - <strong>Request count - server</strong></li>
+<li>Click on <strong>Next</strong></li>
+<li>Under <strong>Entity selector</strong>, use <code>type("SERVICE"),tag("[Kubernetes]tier:frontend"),tag("[Kubernetes]stage:prod")</code></li>
+<li>Click on <strong>Preview</strong></li>
+<li>You should have selected <strong>1 entityID</strong> with Display Name <strong>front-end.production</strong></li>
+<li>Click on <strong>Next</strong></li>
+<li>Use default thresholds for <strong>Failure, Warning and Good</strong></li>
+<li>Use <code>-1h</code> under Timeframe</li>
+<li>Click on <strong>Save</strong></li>
+</ul>
+<p class="image-container"><img alt="SLO" src="img/5c24475ae4c3320.gif"></p>
+</google-codelab-step>
+<google-codelab-step label="Advance SLO" duration="10">
+<p>In this exercise, we will cover the setting up an advance Service Level Objectives (SLO). These objectives would require creating a custom metric first, followed by targeting the measured Service Level Indicators (SLI) to fulfill the business&#39;s Service Level Agreement (SLA).</p>
+<h2 is-upgraded>Creating metrics for Catalogue page</h2>
+<p>Next, we will be creating a custom metric for successful requests count to Catalogue page</p>
+<ul>
+<li>On the left nav, go to <code>Transactions and services</code></li>
+<li>Click on <code>front-end</code> service</li>
+<li>Click on <strong>View dynamic requests</strong></li>
+<li>Scroll down and with <strong>/catalogue</strong> request, select the <strong>graph icon (Create analysis view)</strong></li>
+<li>Under <strong>Metric</strong> downdrop, select <strong>Successful request count</strong></li>
+<li>Click on <strong>Create metric</strong></li>
+<li>Under Metric name, use <code>cataloguesuccesscount</code></li>
+<li>Click on <strong>Create metric</strong></li>
+</ul>
+<p class="image-container"><img alt="SLO" src="img/11bdd0bf01b71d76.gif"></p>
+<ul>
+<li>Under <strong>Metric</strong> downdrop, change and select <strong>request count</strong></li>
+<li>Click on <strong>Create metric</strong></li>
+<li>Under Metric name, use <code>cataloguecount</code></li>
+<li>Click on <strong>Create metric</strong></li>
+</ul>
+<p class="image-container"><img alt="SLO" src="img/ace8dd41fd325c91.png"></p>
+<h2 is-upgraded>Creating SLO for Catalogue Availability</h2>
+<ul>
+<li>Name this SLO: <code>Catalogue Availability SLO</code></li>
+<li>Select tab <strong>Calculate success rate using two metrics</strong></li>
+<li>Under <strong>numerator</strong> dropdown, use <code>calc:service.cataloguesuccesscount</code></li>
+<li>Click on the selected field - <strong>Catalogue Success Count</strong></li>
+<li>Under <strong>denominator</strong> dropdown, use <code>calc:service.cataloguecount</code></li>
+<li>Click on the selected field - <strong>Catalogue Count</strong></li>
+<li>Click on <strong>Next</strong></li>
+<li>Click on <strong>Next</strong></li>
+<li>Use <code>85</code> for <strong>Failure</strong></li>
+<li>Use <code>90</code> for <strong>Warning</strong></li>
+<li>Use <code>-15m</code> under Timeframe</li>
+<li>Click on <strong>Save</strong></li>
+</ul>
+<p class="image-container"><img alt="SLO" src="img/11bdd0bf01b71d76.gif"></p>
+</google-codelab-step>
+<google-codelab-step label="Dashboards" duration="15">
+<p>Refer to the left navigation bar and go to <strong>Dashboards</strong>. Dynatrace has now prebuilt dashboard templates such as <strong>Kubernetes Dashboards</strong> and <strong>Real User Monitoring</strong> dashboards.</p>
+<p>As part of the Monaco rollout, you should also see dashboards created such as <strong>Environment Overview Dashboard</strong> and <strong>Prometheus - Environment Overview Dashboard</strong></p>
+<p class="image-container"><img alt="Session-properties" src="img/9b6febf21054b293.png"></p>
+<p>Drill down into each of these dashboards and explore the various dashboard widgets for App Owners and Business Users.</p>
+<p class="image-container"><img alt="Session-properties" src="img/12ab9db79d53522.png"></p>
+<h2 is-upgraded>Adding a SLO widget</h2>
+<p>We will now add a new SLO widget based on the new SLO we&#39;ve created.</p>
+<p>On the left nav, go to <strong>Service level objectives</strong></p>
+<p>You can use the <strong>pin icon</strong> to pin the dashboard to <strong>Environment Overview Dashboard</strong></p>
+<p class="image-container"><img alt="Session-properties" src="img/964dde397728e3e9.png"></p>
+<h2 is-upgraded>Adding a custom metric widget</h2>
+<p>Within the <strong>Environment Overview Dashboard</strong> dashboard, click on <strong>Edit</strong></p>
+<p>Drag the <strong>Custom Chart</strong> widget onto the dashboard and click on <strong>configure custom chart</strong></p>
+<ul>
+<li>Use <code>Number of calls without server side errors</code> metric</li>
+<li>With <strong>Filter by</strong>, use <code>Service: Tag: [Kubernetes]app: catalogue</code></li>
+<li>Click on <strong>Run Query</strong></li>
+<li>You can use other visualization methods such as <strong>Single Value</strong></li>
+<li>Click on <strong>Pin to dashboard</strong> and select <strong>Environment Overview Dashboard</strong></li>
+</ul>
+<p class="image-container"><img alt="Session-properties" src="img/71aa1afdf1218a2a.png"></p>
+<h2 is-upgraded>Adding a custom metric widget with CODE</h2>
+<p>Back at the dashboard view, click on the newly created widget to <strong>clone another custom chart</strong></p>
+<p>On the new widget, click on <strong>configure custom chart</strong></p>
+<p>Back in the Data Explorer view, following the below:</p>
+<ul>
+<li>click on <strong>Code</strong> tab</li>
+<li>You can view the <strong>code equivalent</strong> of the earlier custom metric widget</li>
+<li>Amend the text to <code>((calc:service.cataloguesuccesscount) / (calc:service.cataloguecount)) * (100)</code></li>
+<li>This will get a <strong>percentage of the successful catalogue counts</strong></li>
+<li>On the left <strong>Settings</strong>, change the <strong>threshold</strong> on the below: <ul>
+<li>🟩 - <code>15</code></li>
+<li>🟨 - <code>10</code></li>
+<li>🟥 - <code>5</code></li>
+</ul>
+</li>
+<li>Click on <strong>Run query</strong></li>
+<li>Click on <strong>Pin to dashboard</strong> and select <strong>Environment Overview Dashboard</strong></li>
+</ul>
+<p class="image-container"><img alt="Session-properties" src="img/9d2aef49a2daae2b.png"></p>
+</google-codelab-step>
+<google-codelab-step label="Releases" duration="15">
+<p>Dynatrace also offers a built-in release-analysis solution that helps you determine the versions or stages of your deployed applications.</p>
+<p>On the left nav, go to <strong>Releases</strong></p>
+<p class="image-container"><img alt="Session-properties" src="img/76aa2a0dd6d7567f.png"></p>
+<p>This provides an overview of <strong>deployed component versions</strong> and their <strong>release events</strong>.</p>
+<p>Drilling into each component, you will find additional metadata from the respective component. This provides context to the monitored component as well as information regarding it&#39;s <strong>lifecycle</strong> and <strong>tracking issues</strong>.</p>
+<p class="image-container"><img alt="Session-properties" src="img/ffeb52ab88907fa8.png"></p>
+</google-codelab-step>
+<google-codelab-step label="Feedback" duration="3">
+<p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
+<google-codelab-survey survey-id="cloud-native-observability-dst-1">
+<h4>How was your overall experience with this lab?</h4>
+<paper-radio-group>
+<paper-radio-button>Excellent</paper-radio-button>
+<paper-radio-button>Good</paper-radio-button>
+<paper-radio-button>Average</paper-radio-button>
+<paper-radio-button>Fair</paper-radio-button>
+<paper-radio-button>Poor</paper-radio-button>
+</paper-radio-group>
+</google-codelab-survey>
+<google-codelab-survey survey-id="cloud-native-observability-dst-2">
+<h4>What did you benefit most from this lab?</h4>
+<paper-radio-group>
+<paper-radio-button>Deploy OneAgent to a Kubernetes</paper-radio-button>
+<paper-radio-button>GitOps / Monitoring as code approach</paper-radio-button>
+<paper-radio-button>Service Level Objectives</paper-radio-button>
+<paper-radio-button>Releases</paper-radio-button>
+</paper-radio-group>
+</google-codelab-survey>
+<google-codelab-survey survey-id="cloud-native-observability-dst-3">
+<h4>How likely are you to recommend this lab to a friend or colleague?</h4>
+<paper-radio-group>
+<paper-radio-button>Very Likely</paper-radio-button>
+<paper-radio-button>Moderately Likely</paper-radio-button>
+<paper-radio-button>Neither Likely nor unlikely</paper-radio-button>
+<paper-radio-button>Moderately Unlikely</paper-radio-button>
+<paper-radio-button>Very Unlikely</paper-radio-button>
+</paper-radio-group>
+</google-codelab-survey>
+<aside class="special"><p>💡 For other ideas and suggestions, please <a href="mailto:APAC-SE-Central@dynatrace.com?subject=Kubernetes Workshop - Ideas and Suggestions" target="_blank"><strong>reach out via email</strong></a>.</p>
+</aside>
+</google-codelab-step>
+</google-codelab>
+<script src="../../elements/codelab-elements/native-shim.js"></script>
+<script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+<script src="../../elements/codelab-elements/prettify.js"></script>
+<script src="../../elements/codelab-elements/codelab-elements.js"></script>
+<script src="//support.google.com/inapp/api.js"></script>
+</body>
+</html>
