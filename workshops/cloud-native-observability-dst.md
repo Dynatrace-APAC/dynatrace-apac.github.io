@@ -1,6 +1,6 @@
 id: cloud-native-observability-dst
 summary: DAY 1, July 21st 1330-1530 – Cloud Native Observability - Part 1 (K8s and Monitoring-as-code)
-categories: cloud-obs, cloud-automation
+categories: kubernetes, cloud-obs, cloud-automation
 tags: dst, cloud-Obs, Intermediate
 status: Published 
 authors: Brandon Neo
