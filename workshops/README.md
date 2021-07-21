@@ -1,4 +1,4 @@
-Use this format below in the beginnig of the of the MD file
+# Use this format below in the beginnig of the of the MD file
 
 - Summary: Short summary of your tutorial. Text is used within overview page
 - ID: The ID will define the folder that the tutorial contents will be generated and put into
