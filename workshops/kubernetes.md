@@ -1,6 +1,6 @@
 id: kubernetes
 summary: Full Stack Observability with vanilla K8s
-categories: application-microservices-monitoring, kubernetes
+categories: kubernetes, application-microservices-monitoring
 tags: kubernetes, beginner
 status: Published 
 authors: Brandon Neo
