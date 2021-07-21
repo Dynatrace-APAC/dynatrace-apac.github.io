@@ -9,7 +9,7 @@ Thanks for considering contributing a tutorial or fixing a bug!
 
 1. Fork the repo from https://github.com/nodnarboen/apac-techlabs and clone it to your local machine.
 
-1. Find all tutorial located in the `/site/workshops` folder.
+1. Find all tutorial located in the `/workshops` folder.
 
 1. Start your tutorial by taking a look at the `template.md` file in this folder. You can just duplicate the file and adopt it to get started easily. The contents of the file should be self-explanatory. Make sure to change the "ID" as this will be the folder the generated files of your new tutorial will be go into.
 
