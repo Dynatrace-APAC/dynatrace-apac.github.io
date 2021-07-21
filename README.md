@@ -13,26 +13,14 @@ Thanks for considering contributing a tutorial or fixing a bug!
 
 1. Start your tutorial by taking a look at the `template.md` file in this folder. You can just duplicate the file and adopt it to get started easily. The contents of the file should be self-explanatory. Make sure to change the "ID" as this will be the folder the generated files of your new tutorial will be go into.
 
-1. Write the tutorial - make sure you use some of the features that are described in the `tutorial-template.md` file such as `duration` information or hightlights of some sections.
+1. Write the tutorial - make sure you use some of the features that are described in the `template.md` file such as `duration` information or hightlights of some sections.
 
 
 ## Generate contents and test locally
 
-1. Generate ONLY ONE tutorial and test it locally
-
-    ```
-    ./builder.sh my-tutorial.md
-
 1. You can now start a local webserver take a look at your tutoral (you'll find the `claat` binary in the `./bin` folder, please copy it in your path)
 
     ```
-    claat serve
-    ```
-
-1. Alernatively, generate ALL tutorials and test it locally.
-    ```
-    ./builder.sh 
-
     claat serve
     ```
 
