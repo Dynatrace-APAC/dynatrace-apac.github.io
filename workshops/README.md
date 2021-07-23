@@ -2,10 +2,24 @@
 
 ## Use this format below in the beginning of the MD file
 
-- Summary: Short summary of your tutorial. Text is used within overview page
 - ID: The ID will define the folder that the tutorial contents will be generated and put into
-- Categories: The first item in the categories list defines the "icon" that you will attached to your lab in the tutorial overview screen. You can add up to 3 items / icons. From the end of the list, use categories which you want the lab to appear in. Options are : infrastructure-monitoring, application-microservices-monitoring, cloud-automation, digital-experience, business-analytics
-- Tags: Other searchable elements from the lab. End the list with level - (Beginner, Intermediate, Advanced)
+  - Add `-jp` or language as suffix for translated lab. Eg. **kubernetes-jp.md**
+- Summary: Short summary of your tutorial. Text is used within overview page
+- Categories: The first item in the categories list defines the "icon" that you will attached to your lab in the tutorial overview screen. 
+  - You can add up to 3 entries / icons. Icons will have to added within /app/view/categories.scss
+  - Ending entries should include categories which lab will appear in. 
+  - Options are: 
+    - infrastructure-monitoring
+    - application-microservices-monitoring 
+    - cloud-automation
+    - digital-experience
+    - business-analytics
+- Tags: Other searchable elements from the lab. 
+  - End the list with level -
+  - Options are: 
+    - Beginner
+    - Intermediate
+    - Advanced
 - Status: set it to Draft or Published (doesn't have any effect right now)
 - Authors: Please list yourself as an author
 - Feedback link: either the tutorial repostory or any other link you want to provide 
