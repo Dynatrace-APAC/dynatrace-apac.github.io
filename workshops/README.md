@@ -22,7 +22,7 @@
     - Advanced
 - Status: set it to Draft or Published (doesn't have any effect right now)
 - Authors: Please list yourself as an author
-- Feedback link: either the tutorial repostory or any other link you want to provide 
+- Feedback link: either the team email or defaults to SE central email 
 
 Example
 
