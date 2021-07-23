@@ -1,6 +1,6 @@
 # MD file format
 
-## Use this format below in the beginning of the MD file
+## Header of MD file
 
 - ID: The ID will define the folder that the tutorial contents will be generated and put into
   - Add `-jp` or language as suffix for translated lab. Eg. **kubernetes-jp.md**
