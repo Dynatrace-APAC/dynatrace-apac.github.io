@@ -58,7 +58,7 @@ Consider including the following subheadlines. **Examples are provided below.**
 
 <!-- subheadline -->
 ### Lab Setup
-The following steps are used for this lab:
+The following apps are used for this lab:
 - Sample Application
   - Sample App is based on [easyTravel](https://community.dynatrace.com/community/display/DL/easyTravel)
 
