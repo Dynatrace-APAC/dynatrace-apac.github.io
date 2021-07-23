@@ -6,8 +6,8 @@
   - Add `-jp` or language as suffix for translated lab. Eg. **kubernetes-jp.md**
 - Summary: Short summary of your tutorial. Text is used within overview page
 - Categories: The first item in the categories list defines the "icon" that you will attached to your lab in the tutorial overview screen. 
-  - You can add up to 3 entries / icons. Icons will have to added within /app/view/categories.scss
-  - Ending entries should include categories which lab will appear in. 
+  - You can add **up to 3 icons**. Icons will have to added within /app/view/categories.scss
+  - Ending entries should include categories which lab will appear in. No limit to categories per lab
   - Options are: 
     - infrastructure-monitoring
     - application-microservices-monitoring 
