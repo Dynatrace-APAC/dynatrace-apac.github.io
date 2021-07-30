@@ -1,28 +1,12 @@
-# MD file format
+Use this format below in the beginnig of the of the MD file
 
-## Header of MD file
-
-- ID: The ID will define the folder that the tutorial contents will be generated and put into
-  - Add `-jp` or language as suffix for translated lab. Eg. **kubernetes-jp.md**
 - Summary: Short summary of your tutorial. Text is used within overview page
-- Categories: The first item in the categories list defines the "icon" that you will attached to your lab in the tutorial overview screen. 
-  - You can add **up to 3 icons**. Icons will have to added within /app/view/categories.scss
-  - Ending entries should include categories which lab will appear in. No limit to categories per lab
-  - Options are: 
-    - infrastructure-monitoring
-    - application-microservices-monitoring 
-    - cloud-automation
-    - digital-experience
-    - business-analytics
-- Tags: Other searchable elements from the lab. 
-  - End the list with level -
-  - Options are: 
-    - Beginner
-    - Intermediate
-    - Advanced
+- ID: The ID will define the folder that the tutorial contents will be generated and put into
+- Categories: The first item in the categories list defines the "icon" that you will attached to your lab in the tutorial overview screen. You can add up to 3 items / icons. From the end of the list, use categories which you want the lab to appear in. Options are : infrastructure-monitoring, application-microservices-monitoring, cloud-automation, digital-experience, business-analytics
+- Tags: Other searchable elements from the lab. End the list with level - (Beginner, Intermediate, Advanced)
 - Status: set it to Draft or Published (doesn't have any effect right now)
 - Authors: Please list yourself as an author
-- Feedback link: either the team email or defaults to SE central email 
+- Feedback link: either the tutorial repostory or any other link you want to provide 
 
 Example
 
@@ -39,40 +23,25 @@ Analytics Account: UA-175467274-1
 ```
 
 <!-- name of your lab -->
-# My first lab
+# My first tutorial
 
 <!-- heading starting with ## will create a new section. Also include the estimated duration for this section to provide some guidance for the user -->
-## Introduction
+## Welcome
 Duration: 10:00
 
-Background / Summary of the Labs.
-
-Consider including the following subheadlines. **Examples are provided below.**
-
-<!-- subheadline -->
-### Prerequisites
-- Dynatrace SaaS/Managed Account. Get your free SaaS trial [here](https://www.dynatrace.com/trial/).
-- AWS account, with the ability to create an EC2 instance from a public AMI. Signup to a free trial here.
-- Chrome Browser
-- SSH client such as mobaxterm.
-
-<!-- subheadline -->
-### Lab Setup
-The following apps are used for this lab:
-- Sample Application
-  - Sample App is based on [easyTravel](https://community.dynatrace.com/community/display/DL/easyTravel)
-
-<!-- subheadline -->
-### What You'll Learn
-- Install Dynatrace OneAgent
-- Learn Request Attributes for deep code level capture
-- Learn Session Properties for advanced dashboarding
-- Learn Metric Ingestion for automated baselines across all entities
+Take a look at the metadata above.
+- Summary: Short summary of your tutorial.
+- ID: The ID will define the folder that the tutorial contents will be generated and put into
+- Categories: The first item in the categories list defines the "icon" that you will attached to your tutorial in the tutorial overview screen. The other items in this list are used along with the first item to allow for filtering the tutorials.
+- Tags: please set the Keptn version that your tutorial is written for, e.g., keptn07x (for Keptn 0.7.x releases)
+- Status: set it to Draft or Published (doesn't have any effect right now)
+- Authors: Please list yourself as an author
+- Feedback link: either the tutorial repostory or any other link you want to provide 
 
 In this tutorial we are going to ...
 
-<!-- Next Step -->
-## Step 2
+<!-- subheadline -->
+### What you'll learn
 
 - item 1
 - item 2
@@ -109,3 +78,7 @@ Reference them as you would normally in markdown.
 
 <!-- include snippets here -->
 {{ snippets/07/install/cluster-gke.md }}
+
+
+Format of MD file
+
