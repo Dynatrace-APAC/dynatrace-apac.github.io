@@ -15,76 +15,151 @@
 <body>
 <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
 <google-codelab codelab-gaid="UA-175467274-1" id="cloud-automation-quality-gates" title="Cloud Automation - Quality Gates with Dynatrace" environment="web" feedback-link="mailto:APAC-SE-Central@dynatrace.com">
-<google-codelab-step label="Introduction" duration="0">
-<h2 is-upgraded>Prerequisites </h2>
+<google-codelab-step label="Introduction" duration="1">
+<p>This repository contains the hands on for the Day 2 Operations - Cloud Native Observability Workshop.</p>
+<h2 is-upgraded>Prerequisites</h2>
 <ul>
-<li>Dynatrace SaaS/Managed Account. Get your free SaaS trial <a href="https://www.dynatrace.com/trial/" target="_blank">here</a>. </li>
-<li>AWS account, with the ability to create an EC2 instance from a public AMI. Signup to a free trial <a href="https://aws.amazon.com/free/" target="_blank">here</a>. </li>
-<li>Chrome Browser </li>
-<li>SSH client such as <a href="https://mobaxterm.mobatek.net/" target="_blank">mobaxterm</a>. <h2 is-upgraded>Lab Setup </h2>
-The following steps are used for this lab: </li>
+<li>Dynatrace SaaS/Managed Account. Get your free SaaS trial <a href="https://www.dynatrace.com/trial/" target="_blank">here</a>.</li>
+<li>AWS account, with the ability to create an EC2 instance from a public AMI. Signup to a free trial <a href="https://aws.amazon.com/free/" target="_blank">here</a>.</li>
+<li>Chrome Browser</li>
+<li>SSH client such as <a href="https://mobaxterm.mobatek.net/" target="_blank">mobaxterm</a>.</li>
+</ul>
+<h2 is-upgraded>Lab Setup</h2>
+<p>The following steps are used for this lab:</p>
+<ul>
 <li>Sample Application <ul>
-<li>Sample App is based on <a href="https://github.com/dynatrace-sockshop" target="_blank">Sockshop</a> <h2 class="checklist" is-upgraded>What You&#39;ll Learn </h2>
-</li>
+<li>Sample App is based on <a href="https://github.com/dynatrace-sockshop" target="_blank">Sockshop</a></li>
 </ul>
 </li>
-<li>Deploy OneAgent to a Kubernetes / Microservice Environment </li>
-<li>GitOps / Monitoring as code approach to push application config </li>
-<li>Learn Metric Ingestion for automated baselines across all entities </li>
-<li>Site Reliability Engineering - Service Level Objectives </li>
-<li>Site Reliability Engineering - Releases Install Keptn CLI and Authenticate Login to the bastion host using the username / password provided <h2 is-upgraded>Install Keptn CLI </h2>
-Download and install the Keptn CLI: <code>bash<br>curl -sL https://get.keptn.sh | bash</code><br> <h2 is-upgraded>Authenticate with Keptn Cloud Automation </h2>
-Copy the <strong>keptn auth command</strong> from the Cloud Automation UI (top right of screen) <img alt="kepth_auth" src="img/441e7d5b304b91eb.png"> &#34;`bash [xxx@ip-172-31-28-139 ~]$ keptn auth –endpoint=https://mvl77343.cloudautomation.live.dynatrace.com/api –api-token= Warning: could not parse KUBECONFIG file: Cannot find file /home/harhiy/.kube/config Hint: If you don&#39;t have a ‘kubeconfig&#39; file, you can disable this check via ‘keptn set config KubeContextCheck false&#39; </li>
-<li>Warning: Your Keptn CLI version (0.8.7) and Keptn cluster version (0.8.6) don&#39;t match. This can lead to problems. Please make sure to use the same versions. Starting to authenticate Successfully authenticated against the Keptn cluster https://mvl77343.cloudautomation.live.dynatrace.com/api Using a file-based storage for the key because the password-store seems to be not set up. <br><br><code>Test it is working by calling **keptn get projects**</code><br><br>bash [xx@ip-172-31-28-139 ~]$ keptn get projects Warning: could not parse KUBECONFIG file: Cannot find file /home/harhiy/.kube/config Hint: If you don&#39;t have a ‘kubeconfig&#39; file, you can disable this check via ‘keptn set config KubeContextCheck false&#39; </li>
-<li>Warning: Your Keptn CLI version (0.8.7) and Keptn cluster version (0.8.6) don&#39;t match. This can lead to problems. Please make sure to use the same versions. NAME CREATION DATE SHIPYARD VERSION delivery-demo 2021-08-05T07:31:03Z spec.keptn.sh/0.2.0 dynatrace 2021-08-05T06:09:24Z spec.keptn.sh/0.2.0 &#34;` Quality Gate in 5 mins <h2 is-upgraded>Add Tags </h2>
-Pick your <strong>tnt-xxxx-svc</strong> service in production </li>
-<li>Tag 1: <strong>keptn_managed</strong>. Either add via „Add tag&#34; or via Dynatrace Tagging API <img alt="keptn_managed" src="img/2d6ca21ac163e10a.PNG"> </li>
-<li>Tag 2: <strong>keptn_service</strong>:<strong>YOUR_SERVICE_NAME</strong>: This is best done via a Tagging Rule or also via „Add tag&#34;. In this example use your <strong>firstname-lastname </strong><img alt="keptn_service" src="img/87de9f6043ceea16.PNG"> Wait 1 min for your service to appear in the Dynatrace project </li>
-<li>Automatic Synchronization happens every minute </li>
-<li>Every service with the tags keptn_managed and keptn_service: will show as a service <img alt="example_keptn_service" src="img/27f69b8c251f0089.PNG"> <h2 is-upgraded>Trigger evaluation via command line </h2>
-<code>bash<br>keptn trigger evaluation --project=dynatrace --stage=quality-gate --service=YOUR_SERVICE_NAME --timeframe=30m --labels=buildId=1,executedBy=manual</code><br> Example: &#34;`bash [ec2-user@ip-172-31-18-234 keptn-on-k3s]$ keptn trigger evaluation –project=dynatrace –stage=quality-gate –service=kevin-leng –timeframe=30m –labels=buildId=1,executedBy=manual Warning: could not parse KUBECONFIG file: Cannot find file /home/ec2-user/.kube/config Hint: If you don&#39;t have a ‘kubeconfig&#39; file, you can disable this check via ‘keptn set config KubeContextCheck false&#39; </li>
-<li>Warning: Your Keptn CLI version (0.8.7) and Keptn cluster version (0.8.6) don&#39;t match. This can lead to problems. Please make sure to use the same versions. Starting to trigger evaluation of the service kevin-leng in project dynatrace ID of Keptn context: 2e7e14d1-f8b5-436c-9638-c51a77dd41ff <br><br><code>![example_keptn_service_qg.PNG](assets/bootcamp/cloud-automation-quality-gates/example_keptn_service_qg.PNG)<br><br><br>Trigger evaluation again but this time use buildId=2</code><br><br>bash keptn trigger evaluation –project=dynatrace –stage=quality-gate –service=YOUR_SERVICE_NAME –timeframe=30m –labels=buildId=2,executedBy=manual &#34;` <h2 is-upgraded>Trigger evaluation via API </h2>
-</li>
-<li>Access the Keptn Swagger API&#39;s (top right-hand corner &gt; Keptn API) </li>
+</ul>
+<h2 class="checklist" is-upgraded>What You&#39;ll Learn</h2>
+<ul>
+<li>Deploy OneAgent to a Kubernetes / Microservice Environment</li>
+<li>GitOps / Monitoring as code approach to push application config</li>
+<li>Learn Metric Ingestion for automated baselines across all entities</li>
+<li>Site Reliability Engineering - Service Level Objectives</li>
+<li>Site Reliability Engineering - Releases</li>
+</ul>
+</google-codelab-step>
+<google-codelab-step label="Install Keptn CLI and Authenticate" duration="0">
+<p>Login to the bastion host using the username / password provided</p>
+<h2 is-upgraded>Install Keptn CLI</h2>
+<p>Download and install the Keptn CLI:</p>
+<pre><code language="language-bash" class="language-bash">curl -sL https://get.keptn.sh | bash
+</code></pre>
+<h2 is-upgraded>Authenticate with Keptn Cloud Automation</h2>
+<p>Copy the <strong>keptn auth command</strong> from the Cloud Automation UI (top right of screen)</p>
+<p class="image-container"><img alt="kepth_auth" src="img/441e7d5b304b91eb.png"></p>
+<pre><code language="language-bash" class="language-bash">[xxx@ip-172-31-28-139 ~]$ keptn auth --endpoint=https://mvl77343.cloudautomation.live.dynatrace.com/api --api-token=&lt;token&gt;
+Warning: could not parse KUBECONFIG file: Cannot find file /home/harhiy/.kube/config
+Hint: If you don&#39;t have a &#39;kubeconfig&#39; file, you can disable this check via &#39;keptn set config KubeContextCheck false&#39;
+* Warning: Your Keptn CLI version (0.8.7) and Keptn cluster version (0.8.6) don&#39;t match. This can lead to problems. Please make sure to use the same versions.
+Starting to authenticate
+Successfully authenticated against the Keptn cluster https://mvl77343.cloudautomation.live.dynatrace.com/api
+Using a file-based storage for the key because the password-store seems to be not set up.
+</code></pre>
+<p>Test it is working by calling <strong>keptn get projects</strong></p>
+<pre><code language="language-bash" class="language-bash">[xx@ip-172-31-28-139 ~]$ keptn get projects
+Warning: could not parse KUBECONFIG file: Cannot find file /home/harhiy/.kube/config
+Hint: If you don&#39;t have a &#39;kubeconfig&#39; file, you can disable this check via &#39;keptn set config KubeContextCheck false&#39;
+* Warning: Your Keptn CLI version (0.8.7) and Keptn cluster version (0.8.6) don&#39;t match. This can lead to problems. Please make sure to use the same versions.
+NAME            CREATION DATE           SHIPYARD VERSION
+delivery-demo   2021-08-05T07:31:03Z    spec.keptn.sh/0.2.0
+dynatrace       2021-08-05T06:09:24Z    spec.keptn.sh/0.2.0
+</code></pre>
+</google-codelab-step>
+<google-codelab-step label="Quality Gate in 5 mins" duration="5">
+<p>In this exercise, we&#39;ll create a service for a basic quality gate.</p>
+<h2 is-upgraded>Add Tags</h2>
+<p>Pick your <strong>tnt-xxxx-svc</strong> service in production</p>
+<ul>
+<li>Tag 1: <strong>keptn_managed</strong>. Either add via „Add tag&#34; or via Dynatrace Tagging API</li>
+</ul>
+<p class="image-container"><img alt="keptn_managed" src="img/2d6ca21ac163e10a.PNG"></p>
+<ul>
+<li>Tag 2: <strong>keptn_service</strong>:<strong>YOUR_SERVICE_NAME</strong>: This is best done via a Tagging Rule or also via „Add tag&#34;. In this example use your <strong>firstname-lastname</strong></li>
+</ul>
+<p class="image-container"><img alt="keptn_service" src="img/87de9f6043ceea16.PNG"></p>
+<p>Wait 1 min for your service to appear in the Dynatrace project</p>
+<ul>
+<li>Automatic Synchronization happens every minute</li>
+<li>Every service with the tags keptn_managed and keptn_service: will show as a service</li>
+</ul>
+<p class="image-container"><img alt="example_keptn_service" src="img/27f69b8c251f0089.PNG"></p>
+<h2 is-upgraded>Trigger evaluation via command line</h2>
+<pre><code language="language-bash" class="language-bash">keptn trigger evaluation --project=dynatrace --stage=quality-gate --service=YOUR_SERVICE_NAME --timeframe=30m --labels=buildId=1,executedBy=manual
+</code></pre>
+<p>Example:</p>
+<pre><code language="language-bash" class="language-bash">[ec2-user@ip-172-31-18-234 keptn-on-k3s]$ keptn trigger evaluation --project=dynatrace --stage=quality-gate --service=kevin-leng --timeframe=30m --labels=buildId=1,executedBy=manual
+Warning: could not parse KUBECONFIG file: Cannot find file /home/ec2-user/.kube/config
+Hint: If you don&#39;t have a &#39;kubeconfig&#39; file, you can disable this check via &#39;keptn set config KubeContextCheck false&#39;
+* Warning: Your Keptn CLI version (0.8.7) and Keptn cluster version (0.8.6) don&#39;t match. This can lead to problems. Please make sure to use the same versions.
+Starting to trigger evaluation of the service kevin-leng in project dynatrace
+ID of Keptn context: 2e7e14d1-f8b5-436c-9638-c51a77dd41ff
+</code></pre>
+<p class="image-container"><img alt="example_keptn_service_qg.PNG" src="img/201cbd1fd2ffd717.PNG"></p>
+<p>Trigger evaluation again but this time use buildId=2</p>
+<pre><code language="language-bash" class="language-bash">keptn trigger evaluation --project=dynatrace --stage=quality-gate --service=YOUR_SERVICE_NAME --timeframe=30m --labels=buildId=2,executedBy=manual
+</code></pre>
+<h2 is-upgraded>Trigger evaluation via API</h2>
+<ul>
+<li>Access the Keptn Swagger API&#39;s (top right-hand corner &gt; Keptn API)</li>
 <li>Change API definition to <strong>controlPlane</strong></li>
-<li>Authorize the API&#39;s using the keptn API token (top right-hand corner &gt; Keptn API token) </li>
-<li>Select API: Evaluation &gt; Post /project​/{project}​/stage​/{stage}​/service​/{service}​/evaluation Set: </li>
+<li>Authorize the API&#39;s using the keptn API token (top right-hand corner &gt; Keptn API token)</li>
+<li>Select API: Evaluation &gt; Post /project​/{project}​/stage​/{stage}​/service​/{service}​/evaluation</li>
+</ul>
+<p>Set:</p>
+<ul>
 <li>project: <strong>dynatrace</strong></li>
 <li>stage: <strong>quality-gate</strong></li>
 <li>service: <strong>YOUR_SERVICE_NAME</strong></li>
-<li>evaluation= <code>json<br>{<br>"labels": {<br> "executedBy": "api",<br> "buildId": "3"<br>},<br>"timeframe": "30m"<br>}</code><br> Then click <strong>Execute </strong><img alt="example_keptn_api.PNG" src="img/b3eee9063de12300.PNG"> <h2 is-upgraded>Automation Events also available in Dynatrace </h2>
-Events sent to the Dynatrace monitored service based on the two tags View the events against your service in Dynatrace. <img alt="example_keptn_event.PNG" src="img/e2e733a10e5b750a.PNG"> Gitops - Codify Quality Gates <h2 is-upgraded>First explore upstream git repo </h2>
-<img alt="expore_git.PNG" src="img/4c29daab80fab69.PNG"> <h2 is-upgraded>Modify SLO </h2>
-Find your service (tenant) under the quality-gates branch and modify the default SLO.yaml Git User: keptn Git Password: keptn#R0cks Modify the SLO are per the following image: <img alt="update_slo.PNG" src="img/889cdc7ec758f4d6.PNG"> If you need the full completed yaml: &#34;`yaml — spec_version: &#34;1.0&#34; comparison: aggregate_function: &#34;avg&#34; compare_with: &#34;single_result&#34; include_result_with_score: &#34;pass&#34; number_of_comparison_results: 1 filter: objectives: <ul>
-<li>sli: &#34;response_time_p95&#34; key_sli: false pass: <ul>
-<li>criteria: <ul>
-<li>&#34;&lt;500&#34; warning: </li>
+<li>evaluation= <code>json<br>{<br>"labels": {<br> "executedBy": "api",<br> "buildId": "3"<br>},<br>"timeframe": "30m"<br>}</code><br> Then click <strong>Execute</strong><img alt="example_keptn_api.PNG" src="img/b3eee9063de12300.PNG"> ### Automation Events also available in Dynatrace Events sent to the Dynatrace monitored service based on the two tags View the events against your service in Dynatrace. <img alt="example_keptn_event.PNG" src="img/e2e733a10e5b750a.PNG"> ## Gitops - Codify Quality Gates Duration: 15 ### First explore upstream git repo <img alt="expore_git.PNG" src="img/4c29daab80fab69.PNG"> ### Modify SLO Find your service (tenant) under the quality-gates branch and modify the default SLO.yaml Git User: keptn Git Password: keptn#R0cks Modify the SLO are per the following image: <img alt="update_slo.PNG" src="img/889cdc7ec758f4d6.PNG"> If you need the full completed yaml: <code>yaml<br>---<br>spec_version: "1.0"<br>comparison:<br>aggregate_function: "avg"<br>compare_with: "single_result"<br>include_result_with_score: "pass"<br>number_of_comparison_results: 1<br>filter:<br>objectives:<br>- sli: "response_time_p95"<br>key_sli: false<br>pass: <br> - criteria:<br> - "&#60;500" <br>warning: <br> - criteria:<br> - "&#60;=1000"<br>weight: 1<br>- sli: "error_rate"<br>key_sli: true<br>pass:<br> - criteria:<br> - "&#60;5"<br>- sli: throughput<br>pass:<br> - criteria:<br> - ">10"<br>- sli: "response_time_p50"<br>- sli: "response_time_p90"<br>total_score:<br>pass: "90%"<br>warning: "50%"<br></code></li>
 </ul>
-</li>
-<li>criteria: <ul>
-<li>&#34;&lt;=1000&#34; weight: 1 </li>
-</ul>
-</li>
-</ul>
-</li>
-<li>sli: &#34;error_rate&#34; key_sli: true pass: <ul>
-<li>criteria: <ul>
-<li>&#34;&#34; </li>
-</ul>
-</li>
-</ul>
-</li>
-<li>sli: throughput pass: <ul>
-<li>criteria: <ul>
-<li>&#34;&gt;10&#34; </li>
-</ul>
-</li>
-</ul>
-</li>
-<li>sli: &#34;response_time_p50&#34; </li>
-<li>sli: &#34;response_time_p90&#34; total_score: pass: &#34;90%&#34; warning: &#34;50%&#34; &#34;` <h2 is-upgraded>Modify SLI </h2>
-Find your service (tenant) under the quality-gates branch and view the default SLI.yaml No changes are required for this exercise. <h2 is-upgraded>Trigger evaluation </h2>
-Use the API or command line to trigger an evaluation - use buildId 4 e.g. <code>bash<br>keptn trigger evaluation --project=dynatrace --stage=quality-gate --service=tnt-xxxx-svc --timeframe=30m --labels=buildId=4,executedBy=manual</code><br> View the resulting evaluation in the Cloud Automation UI: <img alt="update_slo_run.PNG" src="img/a8f5928ad14082b7.PNG"> Gitops - Dashboard based Automation Create new project Let‘s create a new „dbqg-xxx&#34; (short for dashboard quality gate for xxxx) service in our dynatrace project with the CLI where xxx is your &#34;tenant&#34; <code>bash<br>keptn create service dbqg-xxxx --project=dynatrace</code><br> Create a dashboard for that service CLONE the existing dashboard KQG;project=dynatrace;service=dbqg-xxxx;stage=quality-gate Change the name format to reflect your service name Trigger evaluation <code>bash<br>keptn trigger evaluation --project=dynatrace --stage=quality-gate --service=dbqg-xxx --timeframe=30m</code><br> Add a new Chart Tile Add a new chart tile to the dashboard: Metric: <strong>builtin:service.cpu.perRequest</strong> Chart Title: <strong>Service CPU;sli=service_cpu;pass=&lt;20;warning=&lt;50;key=false</strong> Then trigger an evaluation again... <code>bash<br>keptn trigger evaluation --project=dynatrace --stage=quality-gate --service=dbqg-xxx --timeframe=30m</code><br> You should see a new metric (service_cpu) being evaluated in the SLO Add a new Top List tile Add a new Top List tile to your dashboard Metric: <strong>builtin:service.response.server</strong> Split by: <strong>Service</strong> Chart Title: <strong>Service Response;sli=service_rt;pass=&lt;200;warning=&lt;500;key=false</strong> Then trigger an evaluation again... <code>bash<br>keptn trigger evaluation --project=dynatrace --stage=quality-gate --service=dbqg-xxx --timeframe=30m</code><br> You should see a new metrics (service<em>rt</em>) being evaluated in the SLO Feedback <google-codelab-survey survey-id="cloud-automation-quality-gates-1">
+<h2 is-upgraded>Modify SLI</h2>
+<p>Find your service (tenant) under the quality-gates branch and view the default SLI.yaml No changes are required for this exercise.</p>
+<h2 is-upgraded>Trigger evaluation</h2>
+<p>Use the API or command line to trigger an evaluation - use buildId 4</p>
+<p>e.g.</p>
+<pre><code language="language-bash" class="language-bash">keptn trigger evaluation --project=dynatrace --stage=quality-gate --service=tnt-xxxx-svc --timeframe=30m --labels=buildId=4,executedBy=manual
+</code></pre>
+<p>View the resulting evaluation in the Cloud Automation UI:</p>
+<p class="image-container"><img alt="update_slo_run.PNG" src="img/a8f5928ad14082b7.PNG"></p>
+</google-codelab-step>
+<google-codelab-step label="Gitops - Dashboard based Automation" duration="15">
+</google-codelab-step>
+<google-codelab-step label="Create new project" duration="0">
+<p>Let‘s create a new &#34;dbqg-xxx&#34; (short for dashboard quality gate for xxxx) service in our dynatrace project with the CLI</p>
+<p>where xxx is your &#34;tenant&#34;</p>
+<pre><code language="language-bash" class="language-bash">keptn create service dbqg-xxxx --project=dynatrace
+</code></pre>
+</google-codelab-step>
+<google-codelab-step label="Create a dashboard for that service" duration="0">
+<p>CLONE the existing dashboard KQG;project=dynatrace;service=dbqg-xxxx;stage=quality-gate</p>
+<p>Change the name format to reflect your service name</p>
+</google-codelab-step>
+<google-codelab-step label="Trigger evaluation" duration="0">
+<pre><code language="language-bash" class="language-bash">keptn trigger evaluation --project=dynatrace --stage=quality-gate --service=dbqg-xxx --timeframe=30m
+</code></pre>
+</google-codelab-step>
+<google-codelab-step label="Add a new Chart Tile" duration="0">
+<p>Add a new chart tile to the dashboard:</p>
+<p>Metric: <strong>builtin:service.cpu.perRequest</strong> Chart Title: <strong>Service CPU;sli=service_cpu;pass=&lt;20;warning=&lt;50;key=false</strong></p>
+<p>Then trigger an evaluation again...</p>
+<pre><code language="language-bash" class="language-bash">keptn trigger evaluation --project=dynatrace --stage=quality-gate --service=dbqg-xxx --timeframe=30m
+</code></pre>
+<p>You should see a new metric (service_cpu) being evaluated in the SLO</p>
+</google-codelab-step>
+<google-codelab-step label="Add a new Top List tile" duration="0">
+<p>Add a new Top List tile to your dashboard</p>
+<p>Metric: <strong>builtin:service.response.server</strong> Split by: <strong>Service</strong> Chart Title: <strong>Service Response;sli=service_rt;pass=&lt;200;warning=&lt;500;key=false</strong></p>
+<p>Then trigger an evaluation again...</p>
+<pre><code language="language-bash" class="language-bash">keptn trigger evaluation --project=dynatrace --stage=quality-gate --service=dbqg-xxx --timeframe=30m
+</code></pre>
+<p>You should see a new metrics (service<em>rt</em>) being evaluated in the SLO</p>
+</google-codelab-step>
+<google-codelab-step label="Feedback" duration="3">
+<p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
+<google-codelab-survey survey-id="cloud-automation-quality-gates-1">
 <h4>How was your overall experience with this lab?</h4>
 <paper-radio-group>
 <paper-radio-button>Excellent</paper-radio-button>
@@ -113,11 +188,8 @@ Use the API or command line to trigger an evaluation - use buildId 4 e.g. <code>
 <paper-radio-button>Very Unlikely</paper-radio-button>
 </paper-radio-group>
 </google-codelab-survey>
-Positive </li>
-</ul>
-</li>
-</ul>
-<p>💡 For other ideas and suggestions, please <a href="mailto:APAC-SE-Central@dynatrace.com?subject=Kubernetes Workshop - Ideas and Suggestions" target="_blank"><strong>reach out via email</strong></a>.</p>
+<aside class="special"><p>💡 For other ideas and suggestions, please <a href="mailto:APAC-SE-Central@dynatrace.com?subject=Kubernetes Workshop - Ideas and Suggestions" target="_blank"><strong>reach out via email</strong></a>.</p>
+</aside>
 </google-codelab-step>
 </google-codelab>
 <script src="../../elements/codelab-elements/native-shim.js"></script>
