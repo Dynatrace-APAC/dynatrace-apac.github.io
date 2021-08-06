@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="description" content="Lab sessions to be used for virtual bootcamps.">
+<meta name="description" content="Lab sessions conducted for internally for the Dynatrace team. These sessions could be modified and conducted externally. Reach out to APAC-SE-Central@dynatrace.com for any requests.">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="generator" content="Dynatrace vBootcamp">
 <meta name="application-name" content="Dynatrace vBootcamp">
@@ -35,7 +35,7 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <meta name="theme-color" content="#455a64">
 <meta name="og:type" property="og:type" content="website">
 <meta name="og:title" property="og:title" content="Dynatrace vBootcamp">
-<meta name="og:description" property="og:description" content="Lab sessions to be used for virtual bootcamps.">
+<meta name="og:description" property="og:description" content="Lab sessions conducted for internally for the Dynatrace team. These sessions could be modified and conducted externally. Reach out to APAC-SE-Central@dynatrace.com for any requests.">
 <meta name="og:url" property="og:url" content="https://dynatrace-apac.github.io/bootcamp/">
 <meta name="og:site_name" property="og:site_name" content="APAC Tech Labs">
 <meta name="og:determiner" property="og:determiner" content="the">
@@ -48,7 +48,7 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <meta name="og:image:alt" property="og:image:alt" content="Dynatrace">
 <meta name="twitter:card" property="twitter:card" content="summary_large_image">
 <meta name="twitter:title" property="twitter:title" content="Dynatrace vBootcamp">
-<meta name="twitter:description" property="twitter:description" content="Lab sessions to be used for virtual bootcamps.">
+<meta name="twitter:description" property="twitter:description" content="Lab sessions conducted for internally for the Dynatrace team. These sessions could be modified and conducted externally. Reach out to APAC-SE-Central@dynatrace.com for any requests.">
 <meta name="twitter:image" property="twitter:image" content="/images/og-image.png">
 <meta name="twitter:url" property="twitter:url" content="https://dynatrace-apac.github.io/bootcamp/">
 </head>
@@ -71,12 +71,19 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <header id="banner" down>
 <div class="site-width">
 <div class="banner-description">
-<img id="logo" src="/bootcamp/bootcamp.jpg" alt="Event logo">
+<img id="logo" src="/bootcamp/bootcamp.png" alt="Event logo">
 <div class="banner-meta">
 <h3>Dynatrace vBootcamp</h3>
-<p>Lab sessions to be used for virtual bootcamps.</p>
+<p class="banner-info">Lab sessions conducted for internally for the Dynatrace team. These sessions could be modified and conducted externally. Reach out to APAC-SE-Central@dynatrace.com for any requests.</p>
 </div>
 </div>
+<span class="banner-info">
+<a href="/" class="button">Home</a>
+<a href="/schedule" class="button">Virtual Hands-On Workshops</a>
+<a href="/interactive-demo" class="button">Interactive Demo</a>
+<a href="https://www.dynatrace.com/request-demo/" class="button">Request a Demo</a>
+<a href="https://www.dynatrace.com/trial/" class="button">Free Trial</a>
+</span>
 </div>
 </header>
 <main>
@@ -89,13 +96,7 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 </paper-tabs>
 </div>
 <div id="right-dropdown">
-<paper-dropdown-menu label="English" class="lang-dropdown-filter" no-label-float noink no-animations>
-<paper-listbox id="eventList" slot="dropdown-content" class="dropdown-content">
-<a href="/jp/" tabindex="-1">
-<paper-item>日本語</paper-item>
-</a>
-</paper-listbox>
-</paper-dropdown-menu></div>
+</div>
 </div>
 <card-sorter id="cards" class="site-width">
 <a href="https://interact.dynatrace.com/" on-tap="navigate" class="codelab-card category-apps-microservices" data-category="apps-microservices" data-title="Apps And Microservices Demo" data-duration="136" data-updated="2020-07-28T15:48:24+10:00" data-tags="apps-microservices" data-pin="1">
@@ -152,6 +153,18 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 <div class="category-icon dem-icon"></div>
 <div class="category-icon category-icon2 bizops-icon"></div>
 <paper-button class="bizops-bg">Start</paper-button>
+</div>
+</a>
+<a href="/workshops/cloud-automation-quality-gates/index.html?index=..%2F..bootcamp" on-tap="navigate" class="codelab-card category-cloud-obs" data-category="cloud-obs,cloud-automation" data-title="Cloud Automation - Quality Gates with Dynatrace" data-duration="30" data-updated="2021-08-06T15:29:00+10:00" data-tags="bootcamp,cloud-obs,intermediate" data-pin="">
+<div class="title">Cloud Automation - Quality Gates with Dynatrace</div>
+<div class="summary">Cloud Automation - Quality Gates</div>
+<div class="card-duration">
+<span class="IntermediateText"><iron-icon icon="av:equalizer" class="Intermediate"></iron-icon>intermediate - 30 min</span>
+<span>Updated Aug 6, 2021</span>
+</div>
+<div class="card-footer">
+<div class="category-icon cloud-obs-icon"></div>
+<paper-button class="cloud-obs-bg">Start</paper-button>
 </div>
 </a>
 <a href="/workshops/azure/index.html?index=..%2F..bootcamp" on-tap="navigate" class="codelab-card category-azure" data-category="azure" data-title="Dynatrace with Azure" data-duration="64" data-updated="2020-10-17T21:39:38+11:00" data-tags="bootcamp" data-pin="">

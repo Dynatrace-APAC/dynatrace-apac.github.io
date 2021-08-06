@@ -1,0 +1,29 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "../../elements",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-08-06T15:29:00+10:00",
+  "id": "cloud-automation-quality-gates",
+  "duration": 30,
+  "title": "Cloud Automation - Quality Gates with Dynatrace",
+  "authors": "Kevin Leng",
+  "summary": "Cloud Automation - Quality Gates",
+  "source": "cloud-automation-workshop.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "cloud-obs",
+    "cloud-automation"
+  ],
+  "tags": [
+    "bootcamp",
+    "cloud-obs",
+    "intermediate"
+  ],
+  "feedback": "mailto:APAC-SE-Central@dynatrace.com",
+  "ga": "UA-175467274-1",
+  "url": "cloud-automation-quality-gates"
+}
