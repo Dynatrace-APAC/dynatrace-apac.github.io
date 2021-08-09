@@ -1,0 +1,28 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "../../elements",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-08-09T16:24:07+10:00",
+  "id": "kubernetes-updated",
+  "duration": 109,
+  "title": "Dynatrace with Kubernetes",
+  "authors": "Brandon Neo",
+  "summary": "Full Stack Observability with vanilla Kubernetes while integating with k8s for additional context",
+  "source": "kubernetes-v2.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "kubernetes",
+    "application-microservices-monitoring"
+  ],
+  "tags": [
+    "beginner",
+    "kubernetes"
+  ],
+  "feedback": "mailto:APAC-SE-Central@dynatrace.com",
+  "ga": "UA-175467274-1",
+  "url": "kubernetes-updated"
+}
