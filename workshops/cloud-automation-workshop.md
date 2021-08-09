@@ -244,8 +244,8 @@ View the resulting evaluation in the Cloud Automation UI:
 ## Gitops - Dashboard based Automation
 Duration: 15
 
-## Create new project
-Let‘s create a new „dbqg-xxx“ (short for dashboard quality gate for xxxx) service in our dynatrace project with the CLI
+### Create new project
+Let‘s create a new **dbqg-xxx** (short for dashboard quality gate for xxxx) service in our dynatrace project with the CLI
 
 where xxx is your "tenant"
 
@@ -253,25 +253,25 @@ where xxx is your "tenant"
 keptn create service dbqg-xxxx --project=dynatrace
 ```
 
-## Create a dashboard for that service
+### Create a dashboard for that service
 
-CLONE the existing dashboard KQG;project=dynatrace;service=dbqg-xxxx;stage=quality-gate
+CLONE the existing dashboard **KQG;project=dynatrace;service=dbqg-xxxx;stage=quality-gate**
 
 Change the name format to reflect your service name
 
-## Trigger evaluation
+### Trigger evaluation
 
 ```bash
 keptn trigger evaluation --project=dynatrace --stage=quality-gate --service=dbqg-xxx --timeframe=30m
 ```
 
 
-## Add a new Chart Tile
+### Add a new Chart Tile
 
 Add a new chart tile to the dashboard:
 
-Metric: **builtin:service.cpu.perRequest**
-Chart Title: **Service CPU;sli=service_cpu;pass=<20;warning=<50;key=false**
+* Metric: **builtin:service.cpu.perRequest**
+* Chart Title: **Service CPU;sli=service_cpu;pass=<20;warning=<50;key=false**
 
 Then trigger an evaluation again...
 ```bash
@@ -280,13 +280,13 @@ keptn trigger evaluation --project=dynatrace --stage=quality-gate --service=dbqg
 
 You should see a new metric (service_cpu) being evaluated in the SLO
 
-## Add a new Top List tile
+### Add a new Top List tile
 
 Add a new Top List tile to your dashboard
 
-Metric: **builtin:service.response.server**
-Split by: **Service**
-Chart Title: **Service Response;sli=service_rt;pass=<200;warning=<500;key=false**
+* Metric: **builtin:service.response.server**
+* Split by: **Service**
+* Chart Title: **Service Response;sli=service_rt;pass=<200;warning=<500;key=false**
 
 Then trigger an evaluation again...
 ```bash

@@ -126,32 +126,34 @@ ID of Keptn context: 2e7e14d1-f8b5-436c-9638-c51a77dd41ff
 <p class="image-container"><img alt="update_slo_run.PNG" src="img/a8f5928ad14082b7.PNG"></p>
 </google-codelab-step>
 <google-codelab-step label="Gitops - Dashboard based Automation" duration="15">
-</google-codelab-step>
-<google-codelab-step label="Create new project" duration="0">
-<p>Let‘s create a new &#34;dbqg-xxx&#34; (short for dashboard quality gate for xxxx) service in our dynatrace project with the CLI</p>
+<h2 is-upgraded>Create new project</h2>
+<p>Let‘s create a new <strong>dbqg-xxx</strong> (short for dashboard quality gate for xxxx) service in our dynatrace project with the CLI</p>
 <p>where xxx is your &#34;tenant&#34;</p>
 <pre><code language="language-bash" class="language-bash">keptn create service dbqg-xxxx --project=dynatrace
 </code></pre>
-</google-codelab-step>
-<google-codelab-step label="Create a dashboard for that service" duration="0">
-<p>CLONE the existing dashboard KQG;project=dynatrace;service=dbqg-xxxx;stage=quality-gate</p>
+<h2 is-upgraded>Create a dashboard for that service</h2>
+<p>CLONE the existing dashboard <strong>KQG;project=dynatrace;service=dbqg-xxxx;stage=quality-gate</strong></p>
 <p>Change the name format to reflect your service name</p>
-</google-codelab-step>
-<google-codelab-step label="Trigger evaluation" duration="0">
+<h2 is-upgraded>Trigger evaluation</h2>
 <pre><code language="language-bash" class="language-bash">keptn trigger evaluation --project=dynatrace --stage=quality-gate --service=dbqg-xxx --timeframe=30m
 </code></pre>
-</google-codelab-step>
-<google-codelab-step label="Add a new Chart Tile" duration="0">
+<h2 is-upgraded>Add a new Chart Tile</h2>
 <p>Add a new chart tile to the dashboard:</p>
-<p>Metric: <strong>builtin:service.cpu.perRequest</strong> Chart Title: <strong>Service CPU;sli=service_cpu;pass=&lt;20;warning=&lt;50;key=false</strong></p>
+<ul>
+<li>Metric: <strong>builtin:service.cpu.perRequest</strong></li>
+<li>Chart Title: <strong>Service CPU;sli=service_cpu;pass=&lt;20;warning=&lt;50;key=false</strong></li>
+</ul>
 <p>Then trigger an evaluation again...</p>
 <pre><code language="language-bash" class="language-bash">keptn trigger evaluation --project=dynatrace --stage=quality-gate --service=dbqg-xxx --timeframe=30m
 </code></pre>
 <p>You should see a new metric (service_cpu) being evaluated in the SLO</p>
-</google-codelab-step>
-<google-codelab-step label="Add a new Top List tile" duration="0">
+<h2 is-upgraded>Add a new Top List tile</h2>
 <p>Add a new Top List tile to your dashboard</p>
-<p>Metric: <strong>builtin:service.response.server</strong> Split by: <strong>Service</strong> Chart Title: <strong>Service Response;sli=service_rt;pass=&lt;200;warning=&lt;500;key=false</strong></p>
+<ul>
+<li>Metric: <strong>builtin:service.response.server</strong></li>
+<li>Split by: <strong>Service</strong></li>
+<li>Chart Title: <strong>Service Response;sli=service_rt;pass=&lt;200;warning=&lt;500;key=false</strong></li>
+</ul>
 <p>Then trigger an evaluation again...</p>
 <pre><code language="language-bash" class="language-bash">keptn trigger evaluation --project=dynatrace --stage=quality-gate --service=dbqg-xxx --timeframe=30m
 </code></pre>
