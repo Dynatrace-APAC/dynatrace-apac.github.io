@@ -17,29 +17,23 @@ This repository contains the hands on for the Day 2 Operations - Cloud Native Ob
 ### Prerequisites
 
 * Dynatrace SaaS/Managed Account. Get your free SaaS trial [here](https://www.dynatrace.com/trial/).
-* AWS account, with the ability to create an EC2 instance from a public AMI. Signup to a free trial [here](https://aws.amazon.com/free/).
+* Dynatrace Cloud Automation Account
 * Chrome Browser
 * SSH client such as [mobaxterm](https://mobaxterm.mobatek.net/).
 
 ### Lab Setup
 The following steps are used for this lab:
-- Sample Application 
-    * Sample App is based on [Sockshop](https://github.com/dynatrace-sockshop)
+https://github.com/keptn-sandbox/keptn-on-k3s/tree/master/cloudautomation
 
-### What You’ll Learn
-- Deploy OneAgent to a Kubernetes / Microservice Environment
-- GitOps / Monitoring as code approach to push application config
-- Learn Metric Ingestion for automated baselines across all entities
-- Site Reliability Engineering - Service Level Objectives
-- Site Reliability Engineering - Releases
 
 
 <!-- ------------------------ -->
 ## Install Keptn CLI and Authenticate
 
-Login to the bastion host using the username / password provided
+Login to the bastion host using the username / password provided.
 
 ### Install Keptn CLI
+
 Download and install the Keptn CLI:
 
 ```bash
@@ -63,7 +57,9 @@ Successfully authenticated against the Keptn cluster https://mvl77343.cloudautom
 Using a file-based storage for the key because the password-store seems to be not set up.
 ```
 
+
 Test it is working by calling **keptn get projects**
+
 
 ```bash
 [xx@ip-172-31-28-139 ~]$ keptn get projects
@@ -85,7 +81,7 @@ In this exercise, we'll create a service for a basic quality gate.
 
 ### Add Tags
 
-Pick your **tnt-xxxx-svc** service in production
+Pick your **tnt-XXXXXX-svc-*.delivery-demo-production** service (production)
 
 * Tag 1: **keptn_managed**. Either add via „Add tag“ or via Dynatrace Tagging API
 
@@ -142,6 +138,7 @@ Set:
 * stage: **quality-gate**
 * service: **YOUR_SERVICE_NAME**
 * evaluation=
+  
   ```json
   {
     "labels": {
@@ -165,6 +162,8 @@ View the events against your service in Dynatrace.
 ![example_keptn_event.PNG](assets/bootcamp/cloud-automation-quality-gates/example_keptn_event.PNG)
 
 
+
+
 <!-- ------------------------ -->
 ## Gitops - Codify Quality Gates
 Duration: 15
@@ -182,10 +181,12 @@ Git User:        keptn
 Git Password:    keptn#R0cks
 
 Modify the SLO are per the following image:
+
 ![update_slo.PNG](assets/bootcamp/cloud-automation-quality-gates/update_slo.PNG)
 
 
 If you need the full completed yaml:
+
 ```yaml
 ---
 spec_version: "1.0"
@@ -240,8 +241,10 @@ View the resulting evaluation in the Cloud Automation UI:
 ![update_slo_run.PNG](assets/bootcamp/cloud-automation-quality-gates/update_slo_run.PNG)
 
 
+
+
 <!-- ------------------------ -->
-## Gitops - Dashboard based Automation
+## Gitops - Dashboard based Automation - Part 1
 Duration: 15
 
 ### Create new project
@@ -266,6 +269,12 @@ keptn trigger evaluation --project=dynatrace --stage=quality-gate --service=dbqg
 ```
 
 
+<!-- ------------------------ -->
+## Gitops - Dashboard based Automation - Part 2
+Duration: 15
+
+Now we'll add new metrics to our dashboard and hand them reflected in the Quality Gate
+
 ### Add a new Chart Tile
 
 Add a new chart tile to the dashboard:
@@ -279,6 +288,8 @@ keptn trigger evaluation --project=dynatrace --stage=quality-gate --service=dbqg
 ```
 
 You should see a new metric (service_cpu) being evaluated in the SLO
+
+
 
 ### Add a new Top List tile
 
