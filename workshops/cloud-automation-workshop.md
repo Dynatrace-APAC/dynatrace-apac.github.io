@@ -1,6 +1,6 @@
 id: cloud-automation-quality-gates
 summary: Cloud Automation - Quality Gates
-categories: cloud-obs, cloud-automation
+categories: cloudautomation, cloud-automation
 tags: cloud-Obs, bootcamp, Intermediate
 status: Published 
 authors: Kevin Leng

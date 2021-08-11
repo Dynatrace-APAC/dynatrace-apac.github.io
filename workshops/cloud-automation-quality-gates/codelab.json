@@ -3,7 +3,7 @@
   "format": "html",
   "prefix": "../../elements",
   "mainga": "UA-49880327-14",
-  "updated": "2021-08-11T12:52:53+10:00",
+  "updated": "2021-08-11T13:09:51+10:00",
   "id": "cloud-automation-quality-gates",
   "duration": 54,
   "title": "Cloud Automation - Quality Gates with Dynatrace",
@@ -15,7 +15,7 @@
     "published"
   ],
   "category": [
-    "cloud-obs",
+    "cloudautomation",
     "cloud-automation"
   ],
   "tags": [
