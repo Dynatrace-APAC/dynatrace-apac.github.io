@@ -1,0 +1,150 @@
+
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+<meta name="theme-color" content="#4F7DC9">
+<meta charset="UTF-8">
+<title>Get Started with Ansible</title>
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+<style>
+.success{color:#1e8e3e}.error{color:red} </style>
+</head>
+<body>
+<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+<google-codelab codelab-gaid="UA-175467274-1" id="get-started-ansible" title="Get Started with Ansible" environment="web" feedback-link="mailto:APAC-SE-Central@dynatrace.com">
+<google-codelab-step label="Introduction" duration="0">
+<p>This section contains the various approaches to get started with Redhat Ansible. This includes the various flavors of Ansible including Redhat Ansible Tower.</p>
+<aside class="special"><p>If you need to use a <strong>demo application</strong>, you can use Dynatrace&#39;s sample app <a href="https://community.dynatrace.com/community/display/DL/easyTravel" target="_blank">easyTravel</a></p>
+</aside>
+<h2 class="checklist" is-upgraded>What You&#39;ll Learn</h2>
+<ul>
+<li>Installing Ansible</li>
+<li>Install OneAgent with Ansible</li>
+<li>Auto-Remediation use case</li>
+<li>Discover and Explore Dynatrace</li>
+</ul>
+</google-codelab-step>
+<google-codelab-step label="Automated Deployment with Ansible" duration="15">
+<p>In this exercise, we will deploy the OneAgent to a Linux instance with Ansible.</p>
+<p>Based off our <a href="https://github.com/Dynatrace/Dynatrace-OneAgent-Ansible" target="_blank">Dynatrace Ansible Github</a>, you can rollout Dynatrace Oneagent easily across on Linux and Windows Operating Systems with different available configurations and ensures the OneAgent service maintains a running state. It also provides the tasks to interact with the various OneAgent configuration files.</p>
+<p>Following the steps from our <a href="https://www.dynatrace.com/support/help/setup-and-configuration/dynatrace-oneagent/deployment-orchestration/ansible/" target="_blank">documentation</a>, we will use an Ansible collection to orchestrate OneAgent deployment.</p>
+<p>You can also use other Ansible playbooks examples can be seen <a href="https://github.com/popecruzdt/dt-ansible/blob/popecruzdt/dt-oneagent-install-linux.yml" target="_blank">here</a></p>
+<h2 is-upgraded>Installing Ansible</h2>
+<p>The following are steps to install Ansible in your Linux host.</p>
+<p>Use the command below</p>
+<p><code>wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Advanced-Observability/master/setup_ansible.sh | bash</code></p>
+<aside class="special"><p>Once it&#39;s finished, run the following command to check the status of ansible <code>ansible --version</code></p>
+</aside>
+<p>You should see that it&#39;s successfully installed along with it&#39;s dependencies</p>
+<pre><code language="language-bash" class="language-bash">ansible 2.9.13
+config file = /etc/ansible/ansible.cfg
+configured module search path = [u&#39;/home/advanced-observability-workshop/.ansible/plugins/modules&#39;, u&#39;/usr/share/ansible/plugins/modules&#39;]
+ansible python module location = /usr/lib/python2.7/dist-packages/ansible
+executable location = /usr/bin/ansible
+python version = 2.7.17 (default, Jul 20 2020, 15:37:01) [GCC 7.5.0]
+</code></pre>
+<h2 is-upgraded>Install OneAgent with Ansible</h2>
+<p>Following the steps in Dynatrace:</p>
+<ul>
+<li>Filter or find <strong>Deploy Dynatrace</strong> from the navigation menu</li>
+<li>Select <strong>Start installation</strong></li>
+<li>Download <strong>Ansible collection</strong> to your Linux instance</li>
+<li>Use the command below to <strong>install the collection</strong></li>
+</ul>
+<p><code>ansible-galaxy collection install dynatrace.oneagent</code></p>
+<p>This will install <strong>dynatrace.oneagent</strong> collection that consist of a single role that deploys OneAgent using dedicated configuration and ensuring the OneAgent service maintains a running state. For more information, see <a href="https://docs.ansible.com/ansible/latest/user_guide/collections_using.html" target="_blank">Using collections</a> in Ansible documentation. You can also find the latest version at <a href="https://galaxy.ansible.com/dynatrace/oneagent" target="_blank">Ansible Galaxy</a></p>
+<h2 is-upgraded>Creating the PaaS Token</h2>
+<p>Following the steps in Dynatrace:</p>
+<ul>
+<li>Go to <strong>Settings &gt; Integration &gt; Platform as a Service</strong></li>
+<li>Click on <strong>Generate token</strong> and give a token name eg. <strong>Ansible</strong></li>
+<li>Click on <strong>Generate</strong> and <strong>copy</strong> the token by selecting <strong>Reveal token</strong> to use for the next step.</li>
+</ul>
+<p class="image-container"><img alt="Deploy" src="../assets/adv-observe/paas-token.png"></p>
+<h2 is-upgraded>Running the playbook</h2>
+<p>Using the example playbook below, replace the <strong>dynatrace_environment_url</strong> and <strong>dynatrace_paas_token</strong> variables to install OneAgent. You can tweak the command with a text editor eg. Notepad++</p>
+<p><strong>EXAMPLE</strong></p>
+<pre><code language="language-yaml" class="language-yaml">---
+- hosts: all
+  become: true
+  roles:
+    - role: Dynatrace.OneAgent
+  vars:
+    dynatrace_environment_url: {your-environment-id}.live.dynatrace.com
+    dynatrace_paas_token: {your-paas-token}
+</code></pre>
+<ul>
+<li>Save the above yaml as <code>install.yml</code></li>
+<li>To install the playbook, run the following command:</li>
+</ul>
+<p><code>ansible-playbook dt-oneagent-install-linux.yml</code></p>
+<p class="image-container"><img alt="Deploy" src="../assets/adv-observe/dynatrace-env.png"></p>
+<h2 is-upgraded>Validate the installation</h2>
+<p>Go to <strong>Deployment status</strong> on the left navigation. You should see OneAgent installed on the current host.</p>
+<p class="image-container"><img alt="Deploy" src="../assets/adv-observe/deployment-status.png"></p>
+</google-codelab-step>
+<google-codelab-step label="Self Healing with Ansible" duration="15">
+<p>Deploying applications efficiently requires using an <strong>automated delivery pipeline</strong>. Dynatrace tracks all key metrics through the various CI/CD stages into production. Through understanding the feedback loop, you can stop faulty builds before they reach production or even self-remediate issues based on problems which Dynatrace detects. This allows deploying software faster with higher quality.</p>
+<p>There are various kinds of use cases for Ansible playbooks:</p>
+<ul>
+<li>Deployment change</li>
+<li>Rollback change</li>
+<li>Rollback deployment</li>
+<li>Auto remediation</li>
+</ul>
+<p>Example of these playbooks could be found <a href="https://github.com/Dynatrace-APAC/dt-ansible-autoremediation" target="_blank">here</a></p>
+<aside class="special"><p>This systematic and generic approach can be applied to any software that Dynatrace monitors and any CI/CD pipeline that our customers may use, meaning we can speed up 🚀 their delivery up to 80% while ensuring the functionality and a higher level of quality of their released software ✅.</p>
+</aside>
+<p><a href="https://www.dynatrace.com/platform/artificial-intelligence/" target="_blank">Dynatrace&#39;s DAVIS AI-engine</a> will be able to detect problems and trigger the specific and appropriate responses based on playbooks.</p>
+<p class="image-container"><img alt="Problem-ansible" src="img/9d6045540bab61b8.png"></p>
+<p>In the video below, we also demonstrate and explore how Ansible and Dynatrace can be used together to automate deployments and to build auto-remediation workflows which enable self-healing applications.</p>
+<p>To experience in <strong>Self-Healing as a Service</strong>, you could refer to our <a href="/workshops/autonomous-cloud/index.html?index=..%2F..index#8" target="_blank">Autonomous Cloud lab</a></p>
+</google-codelab-step>
+<google-codelab-step label="Advanced Use Cases" duration="0">
+<p>Dynatrace is an all-in-one platform that&#39;s purpose-built for a wide range of use cases.</p>
+<p class="image-container"><img alt="Deploy" src="img/6bc1ded3f014cf01.png"></p>
+<p><strong>Infrastructure Monitoring</strong></p>
+<ul>
+<li>Dynatrace delivers simplified, automated infrastructure monitoring that provides broad visibility across your hosts, VMs, containers, network, events, and logs. Dynatrace continuously auto-discovers your dynamic environment and pulls infrastructure metrics into our Davis® AI engine, so you can consolidate tools and cut MTTI.</li>
+</ul>
+<p><strong>Applications and Microservices</strong></p>
+<ul>
+<li>Dynatrace provides automated, code-level visibility and root-cause answers for applications that span complex enterprise cloud environments. Dynatrace automatically captures timing and code-level context for transactions across every tier. It also detects and monitors microservices automatically across the entire hybrid cloud, from mobile to mainframe.</li>
+</ul>
+<p><strong>Digital Experience Monitoring (DEM)</strong></p>
+<ul>
+<li>Dynatrace DEM provides Real User Monitoring (RUM) for every one of your customer&#39;s journeys, synthetic monitoring across a global network, and 4K movie-like Session Replay. This powerful combination helps you optimize your applications, improve user experience, and provide superior support across all digital channels.</li>
+</ul>
+<p><strong>Digital Business Analytics</strong></p>
+<ul>
+<li>By tying business metrics and KPIs to data that&#39;s already flowing through our application performance and digital experience modules, you get real-time, AI-powered answers to your critical business questions.</li>
+</ul>
+<p><strong>Cloud Automation</strong></p>
+<ul>
+<li>Dynatrace AIOps gives you precise answers automatically. Dynatrace collects high-fidelity data and maps dependencies in real-time so that the Dynatrace explainable AI engine, Davis®, can show you the precise root causes of problems or anomalies, enabling quick auto-remediation and intelligent cloud orchestration.</li>
+</ul>
+<p>The above use cases are setup as labs which you can run through:</p>
+<ul>
+<li><a href="/workshops/dem" target="_blank">Digital Experience Management with Dynatrace</a></li>
+<li><a href="/workshops/advanced-observability" target="_blank">Advanced Observability with Dynatrace</a></li>
+<li><a href="/workshops/bizops" target="_blank">BizOps with Dynatrace</a></li>
+<li><a href="/workshops/autonomous-cloud" target="_blank">Autonomous Cloud with Dynatrace</a></li>
+</ul>
+<p>These are also conducted virtually as <a href="/schedule" target="_blank">Hands-On Workshops</a>.</p>
+<h2 is-upgraded>Addtional Resources</h2>
+<ul>
+<li>To learn more about what Dynatrace can do for you, watch the videos on <a href="https://www.dynatrace.com/news/free-trial-resources/" target="_blank">Dynatrace Free Trial Resources</a>.</li>
+<li>To learn about our on-premises alternative, read <a href="https://www.dynatrace.com/support/help/get-started/get-started-with-dynatrace-managed/" target="_blank">Get started with Dynatrace Managed</a>.</li>
+</ul>
+</google-codelab-step>
+</google-codelab>
+<script src="../../elements/codelab-elements/native-shim.js"></script>
+<script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+<script src="../../elements/codelab-elements/prettify.js"></script>
+<script src="../../elements/codelab-elements/codelab-elements.js"></script>
+<script src="//support.google.com/inapp/api.js"></script>
+</body>
+</html>

@@ -43,12 +43,30 @@ You can also use other Ansible playbooks examples can be seen [here](https://git
 ## Self Healing with Ansible
 Duration: 15
 
-Deploying applications continously requires an **automated delivery pipeline**. Dynatrace tracks all key metrics through the various CI/CD stages into production. Through understanding the feedback loop, you can stop faulty builds before they reach production and start deploying software faster at higher quality.
+Deploying applications efficiently requires using an **automated delivery pipeline**. Dynatrace tracks all key metrics through the various CI/CD stages into production. Through understanding the feedback loop, you can stop faulty builds before they reach production or even self-remediate issues based on problems which Dynatrace detects. This allows deploying software faster with higher quality.
 
-Identify bad code changes before executing GIT COMMIT in your IDE
-Stop broken builds earlier in your delivery pipeline
-Detect architectural regressions with automated tests
-Deploy with confidence
+There are various kinds of use cases for Ansible playbooks:
+* Deployment change
+* Rollback change
+* Rollback deployment
+* Auto remediation
+
+Example of these playbooks could be found [here](https://github.com/Dynatrace-APAC/dt-ansible-autoremediation)
+
+Positive
+: This systematic and generic approach can be applied to any software that Dynatrace monitors and any CI/CD pipeline that our customers may use, meaning we can speed up 🚀 their delivery up to 80% while ensuring the functionality and a higher level of quality of their released software ✅.
+
+[Dynatrace's DAVIS AI-engine](https://www.dynatrace.com/platform/artificial-intelligence/) will be able to detect problems and trigger the specific and appropriate responses based on playbooks. 
+
+![Problem-ansible](assets/get-started-ansible/problem-ansible.png)
+
+In the video below, we also demonstrate and explore how Ansible and Dynatrace can be used together to automate deployments and to build auto-remediation workflows which enable self-healing applications.
+
+![https://www.youtube.com/watch?v=OQAXQrKhIt0](.)
+
+![https://www.youtube.com/watch?v=iNkDuCqOrXw](.)
+
+To experience in **Self-Healing as a Service**, you could refer to our [Autonomous Cloud lab](/workshops/autonomous-cloud/index.html?index=..%2F..index#8)
 
 <!-- ------------------------ -->
 ## Advanced Use Cases

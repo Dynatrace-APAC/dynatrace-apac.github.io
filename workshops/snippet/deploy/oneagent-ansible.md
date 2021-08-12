@@ -19,7 +19,7 @@ Following the steps in Dynatrace:
 * Click on **Generate token** and give a token name eg. **Ansible**
 * Click on **Generate** and **copy** the token by selecting **Reveal token** to use for the next step.
 
-![Deploy](assets/adv-observe/paas-token.png)
+![Deploy](../assets/adv-observe/paas-token.png)
 
 ###  Running the playbook
 
@@ -44,10 +44,10 @@ You can tweak the command with a text editor eg. Notepad++
 
 `ansible-playbook dt-oneagent-install-linux.yml`
 
-![Deploy](assets/adv-observe/dynatrace-env.png)
+![Deploy](../assets/adv-observe/dynatrace-env.png)
 
 ### Validate the installation
 
 Go to **Deployment status** on the left navigation. You should see OneAgent installed on the current host.
 
-![Deploy](assets/adv-observe/deployment-status.png)
+![Deploy](../assets/adv-observe/deployment-status.png)
