@@ -62,9 +62,7 @@ Positive
 
 In the video below, we also demonstrate and explore how Ansible and Dynatrace can be used together to automate deployments and to build auto-remediation workflows which enable self-healing applications.
 
-![https://www.youtube.com/watch?v=OQAXQrKhIt0](.)
-
-![https://www.youtube.com/watch?v=iNkDuCqOrXw](.)
+![https://youtube.com/watch?v=iNkDuCqOrXw](.)
 
 To experience in **Self-Healing as a Service**, you could refer to our [Autonomous Cloud lab](/workshops/autonomous-cloud/index.html?index=..%2F..index#8)
 
