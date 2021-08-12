@@ -71,7 +71,19 @@ delivery-demo   2021-08-05T07:31:03Z    spec.keptn.sh/0.2.0
 dynatrace       2021-08-05T06:09:24Z    spec.keptn.sh/0.2.0
 ```
 
+### Optional
 
+Disable kubeContextCheck and AutomaticVersionCheck
+
+
+```bash
+keptn set config kubeContextCheck false
+```
+
+
+```bash
+keptn set config AutomaticVersionCheck false
+```
 
 <!-- ------------------------ -->
 ## Quality Gate in 5 mins
@@ -305,6 +317,53 @@ keptn trigger evaluation --project=dynatrace --stage=quality-gate --service=dbqg
 ```
 
 You should see a new metrics (service_rt_) being evaluated in the SLO
+
+
+
+
+<!-- ------------------------ -->
+## Cloud Native
+Duration: 15
+
+Trigger each release in turn for your service
+
+### Release 2
+
+```bash
+keptn trigger delivery --project=delivery-demo --service=tnt-xxxxxx-svc --image=grabnerandi/simplenodeservice:2.0.0
+```
+
+Release 2 should fail and won't be promoted to production!
+
+
+![build_2.PNG](assets/bootcamp/cloud-automation-quality-gates/build_2.PNG)
+
+
+### Release 3
+
+```bash
+keptn trigger delivery --project=delivery-demo --service=tnt-xxxxxx-svc --image=grabnerandi/simplenodeservice:3.0.0
+```
+
+Release 3 should be accepted by the quality gate and make it into production!
+
+
+![build_3.PNG](assets/bootcamp/cloud-automation-quality-gates/build_3.PNG)
+
+
+### Release 4
+
+Trigger direct deployment to production
+
+
+```bash
+keptn trigger delivery --project=delivery-demo --stage=production --service=tnt-xxxxxx-svc --image=grabnerandi/simplenodeservice:4.0.0
+
+```
+
+
+![build_4.PNG](assets/bootcamp/cloud-automation-quality-gates/build_4.PNG)
+
 
 ## Feedback
 Duration: 3

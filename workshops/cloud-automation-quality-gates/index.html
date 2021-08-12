@@ -53,6 +53,12 @@ NAME            CREATION DATE           SHIPYARD VERSION
 delivery-demo   2021-08-05T07:31:03Z    spec.keptn.sh/0.2.0
 dynatrace       2021-08-05T06:09:24Z    spec.keptn.sh/0.2.0
 </code></pre>
+<h2 is-upgraded>Optional</h2>
+<p>Disable kubeContextCheck and AutomaticVersionCheck</p>
+<pre><code language="language-bash" class="language-bash">keptn set config kubeContextCheck false
+</code></pre>
+<pre><code language="language-bash" class="language-bash">keptn set config AutomaticVersionCheck false
+</code></pre>
 </google-codelab-step>
 <google-codelab-step label="Quality Gate in 5 mins" duration="5">
 <p>In this exercise, we&#39;ll create a service for a basic quality gate.</p>
@@ -205,6 +211,25 @@ total_score:
 <pre><code language="language-bash" class="language-bash">keptn trigger evaluation --project=dynatrace --stage=quality-gate --service=dbqg-xxx --timeframe=30m
 </code></pre>
 <p>You should see a new metrics (service<em>rt</em>) being evaluated in the SLO</p>
+</google-codelab-step>
+<google-codelab-step label="Cloud Native" duration="15">
+<p>Trigger each release in turn for your service</p>
+<h2 is-upgraded>Release 2</h2>
+<pre><code language="language-bash" class="language-bash">keptn trigger delivery --project=delivery-demo --service=tnt-xxxxxx-svc --image=grabnerandi/simplenodeservice:2.0.0
+</code></pre>
+<p>Release 2 should fail and won&#39;t be promoted to production!</p>
+<p class="image-container"><img alt="build_2.PNG" src="img/f9e2d37fd9d98be6.PNG"></p>
+<h2 is-upgraded>Release 3</h2>
+<pre><code language="language-bash" class="language-bash">keptn trigger delivery --project=delivery-demo --service=tnt-xxxxxx-svc --image=grabnerandi/simplenodeservice:3.0.0
+</code></pre>
+<p>Release 3 should be accepted by the quality gate and make it into production!</p>
+<p class="image-container"><img alt="build_3.PNG" src="img/27ac8b7b56d092d1.PNG"></p>
+<h2 is-upgraded>Release 4</h2>
+<p>Trigger direct deployment to production</p>
+<pre><code language="language-bash" class="language-bash">keptn trigger delivery --project=delivery-demo --stage=production --service=tnt-xxxxxx-svc --image=grabnerandi/simplenodeservice:4.0.0
+
+</code></pre>
+<p class="image-container"><img alt="build_4.PNG" src="img/ee9787e342183c91.PNG"></p>
 </google-codelab-step>
 <google-codelab-step label="Feedback" duration="3">
 <p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>

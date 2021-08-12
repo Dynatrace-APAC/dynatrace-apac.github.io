@@ -49,7 +49,7 @@ Use the command below to setup Ansible in your Linux host
 
 `wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Advanced-Observability/master/setup_ansible.sh | bash`
 
-Positive:
+Positive
 : Once it's finished, run the following command to check the status of ansible 
 `ansible --version`
 
