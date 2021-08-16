@@ -38,25 +38,27 @@ Duration: 15
 
 <<snippet/restart/sockshop.md>>
 
-<!-- Step 2 -->
-## Monitoring-as-Code
-Duration: 15
-<<snippet/deploy/monaco.md>>
+<<snippet/setup/k8s-settings.md>>
 
-<!-- Step 3 -->
+<!-- Step 2 -->
 ## Kubernetes Labels and Annotations
 Duration: 15
 <<snippet/setup/k8s-labels.md>>
 
-<!-- Step 4 -->
+<!-- Step 3 -->
 ## Container Environment Variables
 Duration: 15
 <<snippet/setup/k8s-container-variables.md>>
 
-<!-- Step 5 -->
+<!-- Step 4 -->
 ## Process Group & Service Naming Rules for K8s
 Duration: 15
 <<snippet/setup/k8s-pg-svc-naming-rules.md>>
+
+<!-- Step 5 -->
+## Monitoring-as-Code
+Duration: 15
+<<snippet/deploy/monaco.md>>
 
 <!-- Step 6 -->
 ## Kubernetes Dashboards
