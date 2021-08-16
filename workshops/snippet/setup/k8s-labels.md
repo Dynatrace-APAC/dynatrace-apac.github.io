@@ -3,33 +3,28 @@ Duration: 5
 
 With the Sockshop app restarted, you should be able to see services in Dynatrace.
 
-Referring to `~/dtacmworkshop/manifests/sockshop-app/production/front-end.yml`, we will want to setup Dynatrace to automatically pick up the annotations and labels
+Referring to `~/easyTravel/manifests/frontend/angularfrontend-deployment.yaml`, we will want to setup Dynatrace to automatically pick up the annotations and labels.
 
 ```bash
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: front-end.stable
-  namespace: production
+  name: easytravel-angularfrontend
+  namespace: easytravel
 spec:
+  selector:
+    matchLabels:
+      app: easytravel-angularfrontend
+      product: easytravel
   replicas: 1
   template:
     metadata:
-      annotations:
-        sidecar.istio.io/inject: "false"
-        dynatrace/instrument: "true"
-        pipeline.stage: prod-stable
-        pipeline.build: 1.4.0.7424
-        pipeline.project: sockshop
-        support.contact: "jane.smith@sockshop.com"
-        support.channel: "#support-sockshop-frontend"
       labels:
-        app: front-end.stable
-        stage: prod
-        release: stable
-        version: "1.4"
-        tier: "frontend"
-        product: "sockshop"
+        app: easytravel-angularfrontend
+        product: easytravel
+      annotations:
+        support.contact: "demoability@dynatrace.com"
+        support.channel: "#team-demoability"
 ```
 ### Viewership role for service accounts
 
@@ -60,4 +55,4 @@ Once working, you can validate the change in Dynatrace
 ![JSON](../assets/k8s/Picture12.png)
 
 Positive
-: The above steps are taken from [our official documentation page](https://www.dynatrace.com/support/help/technology-support/cloud-platforms/kubernetes/other-deployments-and-configurations/leverage-tags-defined-in-kubernetes-deployments/)
+: The above steps are taken from [our official documentation page](https://www.dynatrace.com/support/help/technology-support/container-platforms/kubernetes/other-deployments-and-configurations/leverage-tags-defined-in-kubernetes-deployments/)

@@ -5,7 +5,7 @@ Duration: 5
 
 In shell terminal, add some Environment Variables with the following command
 
-`nano ~/dtacmworkshop/manifests/sockshop-app/production/front-end.yml`
+`nano ~/easyTravel/manifests/frontend/angularfrontend-deployment.yaml`
 
 **Make sure that the indentation is correct and that they aren't any error promptings**
 
@@ -21,7 +21,7 @@ In shell terminal, add some Environment Variables with the following command
 Save the amended file with **Ctrl-X**, followed by **Y** and **Enter** and run the below command to re-apply the change.
 
 ```bash
-kubectl apply -f ~/dtacmworkshop/manifests/sockshop-app/production/front-end.yml
+kubectl apply -f ~/easyTravel/manifests/frontend/angularfrontend-deployment.yaml
 wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/master/recycle-sockshop-frontend.sh | bash
 ```
 

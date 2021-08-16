@@ -49,7 +49,8 @@
 <p>Open your browser and access the Dynatrace URL.</p>
 <p>Follow these steps below:</p>
 <ul>
-<li>Select <strong>Dynatrace Hub</strong> from the navigation menu.</li>
+<li>Search for <strong>Hub</strong> from the navigation menu.</li>
+<li><strong>Star</strong> it to add to favourites and <strong>click</strong> on it.</li>
 <li>Select <strong>Kubernetes</strong></li>
 <li>Select <strong>Monitor Kubernetes</strong> button from the bottom right.<br></li>
 </ul>
@@ -171,31 +172,26 @@ export DT_DASHBOARD_OWNER=&lt;your email address&gt;
 </google-codelab-step>
 <google-codelab-step label="Kubernetes Labels and Annotations" duration="15">
 <p>With the Sockshop app restarted, you should be able to see services in Dynatrace.</p>
-<p>Referring to <code>~/dtacmworkshop/manifests/sockshop-app/production/front-end.yml</code>, we will want to setup Dynatrace to automatically pick up the annotations and labels</p>
-<pre><code language="language-bash" class="language-bash">apiVersion: extensions/v1beta1
+<p>Referring to <code>~/easyTravel/manifests/frontend/angularfrontend-deployment.yaml</code>, we will want to setup Dynatrace to automatically pick up the annotations and labels.</p>
+<pre><code language="language-bash" class="language-bash">apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: front-end.stable
-  namespace: production
+  name: easytravel-angularfrontend
+  namespace: easytravel
 spec:
+  selector:
+    matchLabels:
+      app: easytravel-angularfrontend
+      product: easytravel
   replicas: 1
   template:
     metadata:
-      annotations:
-        sidecar.istio.io/inject: &#34;false&#34;
-        dynatrace/instrument: &#34;true&#34;
-        pipeline.stage: prod-stable
-        pipeline.build: 1.4.0.7424
-        pipeline.project: sockshop
-        support.contact: &#34;jane.smith@sockshop.com&#34;
-        support.channel: &#34;#support-sockshop-frontend&#34;
       labels:
-        app: front-end.stable
-        stage: prod
-        release: stable
-        version: &#34;1.4&#34;
-        tier: &#34;frontend&#34;
-        product: &#34;sockshop&#34;
+        app: easytravel-angularfrontend
+        product: easytravel
+      annotations:
+        support.contact: &#34;demoability@dynatrace.com&#34;
+        support.channel: &#34;#team-demoability&#34;
 </code></pre>
 <h2 is-upgraded>Viewership role for service accounts</h2>
 <p>The OneAgent will use a pod service account to query for its metadata via the Kubernetes REST API. The service accounts must be granted <strong>viewer role</strong> in order to have access In the CLI, execute the following command for the <strong>production project</strong></p>
@@ -210,13 +206,13 @@ spec:
 <h2 is-upgraded>Validate</h2>
 <p>Once working, you can validate the change in Dynatrace</p>
 <p class="image-container"><img alt="JSON" src="../assets/k8s/Picture12.png"></p>
-<aside class="special"><p>The above steps are taken from <a href="https://www.dynatrace.com/support/help/technology-support/cloud-platforms/kubernetes/other-deployments-and-configurations/leverage-tags-defined-in-kubernetes-deployments/" target="_blank">our official documentation page</a></p>
+<aside class="special"><p>The above steps are taken from <a href="https://www.dynatrace.com/support/help/technology-support/container-platforms/kubernetes/other-deployments-and-configurations/leverage-tags-defined-in-kubernetes-deployments/" target="_blank">our official documentation page</a></p>
 </aside>
 </google-codelab-step>
 <google-codelab-step label="Container Environment Variables" duration="15">
 <h2 is-upgraded>Adding Environment variables</h2>
 <p>In shell terminal, add some Environment Variables with the following command</p>
-<p><code>nano ~/dtacmworkshop/manifests/sockshop-app/production/front-end.yml</code></p>
+<p><code>nano ~/easyTravel/manifests/frontend/angularfrontend-deployment.yaml</code></p>
 <p><strong>Make sure that the indentation is correct and that they aren&#39;t any error promptings</strong></p>
 <pre><code language="language-bash" class="language-bash">        env:
         - name: DT_TAGS
@@ -226,7 +222,7 @@ spec:
 </code></pre>
 <p class="image-container"><img alt="JSON" src="../assets/k8s/Picture13.png"></p>
 <p>Save the amended file with <strong>Ctrl-X</strong>, followed by <strong>Y</strong> and <strong>Enter</strong> and run the below command to re-apply the change.</p>
-<pre><code language="language-bash" class="language-bash">kubectl apply -f ~/dtacmworkshop/manifests/sockshop-app/production/front-end.yml
+<pre><code language="language-bash" class="language-bash">kubectl apply -f ~/easyTravel/manifests/frontend/angularfrontend-deployment.yaml
 wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/master/recycle-sockshop-frontend.sh | bash
 </code></pre>
 <h2 is-upgraded>Validate</h2>
