@@ -3,28 +3,57 @@ Duration: 5
 
 With the Sockshop app restarted, you should be able to see services in Dynatrace.
 
-Referring to `~/easyTravel/manifests/frontend/angularfrontend-deployment.yaml`, we will want to setup Dynatrace to automatically pick up the annotations and labels.
+Referring to `~/sockshop/manifests/sockshop-app/production/front-end.yml`, we will want to setup Dynatrace to automatically pick up the annotations and labels.
 
 ```bash
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: easytravel-angularfrontend
-  namespace: easytravel
+  creationTimestamp: null
+  labels:
+    app: front-end.stable
+    product: sockshop
+    release: stable
+    stage: prod
+    tier: frontend
+    version: "1.4"
+  name: front-end.stable
+  namespace: production
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: easytravel-angularfrontend
-      product: easytravel
-  replicas: 1
+      app: front-end.stable
+      product: sockshop
+      release: stable
+      stage: prod
+      tier: frontend
+      version: "1.4"
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
   template:
     metadata:
-      labels:
-        app: easytravel-angularfrontend
-        product: easytravel
       annotations:
-        support.contact: "demoability@dynatrace.com"
-        support.channel: "#team-demoability"
+        pipeline.build: 1.4.0.7424
+        pipeline.project: sockshop
+        pipeline.stage: prod-stable
+        sidecar.istio.io/inject: "false"
+        support.channel: '#support-sockshop-frontend'
+        support.contact: jane.smith@sockshop.com
+      labels:
+        app.kubernetes.io/name: front-end
+        app.kubernetes.io/version: "1.4"
+        app.kubernetes.io/part-of: sockshop
+        app: front-end.stable
+        product: sockshop
+        release: stable
+        stage: prod
+        tier: frontend
+        version: "1.4"
 ```
 ### Viewership role for service accounts
 

@@ -1,184 +1,244 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
 
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="description" content="Transform faster with unparalleled observability, automation, and intelligence in one platform. Use these interactive demos to understand what makes our platform unique.">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="generator" content="Dynatrace">
-<meta name="application-name" content="Dynatrace">
-<link rel="canonical" href="https://dynatrace-apac.github.io//interactive-demo/">
-<link rel="preconnect" href="https://www.google-analytics.com">
-<script>
-window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  <meta charset="utf-8">
+  <meta name="description" content="Transform faster with unparalleled observability, automation, and intelligence in one platform. Use these interactive demos to understand what makes our platform unique.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="generator" content="Dynatrace">
+  <meta name="application-name" content="Dynatrace">
+  <link rel="canonical" href="https://dynatrace-apac.github.io//interactive-demo/" />
+  <link rel="preconnect" href="https://www.google-analytics.com" />
+
+  <script>
+    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
     ga('create', 'UA-49880327-14', 'auto');
     ga('send', 'pageview');
-</script>
-<script async src="https://www.google-analytics.com/analytics.js"></script>
-<title>Dynatrace</title>
-<link rel="stylesheet" href="/styles/main.css">
-<link rel="import" href="/elements/elements.html">
-<style is="custom-style">
-:root{--paper-tabs-selection-bar-color:currentcolor;--paper-input-container-underline:{display:none};--paper-input-container-underline-focus:{display:none};}.dropdown-filter{--paper-input-container:{background-color:#23282d;display:block;padding:4px}} </style>
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="#455a64">
-<meta name="apple-mobile-web-app-title" content="Dynatrace">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="194x194" href="/images/favicons/favicon-194x194.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/favicons/android-chrome-192x192.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16x16.png">
-<link rel="manifest" href="site.webmanifest">
-<link rel="mask-icon" href="/images/favicons/safari-pinned-tab.svg" color="#455a64">
-<meta name="msapplication-TileColor" content="#455a64">
-<meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
-<meta name="theme-color" content="#455a64">
-<meta name="og:type" property="og:type" content="website">
-<meta name="og:title" property="og:title" content="Dynatrace">
-<meta name="og:description" property="og:description" content="Transform faster with unparalleled observability, automation, and intelligence in one platform. Use these interactive demos to understand what makes our platform unique.">
-<meta name="og:url" property="og:url" content="https://dynatrace-apac.github.io//interactive-demo/">
-<meta name="og:site_name" property="og:site_name" content="APAC Tech Labs">
-<meta name="og:determiner" property="og:determiner" content="the">
-<meta name="og:locale" property="og:locale" content="en_US">
-<meta name="og:image" property="og:image" content="/images/og-image.png">
-<meta name="og:image:url" property="og:image:url" content="/images/og-image.png">
-<meta name="og:image:type" property="og:image:type" content="image/png">
-<meta name="og:image:width" property="og:image:width" content="1200">
-<meta name="og:image:height" property="og:image:height" content="1200">
-<meta name="og:image:alt" property="og:image:alt" content="Dynatrace">
-<meta name="twitter:card" property="twitter:card" content="summary_large_image">
-<meta name="twitter:title" property="twitter:title" content="Dynatrace">
-<meta name="twitter:description" property="twitter:description" content="Transform faster with unparalleled observability, automation, and intelligence in one platform. Use these interactive demos to understand what makes our platform unique.">
-<meta name="twitter:image" property="twitter:image" content="/images/og-image.png">
-<meta name="twitter:url" property="twitter:url" content="https://dynatrace-apac.github.io//interactive-demo/">
+    
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  <title>Dynatrace</title>
+
+  <link rel="stylesheet" href="/styles/main.css">
+
+  
+
+  <link rel="import" href="/elements/elements.html">
+
+  <style is="custom-style">
+    :root {
+      --paper-tabs-selection-bar-color: currentcolor;
+      --paper-input-container-underline: {
+        display: none;
+      };
+      --paper-input-container-underline-focus: {
+        display: none;
+      };
+    }
+
+    .dropdown-filter {
+      --paper-input-container: {
+        padding: 4px;
+        background-color:#23282d;
+        display:block;
+      }
+
+    }
+
+  </style>
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#455a64">
+  <meta name="apple-mobile-web-app-title" content="Dynatrace">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="194x194" href="/images/favicons/favicon-194x194.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/images/favicons/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16x16.png">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="mask-icon" href="/images/favicons/safari-pinned-tab.svg" color="#455a64">
+  <meta name="msapplication-TileColor" content="#455a64">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#455a64">
+
+  <meta name="og:type" property="og:type" content="website" />
+  <meta name="og:title" property="og:title" content="Dynatrace" />
+  <meta name="og:description" property="og:description" content="Transform faster with unparalleled observability, automation, and intelligence in one platform. Use these interactive demos to understand what makes our platform unique." />
+  <meta name="og:url" property="og:url" content="https://dynatrace-apac.github.io//interactive-demo/" />
+  <meta name="og:site_name" property="og:site_name" content="APAC Tech Labs" />
+  <meta name="og:determiner" property="og:determiner" content="the" />
+  <meta name="og:locale" property="og:locale" content="en_US" />
+  <meta name="og:image" property="og:image" content="/images/og-image.png" />
+  <meta name="og:image:url" property="og:image:url" content="/images/og-image.png" />
+  <meta name="og:image:type" property="og:image:type" content="image/png" />
+  <meta name="og:image:width" property="og:image:width" content="1200" />
+  <meta name="og:image:height" property="og:image:height" content="1200" />
+  <meta name="og:image:alt" property="og:image:alt" content="Dynatrace" />
+
+  <meta name="twitter:card" property="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" property="twitter:title" content="Dynatrace" />
+  <meta name="twitter:description" property="twitter:description" content="Transform faster with unparalleled observability, automation, and intelligence in one platform. Use these interactive demos to understand what makes our platform unique." />
+  <meta name="twitter:image" property="twitter:image" content="/images/og-image.png" />
+  <meta name="twitter:url" property="twitter:url" content="https://dynatrace-apac.github.io//interactive-demo/" />
 </head>
+
 <body id="app" is="body-bind" class="loading fullbleed view">
-<paper-header-panel id="main" mode="standard" main>
-<div id="mainToolbar" class="paper-header">
-<div class="site-width layout horizontal">
-<a href="/">
-<img src="/images/dynatrace-logo.svg" class="logo-devs" alt="Dynatrace Logo">
-</a>
-<div id="searchbar">
-<paper-input-container no-label-float>
-<paper-icon-button prefix icon="search"></paper-icon-button>
-<label>Search</label>
-<input is="iron-input" bind-value="{{searchVal}}" on-keydown="onSearchKeyDown">
-</paper-input-container>
-</div>
-</div>
-</div>
-<header id="banner" down$="[[_toBoolean(selectedFilter)]]">
-<div class="site-width">
-<h2 class="banner-title">Dynatrace Interactive Demo</h2>
-<div class="banner-description" data-filter-selected$="[[_toBoolean(selectedFilter)]]">
-<p class="banner-info">
-Transform faster with unparalleled observability, automation, and intelligence in one platform. Use these interactive demos to understand what makes our platform unique.
-<br>
-<a href="/" class="button">Home</a>
-<a href="/schedule" class="button">Virtual Hands-On Workshops</a>
-<a href="/interactive-demo" class="button">Interactive Demo</a>
-<a href="https://www.dynatrace.com/request-demo/" class="button">Request a Demo</a>
-<a href="https://www.dynatrace.com/trial/" class="button">Free Trial</a>
-</p>
-</div>
-</div>
-</header>
-<main>
-<div id="filters" class="site-width layout horizontal center justified">
-<div id="sortby">
-<paper-tabs selected="0" noink on-iron-activate="sortBy">
-<paper-tab>A-Z</paper-tab>
-<paper-tab>Recent</paper-tab>
-<paper-tab>Duration</paper-tab>
-</paper-tabs>
-</div>
-</div>
-<card-sorter id="cards" class="site-width">
-<a href="https://interact.dynatrace.com/" on-tap="navigate" class="codelab-card category-apps-microservices" data-category="apps-microservices" data-title="Apps And Microservices Demo" data-duration="136" data-updated="2020-07-28T15:48:24+10:00" data-tags="apps-microservices" data-pin="1">
-<div class="title">Apps & Microservices</div>
-<div class="card-duration">
-<span>INTERACTIVE DEMO</span>
-<span></span>
-</div>
-<div class="card-footer">
-<div class="category-icon apps-microservices-icon"></div>
-<paper-button class="apps-microservices-bg">Start</paper-button>
-</div>
-</a>
-<a href="https://interact.dynatrace.com/infrastructure-demo/p/1" on-tap="navigate" class="codelab-card category-infrastructure" data-category="apps-microservices" data-title="Apps And Microservices Demo" data-duration="136" data-updated="2020-07-28T15:48:24+10:00" data-tags="apps-microservices" data-pin="1">
-<div class="title">Infrastructure</div>
-<div class="card-duration">
-<span>INTERACTIVE DEMO</span>
-<span></span>
-</div>
-<div class="card-footer">
-<div class="category-icon infrastructure-icon"></div>
-<paper-button class="infrastructure-bg">Start</paper-button>
-</div>
-</a>
-<a href="https://interact.dynatrace.com/davis-explained/p/1" on-tap="navigate" class="codelab-card category-davis" data-category="apps-microservices" data-title="Apps And Microservices Demo" data-duration="136" data-updated="2020-07-28T15:48:24+10:00" data-tags="apps-microservices" data-pin="1">
-<div class="title">Dynatrace DAVIS Explained</div>
-<div class="card-duration">
-<span>INTERACTIVE DEMO</span>
-<span></span>
-</div>
-<div class="card-footer">
-<div class="category-icon davis-icon"></div>
-<paper-button class="davis-bg">Start</paper-button>
-</div>
-</a>
-</card-sorter>
-<div id="loading-placeholder" class="site-width">
-Loading Codelabs, please wait...
-</div>
-</main>
-<footer id="footer">
-<div class="footer-wrapper site-width">
-<div class="link-list">
-<label>Dynatrace Community</label>
-<ul>
-<li><a href="https://help.dynatrace.com/">Documentation</a></li>
-<li><a href="https://university.dynatrace.com/">University</a></li>
-<li><a href="https://support.dynatrace.com/">Support Center</a></li>
-<li><a href="https://community.dynatrace.com/">Forums</a></li>
-<li><a href="https://github.com/dynatrace-oss">Open Source</a></li>
-<li><a href="https://www.youtube.com/c/dynatrace">Youtube</a></li>
-</ul>
-</div>
-<div class="link-list">
-<label>Learn More</label>
-<ul>
-<li><a href="https://www.dynatrace.com/">Dynatrace</a></li>
-<li><a href="https://www.keptn.sh/">keptn</a></li>
-<li><a href="https://www.dynatrace.com/hub/">Dynatrace Hub</a></li>
-<li><a href="https://engineering.dynatrace.com/">Engineering</a></li>
-<li><a href="https://www.dynatrace.com/news/product-news/">Product News</a></li>
-<li><a href="https://www.dynatrace.com/news/demos/">On Demand Demos</a></li>
-</ul>
-</div>
-<div class="link-list">
-<label>Dynatrace APAC</label>
-<ul>
-<li><a href="/schedule">Virtual Workshops</a></li>
-<li><a href="https://github.com/Dynatrace-APAC">Github</a></li>
-<li><a href="https://www.dynatrace.com/news/?region=apac&post_type=event">Events</a></li>
-<li><a href="https://www.dynatrace.com/company/careers/">Careers</a></li>
-</ul>
-</div>
-</div>
-</footer>
-<div class="footerbar">
-<hr>
-<div class="site-width layout horizontal center justified">
-<span>
-<a href="https://www.dynatrace.com/company/trust-center/terms-of-use/">Terms</a>
-&nbsp; | &nbsp;
-<a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/data-privacy-and-security/data-privacy/">Privacy</a>
-</span>
-</div>
-</div>
-</paper-header-panel>
-<script src="/scripts/main.js"></script>
+  <paper-header-panel id="main" mode="standard" main>
+    
+    <div id="mainToolbar" class="paper-header">
+      <div class="site-width layout horizontal">
+        <a href="/">
+          <img src="/images/dynatrace-logo.svg" class="logo-devs" alt="Dynatrace Logo">
+        </a>
+        <div id="searchbar">
+          <paper-input-container no-label-float>
+            <paper-icon-button prefix icon="search"></paper-icon-button>
+            <label>Search</label>
+            <input is="iron-input" bind-value="{{searchVal}}" on-keydown="onSearchKeyDown">
+          </paper-input-container>
+        </div>
+      </div>
+    </div>
+    
+
+    
+    <header id="banner" down$="[[_toBoolean(selectedFilter)]]">
+      <div class="site-width">
+        
+        <h2 class="banner-title">Dynatrace Interactive Demo</h2>
+        <div class="banner-description"
+             data-filter-selected$="[[_toBoolean(selectedFilter)]]">
+          <p class="banner-info">
+            Transform faster with unparalleled observability, automation, and intelligence in one platform. Use these interactive demos to understand what makes our platform unique.
+            <br>
+            <a href="/" class="button">Home</a>
+            <a href="/schedule" class="button">Virtual Hands-On Workshops</a>
+            <a href="/interactive-demo" class="button">Interactive Demo</a>
+            <a href="https://www.dynatrace.com/request-demo/" class="button">Request a Demo</a>
+            <a href="https://www.dynatrace.com/trial/" class="button">Free Trial</a>
+          </p>
+          </div>
+      </div>
+    </header>
+
+    <main>
+      <div id="filters" class="site-width layout horizontal center justified">
+        <div id="sortby">
+          <paper-tabs selected="0" noink on-iron-activate="sortBy">
+            <paper-tab>A-Z</paper-tab>
+            <paper-tab>Recent</paper-tab>
+            <paper-tab>Duration</paper-tab>
+          </paper-tabs>
+        </div>
+        
+        <!-- Disabling events bar unless events exist -->
+        </div>
+
+      <card-sorter id="cards" class="site-width">
+        <!-- code for interactive demos pinned-->
+        <a href="https://interact.dynatrace.com/" on-tap="navigate" class="codelab-card category-apps-microservices" data-category="apps-microservices" data-title="Apps And Microservices Demo" data-duration="136" data-updated="2020-07-28T15:48:24+10:00" data-tags="apps-microservices" data-pin="1">
+          <div class="title">Apps & Microservices</div>
+          <div class="card-duration">
+          <span>INTERACTIVE DEMO</span>
+          <span></span>
+          </div>
+          <div class="card-footer">
+          <div class="category-icon apps-microservices-icon"></div>
+          <paper-button class="apps-microservices-bg">Start</paper-button>
+          </div>
+          </a>
+
+        <a href="https://interact.dynatrace.com/infrastructure-demo/p/1" on-tap="navigate" class="codelab-card category-infrastructure" data-category="apps-microservices" data-title="Apps And Microservices Demo" data-duration="136" data-updated="2020-07-28T15:48:24+10:00" data-tags="apps-microservices" data-pin="1">
+          <div class="title">Infrastructure</div>
+          <div class="card-duration">
+          <span>INTERACTIVE DEMO</span>
+          <span></span>
+          </div>
+          <div class="card-footer">
+          <div class="category-icon infrastructure-icon"></div>
+          <paper-button class="infrastructure-bg">Start</paper-button>
+          </div>
+          </a>
+
+        <a href="https://interact.dynatrace.com/davis-explained/p/1" on-tap="navigate" class="codelab-card category-davis" data-category="apps-microservices" data-title="Apps And Microservices Demo" data-duration="136" data-updated="2020-07-28T15:48:24+10:00" data-tags="apps-microservices" data-pin="1">
+          <div class="title">Dynatrace DAVIS Explained</div>
+          <div class="card-duration">
+          <span>INTERACTIVE DEMO</span>
+          <span></span>
+          </div>
+          <div class="card-footer">
+          <div class="category-icon davis-icon"></div>
+          <paper-button class="davis-bg">Start</paper-button>
+          </div>
+          </a>
+            
+      </card-sorter>
+
+      <div id="loading-placeholder" class="site-width">
+        Loading Codelabs, please wait...
+      </div>
+    </main>
+
+    <footer id="footer">
+      <div class="footer-wrapper site-width">
+      <div class="link-list">
+      <label>Dynatrace Community</label>
+      <ul>
+      <li><a href="https://help.dynatrace.com/">Documentation</a></li>
+      <li><a href="https://university.dynatrace.com/">University</a></li>
+      <li><a href="https://support.dynatrace.com/">Support Center</a></li>
+      <li><a href="https://community.dynatrace.com/">Forums</a></li>
+      <li><a href="https://github.com/dynatrace-oss">Open Source</a></li>
+      <li><a href="https://www.youtube.com/c/dynatrace">Youtube</a></li>
+          
+      </ul>
+      </div>
+      <div class="link-list">
+      <label>Learn More</label>
+      <ul>
+      <li><a href="https://www.dynatrace.com/">Dynatrace</a></li>
+      <li><a href="https://www.keptn.sh/">keptn</a></li>
+      <li><a href="https://www.dynatrace.com/hub/">Dynatrace Hub</a></li>
+      <li><a href="https://engineering.dynatrace.com/">Engineering</a></li>
+      <li><a href="https://www.dynatrace.com/news/product-news/">Product News</a></li>
+      <li><a href="https://www.dynatrace.com/news/demos/">On Demand Demos</a></li>
+      </ul>
+      </div>
+      <div class="link-list">
+        <label>Dynatrace APAC</label>
+        <ul>
+        <li><a href="/schedule">Virtual Workshops</a></li>  
+        <li><a href="https://github.com/Dynatrace-APAC">Github</a></li>
+        <li><a href="https://www.dynatrace.com/news/?region=apac&post_type=event">Events</a></li>
+        <li><a href="https://www.dynatrace.com/company/careers/">Careers</a></li>
+        </ul>
+      </div>
+      </div>
+      </footer>
+
+      <div class="footerbar">
+        <hr>
+        <div class="site-width layout horizontal center justified">
+        <span>
+        <a href="https://www.dynatrace.com/company/trust-center/terms-of-use/">Terms</a>
+        &nbsp; | &nbsp;
+        <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/data-privacy-and-security/data-privacy/">Privacy</a>
+        </span>
+        </div>
+      </div>
+
+  </paper-header-panel>
+
+  <script src="/scripts/main.js"></script>
 </body>
 </html>
