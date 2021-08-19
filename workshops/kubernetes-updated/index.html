@@ -384,6 +384,57 @@ export DT_DASHBOARD_OWNER=&lt;your email address&gt;
 
       </google-codelab-step>
     
+      <google-codelab-step label="Kubernetes workloads intelligent observability" duration="5">
+        <h2 is-upgraded>Managing your workload resource usage</h2>
+<p>Although Kubernetes platform is built on a number of virtualization and abstraction layers, you still need to be conscious of the resources that your workload is using.</p>
+<p>This is because Kubernetes is usually designed as a platform running on shared infrastructure, so how much resources you use might affect the other applications running on the same cluster.</p>
+<h2 is-upgraded>Scenario</h2>
+<ul>
+<li>Kubernetes platform administrators set a resource quota that your project (namespace) needs to comply with</li>
+<li>Application team&#39;s responsibility to assign given resources to different microservices</li>
+<li>Apply this deployment by typing in this command:</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">  cd sockshop
+  ./deploynewbuild.sh
+</code></pre>
+<p>Keep an eye on your Dynatrace console... you never know what could happen.</p>
+<p>At some point, both the apps team and the k8s infra teams received an alert from Dynatrace. Let&#39;s take a look at it.</p>
+<p class="image-container"><img alt="oomkill-container" src="../assets/k8s/oomkill-problemcard1.png"></p>
+<aside class="warning"><p>What happened? Which <strong>service</strong> was impacted? In which <strong>namespace</strong>?</p>
+</aside>
+<p>The container from the new cart service pod has been <strong>OOMKilled</strong>. This means its memory usage went above its configured limit. The thing is, before today, you never had any OOMKilled problems.</p>
+<p>Click on the container to drill-down the the Containers view.</p>
+<p class="image-container"><img alt="oomkill-container" src="../assets/k8s/oomkill-problemcard2.png"></p>
+<p>In the Containers view, you will have all the necessary metrics and data points to have a clear picture on how resources are consumed</p>
+<p class="image-container"><img alt="oomkill-memory" src="../assets/k8s/oomkill-memory.png"></p>
+<p>So it has something to do with the new build. Either:</p>
+<ol type="1">
+<li>The memory limit for the container was set wrongly, or</li>
+<li>The new build has a memory leak, which over time makes it consume memory above the limit.  <ul>
+<li>If that is the case, whatever the increase in memory limit, it will eventually be breached. You would just be buying time, the code itself needs to be fixed.</li>
+<li>Test under different conditions and monitor the Java memory metrics (in the Process view). Dynatrace will provide you all the metrics you need. Make code corrections and test again. Wash-rinse-repeat.</li>
+</ul>
+</li>
+</ol>
+<p class="image-container"><img alt="oomkill-memory" src="../assets/k8s/oomkill-memory-trends.png"></p>
+<p>The dev team quickly found the issue and provided a fix. It is related to a configuration issue - The memory limit for the container was set wrongly.</p>
+<p>In the terminal execute to apply the fix:</p>
+<pre><code language="language-bash" class="language-bash">cd sockshop
+kubectl apply -f newbuild-quota-fix.yml
+</code></pre>
+<h2 is-upgraded>Lesson learned</h2>
+<ul>
+<li>Importance of resource management in Kubernetes</li>
+<li>Resources will always be limited and associated to a cost, either in infrastructure or cloud services</li>
+<li>Understanding workload resource consumption is key to figure out what requests and limits you have to set for your different services</li>
+</ul>
+<p>Also, the k8s infra ops team will always give you only the amount of resources you need. It is their responsiblity to make sure the platform stays healthy for everyone using it. So in the case you need more resources, you have to enter into a negotiation with the platform team. And as with any negotiation, it&#39;s always better if you come at the table with as much information you can get.</p>
+<p>And you can count on Dynatrace for that!</p>
+
+
+
+      </google-codelab-step>
+    
       <google-codelab-step label="Feedback" duration="3">
         <p>We hope you enjoyed this lab and found it useful. We would love your feedback! </p>
 <google-codelab-survey survey-id="kubernetes-updated-1">

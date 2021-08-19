@@ -70,6 +70,11 @@ Duration: 10
 Duration: 20
 <<snippet/explore/k8s-views.md>>
 
+<!-- Step 8 -->
+## Kubernetes workloads intelligent observability 
+Duration: 5
+<<snippet/explore/k8s-o11y.md>>
+
 
 <!-- ------------------------ -->
 
