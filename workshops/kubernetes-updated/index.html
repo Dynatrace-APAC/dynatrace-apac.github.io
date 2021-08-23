@@ -145,6 +145,18 @@ $
 <p class="image-container"><img alt="Deploy" src="../assets/dem/download-deployment-status-1.png"></p>
 <aside class="special"><p>Dynatrace Documentation is referenced <a href="https://www.dynatrace.com/support/help/technology-support/operating-systems/linux/" target="_blank">here</a></p>
 </aside>
+<h2 is-upgraded>⚠️ Troubleshooting steps</h2>
+<aside class="warning"><p>To <strong>check status of pods</strong>, run command below. You should get a <strong>Running</strong> as a return.<br><code>kubectl get pods -n dynatrace</code></p>
+</aside>
+<aside class="warning"><p>To <strong>check the logs</strong>, run command below.<br><code>kubectl logs -f deployment/dynatrace-oneagent-operator -n dynatrace</code></p>
+</aside>
+<aside class="warning"><p>To <strong>delete secrets</strong>, run command below. You might have included a wrong secret previously. <br><code>kubectl delete secret --all -n dynatrace</code></p>
+</aside>
+<aside class="warning"><p>To <strong>delete all pods</strong>, run command below. This will cycle through the pods and you will have new pod instances.<br><code>kubectl delete --all pods -n dynatrace</code></p>
+</aside>
+<aside class="warning"><p>Official troubleshooting page could be found <a href="https://www.dynatrace.com/support/help/setup-and-configuration/setup-on-container-platforms/kubernetes/troubleshoot-k8s-deployment-and-connectivity/" target="_blank">here</a></p>
+</aside>
+<p>If everything is working, you will see the host appearing when you click on <strong>Show Deployment status</strong></p>
 
 <h2 is-upgraded>Restart Sockshop Sample App</h2>
 <p>You can see the various processes automatically detected but Dynatrace prompts you to restart them. This is required for us to automatically instrument them without code changes.</p>

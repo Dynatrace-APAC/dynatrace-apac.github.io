@@ -110,3 +110,26 @@ You should be able to see a connected host as per the image below.
 
 Positive
 : Dynatrace Documentation is referenced [here](https://www.dynatrace.com/support/help/technology-support/operating-systems/linux/)
+
+### ⚠️ Troubleshooting steps
+
+Negative
+: To **check status of pods**, run command below. You should get a **Running** as a return.<br>
+`kubectl get pods -n dynatrace`
+
+Negative
+: To **check the logs**, run command below.<br>
+`kubectl logs -f deployment/dynatrace-oneagent-operator -n dynatrace`
+
+Negative
+: To **delete secrets**, run command below. You might have included a wrong secret previously. <br>
+`kubectl delete secret --all -n dynatrace`
+
+Negative
+: To **delete all pods**, run command below. This will cycle through the pods and you will have new pod instances.<br>
+`kubectl delete --all pods -n dynatrace`
+
+Negative
+: Official troubleshooting page could be found [here](https://www.dynatrace.com/support/help/setup-and-configuration/setup-on-container-platforms/kubernetes/troubleshoot-k8s-deployment-and-connectivity/)
+
+If everything is working, you will see the host appearing when you click on **Show Deployment status**
