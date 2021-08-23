@@ -11,7 +11,7 @@ This is because Kubernetes is usually designed as a platform running on shared i
 
   ```bash
   cd sockshop
-  ./deploynewbuild.sh
+  ./deploy_newbuild.sh
   ```
 
 Keep an eye on your Dynatrace console... you never know what could happen.
