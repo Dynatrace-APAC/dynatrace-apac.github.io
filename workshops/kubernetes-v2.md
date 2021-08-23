@@ -32,7 +32,7 @@ For the purposes of the Hands-On, we will automate and make the steps seamless f
   - Kubernetes Containers / Pods
 
 <!-- Step 1 -->
-## Deploy OneAgent Operator
+## Deploy Dynatrace Operator
 Duration: 15
 <<snippet/deploy/operator.md>>
 
