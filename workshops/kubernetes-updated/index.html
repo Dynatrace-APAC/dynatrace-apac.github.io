@@ -177,7 +177,7 @@ kubectl delete pods --all -n production
 </ul>
 <p class="image-container"><img alt="settings" src="../assets/k8s/k8s-configure.gif"></p>
 <h2 is-upgraded>Annotate Prometheus pods</h2>
-<p>Back in the shell terminal, run the follow command to annotate the pods for Prometheus scraping The command will annotate all Prometheus metric for pods within Production namespace</p>
+<p>Back in the shell terminal, run the follow command to annotate the pods for <strong>Prometheus scraping</strong> The command will annotate all Prometheus metric for pods within <strong>Production</strong> namespace</p>
 <p><code>kubectl annotate po -n production --all --overwrite metrics.dynatrace.com/scrape=true</code></p>
 <aside class="special"><p>The above steps are based on the official documentation <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/infrastructure-monitoring/container-platform-monitoring/kubernetes-monitoring/monitor-prometheus-metrics/#annotate-prometheus-exporter-pods" target="_blank">here</a> </p>
 </aside>

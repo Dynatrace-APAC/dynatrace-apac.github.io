@@ -16,8 +16,8 @@ Follow the configuration steps below:
 
 ### Annotate Prometheus pods
 
-Back in the shell terminal, run the follow command to annotate the pods for Prometheus scraping
-The command will annotate all Prometheus metric for pods within Production namespace
+Back in the shell terminal, run the follow command to annotate the pods for **Prometheus scraping**
+The command will annotate all Prometheus metric for pods within **Production** namespace
 
 `kubectl annotate po -n production --all --overwrite metrics.dynatrace.com/scrape=true`
 
