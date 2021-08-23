@@ -437,9 +437,7 @@ export DT_DASHBOARD_OWNER=&lt;your email address&gt;
 <p class="image-container"><img alt="oomkill-memory" src="../assets/k8s/oomkill-memory-trends.png"></p>
 <p>The dev team quickly found the issue and provided a fix. It is related to a configuration issue - The memory limit for the container was set wrongly.</p>
 <p>In the terminal execute to apply the fix:</p>
-<pre><code language="language-bash" class="language-bash">cd sockshop
-kubectl apply -f newbuild-quota-fix.yml
-</code></pre>
+<p><code>kubectl apply -f ~/sockshop/manifests/sockshop-app/newbuilds/newbuild-quota-fix.yml</code></p>
 <h2 is-upgraded>Lesson learned</h2>
 <ul>
 <li>Importance of resource management in Kubernetes</li>
