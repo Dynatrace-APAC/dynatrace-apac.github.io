@@ -13,3 +13,13 @@ Follow the configuration steps below:
 * Click on **Save**
 
 ![settings](../assets/k8s/k8s-configure.gif)
+
+### Annotate Prometheus pods
+
+Back in the shell terminal, run the follow command to annotate the pods for Prometheus scraping
+The command will annotate all Prometheus metric for pods within Production namespace
+
+`kubectl annotate po -n production --all --overwrite metrics.dynatrace.com/scrape=true`
+
+Positive
+: The above steps are based on the official documentation [here](https://www.dynatrace.com/support/help/how-to-use-dynatrace/infrastructure-monitoring/container-platform-monitoring/kubernetes-monitoring/monitor-prometheus-metrics/#annotate-prometheus-exporter-pods) 
