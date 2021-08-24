@@ -181,6 +181,45 @@ kubectl delete pods --all -n production
 
       </google-codelab-step>
     
+      <google-codelab-step label="Import Prometheus Metrics" duration="10">
+        <p>Applications often use 3rd-party technologies, such as Nginx, Redis, RabbitMQ, MySQL and MongoDB, for which additional insights in terms of metrics are required.</p>
+<p>Dynatrace provides you the ability to ingest those same Prometheus format metrics, bringing them in the larger context of the microservices and pods, and allowing for <strong>enhanced alerting</strong> with <strong>auto-adaptive baselining</strong> of these metrics.</p>
+<p>And even better, Dynatrace will scrape the metrics at the source, so you <strong>don&#39;t even need a Prometheus server</strong>.</p>
+<p class="image-container"><img alt="Prometheus scraping" src="../assets/k8s/prometheus-scrap.png"></p>
+<h2 is-upgraded>Annotate Prometheus exporter pods</h2>
+<p>Back in the shell terminal, run the follow command to annotate the pods for <strong>Prometheus scraping</strong></p>
+<p>The command will annotate Prometheus metrics for pods within <strong>Production</strong> namespace</p>
+<pre><code language="language-bash" class="language-bash">kubectl annotate po -n production --all --overwrite metrics.dynatrace.com/scrape=true
+kubectl annotate po -n production --all --overwrite metrics.dynatrace.com/port=8080
+</code></pre>
+<aside class="special"><p>The above steps are based on the official documentation <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/infrastructure-monitoring/container-platform-monitoring/kubernetes-monitoring/monitor-prometheus-metrics/#annotate-prometheus-exporter-pods" target="_blank">here</a></p>
+</aside>
+<h2 is-upgraded>Explore the metrics</h2>
+<p>You will have to wait one or two minutes and then, in the Dynatrace UI:</p>
+<ul>
+<li>Go to the <strong>Metrics</strong> view</li>
+<li>In the <strong>filter</strong> text box, type <code>process_</code>, and hit <strong>&#34;Enter&#34;</strong> key</li>
+<li>A few different metrics should be displayed. These are scrapped from Prometheus. If you don&#39;t get anything, wait a bit more, refresh the screen and try again</li>
+</ul>
+<p class="image-container"><img alt="Metrics browser" src="../assets/k8s/prometheus-metrics1.png"></p>
+<ul>
+<li>Go ahead to click on any one of them to explore the metrics collected, including the <strong>dimensions</strong>. Notice that Dynatrace <strong>automatically associates</strong> the Kubernetes workloads, namespace, nodes etc., and feeds this into the causation engine!</li>
+</ul>
+<p class="image-container"><img alt="Metrics browser" src="../assets/k8s/prometheus-metrics1.png"></p>
+<p>You can now easily <strong>chart</strong> these metrics and also <strong>create dashboards</strong>. We will provide a sample dashboard later in the hands on for your reference.</p>
+<p>In addition, you can also create an alert based on the metrics.</p>
+<h2 is-upgraded>How to get custom alerts based on the metrics?</h2>
+<p>***Note: Custom alerts is not part of the scope of the hands-on, but you are free to try this on your own, after the session.</p>
+<p>Now you have access to Prometheus metrics in Dynatrace, even though they come from a 3rd party, those metrics are now first class citizens in Dynatrace.</p>
+<p>We have already seen that you can visualize those metrics in charts and dashboards all the same as Dynatrace-native metrics.</p>
+<p>But, of course, you don&#39;t want to spend your days looking at dashboards. What you want is to be notified if there&#39;s an anomaly related to the metrics you are capturing.</p>
+<p>You can define a <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/problem-detection-and-analysis/problem-detection/metric-events-for-alerting/" target="_blank">custom Anomaly Detection rule</a> for your metric.</p>
+<p>Please give this a try if you have time after the session.</p>
+
+
+
+      </google-codelab-step>
+    
       <google-codelab-step label="Kubernetes Labels and Annotations" duration="15">
         <p>With the Sockshop app restarted, you should be able to see services in Dynatrace.</p>
 <p>Referring to <code>~/sockshop/manifests/sockshop-app/production/front-end.yml</code>, we will want to setup Dynatrace to automatically pick up the annotations and labels.</p>
@@ -307,7 +346,7 @@ wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/ma
 
       </google-codelab-step>
     
-      <google-codelab-step label="Monitoring-as-Code" duration="15">
+      <google-codelab-step label="Monitoring-as-Code" duration="10">
         <p>In this exercise, we will automate configuration of Dynatrace environment.</p>
 <p>Using <a href="https://github.com/dynatrace-oss/dynatrace-monitoring-as-code" target="_blank">Dynatrace Monitoring as Code (Monaco)</a>, you can automate the configuration of all global Dynatrace environments without human intervention. Various use cases include:</p>
 <ul>
@@ -397,7 +436,7 @@ export DT_DASHBOARD_OWNER=&lt;your email address&gt;
 
       </google-codelab-step>
     
-      <google-codelab-step label="Kubernetes workloads intelligent observability" duration="5">
+      <google-codelab-step label="Kubernetes workloads intelligent observability" duration="10">
         <h2 is-upgraded>Managing your workload resource usage</h2>
 <p>Although Kubernetes platform is built on a number of virtualization and abstraction layers, you still need to be conscious of the resources that your workload is using.</p>
 <p>This is because Kubernetes is usually designed as a platform running on shared infrastructure, so how much resources you use might affect the other applications running on the same cluster.</p>

@@ -41,38 +41,43 @@ Duration: 15
 <<snippet/setup/k8s-settings.md>>
 
 <!-- Step 2 -->
+## Import Prometheus Metrics
+Duration: 10
+<<snippet/setup/k8s-prometheus.md>>
+
+<!-- Step 3 -->
 ## Kubernetes Labels and Annotations
 Duration: 15
 <<snippet/setup/k8s-labels.md>>
 
-<!-- Step 3 -->
+<!-- Step 4 -->
 ## Container Environment Variables
 Duration: 15
 <<snippet/setup/k8s-container-variables.md>>
 
-<!-- Step 4 -->
+<!-- Step 5 -->
 ## Process Group & Service Naming Rules for K8s
 Duration: 15
 <<snippet/setup/k8s-pg-svc-naming-rules.md>>
 
-<!-- Step 5 -->
+<!-- Step 6 -->
 ## Monitoring-as-Code
-Duration: 15
+Duration: 10
 <<snippet/deploy/monaco.md>>
 
-<!-- Step 6 -->
+<!-- Step 7 -->
 ## Kubernetes Dashboards
 Duration: 10
 <<snippet/explore/k8s-dashboards.md>>
 
-<!-- Step 7 -->
+<!-- Step 8 -->
 ## Exploring Kubernetes View
 Duration: 20
 <<snippet/explore/k8s-views.md>>
 
-<!-- Step 8 -->
+<!-- Step 9 -->
 ## Kubernetes workloads intelligent observability 
-Duration: 5
+Duration: 10
 <<snippet/explore/k8s-o11y.md>>
 
 

@@ -1,6 +1,5 @@
 <!-- Code for k8s Prometheus-->
 
-### Import Prometheus Metrics
 Applications often use 3rd-party technologies, such as Nginx, Redis, RabbitMQ, MySQL and MongoDB, for which additional insights in terms of metrics are required.
 
 Dynatrace provides you the ability to ingest those same Prometheus format metrics, bringing them in the larger context of the microservices and pods, and allowing for **enhanced alerting** with **auto-adaptive baselining** of these metrics.
