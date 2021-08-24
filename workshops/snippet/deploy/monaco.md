@@ -29,7 +29,9 @@ export DT_DASHBOARD_OWNER=<your email address>
 
 After setting up, run the following command to configure Dynatrace:
 
-`./push-monaco.sh` 
+```bash
+./push-monaco.sh 
+```
 
 Below are the configurations done:
 
