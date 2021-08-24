@@ -3,24 +3,26 @@
   "format": "html",
   "prefix": "../../elements",
   "mainga": "UA-49880327-14",
-  "updated": "2020-08-26T14:45:15+10:00",
+  "updated": "2021-08-24T15:13:34+10:00",
   "id": "kubernetes",
-  "duration": 84,
+  "new": 1,
+  "duration": 124,
   "title": "Dynatrace with Kubernetes",
   "authors": "Brandon Neo",
-  "summary": "Full Stack Observability with vanilla Kubernetes while integating with k8s for additional context",
-  "source": "kubernetes.md",
+  "summary": "Full Stack Observability with vanilla Kubernetes while integating with k8s and Prometheus for additional context",
+  "source": "kubernetes-v2.md",
   "theme": "",
   "status": [
     "published"
   ],
   "category": [
     "kubernetes",
+    "prometheus",
     "application-microservices-monitoring"
   ],
   "tags": [
-    "kubernetes",
-    "Beginner"
+    "beginner",
+    "kubernetes"
   ],
   "feedback": "mailto:APAC-SE-Central@dynatrace.com",
   "ga": "UA-175467274-1",

@@ -46,7 +46,9 @@ The dev team quickly found the issue and provided a fix. It is related to a conf
 
 In the terminal execute to apply the fix:
 
-`kubectl apply -f ~/sockshop/manifests/sockshop-app/newbuilds/newbuild-quota-fix.yml`
+```bash
+kubectl apply -f ~/sockshop/manifests/sockshop-app/newbuilds/newbuild-quota-fix.yml
+```
 
 ### Lesson learned
 - Importance of resource management in Kubernetes

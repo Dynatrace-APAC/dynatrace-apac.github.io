@@ -1,10 +1,11 @@
-id: kubernetes-updated
-summary: Full Stack Observability with vanilla Kubernetes while integating with k8s for additional context
-categories: kubernetes, application-microservices-monitoring
+id: kubernetes
+summary: Full Stack Observability with vanilla Kubernetes while integating with k8s and Prometheus for additional context
+categories: kubernetes, prometheus, application-microservices-monitoring
 tags: kubernetes, Beginner
 status: Published 
 authors: Brandon Neo
 Feedback Link: mailto:APAC-SE-Central@dynatrace.com
+new: 1
 Analytics Account: UA-175467274-1
 
 # Dynatrace with Kubernetes
