@@ -33,7 +33,7 @@ You will have to wait one or two minutes and then, in the Dynatrace UI:
 
 - Go ahead to click on any one of them to explore the metrics collected, including the **dimensions**. Notice that Dynatrace **automatically associates** the Kubernetes workloads, namespace, nodes etc., and feeds this into the causation engine!
 
-![Metrics browser](../assets/k8s/prometheus-metrics1.png)
+![Metrics browser](../assets/k8s/prometheus-metrics2.png)
 
 You can now easily **chart** these metrics and also **create dashboards**. We will provide a sample dashboard later in the hands on for your reference.
 

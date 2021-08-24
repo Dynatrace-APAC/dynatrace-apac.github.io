@@ -5,7 +5,6 @@
   "mainga": "UA-49880327-14",
   "updated": "2021-08-24T15:13:34+10:00",
   "id": "kubernetes",
-  "new": 1,
   "duration": 124,
   "title": "Dynatrace with Kubernetes",
   "authors": "Brandon Neo",
@@ -21,7 +20,7 @@
     "application-microservices-monitoring"
   ],
   "tags": [
-    "Beginner",
+    "beginner",
     "kubernetes"
   ],
   "feedback": "mailto:APAC-SE-Central@dynatrace.com",
