@@ -41,7 +41,8 @@ In addition, you can also create an alert based on the metrics.
 
 ### How to get custom alerts based on the metrics?
 
-***Note: Custom alerts is not part of the scope of the hands-on, but you are free to try this on your own, after the session.
+Negative
+: Custom alerts is not part of the scope of the hands-on, but you are free to try this on your own, after the session.
 
 Now you have access to Prometheus metrics in Dynatrace, even though they come from a 3rd party, those metrics are now first class citizens in Dynatrace.
 
