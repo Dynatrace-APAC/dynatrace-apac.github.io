@@ -8,7 +8,7 @@
   "duration": 75,
   "title": "Dynatrace with Azure",
   "authors": "Jason Nai",
-  "summary": "Azure Hands-On",
+  "summary": "Automated Observability for Azure Services with Dynatrace",
   "source": "azure-partner.md",
   "theme": "",
   "status": [
@@ -18,6 +18,7 @@
     "azure"
   ],
   "tags": [
+    "Intermediate",
     "partner"
   ],
   "feedback": "mailto:jason.nai@dynatrace.com",
