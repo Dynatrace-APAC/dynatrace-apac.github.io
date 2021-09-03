@@ -1,0 +1,28 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "../../elements",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-04-30T11:51:49+10:00",
+  "id": "modernization-workshop-azure",
+  "duration": 90,
+  "title": "Modernization Workshop with Microsoft Azure",
+  "authors": "Rob Jahn",
+  "summary": "Learn migration strategies on shifting your application workloads to Microsoft Azure confidently with Dynatrace.",
+  "source": "",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "azure",
+    "get-started"
+  ],
+  "tags": [
+    "microlab",
+    "Introduction"
+  ],
+  "feedback": "mailto:alliances@dynatrace.com",
+  "ga": "UA-175467274-1",
+  "url": "modernization-workshop-azure"
+}
