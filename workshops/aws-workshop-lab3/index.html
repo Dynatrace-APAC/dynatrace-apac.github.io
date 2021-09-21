@@ -1,0 +1,254 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Lab 3 - Davis AI</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid="UA-175467274-1"
+                  id="aws-workshop-lab3"
+                  title="Lab 3 - Davis AI"
+                  environment="web"
+                  feedback-link="mailto:alliances@dynatrace.com">
+    
+      <google-codelab-step label="Lab 3 - Problems" duration="0">
+        <p>Often the monitoring tools organizations use simply don&#39;t work in the complex ecosystem of microservices and for technologies like Kubernetes.</p>
+<p>Finding the root cause of problems is harder than ever before and the effort required goes beyond what is humanly possible when the application spans to the cloud providers and data centers and the explosion of interconnected services. There are more possibilities for failures and more hiding spots for problems to sneak into the environment when software driving more than just the application.</p>
+<p>In this lab, we will trigger a few problem and see how troubleshooting time is significantly reduced by letting AI automatically detect problems and pinpoints the root cause, explaining business impact with no manual configurations.</p>
+<h2 is-upgraded>Objectives of this Lab</h2>
+<p>🔷 Enable a problem in the application and walk through what <a href="https://www.dynatrace.com/platform/artificial-intelligence/" target="_blank">Dynatrace Davis</a> found</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Enable application problems" duration="0">
+        <p>The Dynatrace Orders sample application has pre-built problems with different versions.</p>
+<p>These problems can be enabled with a <code>setversion</code> URL that can be used to change the version and thus the behavior of the application. Version 1 is the <strong>&#34;normal&#34;</strong> behavior and problems are enabled by setting the version to a value such as 2 or 3.</p>
+<p>In the next section, you will run a unix script that sets these problems.</p>
+<h2 is-upgraded>Monolith deployment - backend service - High Response time for all requests</h2>
+<p class="image-container"><img alt="image" src="img/db36189f19831c48.png"></p>
+<h2 is-upgraded>Service deployment - order service - exceptions for all order related requests</h2>
+<p class="image-container"><img alt="image" src="img/5615d490bb80bd50.png"></p>
+<aside class="special"><p>Refer to <a href="https://github.com/dt-orders/overview" target="_blank">dt-orders overview README</a></p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Dynatrace Events" duration="0">
+        <p>Before we get to the problems, let&#39;s review Refer to <a href="https://www.dynatrace.com/support/help/dynatrace-api/environment-api/events/post-event/" target="_blank">Dynatrace information events</a>.</p>
+<p>Dynatrace information events enable continuous delivery tools to provide additional details for Dynatrace. Here is an example of two informational events for deployment and performance testing being be sent to Dynatrace.</p>
+<p class="image-container"><img alt="image" src="img/db72fb03417ec43f.png"></p>
+<p>There are several Dynatrace information event types: * <code>CUSTOM_ANNOTATION</code> * <code>CUSTOM_CONFIGURATION</code> * <code>CUSTOM_DEPLOYMENT</code> * <code>CUSTOM_INFO</code> * <code>MARKED_FOR_TERMINATION</code></p>
+<p>Below we can see both the <code>CUSTOM_INFO</code> (#1) and <code>CUSTOM_DEPLOYMENT</code> events (#2) for a service that was the root cause to a problem the Dynatrace AI engine, Davis®, determined.</p>
+<p class="image-container"><img alt="image" src="img/e7fcf8ff0eae04b0.png"></p>
+<p>Each event has a timestamp, event source, a few standardized fields (depending on the event type), and the option to add additional custom fields. See <a href="https://www.dynatrace.com/support/help/shortlink/api-events-post-event#parameters-mapping" target="_blank">this table</a> for details. Here are two example events. NOTE the URL back to the pipeline making the change.</p>
+<p class="image-container"><img alt="image" src="img/421d520a0437b39f.png"></p>
+<h2 is-upgraded>👍 How this helps</h2>
+<p>Having information events speeds up triage by adding context to what&#39;s happening with the application. Just imagine getting alerted about an issue and immediately seeing a load test or deployment took place, and in one click of the event, URL review the system, job, and team responsible!</p>
+<h2 is-upgraded>Dynatrace tags</h2>
+<p>When creating information events, you must target the entities to receive the event so that it&#39;s only associated with the relevant component. That is where Dynatrace tags come in.</p>
+<p>In a nutshell, tags in Dynatrace are labels or markers used for organizing entities in large monitoring environments. Below shows a few tags for my catalog service: <code>stage:staging</code> and <code>service:catalog-service</code></p>
+<p class="image-container"><img alt="image" src="img/91a9bc6a591bf467.png"></p>
+<h2 is-upgraded>API call Example</h2>
+<pre><code>curl -X POST \
+  https://mySampleEnv.live.dynatrace.com/api/v1/events \
+  -H &#39;Authorization: Api-token abcdefjhij1234567890&#39; \
+  -H &#39;Content-Type: application/json&#39; \  
+  -d &#39;{
+  &#34;eventType&#34; : &#34;CUSTOM_DEPLOYMENT&#34;,
+  &#34;source&#34; : &#34;Pipeline Script&#34; ,
+  &#34;deploymentName&#34; : &#34;Set order-service to version 1&#34;,
+  &#34;deploymentVersion&#34; : &#34;1&#34;  ,
+  &#34;deploymentProject&#34; : &#34;dt-orders project&#34; ,
+  &#34;ciBackLink&#34; : &#34;http://link-back-to-my-pipeline&#34;,
+  &#34;customProperties&#34;: {
+      &#34;Example Custom Property 1&#34; : &#34;Example: Commit SHA&#34;,
+      &#34;Example Custom Property 2&#34; : &#34;Example: Name of person who run pipeline&#34;,
+      &#34;Example Custom Property 3&#34; : &#34;Example: Application owner name&#34;,
+      &#34;Example Custom Property 4&#34; : &#34;Example: Ticket Number approving change&#34;
+  },
+  &#34;attachRules&#34;: {
+            &#34;tagRule&#34; : [
+                {
+                  &#34;meTypes&#34;:[&#34;PROCESS_GROUP_INSTANCE&#34;],
+                  &#34;tags&#34;: [
+                      {
+                            &#34;context&#34;: &#34;CONTEXTLESS&#34;,
+                            &#34;key&#34;: &#34;service&#34;,
+                              &#34;value&#34;: &#34;order-service&#34;
+                      },
+                          {
+                            &#34;context&#34;: &#34;CONTEXTLESS&#34;,
+                            &#34;key&#34;: &#34;project&#34;,
+                              &#34;value&#34;: &#34;dt-orders&#34;
+                      },
+                          {
+                            &#34;context&#34;: &#34;CONTEXTLESS&#34;,
+                            &#34;key&#34;: &#34;stage&#34;,
+                              &#34;value&#34;: &#34;production&#34;
+                      }
+            ]}
+          ]}
+        }
+}&#39;
+</code></pre>
+<h2 is-upgraded>Backend service problem</h2>
+<p>Now we are going to set the <code>backend</code> service version that will cause high response time for all backend requests.</p>
+<p>To automate the version change, a unix script is provided that will do the following: * Call the <code>backend/setversion</code> URL set the backend version * Send a Dynatrace <code>CUSTOM_DEPLOYMENT</code> event indicating the change</p>
+<p>After a minute or so, you should expect to see high Response time for all requests.</p>
+<p class="image-container"><img alt="image" src="img/db36189f19831c48.png"></p>
+<h2 is-upgraded>1. Enable the problem pattern</h2>
+<p>From the AWS CLoudShell, run these commands to set the backend service to version 2</p>
+<pre><code>cd ~/aws-modernization-dt-orders-setup/learner-scripts/
+./set-version.sh backend 2
+</code></pre>
+<p>Review the output to ensure the change was made successfully. I should look like this with numerical values at the end for Response Data: <code>storedEventIds:</code></p>
+<pre><code>Retrieving dt-orders-monolith Public IP
+=================================================================
+Setting Service Version
+SERVICE         = backend
+NEW_VERSION     = 2
+SET_VERSION_URL = http://1.1.1.1/backend/setversion/2
+=================================================================
+Set backend to 2 was successful
+=================================================================
+Sending Dynatrace Deployment event
+DT_API_URL                 = https://xxx.live.dynatrace.com/api/v1/events
+DEPLOYMENT_NAME            = Set backend to version 2
+DEPLOYMENT_VERSION         = 2
+DEPLOYMENT_PROJECT         = dt-orders
+CI_BACK_LINK               = http://1.1.1.1
+=================================================================
+Push Event POST_DATA
+{ &#34;eventType&#34; : &#34;CUSTOM_DEPLOYMENT&#34;, &#34;source&#34; : &#34;Custom Unix Shell Script&#34; , &#34;deploymentName&#34; : &#34;Set backend to version 2&#34;, &#34;deploymentVersion&#34; : &#34;2&#34; , &#34;deploymentProject&#34; :&#34;dt-orders&#34; , &#34;ciBackLink&#34; : &#34;http://1.1.1.1&#34;, &#34;customProperties&#34;: { &#34;Example Custom Property 1&#34; : &#34;Example Custom Value 1&#34;, &#34;Example Custom Property 2&#34; : &#34;Example Custom Value 2&#34;, &#34;Example Custom Property 3&#34; : &#34;Example Custom Value 3&#34; }, &#34;attachRules&#34; : { &#34;tagRule&#34; : [ { &#34;meTypes&#34;:[&#34;PROCESS_GROUP_INSTANCE&#34;], &#34;tags&#34;: [ { &#34;context&#34;: &#34;CONTEXTLESS&#34;, &#34;key&#34;: &#34;service&#34;, &#34;value&#34;: &#34;backend&#34; }, { &#34;context&#34;: &#34;CONTEXTLESS&#34;, &#34;key&#34;: &#34;project&#34;, &#34;value&#34;: &#34;dt-orders&#34; }, { &#34;context&#34;: &#34;CONTEXTLESS&#34;, &#34;key&#34;: &#34;stage&#34;, &#34;value&#34;: &#34;production&#34; } ]} ]} } }
+
+Response Data
+{&#34;storedEventIds&#34;:[8663164135574257870,-5988376401319068441],&#34;storedIds&#34;:[&#34;8663164135574257870_1628095127627&#34;,&#34;-5988376401319068441_1628095127627&#34;],&#34;storedCorrelationIds&#34;:[]}
+</code></pre>
+<h2 is-upgraded>2. View app in browser</h2>
+<p>The event has the URL back to the sample application, so just click that if you don&#39;t have the sample app up already. You should see <code>version 2</code> for the customer app now too.</p>
+<p class="image-container"><img alt="image" src="img/eb7b32942a217105.png"></p>
+<h2 is-upgraded>3. Review problem in Dynatrace</h2>
+<p>The problem may take a minute to show up, but this is what the problem will look like once it does. Also, you may see two problems that eventually get merged into one as Dynatrace is performing the problem analysis.</p>
+<ol type="1">
+<li>Impact Summary - Multiple services affected</li>
+<li>Root cause</li>
+</ol>
+<p class="image-container"><img alt="image" src="img/446324bc33bd9d64.png"></p>
+<h2 is-upgraded>4. Analyze problem - top findings</h2>
+<p>Click on the <code>Analyze Response Time Degradation</code> button to view the real issue with the request. To open the top findings page.</p>
+<p>Here you can see how Dynatrace automatically analyzes the problem and lets you know whether the problem is related to code, waiting, or other services and queues.</p>
+<p>Click in the <code>active wait time</code> line with the top findings to open the execution time breakdown detail.</p>
+<p class="image-container"><img alt="image" src="img/2524cd38161ae57b.png"></p>
+<h2 is-upgraded>5. Analyze problem - execution time breakdown</h2>
+<p>Dynatrace automatically show the breakdown of the execution time. To see more, click the <code>View method hotspots</code> button.</p>
+<p class="image-container"><img alt="image" src="img/53f310fde4a8d1e6.png"></p>
+<h2 is-upgraded>6. Analyze problem - hot spots</h2>
+<p>Here the code call breakdown is shown and by expanding this tree, you can locate the method where the slow down is occurring. <strong>NOTE: You will need to expand several stack frames to get to method causing the slow down.</strong></p>
+<p class="image-container"><img alt="image" src="img/ebdb9c5c0446ac6b.png"></p>
+<h2 is-upgraded>7. Analyze problem impact</h2>
+<p>From the breadcrumb menu, click on the <code>backend</code> to open the service page.</p>
+<p class="image-container"><img alt="image" src="img/d817fdc9acdeb9e5.png"></p>
+<p>Then click on the response time box to open the service details page. You can see exactly when the problem started.</p>
+<p class="image-container"><img alt="image" src="img/dca0ea341a0c888c.png"></p>
+<h2 is-upgraded>8. Disable the problem pattern</h2>
+<p>Run these commands to set the backend to version 1</p>
+<pre><code>cd ~/aws-modernization-dt-orders-setup/learner-scripts/
+./set-version.sh backend 1
+</code></pre>
+<p>💥 <strong>TECHNICAL NOTE</strong></p>
+<p><strong>Why does the problem card say ‘Custom Threshold&#39;?</strong></p>
+<p>The Dynatrace AI engine is evaluating metrics and dependencies for daily and weekly traffic patterns. Since we just setup our sample application, there is not a lot of history to review we setup a fixed threshold as a global service setting.</p>
+<p>To review this setting, on the left side menu, click <code>settings</code>, click <code>Anomaly Detection</code> and the the <code>Services</code> setting.</p>
+<p class="image-container"><img alt="image" src="img/96edd8b515755a28.png"></p>
+<p>Learn more about how How problems are detected and analyzed in the <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/problem-detection-and-analysis/problem-detection/automated-multi-dimensional-baselining/" target="_blank">Dynatrace Docs</a></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Order service problem" duration="0">
+        <p>Now we are going to set the <code>order</code> service version that will cause failures on the all requests.</p>
+<p>To automate the version change, a unix script is provided that will do the following: * Call the <code>order/setversion</code> URL set the order-service version * Send a Dynatrace <code>CUSTOM_DEPLOYMENT</code> event indicating the change</p>
+<p>After a minute or so, you should expect to see exceptions for all order related requests.</p>
+<p class="image-container"><img alt="image" src="img/5615d490bb80bd50.png"></p>
+<h2 is-upgraded>1. Enable the problem pattern</h2>
+<p>Then from the <code>Services</code> host shell, run these commands to set the order service to version 3.</p>
+<pre><code>cd ~/aws-modernization-dt-orders-setup/learner-scripts/
+./set-version.sh k8-order 3
+</code></pre>
+<p>Ensure there are numerical values at the end for Response Data: <code>storedEventIds</code> like:</p>
+<pre><code>Response Data
+{&#34;storedEventIds&#34;:[8663164135574257870,-5988376401319068441],&#34;storedIds&#34;:[&#34;8663164135574257870_1628095127627&#34;,&#34;-5988376401319068441_1628095127627&#34;],&#34;storedCorrelationIds&#34;:[]}
+</code></pre>
+<h2 is-upgraded>2. View change in Dynatrace</h2>
+<p>From the left side menu, navigate to the <code>Releases</code> page. Here you will see the how Dynatrace detected the versions of monitored processes. It may take a minute, but you will see the version change in the <code>Real-time inventory</code> section and a new event in the <code>Release events</code> section.</p>
+<p><strong>NOTE</strong> Be sure to adjust the management zone to <code>dt-orders-services</code></p>
+<p class="image-container"><img alt="image" src="img/4d96ceb43bc01ae.png"></p>
+<p>If you expand the event, you should see something like this</p>
+<p class="image-container"><img alt="image" src="img/ecb05850a03bde23.png"></p>
+<h2 is-upgraded>3. View app in browser</h2>
+<p>The event has the URL back to the sample application, so just click that if you don&#39;t have the sample app up already. You should see <code>version 3</code> for the order app now too.</p>
+<p class="image-container"><img alt="image" src="img/5d15d78860f7438d.png"></p>
+<h2 is-upgraded>4. Review problem in Dynatrace</h2>
+<p>The problem may take a minute to show up, but this is what the problem will look like once it does. Also, you may see two problems that eventually get merged into one as Dynatrace is performing the problem analysis.</p>
+<ol type="1">
+<li>Problem card windows and impact summary</li>
+<li>Root cause</li>
+<li>Deployment event as additional context</li>
+</ol>
+<p class="image-container"><img alt="image" src="img/b952cd397d5b18d0.png"></p>
+<h2 is-upgraded>5. Analyze problem</h2>
+<p>Referring to #4 in the picture above, click on the <code>Analyze failure rate degradation</code> button.</p>
+<p>Right away we can see that there were exceptions in the code and the <code>details</code> button can be clicked to see the code stack trace.</p>
+<p class="image-container"><img alt="image" src="img/2d1e2873338559c6.png"></p>
+<h2 is-upgraded>6. Analyze problem impact</h2>
+<p>From the breadcrumb menu, click on the <code>order</code> to open the service page.</p>
+<p class="image-container"><img alt="image" src="img/76abc1172dadf365.png"></p>
+<p>On this page, notice the failure rate.</p>
+<p class="image-container"><img alt="image" src="img/ccf056f57f598b50.png"></p>
+<p>Then click on the failure rate box to open the service details page. You can see exactly when the problem started.</p>
+<p class="image-container"><img alt="image" src="img/e1733c79cba2b72a.png"></p>
+<h2 is-upgraded>7. Disable the problem pattern</h2>
+<p>From the from the <code>Services</code> host shell, run these commands to set the version back to version 1</p>
+<pre><code>cd ~/aws-modernization-dt-orders-setup/learner-scripts/
+./set-version.sh k8-order 1
+</code></pre>
+<p>Dynatrace will automatically close the problem once it detects things are back to normal.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Summary" duration="0">
+        <p>In this section, you should have completed the following:</p>
+<p>✅ Enable a problem in the application and walk through what Davis found</p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="../../elements/codelab-elements/native-shim.js"></script>
+  <script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+  <script src="../../elements/codelab-elements/prettify.js"></script>
+  <script src="../../elements/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "../../elements",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-09-21T09:40:57+10:00",
+  "id": "aws-workshop-lab3",
+  "duration": 0,
+  "title": "Lab 3 - Davis AI",
+  "authors": "Rob Jahn",
+  "summary": "This section covers the hands-on for Lab 3",
+  "source": "aws-workshop-lab3.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "aws",
+    "adv-obs"
+  ],
+  "tags": [
+    "aws-workshop"
+  ],
+  "feedback": "mailto:alliances@dynatrace.com",
+  "ga": "UA-175467274-1",
+  "url": "aws-workshop-lab3"
+}

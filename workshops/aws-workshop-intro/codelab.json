@@ -1,0 +1,27 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "../../elements",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-09-21T10:11:27+10:00",
+  "id": "aws-workshop-intro",
+  "duration": 0,
+  "title": "Welcome",
+  "authors": "Rob Jahn",
+  "summary": "Introduction to AWS Modernization Workshop",
+  "source": "aws-workshop-intro.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "aws",
+    "dt"
+  ],
+  "tags": [
+    "aws-workshop"
+  ],
+  "feedback": "mailto:alliances@dynatrace.com",
+  "ga": "UA-175467274-1",
+  "url": "aws-workshop-intro"
+}

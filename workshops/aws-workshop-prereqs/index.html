@@ -1,0 +1,229 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Prerequisites</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid="UA-175467274-1"
+                  id="aws-workshop-prereqs"
+                  title="Prerequisites"
+                  environment="web"
+                  feedback-link="mailto:alliances@dynatrace.com">
+    
+      <google-codelab-step label="Prerequisites" duration="0">
+        <p>We will now setup Dynatrace, AWS, and the workshop environment. You need all of these in place before you are presented with the lab exercises.</p>
+<h2 is-upgraded>Objectives of this section</h2>
+<p>🔷 Ensure your Dynatrace account is ready</p>
+<p>🔷 Ensure your AWS Account is ready</p>
+<p>🔷 Create and gather Dynatrace URLs &amp; Tokens needed to provision the workshop</p>
+<h2 is-upgraded>Dynatrace Tenant</h2>
+<p class="image-container"><img alt="image" src="img/9174fa400868f412.png"></p>
+<p>For this workshop you will use a 15-day free Dynatrace evaluation of the full feature set of our all-in-one performance monitoring platform to monitor AWS resources and complete the workshop exercises and to use once the workshop is complete.</p>
+<p>To sign up for a 15-day trial, navigate to this URL:</p>
+<ul>
+<li><a href="https://www.dynatrace.com/trial/?utm_medium=alliance&utm_source=aws&utm_campaign=website&utm_content=none&utm_term=none" target="_blank">https://www.dynatrace.com/trial</a></li>
+<li>You can use your work email even if you are an existing Dynatrace customer</li>
+<li>If you have any issues email <code>alliances-help@dynatrace.com</code></li>
+</ul>
+<p>Once you sign up:</p>
+<ul>
+<li>it will then take about 5 minutes to provision your Dynatrace tenant</li>
+<li>you will be sent an email to set your password and y</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="AWS Account" duration="0">
+        <p>To complete the workshop, you will also need an AWS account to complete the workshop exercises. Please review the following options and proceed to the appropriate section below.</p>
+<h2 is-upgraded>OPTION 1: I have an AWS event engine code</h2>
+<p>To complete this workshop, you will be provided with an AWS account via the AWS Event Engine service. A team hash will be provided to you by event staff.</p>
+<p>1 . If you are currently logged in to an AWS Account, you can log out using this <a href="https://console.aws.amazon.com/console/logout!doLogout" target="_blank">link</a></p>
+<p>2 . Connect to the portal by clicking the button or browsing to <a href="https://dashboard.eventengine.run" target="_blank">https://dashboard.eventengine.run</a>. The following screen shows up. Enter the provided hash in the text box. The button in the bottom right corner changes to <strong>Accept Terms &amp; Login</strong>. Click on that button to continue.</p>
+<p class="image-container"><img alt="Event Engine" src="img/9c0efb9adaade717.png"></p>
+<p>3 . Once on the <code>Team dashboard</code> page, click the <code>AWS console</code> button that opens a popup.</p>
+<p class="image-container"><img alt="Event Engine" src="img/9de48a1418175194.png"></p>
+<p>4 . On the popup, click on <code>Open AWS console</code> button which opens the AWS portal.</p>
+<p class="image-container"><img alt="Event Engine" src="img/385740ec7d68bee7.png"></p>
+<p>5 . One the new browser tab, you should see the AWS portal.</p>
+<p class="image-container"><img alt="image" src="img/a3df29c3124ce0c8.png"></p>
+<p>6 . Once you are in the AWS portal, you can now move to the next section.</p>
+<aside class="warning"><p><em>Once the free credits for this account expire, all the resources created will be automatically de-provisioned and you will not be able to access the account.</em></p>
+</aside>
+<h2 is-upgraded>OPTION 2: I am running the workshop in my own AWS account</h2>
+<p>This workshop requires an AWS account where there is IAM user/identity that has proper permissions to set up the necessary AWS components to work through the workshop.</p>
+<p>Negative:</p>
+<ul>
+<li>You are responsible for the cost of the AWS services used while running this workshop in your AWS account.</li>
+<li>You will need permission to add/delete: VPCs/subnets/Routes/IGWs/Route tables, CloudFormation Stacks, and EC2s/security groups/keypairs.  <ul>
+<li>If you are using an AWS trial account, you should have <code>AdministratorAccess</code> policy, so this is all you need.</li>
+<li>If you are using an account owned by your organization, please ensure you have the right permissions and authority.</li>
+</ul>
+</li>
+</ul>
+<p>If you already have an account, you can skip the <code>setting up your AWS account</code> section below</p>
+<h2 is-upgraded>Setting up your AWS account</h2>
+<p>1 . If you don&#39;t already have an AWS account with Administrator access: <a href="https://aws.amazon.com/getting-started/" target="_blank">create one now by clicking here</a></p>
+<p>2 . Once you have an AWS account, ensure you are following the remaining workshop steps as an IAM user with administrator access to the AWS account: <a href="https://console.aws.amazon.com/iam/home?#/users$new" target="_blank">Create a new IAM user to use for the workshop</a></p>
+<p>3 . Enter the user details: <img alt="create\nuser" src="img/81515f01cea2d530.png"></p>
+<p>4 . Attach the AdministratorAccess IAM Policy: <img alt="attach\npolicy" src="img/f5f41839409d677b.png"></p>
+<p>5 . Click to create the new user: <img alt="finish\ncreation" src="img/3c50eb58054e5d07.png"></p>
+<p>6 . Take note of the login URL and save: <img alt="login\nurl" src="img/5edf6a0fd864bf94.png"></p>
+<p>7 . Once you are in the AWS portal, you can now move to the next section.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="AWS Prep" duration="0">
+        <h2 is-upgraded>1. Make sure you are in the correct region</h2>
+<p>Click the region button in the top right corner of your AWS console and make sure you are in <code>Oregon us-west-2</code> for consistency in this lab.</p>
+<p class="image-container"><img alt="image" src="img/7b0bf38203d7d7e2.png"></p>
+<h2 is-upgraded>2. Open up Cloudshell</h2>
+<p>In this lab, we will be using AWS Cloudshell. Cloudshell is a browser-based shell that makes it easy to securely manage, explore, and interact with your AWS resources.</p>
+<p>To open the Cloudshell, click on the Cloudshell icon at the top of the AWS console. This make take a minute to complete.</p>
+<p class="image-container"><img alt="image" src="img/e5d868238546be70.png"></p>
+<p>This may open up a slash page.</p>
+<p class="image-container"><img alt="image" src="img/4edf06be29325684.png"></p>
+<p>After closing the pop-up, wait a minute for the Cloudshell to initialize. When this is done, you will see the command prompt as shown below.</p>
+<p class="image-container"><img alt="image" src="img/81b6a8f1449f0ddb.png"></p>
+<h2 is-upgraded>3. Clone the workshop scripts</h2>
+<p>Once you have the Cloudshell open, you need to get some scripts that will automate the workshop setup. Run this command:</p>
+<pre><code>git clone https://github.com/dt-alliances-workshops/aws-modernization-dt-orders-setup.git
+</code></pre>
+<p>It should look like this:</p>
+<pre><code>[cloudshell-user@ip-10-0-52-50 ~]$ git clone https://github.com/dt-alliances-workshops/aws-modernization-dt-orders-setup.git
+
+Cloning into &#39;aws-modernization-dt-orders-setup&#39;...
+
+remote: Enumerating objects: 161, done.
+remote: Counting objects: 100% (161/161), done.
+remote: Compressing objects: 100% (96/96), done.
+remote: Total 161 (delta 72), reused 143 (delta 60), pack-reused 0
+Receiving objects: 100% (161/161), 19.82 MiB | 22.21 MiB/s, done.
+Resolving deltas: 100% (72/72), done.
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Capture Setup Inputs" duration="0">
+        <p>The next steps of this guide will have you gather various information from your environment needed to provision and setup your environment and for exercises later in the workshop.</p>
+<p>From your Dynatrace environment, you will capture:</p>
+<ul>
+<li>Base URL</li>
+<li>Environment ID</li>
+<li>API token</li>
+<li>PaaS token</li>
+</ul>
+<aside class="special"><p><em>The next set of steps assume that your Dynatrace tenant is fully provisioned, you have your AWS account, and you are logged in to both.</em></p>
+</aside>
+<h2 is-upgraded>Capture Inputs Script</h2>
+<p>In the code repo you cloned, there is a simple UNIX shell script for this workshop that prompts for these values and writes them to a file called <code>workshop-credentials.json</code>. Later in the workshop steps, there are a few other simple UNIX shell scripts that will automate the step that reads this file so that you don&#39;t need to type or copy-paste these values over and over again during the workshop.</p>
+<p>So start by running this script that will provide prompts. Follow the sections below to get these values and paste them against the prompt. If you mess up, you can re-run the script.</p>
+<p>1 . Run inputs script</p>
+<pre><code>cd ~/aws-modernization-dt-orders-setup/provision-scripts
+./input-credentials.sh
+</code></pre>
+<p>2 . Login into Dynatrace.</p>
+<aside class="special"><p><em>The URL will be in the Dynatrace tenant creation email such as: https://[ENVIRONMENT ID].live.dynatrace.com. You can also get there by by using the the SaaS login link on the top right of the </em><a href="https://www.dyntrace.com" target="_blank"><em>Dynatrace home page</em></a><em>.</em></p>
+</aside>
+<h2 is-upgraded>Input 1 of 4: Your last name</h2>
+<p>In the UNIX terminal, enter your last name at the prompt.</p>
+<p>Positive: <em>This will be added as a prefix for the provisioned resources.</em></p>
+<h2 is-upgraded>Input 2 of 4: Dynatrace Base URL</h2>
+<p>1 . Copy the Dynatrace base URL from your browser, for example: <strong>https://[ENVIRONMENT ID].live.dynatrace.com</strong></p>
+<aside class="special"><p>*Only include the base URL up to the <strong>...dynatrace.com</strong>*</p>
+</aside>
+<p>2 . Back in the UNIX terminal, paste the value for the <code>Dynatrace Base URL</code> prompt.</p>
+<h2 is-upgraded>Input 3 of 4: Dynatrace PaaS Token</h2>
+<p>1 . From the Dynatrace left side menu, select <code>Settings</code>. Under the <code>Integrations</code> sub-menu, click the <code>Platform as a Service</code> option</p>
+<p class="image-container"><img alt="image" src="img/500f6ddf8571913c.png"></p>
+<p>2 . Click the <code>Generate Token</code> button, Enter a name for your token (e.g. workshop), then click the <code>Generate</code> button</p>
+<p class="image-container"><img alt="image" src="img/2c49e816b45aedf8.png"></p>
+<p>3 . Use the <code>Copy</code> button</p>
+<p class="image-container"><img alt="image" src="img/627213776f3dda2c.png"></p>
+<p>4 . Back in the UNIX terminal, paste the value for the <code>Dynatrace PaaS Token</code> prompt</p>
+<h2 is-upgraded>Input 4 of 4: Dynatrace API Token</h2>
+<p>1 . From the Dynatrace left side menu, select <code>Settings</code>. Under the <code>Integrations</code> sub-menu, click the <code>Dynatrace API</code> option</p>
+<p class="image-container"><img alt="image" src="img/a9a74c3a5ab92741.png"></p>
+<p>2 . Click the <code>Generate Token</code> button, Enter a name for your token (e.g. workshop), then click the <code>Generate</code> button</p>
+<p class="image-container"><img alt="image" src="img/1bf1acee845b20a.png"></p>
+<p>3 . Expand both the <code>API V2</code> and <code>API V1</code> section and enable permissions as shown below</p>
+<p class="image-container"><img alt="image" src="img/a7b5e2900463850e.png"></p>
+<p>4 . Use the <code>Copy</code> button</p>
+<p class="image-container"><img alt="image" src="img/c6acaca02e287cef.png"></p>
+<p>5 . Back in the UNIX terminal, paste the value for the <code>Dynatrace API Token</code> prompt</p>
+<h2 is-upgraded>Verify</h2>
+<p>Your completed data entry should look like this:</p>
+<pre><code>Please confirm all are correct:
+--------------------------------------------------
+Your last name           : jones
+Dynatrace Base URL       : https://ABC.live.dynatrace.com
+Dynatrace PaaS Token     : zzzzzzzzzzzzzzzzzzzzzzz
+Dynatrace API Token      : ggggggggggggggggggggggg
+--------------------------------------------------
+derived values
+--------------------------------------------------
+Dynatrace Environment ID : ABC
+===================================================================
+Is this all correct? (y/n) : y
+
+===================================================================
+Saved credential to: ../gen/workshop-credentials.json
+{
+    &#34;RESOURCE_PREFIX&#34;: &#34;jones&#34;,
+    &#34;DT_BASEURL&#34;: &#34;https://ABC.live.dynatrace.com&#34;,
+    &#34;DT_ENVIRONMENT_ID&#34;: &#34;ABC&#34;,
+    &#34;DT_PAAS_TOKEN&#34;: &#34;zzzzzzzzzzzzzzzzzzzzzzz&#34;,
+    &#34;DT_API_TOKEN&#34;: &#34;ggggggggggggggggggggggg&#34;,
+    &#34;AWS_REGION&#34;: &#34;us-west-2&#34;
+}
+</code></pre>
+<p>After you confirm, the script will show the saved values in the <code>~/aws-modernization-dt-orders-setup/gen/workshop-credentials.json</code> file.</p>
+<h2 is-upgraded>Fixing Inputs</h2>
+<p>If you mess up, you can re-run the script again and will prompt you again for each value.</p>
+<pre><code>cd ~/aws-modernization-dt-orders-setup/provision-scripts
+./input-credentials.sh
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Summary" duration="0">
+        <p>In this section, you should have completed the following:</p>
+<p>✅ Ensure your Dynatrace account is ready</p>
+<p>✅ Ensure your AWS Account is ready</p>
+<p>✅ Create and gather Dynatrace URLs &amp; Tokens needed to provision the workshop</p>
+<h2 is-upgraded>Next Steps</h2>
+<p>You are now ready to proceed with the labs where you provision resources and follow the lab guides.</p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="../../elements/codelab-elements/native-shim.js"></script>
+  <script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+  <script src="../../elements/codelab-elements/prettify.js"></script>
+  <script src="../../elements/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

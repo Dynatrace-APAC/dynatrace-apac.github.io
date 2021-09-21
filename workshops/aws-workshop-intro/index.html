@@ -1,0 +1,153 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Welcome</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid="UA-175467274-1"
+                  id="aws-workshop-intro"
+                  title="Welcome"
+                  environment="web"
+                  feedback-link="mailto:alliances@dynatrace.com">
+    
+      <google-codelab-step label="Introduction" duration="0">
+        <p class="image-container"><img alt="image" src="img/a6cfd650cf476347.png"></p>
+<p>This virtual hands-on workshop will deep dive into successful modernization tactics and how Dynatrace&#39;s AI-engine, Davis, performs automatic and intelligent root-cause analysis in hybrid cloud AWS environments.  ​</p>
+<p>By analyzing an application within Dynatrace, you&#39;ll learn how to understand application usage patterns, infrastructure consumption, service dependencies, benchmarking performance and ensuring service levels, and enabling modern operations for cloud native architectures.</p>
+<p>Attendees can expect to learn the following from this workshop:​</p>
+<ul>
+<li>Common challenges associated with modernization​</li>
+<li>How to solve challenges of hybrid cloud with Dynatrace observability​</li>
+<li>Improve acceleration of cloud workload adoption of AWS</li>
+</ul>
+<h2 is-upgraded>Who should attend:</h2>
+<ul>
+<li>Application teams</li>
+<li>Architects</li>
+<li>Developers</li>
+<li>Technical leads</li>
+</ul>
+<h2 is-upgraded>We require every attendee to:</h2>
+<ul>
+<li>Be able to run basic <a href="http://mally.stanford.edu/~sr/computing/basic-unix.html" target="_blank">Unix commands</a></li>
+<li>Be familiar with basic <a href="https://aws.amazon.com/getting-started/fundamentals-core-concepts/" target="_blank">AWS cloud concepts</a></li>
+<li>Be familiar with <a href="https://aws.amazon.com/containers/" target="_blank">container concepts</a></li>
+<li>Please <strong>ASK QUESTIONS</strong> and <strong>INTERACT</strong></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Forward" duration="0">
+        <h2 is-upgraded>Modern cloud environments need a different approach to observability</h2>
+<p>Conventional application performance monitoring (APM) emerged when software was mostly monolithic and update cycles were measured in years, not days. Manual instrumentation and performance base lining, though cumbersome, were once adequate—particularly since fault patterns were generally known and well understood.</p>
+<p>As monoliths get replaced by cloud-native applications, that are rapidly growing in size, traditional monitoring approaches are no longer enough. Rather than instrumenting for a predefined set of problems, enterprises need complete visibility into every single component of these dynamically scaling micro service environments. This includes multi-cloud infrastructures, container orchestration systems like Kubernetes, service meshes, functions-as-a-service and polyglot container payloads.</p>
+<p>Such applications are more complex and unpredictable than ever. System health problems are rarely well understood from the outset and IT teams spend a significant amount of time manually solving problems and putting out fires after the fact. The challenge with modern cloud environments is to address the unknown unknowns—the kind of unique glitches that have never occurred in the past.</p>
+<p>Lets next review a few common challenges the are driving the need for better observability and automation as applications are modernizing.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Challenges" duration="0">
+        <p>Below are a few common challenges the are driving the need for better observability and automation as applications are modernizing.</p>
+<h2 is-upgraded>Challenge #1: Understanding the Legacy Application</h2>
+<p>First, we need to have a good overview of all hosts, processes, services and technologies so that we can answer the following key questions:</p>
+<ol type="1">
+<li>Which technologies are in use and where do they run?</li>
+<li>Which technologies are legacy and can&#39;t be moved because they are not supported?</li>
+<li>What is the big picture and end-to-end aggregate view of the legacy app services?</li>
+<li>Who is responsible and needs to be included in the discussion?</li>
+</ol>
+<p>In our current state, we anticipate this as a few weeks of effort by our developer and operations teams to inventory the hosts, technology and dependencies. Because our IT teams are distributed and siloed by function, it may take several meetings to review the new diagrams and spreadsheets, and we will have to assign a project manager to help coordinate and keep everyone on task. All of this takes valuable time from our already busy team.</p>
+<h2 is-upgraded>Challenge #2: Understanding application usage patterns</h2>
+<p>In addition to needing to understand the blueprint for the existing application and infrastructure landscape, we need to know how the end-user traffic patterns map to resource consumption patterns of the underlying services as to properly answer:</p>
+<ol type="1">
+<li>What will it cost to run in the cloud?</li>
+<li>What network traffic will there be between the services we migrate and those that have to stay in the current data center?</li>
+<li>How can I make sense of all the spaghetti codes in the legacy app without reverse engineering miles of code and determining what service talks to what?</li>
+</ol>
+<p>Because we use multiple monitoring and logging tools, gathering and compiling all this data can be complex and will take time. What will likely happen is that some teams will lack the resources to take on this task resulting in low confidence in the resulting analysis.</p>
+<h2 is-upgraded>Challenge #3: Making decision for the application migration strategy</h2>
+<p>You may familiar with <a href="https://docs.aws.amazon.com/whitepapers/latest/aws-migration-whitepaper/the-6-rs-6-application-migration-strategies.html" target="_blank">the 6-Rs migration strategies</a> shown in the diagram below, but we are challenged with best determining which one makes sense for us....</p>
+<p class="image-container"><img alt="image" src="img/4876cfaaeccf1a00.png"></p>
+<p>We want to balance the lower risk of just &#34;lifting and shifting&#34; versus benefits of the moving to new technology and the cost savings with on-demand and scalable AWS services.</p>
+<p>What is needed to answer is:</p>
+<ol type="1">
+<li>What are the dependencies, complexity and which pieces are most important for each component and service?</li>
+<li>What are the underlying infrastructure components and dependencies?</li>
+<li>Where are the data repositories and what is the activity?</li>
+<li>Which KPI&#39;s are the most relevant?</li>
+<li>What is the application usage patterns (mentioned above)?</li>
+</ol>
+<p>Much like the effort to gather application usage patterns, we anticipate this effort being laborious and requiring multiple teams to get involved. Again, adding more time and taking resources away from other work.</p>
+<p>Much like the effort to gather application usage patterns, we anticipate this effort being laborious and requiring multiple teams to get involved.  Again adding more time and taking resources away from other work.</p>
+<h2 is-upgraded>Challenge #4: Benchmarking performance and ensuring service levels</h2>
+<p>As mentioned above, we have a patchwork of tools with many of them focused on a single view:</p>
+<ul>
+<li>Just host monitoring</li>
+<li>Just logs</li>
+<li>Just website traffic</li>
+</ul>
+<p>There is no unified view across our current on-prem platforms let alone the cloud. As a result, we don&#39;t know how the application and underlying services are behaving, and many of our current tools aren&#39;t even suited to support cloud native, or new technologies like Kubernetes.</p>
+<p>At high level, we know we must first establish system benchmarks.  And then, during and post migration the following:</p>
+<ol type="1">
+<li>Validate business outcomes</li>
+<li>Manage service levels real-time for full stack visibility of user experience, application and components</li>
+<li>Maintain single view of our hybrid cloud environment</li>
+</ol>
+<p>With our current set of tooling and manual approach to aggregate all the data, we simply will not be able to keep up with the demand.  This will result in blind spots and delays in gathering data and an increased risk to hurting services levels.  Just this past March, we had a major outage caused by a memory leak in the legacy code and we never saw it coming.</p>
+<h2 is-upgraded>Challenge #5: Increased Complexity for Operations</h2>
+<p>The team has quickly learned that building out cloud infrastructure, where everything is virtualized and dynamic, causes interdependencies to go way up, adding more layers of complexity.</p>
+<p>The team understands that modernizing our legacy application to a Cloud native architecture will force a change to new way of operating in cloud. By decomposing the legacy application into small agile, autonomous applications adds complexity for operations.</p>
+<p>We need to both scale up our team&#39;s ability to support all this new complexity AND minimize disruption during cloud migration and prevent delays but do so without adding a whole new set of resources.</p>
+<p>We are asking ourselves:</p>
+<ul>
+<li>Will one tool or multiple tools simplify operations ?</li>
+<li>How can we filter noisy incidents from the actual incident which require attention?</li>
+<li>How can we scale the team to support additional complexity without adding more staff?</li>
+</ul>
+<h2 is-upgraded>Before we dig in ...</h2>
+<p>Before we take a look at how Dynatrace can help us with these challenges.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Next Steps" duration="0">
+        <p>There are a few prerequisite tasks you must perform before getting started on this workshop. These are:</p>
+<ul>
+<li>Access to an AWS account w/ proper permissions</li>
+<li>Sign-up for Dynatrace free trial</li>
+<li>Provision AWS resources and sample applications required for the labs</li>
+</ul>
+<p>In the next section, there will be instructions on how to set everything up, step by step.</p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="../../elements/codelab-elements/native-shim.js"></script>
+  <script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+  <script src="../../elements/codelab-elements/prettify.js"></script>
+  <script src="../../elements/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>
