@@ -5,6 +5,7 @@
   "mainga": "UA-49880327-14",
   "updated": "2021-10-11T10:14:55+11:00",
   "id": "kubernetes-jp",
+  "new": 1,
   "duration": 124,
   "title": "DynatraceとKubernetes",
   "authors": "Brandon Neo",
