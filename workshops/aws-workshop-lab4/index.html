@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Lab 4 - SLOs</title>
+  <title>Supercharge AWS Cloud operations</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
@@ -23,82 +23,322 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid="UA-175467274-1"
                   id="aws-workshop-lab4"
-                  title="Lab 4 - SLOs"
+                  title="Supercharge AWS Cloud operations"
                   environment="web"
                   feedback-link="mailto:alliances@dynatrace.com">
     
-      <google-codelab-step label="Lab 4 - SLOs" duration="0">
-        <p>In order to do more with less and scale, organizations must transcend IT silos, foster collaboration and improve productivity. Automation and a common data model are key components of this, but it takes platforms that support operational teams and workflows.</p>
-<p>Objectives of this Lab</p>
-<p>🔷 Examine Dynatrace Service Level Objectives (SLOs)</p>
-<p>🔷 Create a custom dashboard with SLOs</p>
+      <google-codelab-step label="Objectives of this Lab" duration="0">
+        <p>🔷 Review how Dynatrace integrates with <a href="https://aws.amazon.com/cloudwatch/" target="_blank">AWS CloudWatch</a></p>
+<p>🔷 Review how <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/problem-detection-and-analysis/problem-detection/metric-events-for-alerting/" target="_blank">Metric events for alerts</a></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="SLO" duration="0">
-        <p>Dynatrace provides all the necessary real-time information that your Site-Reliability Engineering (SRE) teams need to monitor their defined objectives.</p>
-<p>An SRE team is responsible for finding good service-level indicators (SLIs) for a given service in order to closely monitor the reliable delivery of that service. SLIs can differ from one service to the other, as not all services are equally critical in terms of time and error constraints.</p>
-<p>Dynatrace offers more than 2000 different metrics that are ready for use as dedicated SLIs.</p>
-<p>Each SLO definition can be evaluated by following two result metrics:</p>
-<ul>
-<li><strong>SLO status:</strong> The current evaluation result of the SLO, expressed as a percentage. The semantics of this percentage (for example, 99.3% of all service requests are successful, or 99.99% of all website users are &#34;satisfied&#34; in terms of Apdex rating) and the target defined for this percentage are up to the SRE team.</li>
-<li><strong>SLO error budget:</strong> The remaining buffer until the defined SLO target is considered as failed. For example, if an SLO defines a 95% target and its current SLO status is evaluated as 98%, the remaining error budget is the difference between the SLO status and the SLO target. Two SLOs were created for you, so review those.</li>
-</ul>
-<p>Here is an example custom dashboard with SLO dashboard tiles.</p>
-<p class="image-container"><img alt="image" src="img/e23df7793c27d90c.png"></p>
-<h2 is-upgraded>Review your environment</h2>
-<p>From the left menu in Dynatrace, click the <code>SLO</code> option to review the two SLOs that are already setup.  Edit one of them to review the configuration.</p>
-<p class="image-container"><img alt="image" src="img/4dd09551893ca79e.png"></p>
+      <google-codelab-step label="AWS Dashboard" duration="0">
+        <p>In addition to monitoring your AWS workloads using OneAgent, Dynatrace provides integration with AWS CloudWatch which adds infrastructure monitoring to gain insight even into serverless application scenarios.</p>
 <h2 is-upgraded>👍 How this helps</h2>
-<p>You can review the current health status, error budgets, target and warning, along with the timeframe of all your SLOs on the SLOs overview page.</p>
-<p>Davis provides quick notifications on anomalies detected, along with actionable root causes. If your SLO has turned red, this is most likely because Davis has already raised a problem for the underlying metrics, showing you the root cause.</p>
-<h2 is-upgraded>💥 <strong>TECHNICAL NOTE</strong></h2>
-<p>See the <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/service-level-objectives/" target="_blank">Dynatrace Docs</a> for more details on SLOs</p>
+<p>Dynatrace brings value by enriching the data from AWS CloudWatch extending observability into the platform with additional metrics for cloud infrastructure, load balancers, API Management Services, and more.</p>
+<p>These metrics are managed by Dynatrace&#39;s AI engine automatically and this extended observability improves operations, reduces MTTR and increases innovation.</p>
+<p>Here is an example from another environment.</p>
+<p class="image-container"><img alt="image" src="img/a000bf10dd5b770a.png"></p>
+<h2 is-upgraded>Preset dashboards</h2>
+<p>As AWS services are enabled, Dynatrace will enable preset dashboards automatically. These can be cloned and customized or hidden as required.</p>
+<p>Here is one example:</p>
+<p class="image-container"><img alt="image" src="img/97503374d5e348ca.png"></p>
+<p>To see more dashboards, navigate to this repository:</p>
+<p><a href="https://github.com/Dynatrace/snippets/tree/master/product/dashboarding/aws-supporting-services" target="_blank">https://github.com/Dynatrace/snippets/tree/master/product/dashboarding/aws-supporting-services</a></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="Create Dashboard" duration="0">
-        <p>From the left side menu in Dynatrace, pick the <code>dashboard</code> menu.</p>
-<p>On the dashboard page, click the <code>new dashboard</code> button.</p>
-<p class="image-container"><img alt="image" src="img/4612fddb1f7812df.png"></p>
-<p>Provide a dashboard name like <code>Cloud Migration Success</code></p>
-<p>On the blank dashboard page, click the settings.  Then click the <code>advanced settings</code> link to open then settings page</p>
-<p class="image-container"><img alt="image" src="img/8116e1d7556d09d4.png"></p>
-<p>Referring to this picture, follow these steps:</p>
+      <google-codelab-step label="AWS Integration setup" duration="0">
+        <aside class="special"><p>Reference documentation <a href="https://www.dynatrace.com/support/help/shortlink/aws-hub#integrations" target="_blank">Set up Dynatrace on Amazon Web Services</a></p>
+</aside>
+<p>There are several ways one can configure the Dynatrace AWS monitor, for this workshop we will use a quick solution using AWS <strong>Key based</strong> access following these basic steps:</p>
 <ol type="1">
-<li>On the settings page, click the <code>dashboard JSON</code> menu.</li>
-<li>Copy and paste the following Json content from this file into your dashboard JSON, replacing the existing JSON in the process:  <ul>
-<li><a href="https://raw.githubusercontent.com/dt-alliances-workshops/aws-modernization-dt-orders-setup/main/learner-scripts/cloud-modernization-dashboard.json" target="_blank">https://raw.githubusercontent.com/dt-alliances-workshops/aws-modernization-dt-orders-setup/main/learner-scripts/cloud-modernization-dashboard.json</a></li>
+<li>Create AWS IAM policy for monitoring</li>
+<li>Create AWS User</li>
+<li>Complete the Dynatrace Connection setup by adding the AWS account</li>
+</ol>
+<h2 is-upgraded>Step 1 of 3: Create AWS IAM policy for monitoring</h2>
+<ol type="1">
+<li>Go to <strong>Identity and Access Management (IAM)</strong> in your Amazon Console.</li>
+<li>Go to <strong>Policies</strong> and click the <strong>Create policy</strong> button.</li>
+</ol>
+<p class="image-container"><img alt="image" src="img/ec520f0e64b3999a.png"></p>
+<ol type="1">
+<li>Select the JSON tab, and paste this predefined policy from the box below.</li>
+</ol>
+<p class="image-container"><img alt="image" src="img/bac77dab517846df.png"></p>
+<pre><code>    {
+        &#34;Version&#34;: &#34;2012-10-17&#34;,
+        &#34;Statement&#34;: [
+            {
+                &#34;Sid&#34;: &#34;VisualEditor0&#34;,
+                &#34;Effect&#34;: &#34;Allow&#34;,
+                &#34;Action&#34;: [
+                    &#34;acm-pca:ListCertificateAuthorities&#34;, 
+                    &#34;apigateway:GET&#34;, 
+                    &#34;apprunner:ListServices&#34;, 
+                    &#34;appstream:DescribeFleets&#34;, 
+                    &#34;appsync:ListGraphqlApis&#34;, 
+                    &#34;athena:ListWorkGroups&#34;, 
+                    &#34;autoscaling:DescribeAutoScalingGroups&#34;, 
+                    &#34;cloudformation:ListStackResources&#34;, 
+                    &#34;cloudfront:ListDistributions&#34;, 
+                    &#34;cloudhsm:DescribeClusters&#34;, 
+                    &#34;cloudsearch:DescribeDomains&#34;, 
+                    &#34;cloudwatch:GetMetricData&#34;, 
+                    &#34;cloudwatch:GetMetricStatistics&#34;, 
+                    &#34;cloudwatch:ListMetrics&#34;, 
+                    &#34;codebuild:ListProjects&#34;, 
+                    &#34;datasync:ListTasks&#34;, 
+                    &#34;dax:DescribeClusters&#34;, 
+                    &#34;directconnect:DescribeConnections&#34;, 
+                    &#34;dms:DescribeReplicationInstances&#34;, 
+                    &#34;dynamodb:ListTables&#34;, 
+                    &#34;dynamodb:ListTagsOfResource&#34;, 
+                    &#34;ec2:DescribeAvailabilityZones&#34;, 
+                    &#34;ec2:DescribeInstances&#34;, 
+                    &#34;ec2:DescribeNatGateways&#34;, 
+                    &#34;ec2:DescribeSpotFleetRequests&#34;, 
+                    &#34;ec2:DescribeTransitGateways&#34;, 
+                    &#34;ec2:DescribeVolumes&#34;, 
+                    &#34;ec2:DescribeVpnConnections&#34;, 
+                    &#34;ecs:ListClusters&#34;, 
+                    &#34;eks:ListClusters&#34;, 
+                    &#34;elasticache:DescribeCacheClusters&#34;, 
+                    &#34;elasticbeanstalk:DescribeEnvironmentResources&#34;, 
+                    &#34;elasticbeanstalk:DescribeEnvironments&#34;, 
+                    &#34;elasticfilesystem:DescribeFileSystems&#34;, 
+                    &#34;elasticloadbalancing:DescribeInstanceHealth&#34;, 
+                    &#34;elasticloadbalancing:DescribeListeners&#34;, 
+                    &#34;elasticloadbalancing:DescribeLoadBalancers&#34;, 
+                    &#34;elasticloadbalancing:DescribeRules&#34;, 
+                    &#34;elasticloadbalancing:DescribeTags&#34;, 
+                    &#34;elasticloadbalancing:DescribeTargetHealth&#34;, 
+                    &#34;elasticmapreduce:ListClusters&#34;, 
+                    &#34;elastictranscoder:ListPipelines&#34;, 
+                    &#34;es:ListDomainNames&#34;, 
+                    &#34;events:ListEventBuses&#34;, 
+                    &#34;firehose:ListDeliveryStreams&#34;, 
+                    &#34;fsx:DescribeFileSystems&#34;, 
+                    &#34;gamelift:ListFleets&#34;, 
+                    &#34;glue:GetJobs&#34;, 
+                    &#34;inspector:ListAssessmentTemplates&#34;, 
+                    &#34;kafka:ListClusters&#34;, 
+                    &#34;kinesis:ListStreams&#34;, 
+                    &#34;kinesisanalytics:ListApplications&#34;, 
+                    &#34;kinesisvideo:ListStreams&#34;, 
+                    &#34;lambda:ListFunctions&#34;, 
+                    &#34;lambda:ListTags&#34;, 
+                    &#34;lex:GetBots&#34;, 
+                    &#34;logs:DescribeLogGroups&#34;, 
+                    &#34;mediaconnect:ListFlows&#34;, 
+                    &#34;mediaconvert:DescribeEndpoints&#34;, 
+                    &#34;mediapackage-vod:ListPackagingConfigurations&#34;, 
+                    &#34;mediapackage:ListChannels&#34;, 
+                    &#34;mediatailor:ListPlaybackConfigurations&#34;, 
+                    &#34;opsworks:DescribeStacks&#34;, 
+                    &#34;qldb:ListLedgers&#34;, 
+                    &#34;rds:DescribeDBClusters&#34;, 
+                    &#34;rds:DescribeDBInstances&#34;, 
+                    &#34;rds:DescribeEvents&#34;, 
+                    &#34;rds:ListTagsForResource&#34;, 
+                    &#34;redshift:DescribeClusters&#34;, 
+                    &#34;robomaker:ListSimulationJobs&#34;, 
+                    &#34;route53:ListHostedZones&#34;, 
+                    &#34;route53resolver:ListResolverEndpoints&#34;, 
+                    &#34;s3:ListAllMyBuckets&#34;, 
+                    &#34;sagemaker:ListEndpoints&#34;, 
+                    &#34;sns:ListTopics&#34;, 
+                    &#34;sqs:ListQueues&#34;, 
+                    &#34;storagegateway:ListGateways&#34;, 
+                    &#34;sts:GetCallerIdentity&#34;, 
+                    &#34;swf:ListDomains&#34;, 
+                    &#34;tag:GetResources&#34;, 
+                    &#34;tag:GetTagKeys&#34;, 
+                    &#34;transfer:ListServers&#34;, 
+                    &#34;workmail:ListOrganizations&#34;, 
+                    &#34;workspaces:DescribeWorkspaces&#34;
+                ],
+                &#34;Resource&#34;: &#34;*&#34;
+            }
+        ]
+    }
+</code></pre>
+<ol type="1">
+<li>You can skip over the <strong>Add tags</strong> page</li>
+<li>One the <strong>Review policy</strong> page, use the policy name of <strong>dynatrace_monitoring_policy</strong></li>
+</ol>
+<p class="image-container"><img alt="image" src="img/6846aa45e5d1d2f6.png"></p>
+<ol type="1">
+<li>Click <strong>Create policy</strong> button.</li>
+</ol>
+<h2 is-upgraded>Step 2 of 4: Create AWS User</h2>
+<ol type="1">
+<li>Go to <strong>Identity and Access Management (IAM)</strong> in your Amazon Console.</li>
+<li>Go to <strong>Users</strong> and click the <strong>Add User</strong> button.</li>
+</ol>
+<p class="image-container"><img alt="image" src="img/bbc3fbc425ff1df7.png"></p>
+<ol type="1">
+<li>Enter a name for the key you want to create (for example, <strong>Dynatrace_monitoring_user</strong>).</li>
+<li>In Select AWS access type, select <strong>Programmatic access</strong>, and click <strong>Next:Permissions</strong>.</li>
+</ol>
+<p class="image-container"><img alt="image" src="img/6a954fde2b01270a.png"></p>
+<ol type="1">
+<li>Click <strong>Attach existing policies directly</strong> and choose the monitoring policy you defined, for example <strong>dynatrace_monitoring_policy</strong>. Click <strong>Next: Review</strong>.</li>
+</ol>
+<p class="image-container"><img alt="image" src="img/5f770ea5a9f65708.png"></p>
+<ol type="1">
+<li>Review the user details and click <strong>Create user</strong>.</li>
+<li>Store the <strong>Access Key ID name (AKID)</strong> and <strong>Secret access key values</strong>. You can either download the user credentials or copy the credentials displayed online (click Show).</li>
+</ol>
+<p>TODO: Insert screen shot</p>
+<h2 is-upgraded>Step 3 of 3: Complete the Dynatrace Connection setup by adding the AWS account</h2>
+<ol type="1">
+<li>In the Dynatrace menu, go to <strong>Settings</strong> &gt; <strong>Cloud and virtualization</strong> &gt; <strong>AWS</strong> and click <strong>Connect new instance</strong>.</li>
+<li>Select <strong>Key-based authentication</strong> method.  <ul>
+<li>Create a name for this connection. This is mandatory. Dynatrace needs this name to identify and display the connection.</li>
+<li>In the Access key ID field, paste the identifier of the key you created in Amazon for Dynatrace access.</li>
+<li>In the Secret access key field, paste the value of the key you created in Amazon for Dynatrace access.</li>
 </ul>
 </li>
-<li>You <strong>MUST</strong> replace the <code>owner</code> field to be the email that you logged into Dynatrace with or you will not be able to view it.</li>
+<li>Click Connect to verify and save the connection.</li>
 </ol>
-<p class="image-container"><img alt="image" src="img/56239ae4e217fb79.png"></p>
-<p>After you edit the email, then click the <code>Revert Dashboard ID</code> button.  After you click the <code>Revert Dashboard ID</code> button, click the <code>Save changes</code> button.</p>
-<p class="image-container"><img alt="image" src="img/77593bd994db4844.png"></p>
-<h2 is-upgraded>View Dashboard</h2>
-<p>Click the <code>Cloud Migration Success</code> bread crumb menu to go back to the dashboard page</p>
-<p class="image-container"><img alt="image" src="img/e921d388369610b7.png"></p>
-<p>You should now see the dashboard</p>
-<p class="image-container"><img alt="image" src="img/7a6fcf82d77a107b.png"></p>
-<h2 is-upgraded>Edit Dashboard</h2>
-<p>Now you need to edit the dashboard and adjust the tiles with the SLOs and databases in your environment.</p>
-<p>On the top right of the page, click the <code>edit</code> button and then follow these steps:</p>
-<h2 is-upgraded>Edit Dynamic requests tile</h2>
+<p>Once the connection is successfully verified and saved, your AWS account will be listed in the Cloud and virtualization settings page. You should soon begin to see AWS cloud monitoring data.</p>
+<p class="image-container"><img alt="image" src="img/325d0cf8d1be7e1f.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Explore the AWS dashboard" duration="0">
+        <p>On the far left Dynatrace menu, navigate to the <strong>Infrastructure -&gt; AWS</strong> menu.</p>
+<p class="image-container"><img alt="image" src="img/f03403623d745b72.png"></p>
+<p>You may see no data initially as seen here. This is because Dynatrace makes Amazon API requests every 5 minutes, so it might take a few minutes for data to show until we are done with application setup on AWS.</p>
+<p class="image-container"><img alt="image" src="img/39914e47eb627a07.png"></p>
+<p>Once data is coming in, the dashboard pages will look similar to what is shown below.</p>
+<p class="image-container"><img alt="image" src="img/7c7d2679d99a5b67.png"></p>
+<p class="image-container"><img alt="image" src="img/9e3902ecb13b4701.png"></p>
+<h2 is-upgraded>Review collected metrics</h2>
+<p>Once data starts to be collected, click in the blue availability zone section located under the grey header labeled EC2 and you should see the list of availability zones below. Click on any one and the EC2 instances will be listed.</p>
+<p class="image-container"><img alt="image" src="img/bc35a0b53ca3caa4.png"></p>
+<p>Click on an EC2 instance, and you will see how this host still is represented in the same Host view that we saw earlier with the host running the OneAgent. The basic CPU and memory metrics from CloudWatch are graphed for you. What is GREAT, is that this host is being monitored automatically by the Dynatrace AI engine and can raise a problem when there are anomalies.</p>
+<p class="image-container"><img alt="image" src="img/a4e271a6623c666b.png"></p>
+<h2 is-upgraded>👍 How this helps</h2>
+<p>The AWS monitor is a central way to get a picture and metrics for the AWS resources running against your accounts as you migrate.</p>
+<p>Read more about how to scale your enterprise cloud environment with enhanced AI-powered observability of all AWS services in <a href="https://www.dynatrace.com/news/blog/monitor-any-aws-service/" target="_blank">this Dynatrace blog</a></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Custom Alerting" duration="0">
+        <p>Dynatrace Davis automatically analyzes abnormal situations within your IT infrastructure and attempts to identify any relevant impact and root cause. Davis relies on a wide spectrum of information sources, such as a transactional view of your services and applications, as well as all on events raised on individual nodes within your Smartscape topology.</p>
+<p>There are two main sources for single events in Dynatrace:</p>
+<ul>
+<li>Metric-based events (events that are triggered by a series of measurements)</li>
+<li>Events that are independent of any metric (for example, process crashes, deployment changes, and VM motion events)</li>
+</ul>
+<p>Custom metric events are configured in the global settings of your environment and are visible to all Dynatrace users in your environment.</p>
+<h2 is-upgraded>1. Setup Custom metric alerting for AWS</h2>
 <ol type="1">
-<li>Click on the title of the Dynamic requests tile to open the Service properties window on the right side</li>
-<li>On the Service properties window, pick the monolith <code>frontend (monolith-frontend)</code> service</li>
-<li>Click the <code>Done</code> button</li>
+<li>To add custom alerts, navigate to <strong>Settings –&gt; Anomaly Detection –&gt; Custom Events for Alerting</strong> menu.</li>
+<li>Click the <strong>Create custom event for alerting</strong> button.</li>
 </ol>
-<p class="image-container"><img alt="image" src="img/b5c3f5ed8d27dc09.png"></p>
-<h2 is-upgraded>Edit remaining tiles</h2>
+<p class="image-container"><img alt="image" src="img/a11aa41f0f3f4650.png"></p>
 <ol type="1">
-<li>Repeat the same steps above for the Cloud services tile, but pick the <code>frontend (dev-frontend)</code> in the Service properties window</li>
-<li>Repeat for the two SLO tiles, but pick the associated SLO from the drop down list in the SLO properties window</li>
-<li>Repeat for the two database tiles. For Cloud services application there are 3 databases, so just pick one of the database of a demo.</li>
-<li>Click the <code>Done</code> button to save the dashboard</li>
+<li>In the <strong>Metric</strong> dropdown list, type <strong>EC2 CPU usage %</strong> and pick the <strong>Cloud platforms &gt; AWS &gt; EC2 &gt; CPU &gt; usage</strong> option and Pick <strong>Average</strong></li>
+</ol>
+<p class="image-container"><img alt="image" src="img/87f7ce51355b0dd3.png"></p>
+<ol type="1">
+<li>Click <strong>Add rule-base</strong> button and update as shown below</li>
+</ol>
+<p class="image-container"><img alt="image" src="img/f799fcef1c2184b7.png"></p>
+<ol type="1">
+<li>Choose <strong>Static threshold</strong> and update as shown below</li>
+</ol>
+<p class="image-container"><img alt="image" src="img/ad6bf46f3a138e50.png"></p>
+<ol type="1">
+<li>Add the <strong>Event Description</strong> to have the <strong>title</strong> and <strong>severity = CUSTOM ALERT</strong> as shown below.</li>
+</ol>
+<p class="image-container"><img alt="image" src="img/b2fca6858ce9911c.png"></p>
+<p>Notice the <strong>Alert preview</strong> chart that helps you in reviewing these settings</p>
+<p class="image-container"><img alt="image" src="img/15a3d3f2962b3c91.png"></p>
+<ol type="1">
+<li>Save your changes</li>
+<li>Add another rule, with everything the same, except for the <strong>Event Description</strong> to have the <strong>title</strong> and <strong>severity = RESOURCE</strong> as shown below.</li>
+</ol>
+<p class="image-container"><img alt="image" src="img/1987bcc448f03da0.png"></p>
+<ol type="1">
+<li>Save your changes and the list should look as shown below.</li>
+</ol>
+<p class="image-container"><img alt="image" src="img/786202da53adf738.png"></p>
+<h2 is-upgraded>2. SSH to monolith host</h2>
+<p>To connect to the host, simply use <strong>EC2 Instance Connect</strong>. To this, navigate to the <strong>EC2 instances</strong> page in the AWS console.</p>
+<p>From the list, pick the <strong>dt-orders-monolith</strong> and then the <strong>connect</strong> button.</p>
+<p class="image-container"><img alt="image" src="img/c039d6650e6fb4c1.png"></p>
+<p>Then on the next page, choose the <strong>EC2 Instance Connect</strong> option and then the <strong>connect</strong> button.</p>
+<p class="image-container"><img alt="image" src="img/9289ada3bfe69c28.png"></p>
+<p>Once you connected, you will see the terminal prompt like the below.</p>
+<pre><code language="language-bash" class="language-bash">Welcome to Ubuntu 20.04.2 LTS (GNU/Linux 5.4.0-1045-aws x86_64)
+...
+...
+To run a command as administrator (user &#34;root&#34;), use &#34;sudo &lt;command&gt;&#34;.
+See &#34;man sudo_root&#34; for details.
+ubuntu@ip-10-0-0-118:~$ 
+</code></pre>
+<h2 is-upgraded>3. Trigger a CPU problem</h2>
+<p>In the shell, copy all these lines and run them:</p>
+<pre><code language="language-bash" class="language-bash">    yes &gt; /dev/null &amp;
+    yes &gt; /dev/null &amp;
+    yes &gt; /dev/null &amp;
+</code></pre>
+<p>To verify, run this command:</p>
+<pre><code language="language-bash" class="language-bash">    ps -ef | grep yes
+</code></pre>
+<p>The output should look like this:</p>
+<pre><code language="language-bash" class="language-bash">    ubuntu    5802  5438 99 20:48 pts/0    00:00:05 yes
+    ubuntu    5805  5438 89 20:48 pts/0    00:00:04 yes
+    ubuntu    5806  5438 97 20:48 pts/0    00:00:03 yes
+    ubuntu    5818  5438  0 20:48 pts/0    00:00:00 grep --color=auto yes
+</code></pre>
+<p>Back in Dynatrace within the <strong>host</strong> view, the CPU should now be high as shown below</p>
+<p class="image-container"><img alt="image" src="img/5dd6434d37d3c869.png"></p>
+<p>It may take a minute or so, but you will get two problem cards as shown below. #1 is the alert from the <strong>severity = RESOURCE</strong> where DAVIS was invoked, and #2 is the alert from <strong>severity = CUSTOM ALERT</strong>.</p>
+<p class="image-container"><img alt="image" src="img/cd023cca077ab259.png"></p>
+<h2 is-upgraded>4. Stop the CPU problem</h2>
+<p>To stop the problem, you need to <strong>kill</strong> the processes. To do this:</p>
+<ol type="1">
+<li>Back in the CloudShell, run this command to get the process IDs</li>
+</ol>
+<pre><code language="language-bash" class="language-bash">   ps -ef | grep yes
+   ````
+
+2. For each process, copy the process ID and run **kill &lt;PID&gt;**
+
+For example:
+
+    # If output is this...
+
+```bash
+    ubuntu@ip-10-0-0-118:~$ ps -ef | grep yes
+    ubuntu    5802  5438 99 20:48 pts/0    00:00:05 yes
+    ubuntu    5805  5438 89 20:48 pts/0    00:00:04 yes
+    ubuntu    5806  5438 97 20:48 pts/0    00:00:03 yes
+</code></pre>
+<pre><code># Then run...
+</code></pre>
+<pre><code language="language-bash" class="language-bash">    kill 5802
+    kill 5805
+    kill 5806
+</code></pre>
+<ol type="1">
+<li>Verify they are gone by running this again</li>
+</ol>
+<pre><code language="language-bash" class="language-bash">   ps -ef | grep yes
+</code></pre>
+<ol type="1">
+<li>Verify that CPU in Dynatrace goes to normal and the problems will eventually automatically close</li>
 </ol>
 
 
@@ -106,8 +346,8 @@
     
       <google-codelab-step label="Summary" duration="0">
         <p>In this section, you should have completed the following:</p>
-<p>✅ Examine Dynatrace Service Level Objectives (SLOs)</p>
-<p>✅ Create a custom dashboard with SLOs</p>
+<p>✅ Review how Dynatrace integrates with <a href="https://aws.amazon.com/cloudwatch/" target="_blank">AWS CloudWatch</a></p>
+<p>✅ Review how <a href="https://aws.amazon.com/cloudwatch/" target="_blank">AWS CloudWatch</a> metrics can be configured as <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/problem-detection-and-analysis/problem-detection/metric-events-for-alerting/" target="_blank">Metric events for alerts</a></p>
 
 
       </google-codelab-step>

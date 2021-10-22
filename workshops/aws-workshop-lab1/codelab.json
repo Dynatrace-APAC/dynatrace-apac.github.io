@@ -3,10 +3,10 @@
   "format": "html",
   "prefix": "../../elements",
   "mainga": "UA-49880327-14",
-  "updated": "2021-09-21T09:47:32+10:00",
+  "updated": "2021-10-21T16:27:52+08:00",
   "id": "aws-workshop-lab1",
   "duration": 0,
-  "title": "Lab 1 - OneAgent Observability",
+  "title": "Cloud workload modernization #1 - Plan Better",
   "authors": "Rob Jahn",
   "summary": "This section covers the hands-on for Lab 1",
   "source": "aws-workshop-lab1.md",
@@ -15,8 +15,7 @@
     "published"
   ],
   "category": [
-    "aws",
-    "infrastructure"
+    "dt"
   ],
   "tags": [
     "aws-workshop"

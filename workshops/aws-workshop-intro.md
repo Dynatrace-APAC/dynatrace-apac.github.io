@@ -7,28 +7,19 @@ authors: Rob Jahn
 Feedback Link: mailto:alliances@dynatrace.com
 Analytics Account: UA-175467274-1
 
-# Welcome
+# Lab setup
 
-## Introduction
+## Overview
 
 ![image](assets/aws-workshop/dt-aws.png)
 
-This virtual hands-on workshop will deep dive into successful modernization tactics and how Dynatrace’s AI-engine, Davis, performs automatic and intelligent root-cause analysis in hybrid cloud AWS environments.  ​
+Dynatrace is an AWS Advanced Technology Partner and AWS DevOps, Migration, and Containers Competency Partner.
 
-By analyzing an application within Dynatrace, you’ll learn how to understand application usage patterns, infrastructure consumption, service dependencies, benchmarking performance and ensuring service levels, and enabling modern operations for cloud native architectures.
+Dynatrace has pioneered and expanded the collection of observability data in highly dynamic cloud environments with the Dynatrace OneAgent. When an organization installs the OneAgent, it automatically detects all applications, containers, services, processes, and infrastructure in real-time with zero manual configuration or code changes. System components are automatically instrumented collect not only metrics, logs and traces, but a broader view of your environment including full topological model with entity relationships, code-level detail, and user experience – all in context.
 
-Attendees can expect to learn the following from this workshop:​
-
-* Common challenges associated with modernization​
-* How to solve challenges of hybrid cloud with Dynatrace observability​
-* Improve acceleration of cloud workload adoption of AWS
-
-### Who should attend:
-
-* Application teams
-* Architects
-* Developers
-* Technical leads
+### Prerequisites
+- **AWS account**: Access to an AWS account will be provided
+- **Dynatrace environment**: Access to a Dynatrace environment will be provided
 
 ### We require every attendee to:
 
@@ -37,109 +28,200 @@ Attendees can expect to learn the following from this workshop:​
 * Be familiar with [container concepts](https://aws.amazon.com/containers/)
 * Please **ASK QUESTIONS** and **INTERACT**
 
+### Workshop structure
+The workshop breaks down into three sections
+- Prerequisites - Ensure your Dynatrace and AWS accounts are set-up
+- Workshop Labs - Divided into modules, some labs include a step to run scripts that will provision AWS resources, deploy sample application, and configure Dynatrace.
+- Cleanup Resources - Tear down workshop resources and keep on using the Free Trial!
+
+### Workshop Learning Objectives
+- Setup a Dynatrace environment and sample applications within AWS
+- Jump in and fully analyze an application within Dynatrace
+- Start to see and understand application usage patterns, infrastructure consumption, service dependencies, benchmarking performance and how service levels can be tightly ensured.
+
+You are now in the drivers seat for enabling modern operations for cloud native architectures!
+
 <!-- -->
-## Forward
+## AWS account
+You will be provided with an AWS account via the AWS Event Engine service.
 
-### Modern cloud environments need a different approach to observability
-
-Conventional application performance monitoring (APM) emerged when software was mostly monolithic and update cycles were measured in years, not days. Manual instrumentation and performance base lining, though cumbersome, were once adequate—particularly since fault patterns were generally known and well understood.
-
-As monoliths get replaced by cloud-native applications, that are rapidly growing in size, traditional monitoring approaches are no longer enough. Rather than instrumenting for a predefined set of problems, enterprises need complete visibility into every single component of these dynamically scaling micro service environments. This includes multi-cloud infrastructures, container orchestration systems like Kubernetes, service meshes, functions-as-a-service and polyglot container payloads.
-
-Such applications are more complex and unpredictable than ever. System health problems are rarely well understood from the outset and IT teams spend a significant amount of time manually solving problems and putting out fires after the fact. The challenge with modern cloud environments is to address the unknown unknowns—the kind of unique glitches that have never occurred in the past. 
-
-Lets next review a few common challenges the are driving the need for better observability and automation as applications are modernizing.
+1. If you are currently logged in to an AWS Account, please log out using this [link](https://console.aws.amazon.com/console/logout!doLogout)
+2. Connect to the portal by clicking the button or browsing to [https://dashboard.eventengine.run](https://dashboard.eventengine.run). The following screen shows up. Enter the provided hash in the text box. The button in the bottom right corner changes to ***Accept Terms & Login***. Click on that button to continue.
+![Image](assets/aws-workshop/event-engine-initial-screen.png)
+3. Once on the Team dashboard page, click the ***AWS console*** button that opens a popup. 
+![Image](assets/aws-workshop/aws-event-engine.png)
+4. On the popup, click on ***Open AWS console*** button which opens the AWS portal.
+![Image](assets/aws-workshop/aws-event-engine-popup.png)
+5. One the new browser tab, you should see the AWS portal.
+![Image](assets/aws-workshop/setup-aws-portal.png)
+6. Once you are in the AWS portal, please select ***ap-southeast-2 (Sydney)*** as the region. We will be creating AWS resources in the Sydney region for this hands on
 
 <!-- -->
-## Challenges
+## Clone scripts
 
-Below are a few common challenges the are driving the need for better observability and automation as applications are modernizing.
+1. Open up Cloudshell. In this lab, we will be using AWS Cloudshell. To open the Cloudshell, click on the Cloudshell icon at the top of the AWS console. This make take a minute to complete.
+![Image](assets/aws-workshop/setup-cloud-shell-icon.png)
+2. Clone the workshop scripts. Once you have the Cloudshell open, you need to get some scripts that will automate the workshop setup. Run this command:
 
-### Challenge #1: Understanding the Legacy Application
+```bash
+git clone -b add-stg-vm https://github.com/dt-alliances-workshops/aws-modernization-dt-orders-setup.git
+```
 
-First, we need to have a good overview of all hosts, processes, services and technologies so that we can answer the following key questions:
+<!-- -->
+## Collating information
 
-1. Which technologies are in use and where do they run?
-1. Which technologies are legacy and can’t be moved because they are not supported?
-1. What is the big picture and end-to-end aggregate view of the legacy app services?
-1. Who is responsible and needs to be included in the discussion?
-
-In our current state, we anticipate this as a few weeks of effort by our developer and operations teams to inventory the hosts, technology and dependencies. Because our IT teams are distributed and siloed by function, it may take several meetings to review the new diagrams and spreadsheets, and we will have to assign a project manager to help coordinate and keep everyone on task. All of this takes valuable time from our already busy team.
-
-### Challenge #2: Understanding application usage patterns
-
-In addition to needing to understand the blueprint for the existing application and infrastructure landscape, we need to know how the end-user traffic patterns map to resource consumption patterns of the underlying services as to properly answer:
-
-1. What will it cost to run in the cloud?
-1. What network traffic will there be between the services we migrate and those that have to stay in the current data center?
-1. How can I make sense of all the spaghetti codes in the legacy app without reverse engineering miles of code and determining what service talks to what?
-
-Because we use multiple monitoring and logging tools, gathering and compiling all this data can be complex and will take time. What will likely happen is that some teams will lack the resources to take on this task resulting in low confidence in the resulting analysis.
-
-### Challenge #3: Making decision for the application migration strategy 
-
-You may familiar with <a href="https://docs.aws.amazon.com/whitepapers/latest/aws-migration-whitepaper/the-6-rs-6-application-migration-strategies.html" target="_blank">the 6-Rs migration strategies</a> shown in the diagram below, but we are challenged with best determining which one makes sense for us.…
-
-![image](assets/aws-workshop/cloud-migration-strategies-new.png)
-
-We want to balance the lower risk of just "lifting and shifting" versus benefits of the moving to new technology and the cost savings with on-demand and scalable AWS services.
-
-What is needed to answer is:
-
-1. What are the dependencies, complexity and which pieces are most important for each component and service?
-1. What are the underlying infrastructure components and dependencies?
-1. Where are the data repositories and what is the activity?
-1. Which KPI’s are the most relevant?
-1. What is the application usage patterns (mentioned above)?
-
-Much like the effort to gather application usage patterns, we anticipate this effort being laborious and requiring multiple teams to get involved. Again, adding more time and taking resources away from other work.
-
-Much like the effort to gather application usage patterns, we anticipate this effort being laborious and requiring multiple teams to get involved.  Again adding more time and taking resources away from other work.
-
-### Challenge #4: Benchmarking performance and ensuring service levels
-
-As mentioned above, we have a patchwork of tools with many of them focused on a single view:
-
-* Just host monitoring
-* Just logs
-* Just website traffic
-
-There is no unified view across our current on-prem platforms let alone the cloud. As a result, we don’t know how the application and underlying services are behaving, and many of our current tools aren’t even suited to support cloud native, or new technologies like Kubernetes.
-
-At high level, we know we must first establish system benchmarks.  And then, during and post migration the following:
-
-1. Validate business outcomes
-1. Manage service levels real-time for full stack visibility of user experience, application and components
-1. Maintain single view of our hybrid cloud environment
-
-With our current set of tooling and manual approach to aggregate all the data, we simply will not be able to keep up with the demand.  This will result in blind spots and delays in gathering data and an increased risk to hurting services levels.  Just this past March, we had a major outage caused by a memory leak in the legacy code and we never saw it coming.
-
-### Challenge #5: Increased Complexity for Operations
-
-The team has quickly learned that building out cloud infrastructure, where everything is virtualized and dynamic, causes interdependencies to go way up, adding more layers of complexity.
-
-The team understands that modernizing our legacy application to a Cloud native architecture will force a change to new way of operating in cloud. By decomposing the legacy application into small agile, autonomous applications adds complexity for operations. 
-
-We need to both scale up our team’s ability to support all this new complexity AND minimize disruption during cloud migration and prevent delays but do so without adding a whole new set of resources.
-
-We are asking ourselves:
-
-* Will one tool or multiple tools simplify operations ?
-* How can we filter noisy incidents from the actual incident which require attention?
-* How can we scale the team to support additional complexity without adding more staff?
-
-### Before we dig in ...
-
-Before we take a look at how Dynatrace can help us with these challenges.
+1. Open up a text editor on your PC/Mac
+2. Input these in the text editior
+   - Dynatrace URL: https://mou612.managed-sprint.dynalabs.io/e/**REPLACE with your environmentID**
+   - Hint: It is easier to ***copy the URL from the browser***
+   - Dynatrace access token: **Steps to get token shown below**
+3. Capture the Dynatrace access token
+   - Login into Dynatrace
+   - Choose the **Access Tokens** option from bottom of the left side menu
+     ![image](assets/aws-workshop/dt-access-token.png)
+   - On the create token page, click the **Generate new token** button
+   - On the new token page, Enter a name like **aws-workshop**
+   - Scope
+     - ***Read SLO***, ***Write SLO***
+	 - ***Read configuration***, ***Write configuration***
+	 - ***Access problem and event feed, metrics, and topology***
+	 - ***PaaS integration - Installer download***, ***PaaS integration - Support alert***
+   - When completed, you should have the follow scopes defined
+     ![image](assets/aws-workshop/dt-tokens-page-save.png)
 
 <!--  -->
+## Capture Setup Inputs
+The next steps of this guide will have you gather various information from your Dynatrace environment needed to configure your environment and for the lab exercises.
 
-## Next Steps
+From your Dynatrace environment, you will capture:
+- Dynatrace Base URL
+- Dynatrace API token
 
-There are a few prerequisite tasks you must perform before getting started on this workshop. These are:
+1. Execute
 
-* Access to an AWS account w/ proper permissions
-* Sign-up for Dynatrace free trial
-* Provision AWS resources and sample applications required for the labs
+   ```bash
+   cd ~/aws-modernization-dt-orders-setup/provision-scripts
+   ./input-credentials.sh
+   ```
+2. Copy the Dynatrace Base URL and API token values from your text editor
+3. You will see additional inputs for the name of the AWS resources used in the labs. Accept the default values.
+4. Verify Inputs
 
-In the next section, there will be instructions on how to set everything up, step by step.
+  ```bash
+   Please confirm all are correct:
+   --------------------------------------------------
+   Dynatrace Base URL       : https://mou612.managed-sprint.dynalabs.io/e/abcd-1234-xxxx-yyyy
+   Dynatrace API Token      : ggggggggggggggggggggggg
+   --------------------------------------------------
+   Monolith Host Name       : dt-orders-monolith
+   Services Host Name       : dt-orders-services
+   Cluster Name             : dynatrace-workshop-cluster
+   ===================================================================
+   Saved credential to: ../gen/workshop-credentials.json
+   {
+       "DT_BASEURL": "https://mou612.managed-sprint.dynalabs.io/e/abcd-1234-xxxx-yyyy",
+       "DT_API_TOKEN": "ggggggggggggggggggggggg",
+       "HOSTNAME_MONOLITH": "dt-orders-monolith",
+       "HOSTNAME_SERVICES": "dt-orders-services",
+       "CLUSTER_NAME": "dynatrace-workshop-cluster"
+   }
+   ```
+5. After you confirm, the script will show the saved values in the **~/aws-modernization-dt-orders-setup/gen/workshop-credentials.json** file.
+6. If you mess up, you can re-run the script again and will prompt you again for each value.
+
+<!--  -->
+## Configure Dynatrace
+The script will run fast while it adds the following Dynatrace configuration:
+- Set global Frequent Issue Detection settings to Off
+- Adjust the Service Anomaly Detection
+- Add Management Zones
+- Add Auto Tagging Rules to drive management zone and SLO settings
+- Add SLOs for a use in custom dashboards
+
+1. Execute the scripts to configure Dynatrace for the **monolith** application:
+
+   ```bash
+  cd ~/aws-modernization-dt-orders-setup/workshop-config
+   ./setup-workshop-config.sh monolith-vm
+   ```
+2. Execute the scripts to configure Dynatrace for the **micro-services** application:
+
+   ```bash
+   cd ~/aws-modernization-dt-orders-setup/workshop-config
+   ./setup-workshop-config.sh services-vm
+   ```
+
+<!--  -->
+## Provision AWS resources
+You will now run 2 CloudFormation script that will do the following:
+- Add a VPC
+- Add EC2 instance with a new security group that opens up the required ports to access the sample application
+- At EC2 startup, it installs Docker and Docker-Compose
+- At EC2 startup, it installs the OneAgent for your Dynatrace tenant
+- Starts up the sample application
+- The OneAgent which was installed will automatically discover the application running in the EC2 instance and starts to provide Full Stack observability.
+
+These CloudFormation scripts can help you to automate both **AWS resource provisioning** and **Dynatrace components** as well! This is the automated observability that Dynatrace provides out of the box
+
+### Step 1: Add Cloudformation Stack for monolith app
+1. In the AWS console, navigate to Cloudformation Stack
+   ![Image](assets/aws-workshop/aws-cf-menu.png)
+2. On the Cloudformation Stack page, click the **Create Stack** button and the **With new resources** option.
+3. Download and save the CloudFormation script on your PC/Mac
+TODO provide URL
+4. On the Create stack page, select **Upload a template file**, browse your PC/Mac and select the workshopMonolith.yaml file
+
+### Step 2: Enter input parameters for monolith app
+On the Specify Stack Details page, enter the following values:
+1. Stack Name - **monolith**
+2. DynatraceBaseUrl - **Copy from the text editior**
+3. DynatracePaasToken - The Dynatrace Access token you created earlier **Copy from the text editior**
+4. KeyPairName - **leave the default value** of *ee-default-keypair*
+5. ResourcePrefix - **leave this empty**
+6. Click on the **next** button
+
+![image](assets/aws-workshop/aws-stack-inputs.png)
+
+### Step 3: Add Cloudformation Stack for micro-services app
+1. Back to the Cloudformation Stack page, click the **Create Stack** button and the **With new resources** option.
+
+2. This time we will use a CloudFormation stack stored in a public S3 bucket as the **Template source**. Copy s3 URL below in this values to the Amazon s3 URL field as shown below:
+
+```
+https://aws-modernize-workshop-stg-cloudformation.s3.us-west-2.amazonaws.com/workshopServices.yaml 
+```
+3. Click on the **next** button
+
+### Step 4: Enter input parameters for micro-services app
+On the Specify Stack Details page, enter the following values:
+1. Stack Name - **microservice**
+2. DynatraceBaseUrl - **Copy from the text editior**
+3. DynatracePaasToken - The Dynatrace Access token you created earlier **Copy from the text editior**
+4. KeyPairName - **leave the default value** of *ee-default-keypair*
+5. ResourcePrefix - **leave this empty**
+6. Click on the **next** button
+
+### Step 5: Review CloudFormation Output
+The CloudFormation may take a few minutes, but you can check the CloudFormation output to ensure that all the AWS resources were provisioned successfully.
+
+Monitor CloudFormation stack status within the AWS console. Navigate to the CloudFormation page or just navidate to: [https://console.aws.amazon.com/cloudformation/home](https://console.aws.amazon.com/cloudformation/home)
+
+When it is complete, it will show a **CREATE_COMPLETE** status as shown below.
+
+![image](assets/aws-workshop/aws-cf-complete.png)
+
+Positive
+: The process to provision everything will take ~5 minutes, so please be patient.
+
+<!--  -->
+## Summary
+In this section, you should have completed the following:
+
+✅ Ensure your Dynatrace account is ready
+
+✅ Ensure your AWS Account is ready
+
+✅ Create and gather Dynatrace URLs & Tokens needed to provision the workshop
+
+### Next Steps
+You are now ready to proceed with the labs where you provision resources and follow the lab guides.

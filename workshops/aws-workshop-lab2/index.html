@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Lab 2 - Kubernetes</title>
+  <title>Modernize cloud workloads #2 - Move faster</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
@@ -23,457 +23,101 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid="UA-175467274-1"
                   id="aws-workshop-lab2"
-                  title="Lab 2 - Kubernetes"
+                  title="Modernize cloud workloads #2 - Move faster"
                   environment="web"
                   feedback-link="mailto:alliances@dynatrace.com">
     
-      <google-codelab-step label="Lab 2 - Kubernetes" duration="0">
-        <p>Re-hosting (also referred to as lift and shift) is a common migration use case. Re-architecture and Re-platform are steps that break the traditional architectures and replace individual components with cloud services and microservices.</p>
-<p>We just learned how we can get great information on services, processes and user requests using Dynatrace and OneAgent. This helps us now decide what individual features or complete applications based on business benefits we need to migrate and modernize. The idea here is to focus on feature-based business benefit with functional migration.</p>
-<h2 is-upgraded>Objectives of this Lab</h2>
-<p>🔷 Install the Dynatrace Operator and sample application</p>
-<p>🔷 Review how the sample application went from a simple architecture to multiple services</p>
+      <google-codelab-step label="Objectives of this Lab" duration="0">
+        <p>🔷 Review how the sample application went from a simple architecture to multiple services</p>
 <p>🔷 Examine the transformed application using service flows and backtraces</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="Overview" duration="0">
-        <p>As we saw earlier, the sample application is a three-tiered application –&gt; frontend, backend, database.</p>
-<p>For our lab, another version of the application exists that breaks out each of these backend services into separate services. By putting these services into Docker images, we gain the ability to deploy the service into modern platforms like Kubernetes and AWS services such as the ones shown below.</p>
+      <google-codelab-step label="Micro-services application architecture" duration="0">
+        <p>For this lab you are going to use an updated version of the application on a</p>
+<p>As we saw earlier, the sample application is a <strong>three-tiered application</strong> –&gt; frontend, backend, database</p>
+<p>Re-hosting (also referred to as lift and shift) is a common migration use case. Re-architecture and Re-platform are steps that break the traditional architectures and replace individual components with cloud services and microservices.</p>
+<p>In our scenario, we assume that you have decided to use one of AWS&#39;s 6 R&#39;s, i.e. <strong>re-architect</strong> to break out each of these backend services into separate services. We deployed a second EC2 instance so that it is easy for you to see the transformation of the Sample Application in Lab 1.</p>
+<p>By putting these services into Docker images, we gain the ability to deploy the service into modern platforms like Kubernetes and Cloud managed services such as the ones shown below.</p>
 <p class="image-container"><img alt="image" src="img/842f0cabe019d9f5.png"></p>
-<h2 is-upgraded>Kubernetes</h2>
-<p>Kubernetes is open source software that allows you to deploy and manage containerized applications at scale.</p>
-<p>Kubernetes manages clusters of compute instances and runs containers on those instances with processes for deployment, maintenance, and scaling. Using Kubernetes, you can run any type of containerized applications using the same toolset on-premises and in the cloud.</p>
-<p>You can read more about Kubernetes <a href="https://aws.amazon.com/kubernetes" target="_blank">here</a></p>
-<h2 is-upgraded>Amazon Elastic Kubernetes Service</h2>
-<p>AWS makes it easy to run Kubernetes. You can choose to manage Kubernetes infrastructure yourself with Amazon EC2 or get an automatically provisioned, managed Kubernetes control plane with <a href="https://aws.amazon.com/eks/" target="_blank">Amazon EKS</a>. Either way, you get powerful, community-backed integrations to AWS services like VPC, IAM, and service discovery as well as the security, scalability, and high-availability of AWS.</p>
-<p>Amazon EKS runs Kubernetes control plane instances across multiple Availability Zones to ensure high availability. Amazon EKS automatically detects and replaces unhealthy control plane instances, and it provides automated version upgrades and patching for them.</p>
-<p>Amazon EKS is also integrated with many AWS services to provide scalability and security for your applications, including the following:</p>
-<ul>
-<li>Elastic Load Balancing for load distribution</li>
-<li>IAM for authentication</li>
-<li>Amazon VPC for isolation</li>
-<li>Amazon ECR for container images</li>
-</ul>
-<p>For this workshop you are going to use Amazon EKS managed service that makes it easy for you to run Kubernetes on AWS without needing to stand up or maintain your own Kubernetes control plane.</p>
-<h2 is-upgraded>Lab Setup</h2>
-<p>Refer to the picture below, here are the components for lab 2.</p>
-<p class="image-container"><img alt="image" src="img/8859b2722d800782.png"></p>
-<p><strong>#1 . Sample Application</strong> Sample app representing a &#34;services&#34; architecture of a frontend and multiple backend services implemented as Docker containers that we will review in this lab.</p>
-<p><strong>#2 . Kubernetes</strong> Amazon Elastic Kubernetes Service (EKS) is hosting the application. The Kubernetes cluster had the Dynatrace OneAgent Operator installed. (see below for more details). Two EKS nodes make up the Kubernetes cluster. The Dynatrace OneAgent was preinstalled by the OneAgent operator and is sending data to your Dynatrace SaaS environment. (see below for more details)</p>
-<p><strong>#3 . Dynatrace Operator</strong> Dynatrace OneAgent is container-aware and comes with built-in support for out-of-the-box monitoring of Kubernetes. Dynatrace supports full-stack monitoring for Kubernetes, from the application down to the infrastructure layer.</p>
-<p><strong>#4 . Dynatrace</strong> Dynatrace tenant where monitoring data is collected and analyzed.</p>
-<p><strong>#5 . Full-Stack Dashboard</strong> Made possible by the Dynatrace OneAgent that will automatically instrument each running node &amp; pod in EKS.</p>
-<p><strong>#6 . Kubernetes Dashboard</strong> The Kubernetes page provides an overview of all Kubernetes clusters showing monitoring data like the clusters&#39; sizing and utilization.  </p>
-<h2 is-upgraded>Beyond the Lab</h2>
-<p>Over time, you can imagine that this sample application will be further changed to add in other technologies like AWS Lambda functions and other PaaS services like AWS RDS or Aurora databases and virtual networking Application gateways as shown in the picture below.</p>
-<p class="image-container"><img alt="image" src="img/b392baca8c581584.png"></p>
-<aside class="warning"><p>We will not cover this, but organizations are establishing DevOps approaches and Continuous Integration (CI) pipelines to build and test each service independently. They are also adding Continuous Deployment (CD) as well to the process too that vastly increases our ability to delivery features faster to our customers.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Explore the Micro-services application" duration="0">
+        <h2 is-upgraded>Get the Public IP to the frontend of the Sample Application</h2>
+<p>To get the Public IP to the frontend of the Sample Application, open the <strong>EC2 instances page</strong> in the <strong>AWS console</strong>. On the newly created host <strong>dt-orders-services</strong> find the Public IP as shown below.</p>
+<p class="image-container"><img alt="image" src="img/ade8711b901f070.png"></p>
+<h2 is-upgraded>View the Sample app in a Browser</h2>
+<p>To view the application, paste the public IP using <strong><em>HTTP</em></strong> NOT HTTPS into a browser that will look like this:</p>
+<p class="image-container"><img alt="image" src="img/c280fc2314796265.png"></p>
+<p>Use the menu on the home page to navigate around the application and notice the URL for key functionality.</p>
+<aside class="warning"><p>The application looks like this monolith, but notice how the home page shows the versions of the three running backend services. You will see these version updated automatically as we deploy new versions of the backend services. We will refer to this again later in the other labs.</p>
 </aside>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="Lab 2 Setup" duration="0">
-        <p>This step extends what you did in the previous step and will provision an Amazon Elastic Kubernetes Service (EKS) cluster and the Dynatrace configuration needed for the workshop.</p>
-<p>There are the following setup steps for this lab: 1. Install the pre-requisite tools 1. Setup Dynatrace config 1. Create Cluster 1. Verify Cluster 1. Install Dynatrace Kubernetes Operator 1. Install sample application</p>
-<p>NOTE: The step <code>Create Cluster</code> will take ~30 minutes to complete while the EKS cluster is provisioning.</p>
-<h2 is-upgraded>Install the pre-requisite tools</h2>
-<ol type="1">
-<li>Start by installing <code>eksctl</code>, a simple command line utility for creating and managing Kubernetes clusters on Amazon Elastic Kubernetes Service (EKS). You can find out more by checking out the documentation. * <a href="https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html" target="_blank">https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html</a></li>
-</ol>
-<p>First, make a new folder in your home directory</p>
-<pre><code>mkdir -p $HOME/bin 
-</code></pre>
-<p>Then install <code>eksctl</code> by copying the repo from github and unzip it in the directory you just created.</p>
-<pre><code>curl --silent --location &#34;https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz&#34; | tar xz -C $HOME/bin 
-</code></pre>
-<p>Check that it is properly installed by checking the version number using the command below.</p>
-<pre><code>eksctl version 
-</code></pre>
-<ol type="1">
-<li>Next, install <code>kubectl</code>. Kubernetes uses this command line utility for communicating with the cluster API server. You can find out more by checking out the documentation * <a href="https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html" target="_blank">https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html</a><code>curl --silent -o $HOME/bin/kubectl https://amazon-eks.s3-us-west-2.amazonaws.com/1.21.2/2021-07-05/bin/linux/amd64/kubectl</code></li>
-<li>Change the permissions of the new folder to make it executable  chmod +x $HOME/bin/kubectl</li>
-</ol>
-<p>And check to make sure it installed properly by checking the version</p>
-<pre><code>kubectl version --short --client 
-</code></pre>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Setup Dynatrace config" duration="0">
-        <p>From the Cloudshell window, run these commands to start the provisioning process:</p>
-<pre><code>cd ~/aws-modernization-dt-orders-setup/provision-scripts
-./provision-workshop.sh k8
-</code></pre>
-<p>The script output will look like this:</p>
-<pre><code>===================================================================
-About to Provision Workshop - k8
-===================================================================
-Proceed? (y/n)
-</code></pre>
-<p>Select <code>Y</code> and when it completes, it will look like this:</p>
-<pre><code>...
-...
-=============================================
-Provisioning AWS workshop resources COMPLETE
-End: Tue Jun 16 14:42:22 EDT 2020
-=============================================
-</code></pre>
-<p>The script will run fast, but it will take about 1-2 minutes for the CloudFormation script to complete.</p>
-<aside class="special"><p>This script adds the following Dynatrace configuration</p>
-</aside>
-<ul>
-<li>Add <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/management-zones/" target="_blank">Management Zones</a> for the monolith and micro services versions of the application</li>
-<li>Add <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/service-level-objectives/" target="_blank">SLOs</a> for a use in custom dashboards</li>
-<li>Add <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/process-groups/configuration/customize-the-name-of-process-groups/" target="_blank">Process Naming Rule</a> to have the services show as namespace-service-name</li>
-</ul>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Create Cluster" duration="0">
-        <p>Once you run the command to create the cluster, it will take 20-30 minutes to fully provision.</p>
-<ol type="1">
-<li>Copy the <code>eksctl create cluster ...</code> command below and run it.  eksctl create cluster –region us-west-2 –with-oidc –ssh-access –version=1.21 –managed –name dynatrace-workshop –tags &#34;Purpose=dynatrace-modernization-workshop&#34; –ssh-public-key </li>
-</ol>
-<p>It is OK when you get an error like this...</p>
-<pre><code>bash: syntax error near unexpected token `newline&#39;
-</code></pre>
-<p>...because you <strong>MUST</strong> replace the argument value for <code>--ssh-public-key</code> with your Key Pair name that was automatically created in Lab 1 for the EC2 instance</p>
-<ol type="1">
-<li>To get you Key Pair name that was automatically created in Lab 1 for the EC2 instance, navigate to the <code>Key Pairs</code> page in the AWS console:</li>
-</ol>
-<ul>
-<li><a href="https://us-west-2.console.aws.amazon.com/ec2/v2/home?region=us-west-2#KeyPairs" target="_blank">https://us-west-2.console.aws.amazon.com/ec2/v2/home?region=us-west-2#KeyPairs</a>. The Key Pair name will be something like <code>jones-dynatrace-modernize-workshop</code> as shown below.</li>
-</ul>
-<p class="image-container"><img alt="image" src="img/c891334307ad4977.png"></p>
-<ol type="1">
-<li>Copy the Key Pair name and then back in the CLoudShell, click the <code>up arrow keyboard button</code> to get the previous command.</li>
-<li>Adjust the <code>--ssh-public-key <YOUR-Key Pair-NAME></code> argument and then run the command again.</li>
-</ol>
-<p>If you still get an error, first check that you have the correct <code>--ssh-public-key</code> argument value.</p>
-<aside class="warning"><p><em>Optionally, you can adjust the argument value for </em><code>--name dynatrace-workshop</code><em> if you are sharing an AWS account with others as to make it a unique name.</em></p>
-</aside>
-<p>5 . Review the output will start to look like this and may take 20-30 minutes to fully provision..</p>
-<pre><code>cloudshell-user@ip-10-0-45-241 learner-scripts]$ eksctl create cluster --region us-west-2 --with-oidc --ssh-access --version=1.21 --managed --name dynatrace-workshop --tags &#34;Purpose=dynatrace-modernization-workshop&#34; --ssh-public-key jones-dynatrace-modernize-workshop
-2021-09-03 19:26:32 [ℹ]  eksctl version 0.64.0
-2021-09-03 19:26:32 [ℹ]  using region us-west-2
-2021-09-03 19:26:32 [ℹ]  setting availability zones to [us-west-2a us-west-2b us-west-2d]
-2021-09-03 19:26:32 [ℹ]  subnets for us-west-2a - public:192.168.0.0/19 private:192.168.96.0/19
-2021-09-03 19:26:32 [ℹ]  subnets for us-west-2b - public:192.168.32.0/19 private:192.168.128.0/19
-2021-09-03 19:26:32 [ℹ]  subnets for us-west-2d - public:192.168.64.0/19 private:192.168.160.0/19
-2021-09-03 19:26:32 [ℹ]  nodegroup &#34;ng-eaa2eae4&#34; will use &#34;&#34; [AmazonLinux2/1.21]
-2021-09-03 19:26:32 [ℹ]  using EC2 key pair %!q(*string=&lt;nil&gt;)
-2021-09-03 19:26:32 [ℹ]  using Kubernetes version 1.21
-2021-09-03 19:26:32 [ℹ]  creating EKS cluster &#34;dynatrace-workshop&#34; in &#34;us-west-2&#34; region with managed nodes
-...
-...
-2021-09-03 19:28:33 [ℹ]  waiting for CloudFormation stack &#34;eksctl-dynatrace-workshop-cluster&#34;
-2021-09-03 19:29:33 [ℹ]  waiting for CloudFormation stack &#34;eksctl-dynatrace-workshop-cluster&#34;
-</code></pre>
-<p>When this command is complete you should see:</p>
-<pre><code>2021-09-03 19:51:34 [ℹ]  node &#34;ip-192-168-89-237.us-west-2.compute.internal&#34; is ready
-2021-09-03 19:53:35 [ℹ]  kubectl command should work with &#34;/home/cloudshell-user/.kube/config&#34;, try &#39;kubectl get nodes&#39;
-2021-09-03 19:53:35 [✔]  EKS cluster &#34;dynatrace-workshop-cluster&#34; in &#34;us-west-2&#34; region is ready
-</code></pre>
-<ol type="1">
-<li>Also verify the CloudFormation script is also complete within the AWS console.</li>
-</ol>
-<p>You can navigate to the CloudFormation page as shown below. <img alt="image" src="img/a7fb007948905dc2.png"></p>
-<p>Or use this link as shortcut to the CloudFormation page</p>
-<ul>
-<li><a href="https://us-west-2.console.aws.amazon.com/cloudformation/home" target="_blank">https://us-west-2.console.aws.amazon.com/cloudformation/home</a></li>
-</ul>
-<p>On the CloudFormation page, click on the stack shown.</p>
-<p class="image-container"><img alt="image" src="img/54348668775e8901.png"></p>
-<p>Then click on <code>Events</code> to see the provisioning steps. As it processes, the statuses will start to show <code>CREATE_COMPLETE</code></p>
-<p class="image-container"><img alt="image" src="img/8f0210fd0ab9bbe.png"></p>
-<p>You can monitor this as it runs for about 30 minutes. When it&#39;s complete, all statuses will show <code>CREATE_COMPLETE</code></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Verify Cluster" duration="0">
-        <p>Only proceed with this next step once the CloudFormation stack shows <code>CREATE_COMPLETE</code> status.</p>
-<p class="image-container"><img alt="image" src="img/d791f7c35780d8d5.png"></p>
-<h2 is-upgraded>1. Verify Cluster using kubectl</h2>
-<p>Using the CloudShell, you can verify the new cluster with the <a href="https://kubernetes.io/docs/reference/kubectl/overview/" target="_blank">kubectl</a> command line tool used to control Kubernetes clusters.</p>
-<ol type="1">
-<li>Run this command to display the command line options  <pre><code>kubectl
-</code></pre>
-</li>
-<li>Verify you are connected. You should see <code>dynatrace-workshop-cluster</code> as part of the output.  <pre><code>kubectl config current-context
-</code></pre>
-The output should look like this:  <pre><code>[user-info]@dynatrace-workshop-cluster.us-west-2.eksctl.io
-</code></pre>
-</li>
-<li>List the nodes in the cluster  <pre><code>kubectl get nodes
-</code></pre>
-The output should look like this:  <pre><code>NAME                                           STATUS   ROLES    AGE     VERSION
-ip-192-168-31-207.us-west-2.compute.internal   Ready    &lt;none&gt;   5d23h   v1.21.2-eks-c1718fb
-ip-192-168-86-194.us-west-2.compute.internal   Ready    &lt;none&gt;   5d23h   v1.21.2-eks-c1718fb
-</code></pre>
-You can see even more detail with this command.  <pre><code>kubectl describe nodes
-</code></pre>
-</li>
-</ol>
-<h2 is-upgraded>2. Verify Cluster within AWS Console</h2>
-<p>With the AWS Console, search for the <code>Elastic Kubernetes Service</code> or click on the link below.</p>
-<ul>
-<li><a href="https://us-west-2.console.aws.amazon.com/eks/home?region=us-west-2#/clusters" target="_blank">https://us-west-2.console.aws.amazon.com/eks/home?region=us-west-2#/clusters</a></li>
-</ul>
-<p class="image-container"><img alt="image" src="img/a7429a52b22ad821.png"></p>
-<p>The cluster page, click on the new workshop cluster. You should see two nodes as shown below.</p>
-<p class="image-container"><img alt="image" src="img/beca08ab04c0a3d0.png"></p>
-<p>Explore the configuration and view nodes details. ## Kubernetes Dynatrace Operator</p>
-<p>One key Dynatrace advantage is ease of activation. OneAgent technology simplifies deployment across large enterprises and relieves engineers of the burden of instrumenting their applications by hand. As Kubernetes adoption continues to grow, it becomes more important than ever to simplify the activation of observability across workloads without sacrificing the deployment automation that Kubernetes provides. Observability should be as cloud-native as Kubernetes itself.</p>
-<p>In our workshop, we will install the Dynatrace Operator that streamlines lifecycle management. You can read more about it here in this <a href="https://www.dynatrace.com/news/blog/new-dynatrace-operator-elevates-cloud-native-observability-for-kubernetes/" target="_blank">Dynatrace blog</a>.</p>
-<p>Organizations will often customize the Dynatrace Operator installation and you can read more about the options in the <a href="https://www.dynatrace.com/support/help/technology-support/container-platforms/kubernetes/monitor-kubernetes-environments/" target="_blank">Dynatrace docs</a> but, we are going to use a single command that we can get from the Dynatrace interface to show how easy it is to get started.</p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Kubernetes Dynatrace Operator" duration="0">
-        <p>One key Dynatrace advantage is ease of activation. OneAgent technology simplifies deployment across large enterprises and relieves engineers of the burden of instrumenting their applications by hand. As Kubernetes adoption continues to grow, it becomes more important than ever to simplify the activation of observability across workloads without sacrificing the deployment automation that Kubernetes provides. Observability should be as cloud-native as Kubernetes itself.</p>
-<p>In our workshop, we will install the Dynatrace Operator that streamlines lifecycle management. You can read more about it here in this Dynatrace blog.</p>
-<p>Organizations will often customize the Dynatrace Operator installation and you can read more about the options in the Dynatrace docs but, we are going to use a single command that we can get from the Dynatrace interface to show how easy it is to get started.</p>
-<h2 is-upgraded>Install Dynatrace Operator</h2>
-<ol type="1">
-<li>To navigate to Kubernetes page, follow these steps and refer to the picture below:  <ol type="1">
-<li>Within Dynatrace, click on the <code>Deploy Dynatrace</code> menu</li>
-<li>Click on the <code>Start Installation</code> button</li>
-<li>Click on the <code>Kubernetes</code> button</li>
-</ol>
-  <img alt="image" src="img/2a4929c54deb482e.png"></li>
-<li>To get the Dynatrace Operator installation command, refer to the steps and pictures below:  <ol type="1">
-<li>On the Kubernetes configuration page, enter <code>dynatrace-workshop</code> for the name. This is not the cluster name, it will show up as the Kubernetes page name in Dynatrace</li>
-<li>Click the <code>Create tokens</code> button</li>
-<li>Select the <code>Skip SSL Certificate Check</code> to be ON</li>
-<li>Click the <code>Copy</code> button</li>
-</ol>
-  <img alt="image" src="img/3d1e4071bd77bdef.png"></li>
-<li>Paste the command in SSH Shell and run it. When you run the command, it will do the following:  <ul>
-<li>Create a namespace called <code>dynatrace</code> in your cluster containing the Dynatrace Operator supporting pods</li>
-<li>Set the OneAgent on each of the cluster nodes as to provide full-stack Dynatrace monitoring</li>
-<li>Create a Kubernetes dashboard that will be populated with the Kubernetes data pulled from the API</li>
-<li>Setup a Dynatrace Active gate that runs as a container in the <code>dynatrace</code> namespace that is used in the polling of Kubernetes API</li>
-<li>Enable preset out-of-the-box Kubernetes dashboards</li>
-</ul>
-</li>
-</ol>
-<h2 is-upgraded>Verify Dynatrace Operator</h2>
-<p>Once the script is complete, then monitor the installation until you all pods are in <code>Running</code> state with all pods as <code>1/1</code>.</p>
-<pre><code>kubectl -n dynatrace get pods
-</code></pre>
-<p>Rerun the command until the output looks like this:</p>
-<pre><code>NAME                                 READY   STATUS    RESTARTS   AGE
-dynakube-classic-g5n9d               1/1     Running   0          2m45s
-dynakube-classic-vr5qh               1/1     Running   0          2m45s
-dynakube-kubemon-0                   1/1     Running   0          2m43s
-dynakube-routing-0                   1/1     Running   0          2m45s
-dynatrace-operator-f946fb4c6-q5k5g   1/1     Running   0          3m59s
-</code></pre>
-<h2 is-upgraded>Verify Dynatrace Monitoring</h2>
-<p>We will review more detail shortly, but quickly verify within Dynatrace that the hosts are now monitored.</p>
-<p>From the left-side menu in Dynatrace choose <code>Hosts</code>. Ensure the <code>management zone</code> filter is set to all <code>ALL</code></p>
-<p class="image-container"><img alt="image" src="img/81fdfcd3ad9e36e6.png"></p>
-<p>You should see the two hosts like the ones shown below in addition to the host with the name <code>dt-orders-monolith</code>.</p>
-<p class="image-container"><img alt="image" src="img/159f2b6204a63e87.png"></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Deploy sample application" duration="0">
-        <p>Dynatrace automatically derives tags from your Kubernetes/OpenShift labels. This enables you to automatically organize and filter all your monitored Kubernetes/OpenShift application components.</p>
-<p>To review what is configured for the sample application, go ahead and open this folder and look at one such as the <code>frontend.yml</code>:</p>
-<ul>
-<li><a href="https://github.com/dt-alliances-workshops/aws-modernization-dt-orders-setup/tree/main/app-scripts/manifests" target="_blank">https://github.com/dt-alliances-workshops/aws-modernization-dt-orders-setup/tree/main/app-scripts/manifests</a></li>
-</ul>
-<p>Notice the labels and annotations:</p>
-<pre><code>metadata:
-      labels:
-        app.kubernetes.io/name: frontend
-        app.kubernetes.io/version: &#34;1&#34;
-        app.kubernetes.io/component: frontend
-        app.kubernetes.io/part-of: dt-orders
-        app.kubernetes.io/managed-by: helm
-        app.kubernetes.io/created-by: dynatrace-demos
-      annotations:
-        owner: Team Frontend
-        chat-channel: dev-team-frontend 
-</code></pre>
-<p>Notice the defined container and version. These containers are stored in <a href="https://hub.docker.com/u/dtdemos" target="_blank">Dockerhub</a>.</p>
-<pre><code>spec:
-    containers:
-    - name: frontend
-    image: dtdemos/dt-orders-frontend:1
-</code></pre>
-<p>Notice the <code>DT_CUSTOM_PROPS</code> environment variable:</p>
-<pre><code>env:
-    - name: DT_CUSTOM_PROP
-        value: &#34;project=dt-orders service=frontend&#34;
-</code></pre>
-<aside class="special"><p>The <code>DT_CUSTOM_PROPS</code> is a special Dynatrace feature, that the OneAgent will automatically recognize and make Dynatrace tags for the process. You can read more details in the <a href="https://www.dynatrace.com/support/help/shortlink/process-group-properties#anchor_variables" target="_blank">Dynatrace documentation</a></p>
-</aside>
-<aside class="special"><p>Read more details on how Dynatrace identifies labels and tags Kubernetes in the <a href="https://www.dynatrace.com/support/help/technology-support/container-platforms/kubernetes/other-deployments-and-configurations/leverage-tags-defined-in-kubernetes-deployments" target="_blank">Dynatrace documentation</a></p>
-</aside>
-<h2 is-upgraded>Run the script to deploy the sample application</h2>
-<p>Back in the SSH shell, run these commands to deploy the application:</p>
-<pre><code>cd ~/aws-modernization-dt-orders-setup/app-scripts
-./start-k8.sh
-</code></pre>
-<aside class="special"><p>The <a href="https://github.com/dt-alliances-workshops/aws-modernization-dt-orders-setup/tree/main/app-scripts" target="_blank">start-k8.sh</a> script automates a number of <code>kubectl</code> commands:</p>
-</aside>
-<ol type="1">
-<li>Create a namespace called <code>staging</code> where all these resources will reside</li>
-<li>Grant the Kubernetes default service account a viewer role into the <code>staging</code> namespace</li>
-<li>Create both the <code>deployment</code> and <code>service</code> Kubernetes objects for each of the sample</li>
-</ol>
-<h2 is-upgraded>Verify the pods are starting up</h2>
-<p>Rerun this command until all the pods are in <code>Running</code> status with all pods as <code>1/1</code>.</p>
-<pre><code>kubectl -n staging get pods
-</code></pre>
-<p>The output should look like this:</p>
-<pre><code>NAME                               READY   STATUS    RESTARTS   AGE
-browser-traffic-5b9456875d-ks9vw   1/1     Running   0          30h
-catalog-7dcf64cc99-hfrpg           1/1     Running   0          2d8h
-customer-8464884799-vljdx          1/1     Running   0          2d8h
-frontend-7c466b9d69-9ql2g          1/1     Running   0          2d8h
-load-traffic-6886649ddf-76pqf      1/1     Running   0          2d8h
-order-6d4cd477cb-9bvn4             1/1     Running   0          2d8h
-</code></pre>
-<h2 is-upgraded>Kubernetes Role Binding - Overview</h2>
-<p>In Kubernetes, every pod is associated with a service account which is used to authenticate the pod&#39;s requests to the Kubernetes API. If not otherwise specified the pod uses the default service account of its namespace.</p>
-<ul>
-<li>Every namespace has its own set of service accounts and thus also its own namespace-scoped default service account. The labels of each pod for which the service account has view permissions will be imported into Dynatrace automatically.</li>
-<li>In order for Dynatrace to read the Kubernetes properties and annotations, you need to grant the Kubernetes default service account a viewer role into the <code>staging</code> namespace to enable this. We only have one namespace, but you will need to repeat these steps for all service accounts and namespaces you want to enable for Dynatrace within your environments.</li>
-</ul>
-<p>For the workshop, we already updated the required file with the <code>staging</code> namespace. Next you will run the setup script that will apply it to your cluster. Go ahead and open this folder and look at the <code>dynatrace-oneagent-metadata-viewer.yaml</code> file. * <a href="https://github.com/dt-alliances-workshops/aws-modernization-dt-orders-setup/tree/main/app-scripts/manifests" target="_blank">https://github.com/dt-alliances-workshops/aws-modernization-dt-orders-setup/tree/main/app-scripts/manifests</a></p>
-<h2 is-upgraded>Review Kubernetes within Dynatrace</h2>
-<p>Now lets verify what happened within Dynatrace.</p>
-<ol type="1">
-<li>From the Dynatrace Menu, click <code>Manage --> Deployment status</code> to review OneAgent Deployment status</li>
-<li>Within the <code>Deployment status</code> page, next click on the <code>ActiveGate</code> option to review the Active Gate.</li>
-</ol>
-<h2 is-upgraded>Review Kubernetes Architecture</h2>
-<p>From the left-side menu in Dynatrace choose <code>Kubernetes</code> and navigate to the Kubernetes cluster page as shown below:</p>
-<p><strong>NOTE: Be sure that your management zone is NOT filtered!</strong></p>
-<p class="image-container"><img alt="image" src="img/274d6727e507f537.png"></p>
-<p><strong>1 - Kubernetes cluster</strong></p>
-<p>A summary the Kubernetes cluster is shown at the top of the Kubernetes dashboard.</p>
-<p><strong>2 - Nodes</strong></p>
-<p>The resources for the Cluster are summarized for the one-to-many hosts or Cluster nodes in this view. Explore specific node in the Node Analysis section, pick the analyze nodes button. <img alt="image" src="img/1d6b7bb233a31d4.png"></p>
-<p><strong>3 - Namespaces</strong></p>
-<p>Note: Namespaces are ways to partition your cluster resources to run multiple workloads (for example <code>application A</code> and <code>application B</code> workloads) on same cluster 1. This workload section shows workloads over time 2. In the Cluster workload section, pick the view all workloads button.</p>
-<p class="image-container"><img alt="image" src="img/98bf8e9317d03490.png"></p>
-<p>In the filter, pick namespace then staging</p>
-<p class="image-container"><img alt="image" src="img/b87e5c4269f30b27.png"></p>
-<p><strong>4 - Kubernetes workload</strong></p>
-<p>Pick the <code>frontend</code> to drill into.</p>
-<p class="image-container"><img alt="image" src="img/b914f6ba335d9cc9.png"></p>
-<p>Review the workload overview page to look at various metrics related to the workload.</p>
-<p>Click on Kubernetes POD to look at POD utilization metrics.</p>
-<p class="image-container"><img alt="image" src="img/c611ea36b71391fb.png"></p>
-<p><strong>5 - POD</strong></p>
-<p>Review the POD overview page to look at various metrics related to the POD Click on Container next to look at container metrics</p>
-<p class="image-container"><img alt="image" src="img/8e0dab2a6b78f8c8.png"></p>
-<p><strong>6 - Containers</strong></p>
-<p>Referring to the diagram above, expand the properties and tags section to view: 1. Container information 2. Kubernetes information 3. In the info graphic, pick the service to open the services list 4. In the service list, click on k8-frontend service</p>
-<p class="image-container"><img alt="image" src="img/9a0fbf5deccec5ce.png"></p>
-<p>Next click on 2 Services Icon to review the services running inside the container Select the active front-end service.</p>
-<p><strong>7 - Service</strong></p>
-<p>This view should now look familiar. In Lab 1, we looked at the service for the frontend and backend. Notice how the Kubernetes information is also available in the service properties.</p>
-<p class="image-container"><img alt="image" src="img/4e0f10d6988020ce.png"></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Sample application Kubernetes details" duration="0">
-        <p>Refer to this picture for a more detailed description of our setup.</p>
-<p class="image-container"><img alt="image" src="img/f534d2bc177b3d20.png"></p>
-<p><strong>1 - Dynatrace Namespace</strong></p>
-<p>This <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/" target="_blank">Kubernetes Namespace</a> contains the pods and services that make up the Dynatrace Operator.</p>
-<p><strong>2 - Kubernetes nodes</strong></p>
-<p>Kubernetes runs your workload by placing containers into Pods to run on <a href="https://kubernetes.io/docs/concepts/architecture/nodes/" target="_blank">Nodes</a>.</p>
-<p><strong>3 - Dynatrace</strong></p>
-<p>Dynatrace tenant where monitoring data is collected and analyzed.</p>
-<p><strong>4 - Cloud shell</strong></p>
-<p>The shell is configured with the <a href="https://kubernetes.io/docs/reference/kubectl/overview/" target="_blank">kubectl</a> command line tool that lets you control Kubernetes clusters.</p>
-<p><strong>5 - Sample application namespace</strong></p>
-<p>This <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/" target="_blank">Kubernetes Namespace</a> contains the sample application pods and services.</p>
-<p><strong>6 - Sample application</strong></p>
-<p>The frontend service is exposed as a public IP and is accessible in a browser.</p>
-<h2 is-upgraded>Review sample app in a browser</h2>
-<p>To view the application, we need to get the IP to the Kubernetes service for the sample application. To do this, we need to run a kubernetes command.</p>
-<p>From the SSH CLI SSH command prompt type this command</p>
-<pre><code>kubectl -n staging get svc
-</code></pre>
-<p>Example output</p>
-<pre><code>NAME       TYPE           CLUSTER-IP       EXTERNAL-IP
-catalog    ClusterIP      10.100.181.171   &lt;none&gt;                                                                  
-customer   ClusterIP      10.100.147.216   &lt;none&gt;
-frontend   LoadBalancer   10.100.58.2      a6ebaa4a370e0468093167462c3aeab2-115097342.us-west-2.elb.amazonaws.com
-order      ClusterIP      10.100.228.17    &lt;none&gt;
-</code></pre>
-<p>From the output, copy the entire value from EXTERNAL-IP and open it in a browser. This would be <code>http://1a6ebaa4a370e0468093167462c3aeab2-115097342.us-west-2.elb.amazonaws.com</code> for the example above.</p>
-<h2 is-upgraded>Explore Sample app</h2>
-<p>Use the menu on on the home page to navigate around the application and notice the URL for key functionality. You will see these URLs later as we analyze the application.</p>
-<ul>
-<li>Customer List = customer/list.html</li>
-<li>Customer Detail = customer/5.html</li>
-<li>Catalog List = catalog/list.html</li>
-<li>Catalog Search Form = catalog/searchForm.html</li>
-<li>Order List = order/list.html</li>
-<li>Order Form = order/form.html</li>
-</ul>
-<aside class="warning"><p>The application looks like this monolith, but notice how the home page shows the versions of the three running backend services. You will see these version updated automatically as we deploy new versions of the backend services.</p>
-</aside>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Backtrace" duration="0">
-        <h2 is-upgraded>Open Service Page</h2>
-<p>First filter by <code>dt-orders-k8 management</code> zone.</p>
-<p class="image-container"><img alt="image" src="img/8854d50c37f90d90.png"></p>
-<p>Pick the <code>order</code> service.</p>
-<p class="image-container"><img alt="image" src="img/df8103bed4e0a76c.png"></p>
-<p>On this service, we can quickly review the inbound and outbound dependencies.</p>
-<p>Referring to the picture, within the services infographic, click on the &#34;services&#34; square to get a list of the services that the order service calls.</p>
-<p class="image-container"><img alt="image" src="img/1db4fc297e8349bc.png"></p>
-<h2 is-upgraded>Open Backtrace Page</h2>
-<p>To see the backtrace page, just click on the Analyze Backtrace button.</p>
-<p>You should be on the service backtrace page where you will see information for this specific service.</p>
-<p>This will get more interesting in the next lab, but for the monolith backend, we can see that the backtrace is as follows:</p>
-<p>1 . The starting point is the backend</p>
-<p>2 . Backend service is called by the front-end</p>
-<p>3 . Front-end is a where end user requests start and the user sessions get captured</p>
-<p>4 . My web application is the default application that Dynatrace creates</p>
-<p class="image-container"><img alt="image" src="img/6e55d05df517bf1a.png"></p>
+      <google-codelab-step label="Analyze Service Flow" duration="0">
+        <p>Dynatrace understands and visualizes your applications&#39; transactions from end-to-end using <strong>Service Backtraces</strong> and <strong>Service flows</strong></p>
 <h2 is-upgraded>👍 How this helps</h2>
-<p>The service flow and service backtrace give you a complete picture of interdependency to the rest of the environment architecture at host, processes, services, and application perspectives.</p>
+<p>As you plan your migration, it is important to gain a complete picture of interdependency to the rest of the environment architecture at host, processes, services, and application perspectives. Since time is always scarce, being able to do this in a single place can shorten assessment timelines.</p>
+<p>Knowing the type of access, executed statements, and amount of data transferred during regular hours of operation allows for better planning and prioritization of the move groups. In some cases, you may decide to not migrate this database in favor of other services or databases that are less complex to migrate due to fewer dependencies.</p>
+<h2 is-upgraded>Review Service Flow of both Monolith and Micro-services application architecture</h2>
+<p>Let&#39;s start with the <strong>Monolith</strong> app</p>
+<ol type="1">
+<li>Open up the Dynatrace Menu, use the <strong><em>filter</em></strong> to search for Services <img alt="image" src="img/1e9d2ca0f6ec91c5.png"></li>
+<li>Click on <strong>Services</strong></li>
+<li>In the <strong>management zone</strong> drop down, choose <strong>dt-orders-monolith</strong>. The filtered list should now look like this: <img alt="image" src="img/4cad3791cab8b810.png"></li>
+<li>On the <strong>frontend</strong> row, to the <strong><em>far right</em></strong>, click on <strong>...</strong>, and in the <strong>Analyze</strong> pop-up, click on <strong>Service Flow</strong><img alt="image" src="img/95c10baadbc51d1c.png"></li>
+</ol>
+<p>You should now be on the <strong>Service flow</strong> page.</p>
+<p>Right away, we can see how this application is structured:</p>
+<ul>
+<li>Frontend calls backend</li>
+<li>Backend calls database</li>
+</ul>
+<p class="image-container"><img alt="image" src="img/39d7f5bae6af286a.png"></p>
+<p>Do the same for the <strong>Micro-services</strong> app</p>
+<ol type="1">
+<li>Go back to <strong>Service</strong> view</li>
+<li>In the <strong>management zone</strong> drop down, choose <strong>dt-orders-services</strong></li>
+<li>On the <strong>dev-frontend</strong> row, to the <strong><em>far right</em></strong>, click on <strong>...</strong>, and in the <strong>Analyze</strong> pop-up, click on <strong>Service Flow</strong><img alt="image" src="img/3503799decf2c22f.png"></li>
+</ol>
+<p>Compare this view with the Service Flow of the Monolith application, and you can already see some apparent difference in the way the application is structured:</p>
+<ul>
+<li>Frontend calls order, customer, and catalog service</li>
+<li>Order service calls order and customer service</li>
+</ul>
+<p class="image-container"><img alt="image" src="img/e21ac556c630c120.png"></p>
+<p>This is Something you would never know from the application web UI !</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="Serviceflow" duration="0">
-        <h2 is-upgraded>Analyze the Service Flow</h2>
-<p>Now that we are back on the frontend service, let&#39;s look at the service flow to see what&#39;s different now. Just click on the view service flow button to open this.</p>
-<p class="image-container"><img alt="image" src="img/d70f46d3ea242236.png"></p>
-<h2 is-upgraded>Response time perspective</h2>
-<p>You should now be on the Service flow page.</p>
-<p>Right away, we can see how this application is structured: * Frontend calls order, customer, and catalog service * Order service calls order and customer service</p>
-<p>Something you would never know from the application web UI!</p>
-<p class="image-container"><img alt="image" src="img/3b0de8021a742b2d.png"></p>
-<p>Refer to the picture above: 1. We are viewing the data from a Response time perspective. Shortly, we will review the Throughput perspective. 2. Click on the boxes to expand the response time metrics. Most of the response time is spent in the order service and the least in the customer services. And as in the simple version of the application, a very small amount of the response time is spent in the databases.</p>
-<h2 is-upgraded>Throughput perspective</h2>
-<p class="image-container"><img alt="image" src="img/526b936c02877b2.png"></p>
-<p>Refer to the picture above: 1. Change to the Throughput perspective by clicking on the box 2. Click on the boxes to expand the metrics to see the number of requests and average response times going to each service</p>
+      <google-codelab-step label="Analyze service backtrace" duration="0">
+        <p>Dynatrace understands your applications transactions from end to end. This transactional insight is visualized several ways like the backtrace.</p>
+<p>The backtrace tree view represents the sequence of services that led to this service call, beginning with the page load or user action in the browser.</p>
+<p>And this is most useful for <strong><em>database</em></strong> services, where usually a centralized database is called by many applications.</p>
 <h2 is-upgraded>👍 How this helps</h2>
-<p>Reviewing the architecture before and after changes is now as easy as a few clicks!</p>
+<p>Using the service flow and service backtrace, these two views give you a complete picture of interdependency to the rest of the environment architecture at host, processes, services, and application perspectives.</p>
+<p>As you plan your migration, Database observability is critical to a successful plan. Knowing the type of access, executed statements, and amount of data transferred during regular hours of operation allows for better migration planning and prioritization of the move groups. In some cases, you may decide to not migrate this database in favor of other services or databases that are less complex to migrate due to fewer dependencies.</p>
+<h2 is-upgraded>Review databases and service backtrace for the Microservices app</h2>
+<ol type="1">
+<li>Using the same Service Flow diagram as before, you will notice that there are 3 <a href="http://hsqldb.org/)" target="_blank"> in-memory Java databases </a> in the application architecture</li>
+<li>Click on the one that is being called by the <strong>catelogue</strong> service</li>
+<li>Click on the <strong>...</strong> above the database <img alt="image" src="img/76c5f8d59616f00.png"></li>
+<li>Select <strong>backtrace</strong><img alt="image" src="img/16d0c93ee8326087.png"></li>
+</ol>
+<p>We can see that the backtrace is as follows:</p>
+<ul>
+<li>The database is only called by the catalog service</li>
+<li>catalog is called by the order service</li>
+<li>catalog is called by the frontend service</li>
+<li>And here we see the exact <strong><em>user clicks</em></strong> or user transactions that generated the calls to the database!</li>
+</ul>
+<p class="image-container"><img alt="image" src="img/11eb5ccbdac7e0c1.png"></p>
 
 
       </google-codelab-step>

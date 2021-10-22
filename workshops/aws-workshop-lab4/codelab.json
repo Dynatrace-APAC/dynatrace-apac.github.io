@@ -3,10 +3,10 @@
   "format": "html",
   "prefix": "../../elements",
   "mainga": "UA-49880327-14",
-  "updated": "2021-09-21T09:48:26+10:00",
+  "updated": "2021-10-22T08:19:38+08:00",
   "id": "aws-workshop-lab4",
   "duration": 0,
-  "title": "Lab 4 - SLOs",
+  "title": "Supercharge AWS Cloud operations",
   "authors": "Rob Jahn",
   "summary": "This section covers the hands-on for Lab 4",
   "source": "aws-workshop-lab4.md",
@@ -15,8 +15,8 @@
     "published"
   ],
   "category": [
-    "aws",
-    "automate-delivery"
+    "automate-operations",
+    "aws"
   ],
   "tags": [
     "aws-workshop"
