@@ -7,7 +7,7 @@ authors: Rob Jahn
 Feedback Link: mailto:alliances@dynatrace.com
 Analytics Account: UA-175467274-1
 
-# Modernize cloud workloads #1 - Plan Better
+# 1. Modernize cloud workloads #1 - Plan Better
 
 ## Objectives of this Lab
 

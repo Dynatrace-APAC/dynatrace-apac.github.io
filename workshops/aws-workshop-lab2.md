@@ -7,7 +7,7 @@ authors: Rob Jahn
 Feedback Link: mailto:alliances@dynatrace.com
 Analytics Account: UA-175467274-1
 
-# Modernize cloud workloads #2 - Move faster
+# 2. Modernize cloud workloads #2 - Move faster
 
 ## Objectives of this Lab 
 

@@ -7,7 +7,7 @@ authors: Rob Jahn
 Feedback Link: mailto:alliances@dynatrace.com
 Analytics Account: UA-175467274-1
 
-# Supercharge AWS Cloud operations
+# 4. Supercharge AWS Cloud operations
 
 For intelligent monitoring of services running in Amazon cloud, you can integrate Dynatrace with Amazon Web Services (AWS). AWS integration helps you stay on top of the dynamics of your data center in the cloud.
 
@@ -177,7 +177,7 @@ There are several ways one can configure the Dynatrace AWS monitor, for this wor
 
 6. Click **Create policy** button.
 
-### Step 2 of 4: Create AWS User
+### Step 2 of 3: Create AWS User
 ----------------------------------------------------------------
 
 1. Go to **Identity and Access Management (IAM)** in your Amazon Console.
@@ -217,42 +217,6 @@ TODO: Insert screen shot
 Once the connection is successfully verified and saved, your AWS account will be listed in the Cloud and virtualization settings page. You should soon begin to see AWS cloud monitoring data.
 
 ![image](assets/aws-workshop/dt-aws-dashboard-list.png)
-
-<!-- -->
-## Explore the AWS dashboard
-------------------
-
-On the far left Dynatrace menu, navigate to the **Infrastructure -> AWS** menu.
-
-![image](assets/aws-workshop/dt-aws-dashboard-menu.png)
-
-You may see no data initially as seen here. This is because Dynatrace makes Amazon API requests every 5 minutes, so it might take a few minutes for data to show until we are done with application setup on AWS.
-
-![image](assets/aws-workshop/dt-aws-dashboard-blank.png)
-
-Once data is coming in, the dashboard pages will look similar to what is shown below.
-
-![image](assets/aws-workshop/dt-aws-dashboard-overview.png)
-
-![image](assets/aws-workshop/dt-aws-dashboard.png)
-
-### Review collected metrics
-------------------------
-
-Once data starts to be collected, click in the blue availability zone section located under the grey header labeled EC2 and you should see the list of availability zones below. Click on any one and the EC2 instances will be listed.
-
-![image](assets/aws-workshop/aws-monitor-list.png)
-
-Click on an EC2 instance, and you will see how this host still is represented in the same Host view that we saw earlier with the host running the OneAgent. The basic CPU and memory metrics from CloudWatch are graphed for you. What is GREAT, is that this host is being monitored automatically by the Dynatrace AI engine and can raise a problem when there are anomalies.
-
-![image](assets/aws-workshop/aws-monitor-host.png)
-
-### 👍 How this helps
-----------------
-
-The AWS monitor is a central way to get a picture and metrics for the AWS resources running against your accounts as you migrate.
-
-Read more about how to scale your enterprise cloud environment with enhanced AI-powered observability of all AWS services in <a href="https://www.dynatrace.com/news/blog/monitor-any-aws-service/" target="_blank">this Dynatrace blog</a>
 
 <!-- -->
 ## Custom Alerting
@@ -295,14 +259,6 @@ Notice the **Alert preview** chart that helps you in reviewing these settings
 ![image](assets/aws-workshop/lab3-vm-alert-chart.png)
 
 7. Save your changes
-
-8. Add another rule, with everything the same, except for the **Event Description** to have the **title** and **severity = RESOURCE** as shown below.
-
-![image](assets/aws-workshop/lab4-custom-resource-message.png)
-
-9. Save your changes and the list should look as shown below.
-
-![image](assets/aws-workshop/lab4-custom-alert-list.png)
 
 ### 2. SSH to monolith host
 -----------------------
@@ -353,16 +309,57 @@ The output should look like this:
     ubuntu    5806  5438 97 20:48 pts/0    00:00:03 yes
     ubuntu    5818  5438  0 20:48 pts/0    00:00:00 grep --color=auto yes
 ```
+It will take a few mins for the problem card to appear. In the meantime, move on to the next section **Explore the AWS dashboard**.
+
+<!-- -->
+## Explore the AWS dashboard
+------------------
+
+On the far left Dynatrace menu, navigate to the **Infrastructure -> AWS** menu.
+
+![image](assets/aws-workshop/dt-aws-dashboard-menu.png)
+
+You may see no data initially as seen here. This is because Dynatrace makes Amazon API requests every 5 minutes, so it might take a few minutes for data to show until we are done with application setup on AWS.
+
+![image](assets/aws-workshop/dt-aws-dashboard-blank.png)
+
+Once data is coming in, the dashboard pages will look similar to what is shown below.
+
+![image](assets/aws-workshop/dt-aws-dashboard-overview.png)
+
+![image](assets/aws-workshop/dt-aws-dashboard.png)
+
+### Review collected metrics
+------------------------
+
+Once data starts to be collected, click in the blue availability zone section located under the grey header labeled EC2 and you should see the list of availability zones below. Click on any one and the EC2 instances will be listed.
+
+![image](assets/aws-workshop/aws-monitor-list.png)
+
+Click on an EC2 instance, and you will see how this host still is represented in the same Host view that we saw earlier with the host running the OneAgent. The basic CPU and memory metrics from CloudWatch are graphed for you. What is GREAT, is that this host is being monitored automatically by the Dynatrace AI engine and can raise a problem when there are anomalies.
+
+![image](assets/aws-workshop/aws-monitor-host.png)
+
+### 👍 How this helps
+----------------
+
+The AWS monitor is a central way to get a picture and metrics for the AWS resources running against your accounts as you migrate.
+
+Read more about how to scale your enterprise cloud environment with enhanced AI-powered observability of all AWS services in <a href="https://www.dynatrace.com/news/blog/monitor-any-aws-service/" target="_blank">this Dynatrace blog</a>
+
+
+<!-- -->
+## AWS resources alert!
 
 Back in Dynatrace within the **host** view, the CPU should now be high as shown below
 
 ![image](assets/aws-workshop/lab4-cpu.png)
 
-It may take a minute or so, but you will get two problem cards as shown below. \#1 is the alert from the **severity = RESOURCE** where DAVIS was invoked, and \#2 is the alert from **severity = CUSTOM ALERT**.
+A problem card will be generated once the static threshold has been breahed.
 
 ![image](assets/aws-workshop/lab4-custom-alert-problems.png)
 
-### 4. Stop the CPU problem
+### Stop the CPU problem
 -----------------------
 
 To stop the problem, you need to **kill** the processes. To do this:
@@ -371,34 +368,23 @@ To stop the problem, you need to **kill** the processes. To do this:
 
    ```bash
    ps -ef | grep yes
-   ````
+   ```
+2. For each process, copy the process ID and run **kill <PID>**, for example:
 
-2. For each process, copy the process ID and run **kill <PID>**
-
-For example:
-
-    # If output is this...
-
-```bash
-    ubuntu@ip-10-0-0-118:~$ ps -ef | grep yes
-    ubuntu    5802  5438 99 20:48 pts/0    00:00:05 yes
-    ubuntu    5805  5438 89 20:48 pts/0    00:00:04 yes
-    ubuntu    5806  5438 97 20:48 pts/0    00:00:03 yes
-```
-    # Then run...
-
-```bash
-    kill 5802
-    kill 5805
-    kill 5806
-```
-
+   ```bash
+   ubuntu@ip-10-0-0-118:~$ ps -ef | grep yes
+   ubuntu    5802  5438 99 20:48 pts/0    00:00:05 yes
+   ubuntu    5805  5438 89 20:48 pts/0    00:00:04 yes
+   ubuntu    5806  5438 97 20:48 pts/0    00:00:03 yes
+   ubuntu@ip-10-0-0-118:~$ kill 5802
+   ubuntu@ip-10-0-0-118:~$ kill 5805
+   ubuntu@ip-10-0-0-118:~$ kill 5806
+   ```
 3. Verify they are gone by running this again
 
    ```bash
    ps -ef | grep yes
    ```
-
 4. Verify that CPU in Dynatrace goes to normal and the problems will eventually automatically close
 
 <!-- -->

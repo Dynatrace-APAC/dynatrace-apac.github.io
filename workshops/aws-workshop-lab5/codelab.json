@@ -3,10 +3,10 @@
   "format": "html",
   "prefix": "../../elements",
   "mainga": "UA-49880327-14",
-  "updated": "2021-10-18T16:46:29+11:00",
+  "updated": "2021-10-22T14:01:49+08:00",
   "id": "aws-workshop-lab5",
   "duration": 0,
-  "title": "Lab 5 - AWS Monitor",
+  "title": "5. Speed up software delivery",
   "authors": "Rob Jahn",
   "summary": "This section covers the hands-on for Lab 5",
   "source": "aws-workshop-lab5.md",
@@ -16,7 +16,7 @@
   ],
   "category": [
     "aws",
-    "automate-operations"
+    "automate-delivery"
   ],
   "tags": [
     "aws-workshop"

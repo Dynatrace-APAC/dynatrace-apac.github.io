@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Supercharge AWS Cloud operations</title>
+  <title>4. Supercharge AWS Cloud operations</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
@@ -23,7 +23,7 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid="UA-175467274-1"
                   id="aws-workshop-lab4"
-                  title="Supercharge AWS Cloud operations"
+                  title="4. Supercharge AWS Cloud operations"
                   environment="web"
                   feedback-link="mailto:alliances@dynatrace.com">
     
@@ -175,7 +175,7 @@
 <ol type="1">
 <li>Click <strong>Create policy</strong> button.</li>
 </ol>
-<h2 is-upgraded>Step 2 of 4: Create AWS User</h2>
+<h2 is-upgraded>Step 2 of 3: Create AWS User</h2>
 <ol type="1">
 <li>Go to <strong>Identity and Access Management (IAM)</strong> in your Amazon Console.</li>
 <li>Go to <strong>Users</strong> and click the <strong>Add User</strong> button.</li>
@@ -208,26 +208,6 @@
 </ol>
 <p>Once the connection is successfully verified and saved, your AWS account will be listed in the Cloud and virtualization settings page. You should soon begin to see AWS cloud monitoring data.</p>
 <p class="image-container"><img alt="image" src="img/325d0cf8d1be7e1f.png"></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Explore the AWS dashboard" duration="0">
-        <p>On the far left Dynatrace menu, navigate to the <strong>Infrastructure -&gt; AWS</strong> menu.</p>
-<p class="image-container"><img alt="image" src="img/f03403623d745b72.png"></p>
-<p>You may see no data initially as seen here. This is because Dynatrace makes Amazon API requests every 5 minutes, so it might take a few minutes for data to show until we are done with application setup on AWS.</p>
-<p class="image-container"><img alt="image" src="img/39914e47eb627a07.png"></p>
-<p>Once data is coming in, the dashboard pages will look similar to what is shown below.</p>
-<p class="image-container"><img alt="image" src="img/7c7d2679d99a5b67.png"></p>
-<p class="image-container"><img alt="image" src="img/9e3902ecb13b4701.png"></p>
-<h2 is-upgraded>Review collected metrics</h2>
-<p>Once data starts to be collected, click in the blue availability zone section located under the grey header labeled EC2 and you should see the list of availability zones below. Click on any one and the EC2 instances will be listed.</p>
-<p class="image-container"><img alt="image" src="img/bc35a0b53ca3caa4.png"></p>
-<p>Click on an EC2 instance, and you will see how this host still is represented in the same Host view that we saw earlier with the host running the OneAgent. The basic CPU and memory metrics from CloudWatch are graphed for you. What is GREAT, is that this host is being monitored automatically by the Dynatrace AI engine and can raise a problem when there are anomalies.</p>
-<p class="image-container"><img alt="image" src="img/a4e271a6623c666b.png"></p>
-<h2 is-upgraded>👍 How this helps</h2>
-<p>The AWS monitor is a central way to get a picture and metrics for the AWS resources running against your accounts as you migrate.</p>
-<p>Read more about how to scale your enterprise cloud environment with enhanced AI-powered observability of all AWS services in <a href="https://www.dynatrace.com/news/blog/monitor-any-aws-service/" target="_blank">this Dynatrace blog</a></p>
 
 
       </google-codelab-step>
@@ -266,13 +246,7 @@
 <p class="image-container"><img alt="image" src="img/15a3d3f2962b3c91.png"></p>
 <ol type="1">
 <li>Save your changes</li>
-<li>Add another rule, with everything the same, except for the <strong>Event Description</strong> to have the <strong>title</strong> and <strong>severity = RESOURCE</strong> as shown below.</li>
 </ol>
-<p class="image-container"><img alt="image" src="img/1987bcc448f03da0.png"></p>
-<ol type="1">
-<li>Save your changes and the list should look as shown below.</li>
-</ol>
-<p class="image-container"><img alt="image" src="img/786202da53adf738.png"></p>
 <h2 is-upgraded>2. SSH to monolith host</h2>
 <p>To connect to the host, simply use <strong>EC2 Instance Connect</strong>. To this, navigate to the <strong>EC2 instances</strong> page in the AWS console.</p>
 <p>From the list, pick the <strong>dt-orders-monolith</strong> and then the <strong>connect</strong> button.</p>
@@ -302,35 +276,53 @@ ubuntu@ip-10-0-0-118:~$
     ubuntu    5806  5438 97 20:48 pts/0    00:00:03 yes
     ubuntu    5818  5438  0 20:48 pts/0    00:00:00 grep --color=auto yes
 </code></pre>
-<p>Back in Dynatrace within the <strong>host</strong> view, the CPU should now be high as shown below</p>
+<p>It will take a few mins for the problem card to appear. In the meantime, move on to the next section <strong>Explore the AWS dashboard</strong>.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Explore the AWS dashboard" duration="0">
+        <p>On the far left Dynatrace menu, navigate to the <strong>Infrastructure -&gt; AWS</strong> menu.</p>
+<p class="image-container"><img alt="image" src="img/f03403623d745b72.png"></p>
+<p>You may see no data initially as seen here. This is because Dynatrace makes Amazon API requests every 5 minutes, so it might take a few minutes for data to show until we are done with application setup on AWS.</p>
+<p class="image-container"><img alt="image" src="img/39914e47eb627a07.png"></p>
+<p>Once data is coming in, the dashboard pages will look similar to what is shown below.</p>
+<p class="image-container"><img alt="image" src="img/7c7d2679d99a5b67.png"></p>
+<p class="image-container"><img alt="image" src="img/9e3902ecb13b4701.png"></p>
+<h2 is-upgraded>Review collected metrics</h2>
+<p>Once data starts to be collected, click in the blue availability zone section located under the grey header labeled EC2 and you should see the list of availability zones below. Click on any one and the EC2 instances will be listed.</p>
+<p class="image-container"><img alt="image" src="img/bc35a0b53ca3caa4.png"></p>
+<p>Click on an EC2 instance, and you will see how this host still is represented in the same Host view that we saw earlier with the host running the OneAgent. The basic CPU and memory metrics from CloudWatch are graphed for you. What is GREAT, is that this host is being monitored automatically by the Dynatrace AI engine and can raise a problem when there are anomalies.</p>
+<p class="image-container"><img alt="image" src="img/a4e271a6623c666b.png"></p>
+<h2 is-upgraded>👍 How this helps</h2>
+<p>The AWS monitor is a central way to get a picture and metrics for the AWS resources running against your accounts as you migrate.</p>
+<p>Read more about how to scale your enterprise cloud environment with enhanced AI-powered observability of all AWS services in <a href="https://www.dynatrace.com/news/blog/monitor-any-aws-service/" target="_blank">this Dynatrace blog</a></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="AWS resources alert!" duration="0">
+        <p>Back in Dynatrace within the <strong>host</strong> view, the CPU should now be high as shown below</p>
 <p class="image-container"><img alt="image" src="img/5dd6434d37d3c869.png"></p>
-<p>It may take a minute or so, but you will get two problem cards as shown below. #1 is the alert from the <strong>severity = RESOURCE</strong> where DAVIS was invoked, and #2 is the alert from <strong>severity = CUSTOM ALERT</strong>.</p>
+<p>A problem card will be generated once the static threshold has been breahed.</p>
 <p class="image-container"><img alt="image" src="img/cd023cca077ab259.png"></p>
-<h2 is-upgraded>4. Stop the CPU problem</h2>
+<h2 is-upgraded>Stop the CPU problem</h2>
 <p>To stop the problem, you need to <strong>kill</strong> the processes. To do this:</p>
 <ol type="1">
 <li>Back in the CloudShell, run this command to get the process IDs</li>
 </ol>
 <pre><code language="language-bash" class="language-bash">   ps -ef | grep yes
-   ````
-
-2. For each process, copy the process ID and run **kill &lt;PID&gt;**
-
-For example:
-
-    # If output is this...
-
-```bash
-    ubuntu@ip-10-0-0-118:~$ ps -ef | grep yes
-    ubuntu    5802  5438 99 20:48 pts/0    00:00:05 yes
-    ubuntu    5805  5438 89 20:48 pts/0    00:00:04 yes
-    ubuntu    5806  5438 97 20:48 pts/0    00:00:03 yes
 </code></pre>
-<pre><code># Then run...
-</code></pre>
-<pre><code language="language-bash" class="language-bash">    kill 5802
-    kill 5805
-    kill 5806
+<ol type="1">
+<li>For each process, copy the process ID and run <strong>kill </strong>, for example:</li>
+</ol>
+<pre><code language="language-bash" class="language-bash">   ubuntu@ip-10-0-0-118:~$ ps -ef | grep yes
+   ubuntu    5802  5438 99 20:48 pts/0    00:00:05 yes
+   ubuntu    5805  5438 89 20:48 pts/0    00:00:04 yes
+   ubuntu    5806  5438 97 20:48 pts/0    00:00:03 yes
+   ubuntu@ip-10-0-0-118:~$ kill 5802
+   ubuntu@ip-10-0-0-118:~$ kill 5805
+   ubuntu@ip-10-0-0-118:~$ kill 5806
 </code></pre>
 <ol type="1">
 <li>Verify they are gone by running this again</li>
