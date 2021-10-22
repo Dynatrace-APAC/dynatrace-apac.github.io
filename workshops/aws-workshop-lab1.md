@@ -84,10 +84,10 @@ From the left-side menu in Dynatrace choose **hosts** then click on the host wit
 
 On host page, you will see basic infrastructure information for the host.
 
-1. Now expand the **Properties** section to see data about the host:
-   - Host resource metrics (CPU, memory)
-   - Host availability
-   - Discovered processes. The sample app is Node and Java based
+Now expand the **Properties** section to see data about the host:
+- Host resource metrics (CPU, memory)
+- Host availability
+- Discovered processes. The sample app is Node and Java based
 
 ![image](assets/aws-workshop/lab1-host-view.png)
 

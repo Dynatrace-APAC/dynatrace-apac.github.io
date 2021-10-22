@@ -81,34 +81,11 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="Oops, I did it again!" duration="0">
+      <google-codelab-step label="Deploy new patch for monolith" duration="0">
         <p>As part of day to day mainteance, you are tasked to deploy a patch for the monolith application.</p>
 <p>From the AWS CLoudShell, run these commands to set the backend service to version 2</p>
 <pre><code language="language-bash" class="language-bash">cd ~/aws-modernization-dt-orders-setup/learner-scripts/
 ./set-version.sh backend 2
-</code></pre>
-<p>Review the output to ensure the change was made successfully. It should look like this with numerical values at the end for Response Data: <strong>storedEventIds:</strong></p>
-<pre><code language="language-bash" class="language-bash">    Retrieving dt-orders-monolith Public IP
-    =================================================================
-    Setting Service Version
-    SERVICE         = backend
-    NEW_VERSION     = 2
-    SET_VERSION_URL = http://1.1.1.1/backend/setversion/2
-    =================================================================
-    Set backend to 2 was successful
-    =================================================================
-    Sending Dynatrace Deployment event
-    DT_API_URL                 = https://xxx.live.dynatrace.com/api/v1/events
-    DEPLOYMENT_NAME            = Set backend to version 2
-    DEPLOYMENT_VERSION         = 2
-    DEPLOYMENT_PROJECT         = dt-orders
-    CI_BACK_LINK               = http://1.1.1.1
-    =================================================================
-    Push Event POST_DATA
-    { &#34;eventType&#34; : &#34;CUSTOM_DEPLOYMENT&#34;, &#34;source&#34; : &#34;Custom Unix Shell Script&#34; , &#34;deploymentName&#34; : &#34;Set backend to version 2&#34;, &#34;deploymentVersion&#34; : &#34;2&#34; , &#34;deploymentProject&#34; :&#34;dt-orders&#34; , &#34;ciBackLink&#34; : &#34;http://1.1.1.1&#34;, &#34;customProperties&#34;: { &#34;Example Custom Property 1&#34; : &#34;Example Custom Value 1&#34;, &#34;Example Custom Property 2&#34; : &#34;Example Custom Value 2&#34;, &#34;Example Custom Property 3&#34; : &#34;Example Custom Value 3&#34; }, &#34;attachRules&#34; : { &#34;tagRule&#34; : [ { &#34;meTypes&#34;:[&#34;PROCESS_GROUP_INSTANCE&#34;], &#34;tags&#34;: [ { &#34;context&#34;: &#34;CONTEXTLESS&#34;, &#34;key&#34;: &#34;service&#34;, &#34;value&#34;: &#34;backend&#34; }, { &#34;context&#34;: &#34;CONTEXTLESS&#34;, &#34;key&#34;: &#34;project&#34;, &#34;value&#34;: &#34;dt-orders&#34; }, { &#34;context&#34;: &#34;CONTEXTLESS&#34;, &#34;key&#34;: &#34;stage&#34;, &#34;value&#34;: &#34;production&#34; } ]} ]} } }
-
-    Response Data
-    {&#34;storedEventIds&#34;:[8663164135574257870,-5988376401319068441],&#34;storedIds&#34;:[&#34;8663164135574257870_1628095127627&#34;,&#34;-5988376401319068441_1628095127627&#34;],&#34;storedCorrelationIds&#34;:[]}
 </code></pre>
 <h2 is-upgraded>View app in browser</h2>
 <p>The event has the URL back to the sample application, so just click that if you don&#39;t have the sample app up already. You should see <code>version 2</code> for the customer app now too.</p>
@@ -117,7 +94,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="DAVIS AI" duration="0">
+      <google-codelab-step label="What did I break?" duration="0">
         <p>Let DAVIS tell you what broke. The problem may take a minute to show up, but this is what the problem will look like once it does. Also, you may see two problems that eventually get merged into one as Dynatrace is performing the problem analysis.</p>
 <ol type="1">
 <li>Impact Summary - Multiple services affected</li>

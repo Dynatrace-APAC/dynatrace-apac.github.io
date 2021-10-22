@@ -90,7 +90,7 @@ On the top right of the page, click the **edit** button and then follow these st
 4. Click the **Done** button to save the dashboard
 
 <!-- -->
-## Oops, I did it again!
+## Deploy new patch for monolith
 
 As part of day to day mainteance, you are tasked to deploy a patch for the monolith application.
 
@@ -101,32 +101,6 @@ cd ~/aws-modernization-dt-orders-setup/learner-scripts/
 ./set-version.sh backend 2
 ```
 
-Review the output to ensure the change was made successfully. It should look like this with numerical values at the end for Response Data: **storedEventIds:**
-
-```bash
-    Retrieving dt-orders-monolith Public IP
-    =================================================================
-    Setting Service Version
-    SERVICE         = backend
-    NEW_VERSION     = 2
-    SET_VERSION_URL = http://1.1.1.1/backend/setversion/2
-    =================================================================
-    Set backend to 2 was successful
-    =================================================================
-    Sending Dynatrace Deployment event
-    DT_API_URL                 = https://xxx.live.dynatrace.com/api/v1/events
-    DEPLOYMENT_NAME            = Set backend to version 2
-    DEPLOYMENT_VERSION         = 2
-    DEPLOYMENT_PROJECT         = dt-orders
-    CI_BACK_LINK               = http://1.1.1.1
-    =================================================================
-    Push Event POST_DATA
-    { "eventType" : "CUSTOM_DEPLOYMENT", "source" : "Custom Unix Shell Script" , "deploymentName" : "Set backend to version 2", "deploymentVersion" : "2" , "deploymentProject" :"dt-orders" , "ciBackLink" : "http://1.1.1.1", "customProperties": { "Example Custom Property 1" : "Example Custom Value 1", "Example Custom Property 2" : "Example Custom Value 2", "Example Custom Property 3" : "Example Custom Value 3" }, "attachRules" : { "tagRule" : [ { "meTypes":["PROCESS_GROUP_INSTANCE"], "tags": [ { "context": "CONTEXTLESS", "key": "service", "value": "backend" }, { "context": "CONTEXTLESS", "key": "project", "value": "dt-orders" }, { "context": "CONTEXTLESS", "key": "stage", "value": "production" } ]} ]} } }
-
-    Response Data
-    {"storedEventIds":[8663164135574257870,-5988376401319068441],"storedIds":["8663164135574257870_1628095127627","-5988376401319068441_1628095127627"],"storedCorrelationIds":[]}
-```
-
 ### View app in browser
 ----------------------
 
@@ -135,7 +109,7 @@ The event has the URL back to the sample application, so just click that if you 
 ![image](assets/aws-workshop/lab3-app-backend-version-2.png)
 
 <!-- -->
-## DAVIS AI
+## What did I break?
 
 Let DAVIS tell you what broke. The problem may take a minute to show up, but this is what the problem will look like once it does. Also, you may see two problems that eventually get merged into one as Dynatrace is performing the problem analysis.
 
