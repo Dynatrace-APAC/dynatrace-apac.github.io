@@ -28,7 +28,8 @@
                   feedback-link="mailto:alliances@dynatrace.com">
     
       <google-codelab-step label="Objectives of this Lab" duration="0">
-        <p>🔷 Review how Dynatrace integrates with <a href="https://aws.amazon.com/cloudwatch/" target="_blank">AWS CloudWatch</a></p>
+        <p>For intelligent monitoring of services running in Amazon cloud, you can integrate Dynatrace with Amazon Web Services (AWS). AWS integration helps you stay on top of the dynamics of your data center in the cloud.</p>
+<p>🔷 Review how Dynatrace integrates with <a href="https://aws.amazon.com/cloudwatch/" target="_blank">AWS CloudWatch</a></p>
 <p>🔷 Review how <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/problem-detection-and-analysis/problem-detection/metric-events-for-alerting/" target="_blank">Metric events for alerts</a></p>
 
 
@@ -63,134 +64,116 @@
 <h2 is-upgraded>Step 1 of 3: Create AWS IAM policy for monitoring</h2>
 <ol type="1">
 <li>Go to <strong>Identity and Access Management (IAM)</strong> in your Amazon Console.</li>
-<li>Go to <strong>Policies</strong> and click the <strong>Create policy</strong> button.</li>
-</ol>
-<p class="image-container"><img alt="image" src="img/ec520f0e64b3999a.png"></p>
-<ol type="1">
-<li>Select the JSON tab, and paste this predefined policy from the box below.</li>
-</ol>
-<p class="image-container"><img alt="image" src="img/bac77dab517846df.png"></p>
-<pre><code>    {
-        &#34;Version&#34;: &#34;2012-10-17&#34;,
-        &#34;Statement&#34;: [
-            {
-                &#34;Sid&#34;: &#34;VisualEditor0&#34;,
-                &#34;Effect&#34;: &#34;Allow&#34;,
-                &#34;Action&#34;: [
-                    &#34;acm-pca:ListCertificateAuthorities&#34;, 
-                    &#34;apigateway:GET&#34;, 
-                    &#34;apprunner:ListServices&#34;, 
-                    &#34;appstream:DescribeFleets&#34;, 
-                    &#34;appsync:ListGraphqlApis&#34;, 
-                    &#34;athena:ListWorkGroups&#34;, 
-                    &#34;autoscaling:DescribeAutoScalingGroups&#34;, 
-                    &#34;cloudformation:ListStackResources&#34;, 
-                    &#34;cloudfront:ListDistributions&#34;, 
-                    &#34;cloudhsm:DescribeClusters&#34;, 
-                    &#34;cloudsearch:DescribeDomains&#34;, 
-                    &#34;cloudwatch:GetMetricData&#34;, 
-                    &#34;cloudwatch:GetMetricStatistics&#34;, 
-                    &#34;cloudwatch:ListMetrics&#34;, 
-                    &#34;codebuild:ListProjects&#34;, 
-                    &#34;datasync:ListTasks&#34;, 
-                    &#34;dax:DescribeClusters&#34;, 
-                    &#34;directconnect:DescribeConnections&#34;, 
-                    &#34;dms:DescribeReplicationInstances&#34;, 
-                    &#34;dynamodb:ListTables&#34;, 
-                    &#34;dynamodb:ListTagsOfResource&#34;, 
-                    &#34;ec2:DescribeAvailabilityZones&#34;, 
-                    &#34;ec2:DescribeInstances&#34;, 
-                    &#34;ec2:DescribeNatGateways&#34;, 
-                    &#34;ec2:DescribeSpotFleetRequests&#34;, 
-                    &#34;ec2:DescribeTransitGateways&#34;, 
-                    &#34;ec2:DescribeVolumes&#34;, 
-                    &#34;ec2:DescribeVpnConnections&#34;, 
-                    &#34;ecs:ListClusters&#34;, 
-                    &#34;eks:ListClusters&#34;, 
-                    &#34;elasticache:DescribeCacheClusters&#34;, 
-                    &#34;elasticbeanstalk:DescribeEnvironmentResources&#34;, 
-                    &#34;elasticbeanstalk:DescribeEnvironments&#34;, 
-                    &#34;elasticfilesystem:DescribeFileSystems&#34;, 
-                    &#34;elasticloadbalancing:DescribeInstanceHealth&#34;, 
-                    &#34;elasticloadbalancing:DescribeListeners&#34;, 
-                    &#34;elasticloadbalancing:DescribeLoadBalancers&#34;, 
-                    &#34;elasticloadbalancing:DescribeRules&#34;, 
-                    &#34;elasticloadbalancing:DescribeTags&#34;, 
-                    &#34;elasticloadbalancing:DescribeTargetHealth&#34;, 
-                    &#34;elasticmapreduce:ListClusters&#34;, 
-                    &#34;elastictranscoder:ListPipelines&#34;, 
-                    &#34;es:ListDomainNames&#34;, 
-                    &#34;events:ListEventBuses&#34;, 
-                    &#34;firehose:ListDeliveryStreams&#34;, 
-                    &#34;fsx:DescribeFileSystems&#34;, 
-                    &#34;gamelift:ListFleets&#34;, 
-                    &#34;glue:GetJobs&#34;, 
-                    &#34;inspector:ListAssessmentTemplates&#34;, 
-                    &#34;kafka:ListClusters&#34;, 
-                    &#34;kinesis:ListStreams&#34;, 
-                    &#34;kinesisanalytics:ListApplications&#34;, 
-                    &#34;kinesisvideo:ListStreams&#34;, 
-                    &#34;lambda:ListFunctions&#34;, 
-                    &#34;lambda:ListTags&#34;, 
-                    &#34;lex:GetBots&#34;, 
-                    &#34;logs:DescribeLogGroups&#34;, 
-                    &#34;mediaconnect:ListFlows&#34;, 
-                    &#34;mediaconvert:DescribeEndpoints&#34;, 
-                    &#34;mediapackage-vod:ListPackagingConfigurations&#34;, 
-                    &#34;mediapackage:ListChannels&#34;, 
-                    &#34;mediatailor:ListPlaybackConfigurations&#34;, 
-                    &#34;opsworks:DescribeStacks&#34;, 
-                    &#34;qldb:ListLedgers&#34;, 
-                    &#34;rds:DescribeDBClusters&#34;, 
-                    &#34;rds:DescribeDBInstances&#34;, 
-                    &#34;rds:DescribeEvents&#34;, 
-                    &#34;rds:ListTagsForResource&#34;, 
-                    &#34;redshift:DescribeClusters&#34;, 
-                    &#34;robomaker:ListSimulationJobs&#34;, 
-                    &#34;route53:ListHostedZones&#34;, 
-                    &#34;route53resolver:ListResolverEndpoints&#34;, 
-                    &#34;s3:ListAllMyBuckets&#34;, 
-                    &#34;sagemaker:ListEndpoints&#34;, 
-                    &#34;sns:ListTopics&#34;, 
-                    &#34;sqs:ListQueues&#34;, 
-                    &#34;storagegateway:ListGateways&#34;, 
-                    &#34;sts:GetCallerIdentity&#34;, 
-                    &#34;swf:ListDomains&#34;, 
-                    &#34;tag:GetResources&#34;, 
-                    &#34;tag:GetTagKeys&#34;, 
-                    &#34;transfer:ListServers&#34;, 
-                    &#34;workmail:ListOrganizations&#34;, 
-                    &#34;workspaces:DescribeWorkspaces&#34;
-                ],
-                &#34;Resource&#34;: &#34;*&#34;
-            }
-        ]
-    }
+<li>Go to <strong>Policies</strong> and click the <strong>Create policy</strong> button. <img alt="image" src="img/ec520f0e64b3999a.png"></li>
+<li>Select the JSON tab, and paste this predefined policy from the box below. <img alt="image" src="img/bac77dab517846df.png">  <pre><code>{
+    &#34;Version&#34;: &#34;2012-10-17&#34;,
+    &#34;Statement&#34;: [
+        {
+            &#34;Sid&#34;: &#34;VisualEditor0&#34;,
+            &#34;Effect&#34;: &#34;Allow&#34;,
+            &#34;Action&#34;: [
+                &#34;acm-pca:ListCertificateAuthorities&#34;, 
+                &#34;apigateway:GET&#34;, 
+                &#34;apprunner:ListServices&#34;, 
+                &#34;appstream:DescribeFleets&#34;, 
+                &#34;appsync:ListGraphqlApis&#34;, 
+                &#34;athena:ListWorkGroups&#34;, 
+                &#34;autoscaling:DescribeAutoScalingGroups&#34;, 
+                &#34;cloudformation:ListStackResources&#34;, 
+                &#34;cloudfront:ListDistributions&#34;, 
+                &#34;cloudhsm:DescribeClusters&#34;, 
+                &#34;cloudsearch:DescribeDomains&#34;, 
+                &#34;cloudwatch:GetMetricData&#34;, 
+                &#34;cloudwatch:GetMetricStatistics&#34;, 
+                &#34;cloudwatch:ListMetrics&#34;, 
+                &#34;codebuild:ListProjects&#34;, 
+                &#34;datasync:ListTasks&#34;, 
+                &#34;dax:DescribeClusters&#34;, 
+                &#34;directconnect:DescribeConnections&#34;, 
+                &#34;dms:DescribeReplicationInstances&#34;, 
+                &#34;dynamodb:ListTables&#34;, 
+                &#34;dynamodb:ListTagsOfResource&#34;, 
+                &#34;ec2:DescribeAvailabilityZones&#34;, 
+                &#34;ec2:DescribeInstances&#34;, 
+                &#34;ec2:DescribeNatGateways&#34;, 
+                &#34;ec2:DescribeSpotFleetRequests&#34;, 
+                &#34;ec2:DescribeTransitGateways&#34;, 
+                &#34;ec2:DescribeVolumes&#34;, 
+                &#34;ec2:DescribeVpnConnections&#34;, 
+                &#34;ecs:ListClusters&#34;, 
+                &#34;eks:ListClusters&#34;, 
+                &#34;elasticache:DescribeCacheClusters&#34;, 
+                &#34;elasticbeanstalk:DescribeEnvironmentResources&#34;, 
+                &#34;elasticbeanstalk:DescribeEnvironments&#34;, 
+                &#34;elasticfilesystem:DescribeFileSystems&#34;, 
+                &#34;elasticloadbalancing:DescribeInstanceHealth&#34;, 
+                &#34;elasticloadbalancing:DescribeListeners&#34;, 
+                &#34;elasticloadbalancing:DescribeLoadBalancers&#34;, 
+                &#34;elasticloadbalancing:DescribeRules&#34;, 
+                &#34;elasticloadbalancing:DescribeTags&#34;, 
+                &#34;elasticloadbalancing:DescribeTargetHealth&#34;, 
+                &#34;elasticmapreduce:ListClusters&#34;, 
+                &#34;elastictranscoder:ListPipelines&#34;, 
+                &#34;es:ListDomainNames&#34;, 
+                &#34;events:ListEventBuses&#34;, 
+                &#34;firehose:ListDeliveryStreams&#34;, 
+                &#34;fsx:DescribeFileSystems&#34;, 
+                &#34;gamelift:ListFleets&#34;, 
+                &#34;glue:GetJobs&#34;, 
+                &#34;inspector:ListAssessmentTemplates&#34;, 
+                &#34;kafka:ListClusters&#34;, 
+                &#34;kinesis:ListStreams&#34;, 
+                &#34;kinesisanalytics:ListApplications&#34;, 
+                &#34;kinesisvideo:ListStreams&#34;, 
+                &#34;lambda:ListFunctions&#34;, 
+                &#34;lambda:ListTags&#34;, 
+                &#34;lex:GetBots&#34;, 
+                &#34;logs:DescribeLogGroups&#34;, 
+                &#34;mediaconnect:ListFlows&#34;, 
+                &#34;mediaconvert:DescribeEndpoints&#34;, 
+                &#34;mediapackage-vod:ListPackagingConfigurations&#34;, 
+                &#34;mediapackage:ListChannels&#34;, 
+                &#34;mediatailor:ListPlaybackConfigurations&#34;, 
+                &#34;opsworks:DescribeStacks&#34;, 
+                &#34;qldb:ListLedgers&#34;, 
+                &#34;rds:DescribeDBClusters&#34;, 
+                &#34;rds:DescribeDBInstances&#34;, 
+                &#34;rds:DescribeEvents&#34;, 
+                &#34;rds:ListTagsForResource&#34;, 
+                &#34;redshift:DescribeClusters&#34;, 
+                &#34;robomaker:ListSimulationJobs&#34;, 
+                &#34;route53:ListHostedZones&#34;, 
+                &#34;route53resolver:ListResolverEndpoints&#34;, 
+                &#34;s3:ListAllMyBuckets&#34;, 
+                &#34;sagemaker:ListEndpoints&#34;, 
+                &#34;sns:ListTopics&#34;, 
+                &#34;sqs:ListQueues&#34;, 
+                &#34;storagegateway:ListGateways&#34;, 
+                &#34;sts:GetCallerIdentity&#34;, 
+                &#34;swf:ListDomains&#34;, 
+                &#34;tag:GetResources&#34;, 
+                &#34;tag:GetTagKeys&#34;, 
+                &#34;transfer:ListServers&#34;, 
+                &#34;workmail:ListOrganizations&#34;, 
+                &#34;workspaces:DescribeWorkspaces&#34;
+            ],
+            &#34;Resource&#34;: &#34;*&#34;
+        }
+    ]
+}
 </code></pre>
-<ol type="1">
+</li>
 <li>You can skip over the <strong>Add tags</strong> page</li>
-<li>One the <strong>Review policy</strong> page, use the policy name of <strong>dynatrace_monitoring_policy</strong></li>
-</ol>
-<p class="image-container"><img alt="image" src="img/6846aa45e5d1d2f6.png"></p>
-<ol type="1">
+<li>One the <strong>Review policy</strong> page, use the policy name of <strong>dynatrace_monitoring_policy</strong><img alt="image" src="img/6846aa45e5d1d2f6.png"></li>
 <li>Click <strong>Create policy</strong> button.</li>
 </ol>
 <h2 is-upgraded>Step 2 of 3: Create AWS User</h2>
 <ol type="1">
 <li>Go to <strong>Identity and Access Management (IAM)</strong> in your Amazon Console.</li>
-<li>Go to <strong>Users</strong> and click the <strong>Add User</strong> button.</li>
-</ol>
-<p class="image-container"><img alt="image" src="img/bbc3fbc425ff1df7.png"></p>
-<ol type="1">
+<li>Go to <strong>Users</strong> and click the <strong>Add User</strong> button. <img alt="image" src="img/bbc3fbc425ff1df7.png"></li>
 <li>Enter a name for the key you want to create (for example, <strong>Dynatrace_monitoring_user</strong>).</li>
-<li>In Select AWS access type, select <strong>Programmatic access</strong>, and click <strong>Next:Permissions</strong>.</li>
-</ol>
-<p class="image-container"><img alt="image" src="img/6a954fde2b01270a.png"></p>
-<ol type="1">
-<li>Click <strong>Attach existing policies directly</strong> and choose the monitoring policy you defined, for example <strong>dynatrace_monitoring_policy</strong>. Click <strong>Next: Review</strong>.</li>
-</ol>
-<p class="image-container"><img alt="image" src="img/5f770ea5a9f65708.png"></p>
-<ol type="1">
+<li>In Select AWS access type, select <strong>Programmatic access</strong>, and click <strong>Next:Permissions</strong>. <img alt="image" src="img/6a954fde2b01270a.png"></li>
+<li>Click <strong>Attach existing policies directly</strong> and choose the monitoring policy you defined, for example <strong>dynatrace_monitoring_policy</strong>. Click <strong>Next: Review</strong>. <img alt="image" src="img/5f770ea5a9f65708.png"></li>
 <li>Review the user details and click <strong>Create user</strong>.</li>
 <li>Store the <strong>Access Key ID name (AKID)</strong> and <strong>Secret access key values</strong>. You can either download the user credentials or copy the credentials displayed online (click Show).</li>
 </ol>
@@ -223,28 +206,12 @@
 <h2 is-upgraded>1. Setup Custom metric alerting for AWS</h2>
 <ol type="1">
 <li>To add custom alerts, navigate to <strong>Settings –&gt; Anomaly Detection –&gt; Custom Events for Alerting</strong> menu.</li>
-<li>Click the <strong>Create custom event for alerting</strong> button.</li>
-</ol>
-<p class="image-container"><img alt="image" src="img/a11aa41f0f3f4650.png"></p>
-<ol type="1">
-<li>In the <strong>Metric</strong> dropdown list, type <strong>EC2 CPU usage %</strong> and pick the <strong>Cloud platforms &gt; AWS &gt; EC2 &gt; CPU &gt; usage</strong> option and Pick <strong>Average</strong></li>
-</ol>
-<p class="image-container"><img alt="image" src="img/87f7ce51355b0dd3.png"></p>
-<ol type="1">
-<li>Click <strong>Add rule-base</strong> button and update as shown below</li>
-</ol>
-<p class="image-container"><img alt="image" src="img/f799fcef1c2184b7.png"></p>
-<ol type="1">
-<li>Choose <strong>Static threshold</strong> and update as shown below</li>
-</ol>
-<p class="image-container"><img alt="image" src="img/ad6bf46f3a138e50.png"></p>
-<ol type="1">
-<li>Add the <strong>Event Description</strong> to have the <strong>title</strong> and <strong>severity = CUSTOM ALERT</strong> as shown below.</li>
-</ol>
-<p class="image-container"><img alt="image" src="img/b2fca6858ce9911c.png"></p>
-<p>Notice the <strong>Alert preview</strong> chart that helps you in reviewing these settings</p>
-<p class="image-container"><img alt="image" src="img/15a3d3f2962b3c91.png"></p>
-<ol type="1">
+<li>Click the <strong>Create custom event for alerting</strong> button. <img alt="image" src="img/a11aa41f0f3f4650.png"></li>
+<li>In the <strong>Metric</strong> dropdown list, type <strong>EC2 CPU usage %</strong> and pick the <strong>Cloud platforms &gt; AWS &gt; EC2 &gt; CPU &gt; usage</strong> option and Pick <strong>Average</strong><img alt="image" src="img/87f7ce51355b0dd3.png"></li>
+<li>Click <strong>Add rule-base</strong> button and update as shown below <img alt="image" src="img/f799fcef1c2184b7.png"></li>
+<li>Choose <strong>Static threshold</strong> and update as shown below <img alt="image" src="img/ad6bf46f3a138e50.png"></li>
+<li>Add the <strong>Event Description</strong> to have the <strong>title</strong> and <strong>severity = CUSTOM ALERT</strong> as shown below. <img alt="image" src="img/b2fca6858ce9911c.png"></li>
+<li>Notice the <strong>Alert preview</strong> chart that helps you in reviewing these settings <img alt="image" src="img/15a3d3f2962b3c91.png"></li>
 <li>Save your changes</li>
 </ol>
 <h2 is-upgraded>2. SSH to monolith host</h2>
@@ -263,18 +230,18 @@ ubuntu@ip-10-0-0-118:~$
 </code></pre>
 <h2 is-upgraded>3. Trigger a CPU problem</h2>
 <p>In the shell, copy all these lines and run them:</p>
-<pre><code language="language-bash" class="language-bash">    yes &gt; /dev/null &amp;
-    yes &gt; /dev/null &amp;
-    yes &gt; /dev/null &amp;
+<pre><code language="language-bash" class="language-bash">yes &gt; /dev/null &amp;
+yes &gt; /dev/null &amp;
+yes &gt; /dev/null &amp;
 </code></pre>
 <p>To verify, run this command:</p>
-<pre><code language="language-bash" class="language-bash">    ps -ef | grep yes
+<pre><code language="language-bash" class="language-bash">ps -ef | grep yes
 </code></pre>
 <p>The output should look like this:</p>
-<pre><code language="language-bash" class="language-bash">    ubuntu    5802  5438 99 20:48 pts/0    00:00:05 yes
-    ubuntu    5805  5438 89 20:48 pts/0    00:00:04 yes
-    ubuntu    5806  5438 97 20:48 pts/0    00:00:03 yes
-    ubuntu    5818  5438  0 20:48 pts/0    00:00:00 grep --color=auto yes
+<pre><code language="language-bash" class="language-bash">ubuntu    5802  5438 99 20:48 pts/0    00:00:05 yes
+ubuntu    5805  5438 89 20:48 pts/0    00:00:04 yes
+ubuntu    5806  5438 97 20:48 pts/0    00:00:03 yes
+ubuntu    5818  5438  0 20:48 pts/0    00:00:00 grep --color=auto yes
 </code></pre>
 <p>It will take a few mins for the problem card to appear. In the meantime, move on to the next section <strong>Explore the AWS dashboard</strong>.</p>
 
@@ -308,30 +275,22 @@ ubuntu@ip-10-0-0-118:~$
 <p class="image-container"><img alt="image" src="img/cd023cca077ab259.png"></p>
 <h2 is-upgraded>Stop the CPU problem</h2>
 <p>To stop the problem, you need to <strong>kill</strong> the processes. To do this:</p>
-<ol type="1">
-<li>Back in the CloudShell, run this command to get the process IDs</li>
-</ol>
-<pre><code language="language-bash" class="language-bash">   ps -ef | grep yes
+<p>1. Back in the CloudShell, run this command to get the process IDs</p>
+<pre><code language="language-bash" class="language-bash">ps -ef | grep yes
 </code></pre>
-<ol type="1">
-<li>For each process, copy the process ID and run <strong>kill </strong>, for example:</li>
-</ol>
-<pre><code language="language-bash" class="language-bash">   ubuntu@ip-10-0-0-118:~$ ps -ef | grep yes
-   ubuntu    5802  5438 99 20:48 pts/0    00:00:05 yes
-   ubuntu    5805  5438 89 20:48 pts/0    00:00:04 yes
-   ubuntu    5806  5438 97 20:48 pts/0    00:00:03 yes
-   ubuntu@ip-10-0-0-118:~$ kill 5802
-   ubuntu@ip-10-0-0-118:~$ kill 5805
-   ubuntu@ip-10-0-0-118:~$ kill 5806
+<p>2. For each process, copy the process ID and run <strong>kill </strong>, for example:</p>
+<pre><code language="language-bash" class="language-bash">ubuntu@ip-10-0-0-118:~$ ps -ef | grep yes
+ubuntu    5802  5438 99 20:48 pts/0    00:00:05 yes
+ubuntu    5805  5438 89 20:48 pts/0    00:00:04 yes
+ubuntu    5806  5438 97 20:48 pts/0    00:00:03 yes
+ubuntu@ip-10-0-0-118:~$ kill 5802
+ubuntu@ip-10-0-0-118:~$ kill 5805
+ubuntu@ip-10-0-0-118:~$ kill 5806
 </code></pre>
-<ol type="1">
-<li>Verify they are gone by running this again</li>
-</ol>
-<pre><code language="language-bash" class="language-bash">   ps -ef | grep yes
+<p>3. Verify they are gone by running this again</p>
+<pre><code language="language-bash" class="language-bash">ps -ef | grep yes
 </code></pre>
-<ol type="1">
-<li>Verify that CPU in Dynatrace goes to normal and the problems will eventually automatically close</li>
-</ol>
+<p>4. Verify that CPU in Dynatrace goes to normal and the problems will eventually automatically close</p>
 
 
       </google-codelab-step>

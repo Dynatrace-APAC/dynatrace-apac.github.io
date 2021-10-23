@@ -1,0 +1,207 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>6. Bonus!</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid="UA-175467274-1"
+                  id="aws-workshop-lab6"
+                  title="6. Bonus!"
+                  environment="web"
+                  feedback-link="mailto:alliances@dynatrace.com">
+    
+      <google-codelab-step label="Optional labs" duration="0">
+        <p>These additional labs were not covered in the hands on. However, you are free to try them on your own.</p>
+<p>🔷 AWS Log forwarder</p>
+<p>🔷 AWS Lambda code level instrumentation</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Before you begin" duration="0">
+        <p>Dynatrace leverages the Active Gate to ingest logs streamed from cloud providers. Follow the documentation <a href="(https://www.dynatrace.com/support/help/setup-and-configuration/dynatrace-activegate/installation/linux/linux-install-an-environment-activegate/" target="_blank">instructions</a>) to install the Active Gate software in any Linux/Windows OS based instance if you don&#39;t already have one.</p>
+<p>Because we are running an Active Gate on an AWS instance, we&#39;ll need to change it to use a public facing domain name.</p>
+<h2 is-upgraded>Setting up Active Gate</h2>
+<ul>
+<li>Extract the Public IP of the Active Gate  <ul>
+<li>As a metadata within <strong>Host View</strong> in Dynatrace, or</li>
+<li>execute this command <code>bash<br>curl https://ifconfig.me;echo</code><br> * Login to the command shell of your OS (assume Ubuntu bash shell here) * Edit the <strong>custom.properties</strong> file: <code>bash<br>sudo nano /var/lib/dynatrace/gateway/config/custom.properties<br></code></li>
+</ul>
+</li>
+<li>Add the following at the end of the file:</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">[connectivity]
+dnsEntryPoint = https://PUBLIC_DOMAIN_NAME:9999
+</code></pre>
+<ul>
+<li>Remember to <strong><em>SAVE</em></strong> the config.properties file</li>
+<li>Restart Active Gate with the command</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">sudo systemctl restart dynatracegateway
+</code></pre>
+<h2 is-upgraded>Validate setting in Dynatrace</h2>
+<p>Open Dynatrace UI -&gt; <strong>Deployment status</strong> -&gt; <strong>Active Gates</strong></p>
+<p class="image-container"><img alt="Deploy" src="img/a7d585b270671875.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="AWS Log Forwarder" duration="0">
+        <p>We will use the AWS Log Forwarder from <a href="https://github.com/dynatrace-oss/dynatrace-aws-log-forwarder" target="_blank">here</a></p>
+<p class="image-container"><img alt="Deploy" src="img/9c2d2010adc53480.png"></p>
+<h2 is-upgraded>Deploying the Infrastructure</h2>
+<p>We will need to setup the AWS Infrastructure setup via running a Cloudformation script.</p>
+<aside class="special"><p>Full online doucmentation <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/infrastructure-monitoring/cloud-platform-monitoring/amazon-web-services-monitoring/aws-log-forwarder/" target="_blank">AWS Log Forwarder</a></p>
+</aside>
+<ol type="1">
+<li>Open AWS CloudShell if it is already not started</li>
+<li>Set the following environment variables in CloudShell. We recommend that you copy the text below to a text editor and amend the <strong>Placeholder</strong> values such as <strong>PUBLIC_DOMAIN_NAME</strong> and <strong>Managed_Environment_ID</strong> and <strong>TOKEN_NAME</strong></li>
+</ol>
+<pre><code language="language-bash" class="language-bash">   TARGET_URL=https://&lt;PUBLIC_DOMAIN_NAME&gt;:9999/e/&lt;Managed_Environment_ID&gt;
+   TARGET_API_TOKEN=&lt;your_API_token&gt;
+   REQUIRE_VALID_CERTIFICATE=false
+</code></pre>
+<ol type="1">
+<li>Download the script and deploy the infrastructure.</li>
+</ol>
+<pre><code language="language-bash" class="language-bash">wget -O dynatrace-aws-log-forwarder.zip https://github.com/dynatrace-oss/dynatrace-aws-log-forwarder/releases/latest/download/dynatrace-aws-log-forwarder.zip \
+ &amp;&amp; unzip -qo dynatrace-aws-log-forwarder.zip \
+ &amp;&amp; ./dynatrace-aws-logs.sh deploy --target-url $TARGET_URL --target-api-token $TARGET_API_TOKEN --use-existing-active-gate true --require-valid-certificate $REQUIRE_VALID_CERTIFICATE
+</code></pre>
+<p class="image-container"><img alt="Deploy" src="img/cf2ae8154c1e15c4.png"></p>
+<h2 is-upgraded>Create a Lambda function to test log ingest</h2>
+<p>For the purpose of sending logs, we will create a new Lambda function.</p>
+<p>1. In the AWS portal, search for Lambda within the AWS Search Bar and go to <strong>Lambda</strong></p>
+<p>2. Click on <strong>Create Function</strong></p>
+<p>3. Use default option of <strong>Author from scratch</strong></p>
+<p>4. Give a Function name <strong>testlab6</strong></p>
+<p>5. We will create a nodejs function, leave everything else as default</p>
+<p>6. Click on <strong>Create Function</strong></p>
+<p>7. Copy the following code</p>
+<pre><code language="language-nodejs" class="language-nodejs">/**
+ * This is a very simply lambda function that simply executes random HTTP Requests to a randomly selected group of URLs
+ * With the Dynatrace OneAgent injected you can end-to-end trace these calls
+ * 
+ */ 
+exports.handler = (event, context, callback) =&gt; {
+    // TODO implement
+    executeRequest(&#34;https://www.dynatrace.com&#34;);
+    executeRequest(&#34;https://www.amazon.com&#34;);
+    executeRequest(&#34;https://www.google.com&#34;);
+};
+
+var executeRequest = function(url, callback) {
+    var https = require(&#34;https&#34;);
+    var fullUrl = require(&#34;url&#34;).parse(url);
+
+    var request_options = {
+      host: fullUrl.host,
+      path: fullUrl.path,
+      method: &#39;GET&#39;,
+    };
+
+    // Set up the request
+    var get_req = https.request(request_options, function(res) {
+        var responseBody = &#34;&#34;;
+        res.setEncoding(&#39;utf8&#39;);
+        res.on(&#39;data&#39;, function (chunk) {
+            responseBody += chunk;
+        });
+        res.on(&#39;end&#39;, function() {
+            console.log(url + &#34;: StatusCode = &#34; + res.statusCode + &#34; ContentLength: &#34; + responseBody.length);
+            //callback(null, null);
+        });
+    });
+
+    // post the data
+    get_req.end();    
+    
+}
+</code></pre>
+<p>8. Paste it in this section</p>
+<p>9. Click on <strong>deploy</strong></p>
+<p>10. Click on <strong>test</strong></p>
+<p>11. Give any name you like for this test script</p>
+<p>12. Click on <strong>save</strong></p>
+<p>Once done, this Lambda function will create a log group. You can proceed to subscribe to the log group below.</p>
+<h2 is-upgraded>Subscribe to log groups</h2>
+<ol type="1">
+<li>Back within the AWS Cloudshell, run the following command ./dynatrace-aws-logs.sh discover-log-groups &gt; LOG_GROUPS_FILE</li>
+<li>You see the discovered log groups with <strong>more LOG_GROUPS_FILE</strong></li>
+<li>To subscribe, use the command below: ./dynatrace-aws-logs.sh subscribe –log-groups-from-file LOG_GROUPS_FILE</li>
+</ol>
+<h2 is-upgraded>View Cloudwatch logs in Dynatrace</h2>
+<p>Back in Dynatrace, go to the new Log Viewer to see the new Log events from Cloudwatch logs</p>
+<p class="image-container"><img alt="Deploy" src="img/703ccebc058693fc.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="AWS Lambda code-level instrumentation" duration="0">
+        <p>We can also instrument this function with Dynatrace as a <a href="https://www.dynatrace.com/support/help/technology-support/cloud-platforms/amazon-web-services/integrations/deploy-oneagent-as-lambda-extension/" target="_blank">Lambda extension</a></p>
+<aside class="special"><p>Benefit of instrumentation: &#34;Full stack&#34; observability, i.e. metrics + traces + logs!! :-)</p>
+</aside>
+<h2 is-upgraded>Instrumenting the Lambda function with Dynatrace</h2>
+<ol type="1">
+<li>Using <strong>Configure with environment variables</strong>, configure the function wtih Dynatrace instrumentation  <ul>
+<li>Add environment variable to the function</li>
+<li>Add Lambda layer ARN</li>
+</ul>
+</li>
+<li>Once configured, click on <strong>Test</strong></li>
+</ol>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Creating log metrics" duration="0">
+        <ul>
+<li>Filter on your aws.account.id</li>
+<li>Apply a filter for content with <code>REPORT RequestId:</code>  <ul>
+<li>This would reduce your search to only log events with RequestId</li>
+</ul>
+</li>
+<li>Click on <strong>create metric</strong></li>
+<li>Give a key <code>log.lambda</code></li>
+<li>Click on <strong>Add dimension</strong> with the following:  <ul>
+<li>aws.region</li>
+<li>aws.resource.id</li>
+<li>aws.log_stream​</li>
+</ul>
+</li>
+<li>Click on <strong>Metrics</strong> on the left navigation panel</li>
+<li>Search for <code>Text:Log</code> to locate the log metric</li>
+<li>Click on <strong>create chart</strong></li>
+<li>You can spilt Log metrics with various dimensions attached to it</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="../../elements/codelab-elements/native-shim.js"></script>
+  <script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+  <script src="../../elements/codelab-elements/prettify.js"></script>
+  <script src="../../elements/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

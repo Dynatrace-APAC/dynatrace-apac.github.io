@@ -122,39 +122,33 @@
 <li>Dynatrace Base URL</li>
 <li>Dynatrace API token</li>
 </ul>
-<ol type="1">
-<li>Execute</li>
-</ol>
-<pre><code language="language-bash" class="language-bash">  cd ~/aws-modernization-dt-orders-setup/provision-scripts
-   ./input-credentials.sh
+<p>1. Execute</p>
+<pre><code language="language-bash" class="language-bash">cd ~/aws-modernization-dt-orders-setup/provision-scripts
+./input-credentials.sh
 </code></pre>
-<ol type="1">
-<li>Copy the Dynatrace Base URL and API token values from your text editor</li>
-<li>You will see additional inputs for the name of the AWS resources used in the labs. Accept the default values.</li>
-<li>Verify Inputs</li>
-</ol>
-<pre><code language="language-bash" class="language-bash">   Please confirm all are correct:
-   --------------------------------------------------
-   Dynatrace Base URL       : https://mou612.managed-sprint.dynalabs.io/e/abcd-1234-xxxx-yyyy
-   Dynatrace API Token      : ggggggggggggggggggggggg
-   --------------------------------------------------
-   Monolith Host Name       : dt-orders-monolith
-   Services Host Name       : dt-orders-services
-   Cluster Name             : dynatrace-workshop-cluster
-   ===================================================================
-   Saved credential to: ../gen/workshop-credentials.json
-   {
-       &#34;DT_BASEURL&#34;: &#34;https://mou612.managed-sprint.dynalabs.io/e/abcd-1234-xxxx-yyyy&#34;,
-       &#34;DT_API_TOKEN&#34;: &#34;ggggggggggggggggggggggg&#34;,
-       &#34;HOSTNAME_MONOLITH&#34;: &#34;dt-orders-monolith&#34;,
-       &#34;HOSTNAME_SERVICES&#34;: &#34;dt-orders-services&#34;,
-       &#34;CLUSTER_NAME&#34;: &#34;dynatrace-workshop-cluster&#34;
-   }
+<p>2. Copy the Dynatrace Base URL and API token values from your text editor</p>
+<p>3. You will see additional inputs for the name of the AWS resources used in the labs. Accept the default values.</p>
+<p>4. Verify Inputs</p>
+<pre><code language="language-bash" class="language-bash">Please confirm all are correct:
+--------------------------------------------------
+Dynatrace Base URL       : https://mou612.managed-sprint.dynalabs.io/e/abcd-1234-xxxx-yyyy
+Dynatrace API Token      : ggggggggggggggggggggggg
+--------------------------------------------------
+Monolith Host Name       : dt-orders-monolith
+Services Host Name       : dt-orders-services
+Cluster Name             : dynatrace-workshop-cluster
+===================================================================
+Saved credential to: ../gen/workshop-credentials.json
+{
+    &#34;DT_BASEURL&#34;: &#34;https://mou612.managed-sprint.dynalabs.io/e/abcd-1234-xxxx-yyyy&#34;,
+    &#34;DT_API_TOKEN&#34;: &#34;ggggggggggggggggggggggg&#34;,
+    &#34;HOSTNAME_MONOLITH&#34;: &#34;dt-orders-monolith&#34;,
+    &#34;HOSTNAME_SERVICES&#34;: &#34;dt-orders-services&#34;,
+    &#34;CLUSTER_NAME&#34;: &#34;dynatrace-workshop-cluster&#34;
+}
 </code></pre>
-<ol type="1">
-<li>After you confirm, the script will show the saved values in the <strong>~/aws-modernization-dt-orders-setup/gen/workshop-credentials.json</strong> file.</li>
-<li>If you mess up, you can re-run the script again and will prompt you again for each value.</li>
-</ol>
+<p>5. After you confirm, the script will show the saved values in the <strong>~/aws-modernization-dt-orders-setup/gen/workshop-credentials.json</strong> file.</p>
+<p>6. If you mess up, you can re-run the script again and will prompt you again for each value.</p>
 
 
       </google-codelab-step>
@@ -168,17 +162,13 @@
 <li>Add Auto Tagging Rules to drive management zone and SLO settings</li>
 <li>Add SLOs for a use in custom dashboards</li>
 </ul>
-<ol type="1">
-<li>Execute the scripts to configure Dynatrace for the <strong>monolith</strong> application:</li>
-</ol>
-<pre><code language="language-bash" class="language-bash">  cd ~/aws-modernization-dt-orders-setup/workshop-config
-   ./setup-workshop-config.sh monolith-vm
+<p>1. Execute the scripts to configure Dynatrace for the <strong>monolith</strong> application:</p>
+<pre><code language="language-bash" class="language-bash">cd ~/aws-modernization-dt-orders-setup/workshop-config
+./setup-workshop-config.sh monolith-vm
 </code></pre>
-<ol type="1">
-<li>Execute the scripts to configure Dynatrace for the <strong>micro-services</strong> application:</li>
-</ol>
-<pre><code language="language-bash" class="language-bash">   cd ~/aws-modernization-dt-orders-setup/workshop-config
-   ./setup-workshop-config.sh services-vm
+<p>2. Execute the scripts to configure Dynatrace for the <strong>micro-services</strong> application:</p>
+<pre><code language="language-bash" class="language-bash">cd ~/aws-modernization-dt-orders-setup/workshop-config
+./setup-workshop-config.sh services-vm
 </code></pre>
 
 
@@ -195,12 +185,15 @@
 <li>The OneAgent which was installed will automatically discover the application running in the EC2 instance and starts to provide Full Stack observability.</li>
 </ul>
 <p>These CloudFormation scripts can help you to automate both <strong>AWS resource provisioning</strong> and <strong>Dynatrace components</strong> as well! This is the automated observability that Dynatrace provides out of the box</p>
-<h2 is-upgraded>Step 1: Add Cloudformation Stack for monolith app</h2>
+<h2 is-upgraded>Step 1: Create 1st Cloudformation Stack</h2>
 <ol type="1">
 <li>In the AWS console, navigate to Cloudformation Stack <img alt="Image" src="img/e128633c0ee8af5f.png"></li>
 <li>On the Cloudformation Stack page, click the <strong>Create Stack</strong> button and the <strong>With new resources</strong> option.</li>
-<li>Download and save the CloudFormation script on your PC/Mac TODO provide URL</li>
-<li>On the Create stack page, select <strong>Upload a template file</strong>, browse your PC/Mac and select the workshopMonolith.yaml file</li>
+<li>Use your browser, access the CloudFormation script and <strong>save as</strong> on your PC/Mac  <pre><code>https://raw.githubusercontent.com/Dynatrace-APAC/partner-aws/main/workshopMonolith.yaml
+</code></pre>
+<img alt="image" src="img/9e66a0511230ac20.png"></li>
+<li>On the Create stack page, select <strong>Upload a template file</strong>, browse your PC/Mac and select the <strong><em>workshopMonolith.yaml</em></strong> file</li>
+<li>Click on <strong>Next</strong><img alt="Image" src="img/25c99d82cbcdabe.png"></li>
 </ol>
 <h2 is-upgraded>Step 2: Enter input parameters for monolith app</h2>
 <p>On the Specify Stack Details page, enter the following values:</p>
@@ -209,16 +202,16 @@
 <li>DynatraceBaseUrl - <strong>Copy from the text editior</strong></li>
 <li>DynatracePaasToken - The Dynatrace Access token you created earlier <strong>Copy from the text editior</strong></li>
 <li>KeyPairName - <strong>leave the default value</strong> of <em>ee-default-keypair</em></li>
-<li>ResourcePrefix - <strong>leave this empty</strong></li>
-<li>Click on the <strong>next</strong> button</li>
+<li>ResourcePrefix - <strong>leave this empty</strong><img alt="image" src="img/a23f01e05ceeaf56.png"></li>
+<li>Click on the <strong>next</strong> button in the next few pages</li>
+<li>Finally click on <strong>create stack</strong><img alt="image" src="img/f34b07211bd51894.png"></li>
 </ol>
-<p class="image-container"><img alt="image" src="img/a23f01e05ceeaf56.png"></p>
-<h2 is-upgraded>Step 3: Add Cloudformation Stack for micro-services app</h2>
+<h2 is-upgraded>Step 3: Create 2nd Cloudformation Stack</h2>
 <ol type="1">
 <li>Back to the Cloudformation Stack page, click the <strong>Create Stack</strong> button and the <strong>With new resources</strong> option.</li>
 <li>This time we will use a CloudFormation stack stored in a public S3 bucket as the <strong>Template source</strong>. Copy s3 URL below in this values to the Amazon s3 URL field as shown below:  <pre><code>https://aws-modernize-workshop-stg-cloudformation.s3.us-west-2.amazonaws.com/workshopServices.yaml 
 </code></pre>
-</li>
+<img alt="image" src="img/d07ff2a73e19114.png"></li>
 <li>Click on the <strong>next</strong> button</li>
 </ol>
 <h2 is-upgraded>Step 4: Enter input parameters for micro-services app</h2>
@@ -229,14 +222,14 @@
 <li>DynatracePaasToken - The Dynatrace Access token you created earlier <strong>Copy from the text editior</strong></li>
 <li>KeyPairName - <strong>leave the default value</strong> of <em>ee-default-keypair</em></li>
 <li>ResourcePrefix - <strong>leave this empty</strong></li>
-<li>Click on the <strong>next</strong> button</li>
+<li>Simiar to the above, click on the <strong>next</strong> button in the next few pages and finally click on <strong>create stack</strong>.</li>
 </ol>
 <h2 is-upgraded>Step 5: Review CloudFormation Output</h2>
 <p>The CloudFormation may take a few minutes, but you can check the CloudFormation output to ensure that all the AWS resources were provisioned successfully.</p>
 <p>Monitor CloudFormation stack status within the AWS console. Navigate to the CloudFormation page or just navidate to: <a href="https://console.aws.amazon.com/cloudformation/home" target="_blank">https://console.aws.amazon.com/cloudformation/home</a></p>
 <p>When it is complete, it will show a <strong>CREATE_COMPLETE</strong> status as shown below.</p>
 <p class="image-container"><img alt="image" src="img/1dbc045e3f14e23a.png"></p>
-<aside class="special"><p>The process to provision everything will take ~5 minutes, so please be patient.</p>
+<aside class="warning"><p>The process to provision everything will take ~5 minutes, so please be patient.</p>
 </aside>
 
 
@@ -247,6 +240,8 @@
 <p>✅ Ensure your Dynatrace account is ready</p>
 <p>✅ Ensure your AWS Account is ready</p>
 <p>✅ Create and gather Dynatrace URLs &amp; Tokens needed to provision the workshop</p>
+<p>✅ Configure Dynatrace</p>
+<p>✅ Provision AWS resources</p>
 <h2 is-upgraded>Next Steps</h2>
 <p>You are now ready to proceed with the labs where you provision resources and follow the lab guides.</p>
 

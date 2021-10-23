@@ -9,6 +9,7 @@ Analytics Account: UA-175467274-1
 
 # 5. Speed up software delivery
 
+## Objectives of this Lab
 A micro-services architecture provides the best environment for agile development, but also giving rise to a complex ecosystem of microservices.
 
 There are more possibilities for failures and more hiding spots for problems to sneak into the environment when software driving more than just the application.
@@ -31,17 +32,12 @@ However, in this lab, we will not have time to build out the entire AWS Code Dep
 
 Instead, we will manually trigger a deployment in a micro-service and see how troubleshooting time is significantly reduced by letting AI automatically detect problems and pinpoints the root cause, explaining business impact with no manual configurations.
 
-In this way, you can see how DAVIS and Dynatrace helps to automate release validations and provide faster feedback loos
+In this way, you can see how DAVIS and Dynatrace helps to automate release validations and provide faster feedback loops.
 
 <!-- -->
-## What did i break?
+## Deploy enhacements
 
-Imagine you are an app developer and you have done some enhacements to one of the services.
-
-### 1. Deploy enhacements
------------------------------
-
-You will use the AWS Cloudshell to set the order service to version 3. 
+You are now an app developer and you have done some enhacements to one of the services. You will use the AWS Cloudshell to deploy version 3 of the one of the microservice. 
 
 ```bash
 cd ~/aws-modernization-dt-orders-setup/learner-scripts/
@@ -54,8 +50,8 @@ To automate the version change, a unix script is provided that will do the follo
 
 ![image](assets/aws-workshop/lab3-order-problem-usecase.png)
 
-### 2. View change in Dynatrace
----------------------------
+<!-- -->
+## Validate releases
 
 From the left side menu, navigate to the **Releases** page. Here you will see the how Dynatrace detected the versions of monitored processes. It may take a minute, but you will see the version change in the **Real-time inventory** section and a new event in the **Release events** section.
 
@@ -67,15 +63,15 @@ If you expand the event, you should see something like this
 
 ![image](assets/aws-workshop/lab3-release-order-event.png)
 
-### 3. View app in browser
+### View app in browser
 ----------------------
 
 The event has the URL back to the sample application, so just click that if you don't have the sample app up already. You should see **version 3** for the order app now too.
 
 ![image](assets/aws-workshop/lab3-app-ui-order-version-3.png)
 
-### 4. Keep your eye on Dynatrace!
-------------------------------
+<!-- -->
+## Oops, I did it again!
 
 The problem may take a minute to show up, but this is what the problem will look like once it does. Also, you may see two problems that eventually get merged into one as Dynatrace is performing the problem analysis.
 
@@ -85,8 +81,7 @@ The problem may take a minute to show up, but this is what the problem will look
 
 ![image](assets/aws-workshop/lab3-order-problem.png)
 
-### 5. Analyze problem
-------------------
+### Analyze problem
 
 Referring to \#4 in the picture above, click on the **Analyze failure rate degradation** button.
 
@@ -94,7 +89,7 @@ Right away we can see that there were exceptions in the code and the **details**
 
 ![image](assets/aws-workshop/lab3-order-problem-detail.png)
 
-### 6. Analyze problem impact
+### Analyze problem impact
 -------------------------
 
 From the breadcrumb menu, click on the **order** to open the service page.
@@ -109,14 +104,14 @@ Then click on the failure rate box to open the service details page. You can see
 
 ![image](assets/aws-workshop/lab3-order-problem-requests.png)
 
-### 7. Disable the problem pattern
-------------------------------
+<!-- -->
+## Roll back the version
 
-From CloudShell, run these commands to set the version back to version 1
+You have enough trouble for one day. Let's roll back the version and prevent this bad code from reaching production. From CloudShell, run these commands to set the version back to version 1
 
 ```bash
-    cd ~/aws-modernization-dt-orders-setup/learner-scripts/
-    ./set-version.sh order 1
+cd ~/aws-modernization-dt-orders-setup/learner-scripts/
+./set-version.sh order 1
 ```
 
 Dynatrace will automatically close the problem once it detects things are back to normal. 
@@ -126,4 +121,6 @@ Dynatrace will automatically close the problem once it detects things are back t
 
 In this section, you should have completed the following:
 
-✅ Enable a problem in the application and walk through what Davis found
+✅ Release observability
+
+✅ Understand how DAVIS is able to help you spot bad code before it reaches production.

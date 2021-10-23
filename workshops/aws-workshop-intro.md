@@ -97,37 +97,42 @@ From your Dynatrace environment, you will capture:
 - Dynatrace Base URL
 - Dynatrace API token
 
-1. Execute
+1\. Execute
 
-   ```bash
-   cd ~/aws-modernization-dt-orders-setup/provision-scripts
-   ./input-credentials.sh
-   ```
-2. Copy the Dynatrace Base URL and API token values from your text editor
-3. You will see additional inputs for the name of the AWS resources used in the labs. Accept the default values.
-4. Verify Inputs
+```bash
+cd ~/aws-modernization-dt-orders-setup/provision-scripts
+./input-credentials.sh
+```
 
-  ```bash
-   Please confirm all are correct:
-   --------------------------------------------------
-   Dynatrace Base URL       : https://mou612.managed-sprint.dynalabs.io/e/abcd-1234-xxxx-yyyy
-   Dynatrace API Token      : ggggggggggggggggggggggg
-   --------------------------------------------------
-   Monolith Host Name       : dt-orders-monolith
-   Services Host Name       : dt-orders-services
-   Cluster Name             : dynatrace-workshop-cluster
-   ===================================================================
-   Saved credential to: ../gen/workshop-credentials.json
-   {
-       "DT_BASEURL": "https://mou612.managed-sprint.dynalabs.io/e/abcd-1234-xxxx-yyyy",
-       "DT_API_TOKEN": "ggggggggggggggggggggggg",
-       "HOSTNAME_MONOLITH": "dt-orders-monolith",
-       "HOSTNAME_SERVICES": "dt-orders-services",
-       "CLUSTER_NAME": "dynatrace-workshop-cluster"
-   }
-   ```
-5. After you confirm, the script will show the saved values in the **~/aws-modernization-dt-orders-setup/gen/workshop-credentials.json** file.
-6. If you mess up, you can re-run the script again and will prompt you again for each value.
+2\. Copy the Dynatrace Base URL and API token values from your text editor
+
+3\. You will see additional inputs for the name of the AWS resources used in the labs. Accept the default values.
+
+4\. Verify Inputs
+
+```bash
+Please confirm all are correct:
+--------------------------------------------------
+Dynatrace Base URL       : https://mou612.managed-sprint.dynalabs.io/e/abcd-1234-xxxx-yyyy
+Dynatrace API Token      : ggggggggggggggggggggggg
+--------------------------------------------------
+Monolith Host Name       : dt-orders-monolith
+Services Host Name       : dt-orders-services
+Cluster Name             : dynatrace-workshop-cluster
+===================================================================
+Saved credential to: ../gen/workshop-credentials.json
+{
+    "DT_BASEURL": "https://mou612.managed-sprint.dynalabs.io/e/abcd-1234-xxxx-yyyy",
+    "DT_API_TOKEN": "ggggggggggggggggggggggg",
+    "HOSTNAME_MONOLITH": "dt-orders-monolith",
+    "HOSTNAME_SERVICES": "dt-orders-services",
+    "CLUSTER_NAME": "dynatrace-workshop-cluster"
+}
+```
+
+5\. After you confirm, the script will show the saved values in the **~/aws-modernization-dt-orders-setup/gen/workshop-credentials.json** file.
+
+6\. If you mess up, you can re-run the script again and will prompt you again for each value.
 
 <!--  -->
 ## Configure Dynatrace
@@ -138,18 +143,19 @@ The script will run fast while it adds the following Dynatrace configuration:
 - Add Auto Tagging Rules to drive management zone and SLO settings
 - Add SLOs for a use in custom dashboards
 
-1. Execute the scripts to configure Dynatrace for the **monolith** application:
+1\. Execute the scripts to configure Dynatrace for the **monolith** application:
 
-   ```bash
-  cd ~/aws-modernization-dt-orders-setup/workshop-config
-   ./setup-workshop-config.sh monolith-vm
-   ```
-2. Execute the scripts to configure Dynatrace for the **micro-services** application:
+```bash
+cd ~/aws-modernization-dt-orders-setup/workshop-config
+./setup-workshop-config.sh monolith-vm
+```
 
-   ```bash
-   cd ~/aws-modernization-dt-orders-setup/workshop-config
-   ./setup-workshop-config.sh services-vm
-   ```
+2\. Execute the scripts to configure Dynatrace for the **micro-services** application:
+
+```bash
+cd ~/aws-modernization-dt-orders-setup/workshop-config
+./setup-workshop-config.sh services-vm
+```
 
 <!--  -->
 ## Provision AWS resources
@@ -163,13 +169,19 @@ You will now run 2 CloudFormation script that will do the following:
 
 These CloudFormation scripts can help you to automate both **AWS resource provisioning** and **Dynatrace components** as well! This is the automated observability that Dynatrace provides out of the box
 
-### Step 1: Add Cloudformation Stack for monolith app
+### Step 1: Create 1st Cloudformation Stack
 1. In the AWS console, navigate to Cloudformation Stack
    ![Image](assets/aws-workshop/aws-cf-menu.png)
 2. On the Cloudformation Stack page, click the **Create Stack** button and the **With new resources** option.
-3. Download and save the CloudFormation script on your PC/Mac
-TODO provide URL
-4. On the Create stack page, select **Upload a template file**, browse your PC/Mac and select the workshopMonolith.yaml file
+3. Use your browser, access the CloudFormation script and **save as** on your PC/Mac
+
+    ```
+    https://raw.githubusercontent.com/Dynatrace-APAC/partner-aws/main/workshopMonolith.yaml
+    ```
+    ![image](assets/aws-workshop/aws-cf-download.png)
+4. On the Create stack page, select **Upload a template file**, browse your PC/Mac and select the ***workshopMonolith.yaml*** file
+5. Click on **Next**
+   ![Image](assets/aws-workshop/aws-cf-create-monolith.png)
 
 ### Step 2: Enter input parameters for monolith app
 On the Specify Stack Details page, enter the following values:
@@ -178,18 +190,19 @@ On the Specify Stack Details page, enter the following values:
 3. DynatracePaasToken - The Dynatrace Access token you created earlier **Copy from the text editior**
 4. KeyPairName - **leave the default value** of *ee-default-keypair*
 5. ResourcePrefix - **leave this empty**
-6. Click on the **next** button
+   ![image](assets/aws-workshop/aws-stack-inputs.png)
+6. Click on the **next** button in the next few pages
+7. Finally click on **create stack**
+   ![image](assets/aws-workshop/aws-createstack.png)
 
-![image](assets/aws-workshop/aws-stack-inputs.png)
-
-### Step 3: Add Cloudformation Stack for micro-services app
+### Step 3: Create 2nd Cloudformation Stack
 1. Back to the Cloudformation Stack page, click the **Create Stack** button and the **With new resources** option.
-
 2. This time we will use a CloudFormation stack stored in a public S3 bucket as the **Template source**. Copy s3 URL below in this values to the Amazon s3 URL field as shown below:
 
-```
-https://aws-modernize-workshop-stg-cloudformation.s3.us-west-2.amazonaws.com/workshopServices.yaml 
-```
+    ```
+    https://aws-modernize-workshop-stg-cloudformation.s3.us-west-2.amazonaws.com/workshopServices.yaml 
+    ```
+    ![image](assets/aws-workshop/aws-cf-create-services.png)
 3. Click on the **next** button
 
 ### Step 4: Enter input parameters for micro-services app
@@ -199,7 +212,7 @@ On the Specify Stack Details page, enter the following values:
 3. DynatracePaasToken - The Dynatrace Access token you created earlier **Copy from the text editior**
 4. KeyPairName - **leave the default value** of *ee-default-keypair*
 5. ResourcePrefix - **leave this empty**
-6. Click on the **next** button
+6. Simiar to the above, click on the **next** button in the next few pages and finally click on **create stack**.
 
 ### Step 5: Review CloudFormation Output
 The CloudFormation may take a few minutes, but you can check the CloudFormation output to ensure that all the AWS resources were provisioned successfully.
@@ -210,7 +223,7 @@ When it is complete, it will show a **CREATE_COMPLETE** status as shown below.
 
 ![image](assets/aws-workshop/aws-cf-complete.png)
 
-Positive
+Negative
 : The process to provision everything will take ~5 minutes, so please be patient.
 
 <!--  -->
@@ -222,6 +235,10 @@ In this section, you should have completed the following:
 ✅ Ensure your AWS Account is ready
 
 ✅ Create and gather Dynatrace URLs & Tokens needed to provision the workshop
+
+✅ Configure Dynatrace
+
+✅ Provision AWS resources
 
 ### Next Steps
 You are now ready to proceed with the labs where you provision resources and follow the lab guides.

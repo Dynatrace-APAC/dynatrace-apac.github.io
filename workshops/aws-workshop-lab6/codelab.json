@@ -3,18 +3,19 @@
   "format": "html",
   "prefix": "../../elements",
   "mainga": "UA-49880327-14",
-  "updated": "2021-10-22T21:57:35+08:00",
-  "id": "aws-workshop-lab1",
+  "updated": "2021-10-23T17:18:28+08:00",
+  "id": "aws-workshop-lab6",
   "duration": 0,
-  "title": "1. Modernize cloud workloads #1 - Plan Better",
-  "authors": "Rob Jahn",
-  "summary": "This section covers the hands-on for Lab 1",
-  "source": "aws-workshop-lab1.md",
+  "title": "6. Bonus!",
+  "authors": "Myrvin Yap",
+  "summary": "The fun stuff that were not covered!",
+  "source": "aws-workshop-lab6.md",
   "theme": "",
   "status": [
     "published"
   ],
   "category": [
+    "aws",
     "dt"
   ],
   "tags": [
@@ -22,5 +23,5 @@
   ],
   "feedback": "mailto:alliances@dynatrace.com",
   "ga": "UA-175467274-1",
-  "url": "aws-workshop-lab1"
+  "url": "aws-workshop-lab6"
 }

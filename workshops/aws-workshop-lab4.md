@@ -9,9 +9,9 @@ Analytics Account: UA-175467274-1
 
 # 4. Supercharge AWS Cloud operations
 
-For intelligent monitoring of services running in Amazon cloud, you can integrate Dynatrace with Amazon Web Services (AWS). AWS integration helps you stay on top of the dynamics of your data center in the cloud.
-
 ## Objectives of this Lab
+
+For intelligent monitoring of services running in Amazon cloud, you can integrate Dynatrace with Amazon Web Services (AWS). AWS integration helps you stay on top of the dynamics of your data center in the cloud.
 
 🔷 Review how Dynatrace integrates with <a href="https://aws.amazon.com/cloudwatch/" target="_blank">AWS CloudWatch</a>
 
@@ -61,13 +61,9 @@ There are several ways one can configure the Dynatrace AWS monitor, for this wor
 -------------------------------------------------
 
 1. Go to **Identity and Access Management (IAM)** in your Amazon Console.
-
 2. Go to **Policies** and click the **Create policy** button.
-
 ![image](assets/aws-workshop/dt-aws-dashboard-policy.png)
-
 3. Select the JSON tab, and paste this predefined policy from the box below.
-
 ![image](assets/aws-workshop/dt-aws-dashboard-policy-json.png)
 
 ```
@@ -168,36 +164,23 @@ There are several ways one can configure the Dynatrace AWS monitor, for this wor
         ]
     }
 ```
-
 4. You can skip over the **Add tags** page
-
 5. One the **Review policy** page, use the policy name of **dynatrace_monitoring_policy**
-
 ![image](assets/aws-workshop/dt-aws-dashboard-policy-name.png)
-
 6. Click **Create policy** button.
 
 ### Step 2 of 3: Create AWS User
 ----------------------------------------------------------------
 
 1. Go to **Identity and Access Management (IAM)** in your Amazon Console.
-
 2. Go to **Users** and click the **Add User** button.
-
 ![image](assets/aws-workshop/dt-aws-dashboard-user.png)
-
 3. Enter a name for the key you want to create (for example, **Dynatrace_monitoring_user**).
-
 4. In Select AWS access type, select **Programmatic access**, and click **Next:Permissions**.
-
 ![image](assets/aws-workshop/dt-aws-dashboard-adduser.png)
-
 5. Click **Attach existing policies directly** and choose the monitoring policy you defined, for example **dynatrace_monitoring_policy**. Click **Next: Review**.
-
 ![image](assets/aws-workshop/dt-aws-dashboard-attachpolicy.png)
-
 6. Review the user details and click **Create user**.
-
 7. Store the **Access Key ID name (AKID)** and **Secret access key values**. You can either download the user credentials or copy the credentials displayed online (click Show).
 
 TODO: Insert screen shot
@@ -206,12 +189,10 @@ TODO: Insert screen shot
 ------------------------------------------------------------------------------
 
 1. In the Dynatrace menu, go to **Settings** > **Cloud and virtualization** > **AWS** and click **Connect new instance**.
-
 2. Select **Key-based authentication** method.
    - Create a name for this connection. This is mandatory. Dynatrace needs this name to identify and display the connection.
    - In the Access key ID field, paste the identifier of the key you created in Amazon for Dynatrace access.
    - In the Secret access key field, paste the value of the key you created in Amazon for Dynatrace access.
-
 3. Click Connect to verify and save the connection.
 
 Once the connection is successfully verified and saved, your AWS account will be listed in the Cloud and virtualization settings page. You should soon begin to see AWS cloud monitoring data.
@@ -233,32 +214,19 @@ Custom metric events are configured in the global settings of your environment a
 ---------------------------------------
 
 1. To add custom alerts, navigate to **Settings --> Anomaly Detection --> Custom Events for Alerting** menu.
-
 2. Click the **Create custom event for alerting** button.
-
 ![image](assets/aws-workshop/lab3-alert-create.png)
-
 3. In the **Metric** dropdown list, type **EC2 CPU usage %** and pick the **Cloud platforms > AWS > EC2 > CPU > usage** option and Pick **Average**
-
 ![image](assets/aws-workshop/lab3-vm-alert.png)
-
 4. Click **Add rule-base** button and update as shown below
-
 ![image](assets/aws-workshop/lab4-custom-alert-filter.png)
-
 5. Choose **Static threshold** and update as shown below
-
 ![image](assets/aws-workshop/lab4-custom-alert-threashold.png)
-
 6. Add the **Event Description** to have the **title** and **severity = CUSTOM ALERT** as shown below.
-
 ![image](assets/aws-workshop/lab4-custom-alert-message.png)
-
-Notice the **Alert preview** chart that helps you in reviewing these settings
-
+7. Notice the **Alert preview** chart that helps you in reviewing these settings
 ![image](assets/aws-workshop/lab3-vm-alert-chart.png)
-
-7. Save your changes
+8. Save your changes
 
 ### 2. SSH to monolith host
 -----------------------
@@ -290,30 +258,30 @@ ubuntu@ip-10-0-0-118:~$
 In the shell, copy all these lines and run them:
 
 ```bash
-    yes > /dev/null &
-    yes > /dev/null &
-    yes > /dev/null &
+yes > /dev/null &
+yes > /dev/null &
+yes > /dev/null &
 ```
 
 To verify, run this command:
 
 ```bash
-    ps -ef | grep yes
+ps -ef | grep yes
 ```
 
 The output should look like this:
 
 ```bash
-    ubuntu    5802  5438 99 20:48 pts/0    00:00:05 yes
-    ubuntu    5805  5438 89 20:48 pts/0    00:00:04 yes
-    ubuntu    5806  5438 97 20:48 pts/0    00:00:03 yes
-    ubuntu    5818  5438  0 20:48 pts/0    00:00:00 grep --color=auto yes
+ubuntu    5802  5438 99 20:48 pts/0    00:00:05 yes
+ubuntu    5805  5438 89 20:48 pts/0    00:00:04 yes
+ubuntu    5806  5438 97 20:48 pts/0    00:00:03 yes
+ubuntu    5818  5438  0 20:48 pts/0    00:00:00 grep --color=auto yes
 ```
+
 It will take a few mins for the problem card to appear. In the meantime, move on to the next section **Explore the AWS dashboard**.
 
 <!-- -->
 ## Explore the AWS dashboard
-------------------
 
 On the far left Dynatrace menu, navigate to the **Infrastructure -> AWS** menu.
 
@@ -350,7 +318,6 @@ Read more about how to scale your enterprise cloud environment with enhanced AI-
 
 <!-- -->
 ## AWS resources alert!
-
 Back in Dynatrace within the **host** view, the CPU should now be high as shown below
 
 ![image](assets/aws-workshop/lab4-cpu.png)
@@ -364,28 +331,31 @@ A problem card will be generated once the static threshold has been breahed.
 
 To stop the problem, you need to **kill** the processes. To do this:
 
-1. Back in the CloudShell, run this command to get the process IDs
+1\. Back in the CloudShell, run this command to get the process IDs
 
-   ```bash
-   ps -ef | grep yes
-   ```
-2. For each process, copy the process ID and run **kill <PID>**, for example:
+```bash
+ps -ef | grep yes
+```
 
-   ```bash
-   ubuntu@ip-10-0-0-118:~$ ps -ef | grep yes
-   ubuntu    5802  5438 99 20:48 pts/0    00:00:05 yes
-   ubuntu    5805  5438 89 20:48 pts/0    00:00:04 yes
-   ubuntu    5806  5438 97 20:48 pts/0    00:00:03 yes
-   ubuntu@ip-10-0-0-118:~$ kill 5802
-   ubuntu@ip-10-0-0-118:~$ kill 5805
-   ubuntu@ip-10-0-0-118:~$ kill 5806
-   ```
-3. Verify they are gone by running this again
+2\. For each process, copy the process ID and run **kill <PID>**, for example:
 
-   ```bash
-   ps -ef | grep yes
-   ```
-4. Verify that CPU in Dynatrace goes to normal and the problems will eventually automatically close
+```bash
+ubuntu@ip-10-0-0-118:~$ ps -ef | grep yes
+ubuntu    5802  5438 99 20:48 pts/0    00:00:05 yes
+ubuntu    5805  5438 89 20:48 pts/0    00:00:04 yes
+ubuntu    5806  5438 97 20:48 pts/0    00:00:03 yes
+ubuntu@ip-10-0-0-118:~$ kill 5802
+ubuntu@ip-10-0-0-118:~$ kill 5805
+ubuntu@ip-10-0-0-118:~$ kill 5806
+```
+
+3\. Verify they are gone by running this again
+
+```bash
+ps -ef | grep yes
+```
+
+4\. Verify that CPU in Dynatrace goes to normal and the problems will eventually automatically close
 
 <!-- -->
 ## Summary

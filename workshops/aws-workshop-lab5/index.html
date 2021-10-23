@@ -27,10 +27,25 @@
                   environment="web"
                   feedback-link="mailto:alliances@dynatrace.com">
     
-      <google-codelab-step label="What did i break?" duration="0">
-        <p>Imagine you are an app developer and you have done some enhacements to one of the services.</p>
-<h2 is-upgraded>1. Deploy enhacements</h2>
-<p>You will use the AWS Cloudshell to set the order service to version 3.</p>
+      <google-codelab-step label="Objectives of this Lab" duration="0">
+        <p>A micro-services architecture provides the best environment for agile development, but also giving rise to a complex ecosystem of microservices.</p>
+<p>There are more possibilities for failures and more hiding spots for problems to sneak into the environment when software driving more than just the application.</p>
+<p>Often the monitoring tools organizations use simply don&#39;t work for such complexity and scale as finding the root cause of problems is harder than ever before and the effort required goes beyond what is humanly possible when the application spans to the cloud providers and data centers and the explosion of interconnected services.</p>
+<h2 is-upgraded>What if...</h2>
+<p>🔷 You can spot problems even before they reach production?</p>
+<p>🔷 Release evaluations in your pipeline can be automated such that there are faster feedback loops?</p>
+<p>🔷 You can then delivery more reliable software, much faster than before because of these automation?</p>
+<p>An example is the following using <strong>AWS Code Deploy</strong>:</p>
+<p class="image-container"><img alt="image" src="img/c39c9b266b62bc6c.gif"></p>
+<p>However, in this lab, we will not have time to build out the entire AWS Code Deploy.</p>
+<p>Instead, we will manually trigger a deployment in a micro-service and see how troubleshooting time is significantly reduced by letting AI automatically detect problems and pinpoints the root cause, explaining business impact with no manual configurations.</p>
+<p>In this way, you can see how DAVIS and Dynatrace helps to automate release validations and provide faster feedback loops.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Deploy enhacements" duration="0">
+        <p>You are now an app developer and you have done some enhacements to one of the services. You will use the AWS Cloudshell to deploy version 3 of the one of the microservice.</p>
 <pre><code language="language-bash" class="language-bash">cd ~/aws-modernization-dt-orders-setup/learner-scripts/
 ./set-version.sh order 3
 </code></pre>
@@ -40,38 +55,50 @@
 <li>Send a Dynatrace <strong>CUSTOM_DEPLOYMENT</strong> event indicating the change</li>
 </ul>
 <p class="image-container"><img alt="image" src="img/5615d490bb80bd50.png"></p>
-<h2 is-upgraded>2. View change in Dynatrace</h2>
-<p>From the left side menu, navigate to the <strong>Releases</strong> page. Here you will see the how Dynatrace detected the versions of monitored processes. It may take a minute, but you will see the version change in the <strong>Real-time inventory</strong> section and a new event in the <strong>Release events</strong> section.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Validate releases" duration="0">
+        <p>From the left side menu, navigate to the <strong>Releases</strong> page. Here you will see the how Dynatrace detected the versions of monitored processes. It may take a minute, but you will see the version change in the <strong>Real-time inventory</strong> section and a new event in the <strong>Release events</strong> section.</p>
 <p><strong><em>NOTE</em></strong> Be sure to adjust the management zone to <strong>dt-orders-services</strong></p>
 <p class="image-container"><img alt="image" src="img/4d96ceb43bc01ae.png"></p>
 <p>If you expand the event, you should see something like this</p>
 <p class="image-container"><img alt="image" src="img/ecb05850a03bde23.png"></p>
-<h2 is-upgraded>3. View app in browser</h2>
+<h2 is-upgraded>View app in browser</h2>
 <p>The event has the URL back to the sample application, so just click that if you don&#39;t have the sample app up already. You should see <strong>version 3</strong> for the order app now too.</p>
 <p class="image-container"><img alt="image" src="img/5d15d78860f7438d.png"></p>
-<h2 is-upgraded>4. Keep your eye on Dynatrace!</h2>
-<p>The problem may take a minute to show up, but this is what the problem will look like once it does. Also, you may see two problems that eventually get merged into one as Dynatrace is performing the problem analysis.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Oops, I did it again!" duration="0">
+        <p>The problem may take a minute to show up, but this is what the problem will look like once it does. Also, you may see two problems that eventually get merged into one as Dynatrace is performing the problem analysis.</p>
 <ol type="1">
 <li>Problem card windows and impact summary</li>
 <li>Root cause</li>
 <li>Deployment event as additional context</li>
 </ol>
 <p class="image-container"><img alt="image" src="img/b952cd397d5b18d0.png"></p>
-<h2 is-upgraded>5. Analyze problem</h2>
+<h2 is-upgraded>Analyze problem</h2>
 <p>Referring to #4 in the picture above, click on the <strong>Analyze failure rate degradation</strong> button.</p>
 <p>Right away we can see that there were exceptions in the code and the <strong>details</strong> button can be clicked to see the code stack trace.</p>
 <p class="image-container"><img alt="image" src="img/2d1e2873338559c6.png"></p>
-<h2 is-upgraded>6. Analyze problem impact</h2>
+<h2 is-upgraded>Analyze problem impact</h2>
 <p>From the breadcrumb menu, click on the <strong>order</strong> to open the service page.</p>
 <p class="image-container"><img alt="image" src="img/76abc1172dadf365.png"></p>
 <p>On this page, notice the failure rate.</p>
 <p class="image-container"><img alt="image" src="img/ccf056f57f598b50.png"></p>
 <p>Then click on the failure rate box to open the service details page. You can see exactly when the problem started.</p>
 <p class="image-container"><img alt="image" src="img/e1733c79cba2b72a.png"></p>
-<h2 is-upgraded>7. Disable the problem pattern</h2>
-<p>From CloudShell, run these commands to set the version back to version 1</p>
-<pre><code language="language-bash" class="language-bash">    cd ~/aws-modernization-dt-orders-setup/learner-scripts/
-    ./set-version.sh order 1
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Roll back the version" duration="0">
+        <p>You have enough trouble for one day. Let&#39;s roll back the version and prevent this bad code from reaching production. From CloudShell, run these commands to set the version back to version 1</p>
+<pre><code language="language-bash" class="language-bash">cd ~/aws-modernization-dt-orders-setup/learner-scripts/
+./set-version.sh order 1
 </code></pre>
 <p>Dynatrace will automatically close the problem once it detects things are back to normal.</p>
 
@@ -80,7 +107,8 @@
     
       <google-codelab-step label="Summary" duration="0">
         <p>In this section, you should have completed the following:</p>
-<p>✅ Enable a problem in the application and walk through what Davis found</p>
+<p>✅ Release observability</p>
+<p>✅ Understand how DAVIS is able to help you spot bad code before it reaches production.</p>
 
 
       </google-codelab-step>

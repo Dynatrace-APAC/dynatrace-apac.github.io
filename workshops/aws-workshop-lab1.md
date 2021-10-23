@@ -161,30 +161,20 @@ Let's navigate to a specific service from the process view.
 ### Service view
 --------
 
+You should be on the service page where you will see information for this specific service. By navigating in this fashion, you can see how Dynatrace links each entity and allows you to not only visually see the relationships and dependecies, but also allow you to slice and dice the view like a cube.
+
 ![image](assets/aws-workshop/lab1-service-view.png)
 
-1. Click on the `Properties` line to toggle on/off to see additional data
+Follow the picture below to locate the following:
+1. Click on the **Properties** line to toggle on/off to see additional data
 2. Click to view the services that call this service (Inbound)
 3. Click to view the services that this service calls (Outbound)
-
-Let's now take a look at all the services being monitored by clicking on the **Services** left side Dynatrace menu.
-
-The filtered list should now look like this:
-
-![image](assets/aws-workshop/lab1-trans-services.png)
-
-Choose the **frontend** service. On the **frontend** service page, find the **Dynamic Web Requests** section on the right and click the **view Dynamic Requests** button to see what it
-calls.
-
-![image](assets/aws-workshop/lab1-dynamic-requests-arrow.png)
-
-On this page you can view the transactions as time-series charts.
-
-![image](assets/aws-workshop/lab1-dynamic-requests-chart.png)
-
-On this page you can view the "top requests" and their response time consumption. You should recognize the URLs from the sample app!
-
-![image](assets/aws-workshop/lab1-dynamic-requests-list.png)
+4. Click the **view Dynamic Requests** button to see what it calls.
+   ![image](assets/aws-workshop/lab1-dynamic-requests-arrow.png)
+5. On this page you can view the transactions as time-series charts.
+   ![image](assets/aws-workshop/lab1-dynamic-requests-chart.png)
+6. On this page you can view the "top requests" and their response time consumption. You should recognize the URLs from the sample app!
+   ![image](assets/aws-workshop/lab1-dynamic-requests-list.png)
 
 ### Analysis View
 -------------
