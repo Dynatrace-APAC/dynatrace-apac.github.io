@@ -25,7 +25,7 @@
                   id="aws-workshop-lab6"
                   title="6. Bonus!"
                   environment="web"
-                  feedback-link="mailto:alliances@dynatrace.com">
+                  feedback-link="mailto:APAC-SE-Central@dynatrace.com">
     
       <google-codelab-step label="Optional labs" duration="0">
         <p>These additional labs were not covered in the hands on. However, you are free to try them on your own.</p>
@@ -36,24 +36,25 @@
       </google-codelab-step>
     
       <google-codelab-step label="Before you begin" duration="0">
-        <p>Dynatrace leverages the Active Gate to ingest logs streamed from cloud providers. Follow the documentation <a href="(https://www.dynatrace.com/support/help/setup-and-configuration/dynatrace-activegate/installation/linux/linux-install-an-environment-activegate/" target="_blank">instructions</a>) to install the Active Gate software in any Linux/Windows OS based instance if you don&#39;t already have one.</p>
-<p>Because we are running an Active Gate on an AWS instance, we&#39;ll need to change it to use a public facing domain name.</p>
+        <p>Dynatrace leverages the Active Gate to ingest logs streamed from cloud providers. Follow the documentation <a href="(https://www.dynatrace.com/support/help/setup-and-configuration/dynatrace-activegate/installation/linux/linux-install-an-environment-activegate/" target="_blank">instructions</a> to install the Active Gate software in any Linux/Windows OS based instance if you don&#39;t already have one.</p>
+<p>In this lab, we have pre-installed an Active Gate in the <strong>dt-orders-monolith</strong> Ubuntu EC2 instace and by default, the Active Gate reads the IP address assigned to the vNIC, which is an internal AWS IP address. The Active Gate configuration files allow us to change it to use a public facing IP address.</p>
 <h2 is-upgraded>Setting up Active Gate</h2>
+<p>Extract the Public IP of the Active Gate</p>
 <ul>
-<li>Extract the Public IP of the Active Gate  <ul>
 <li>As a metadata within <strong>Host View</strong> in Dynatrace, or</li>
-<li>execute this command <code>bash<br>curl https://ifconfig.me;echo</code><br> * Login to the command shell of your OS (assume Ubuntu bash shell here) * Edit the <strong>custom.properties</strong> file: <code>bash<br>sudo nano /var/lib/dynatrace/gateway/config/custom.properties<br></code></li>
+<li>execute this command</li>
 </ul>
-</li>
-<li>Add the following at the end of the file:</li>
-</ul>
+<pre><code language="language-bash" class="language-bash">curl https://ifconfig.me;echo
+</code></pre>
+<p>Login to the command shell of your OS (assume Ubuntu bash shell here)</p>
+<p>Edit the <strong>custom.properties</strong> file</p>
+<pre><code language="language-bash" class="language-bash">sudo nano /var/lib/dynatrace/gateway/config/custom.properties
+</code></pre>
+<p>Add the following at the end of the file:</p>
 <pre><code language="language-bash" class="language-bash">[connectivity]
 dnsEntryPoint = https://PUBLIC_DOMAIN_NAME:9999
 </code></pre>
-<ul>
-<li>Remember to <strong><em>SAVE</em></strong> the config.properties file</li>
-<li>Restart Active Gate with the command</li>
-</ul>
+<p>Remember to <strong><em>SAVE</em></strong> the config.properties file Restart Active Gate with the command</p>
 <pre><code language="language-bash" class="language-bash">sudo systemctl restart dynatracegateway
 </code></pre>
 <h2 is-upgraded>Validate setting in Dynatrace</h2>
@@ -70,17 +71,13 @@ dnsEntryPoint = https://PUBLIC_DOMAIN_NAME:9999
 <p>We will need to setup the AWS Infrastructure setup via running a Cloudformation script.</p>
 <aside class="special"><p>Full online doucmentation <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/infrastructure-monitoring/cloud-platform-monitoring/amazon-web-services-monitoring/aws-log-forwarder/" target="_blank">AWS Log Forwarder</a></p>
 </aside>
-<ol type="1">
-<li>Open AWS CloudShell if it is already not started</li>
-<li>Set the following environment variables in CloudShell. We recommend that you copy the text below to a text editor and amend the <strong>Placeholder</strong> values such as <strong>PUBLIC_DOMAIN_NAME</strong> and <strong>Managed_Environment_ID</strong> and <strong>TOKEN_NAME</strong></li>
-</ol>
-<pre><code language="language-bash" class="language-bash">   TARGET_URL=https://&lt;PUBLIC_DOMAIN_NAME&gt;:9999/e/&lt;Managed_Environment_ID&gt;
-   TARGET_API_TOKEN=&lt;your_API_token&gt;
-   REQUIRE_VALID_CERTIFICATE=false
+<p>Open AWS CloudShell if it is already not started</p>
+<p>Set the following environment variables in CloudShell. We recommend that you copy the text below to a text editor and amend the <strong>Placeholder</strong> values such as <strong>PUBLIC_DOMAIN_NAME</strong> and <strong>Managed_Environment_ID</strong> and <strong>TOKEN_NAME</strong></p>
+<pre><code language="language-bash" class="language-bash">TARGET_URL=https://&lt;PUBLIC_DOMAIN_NAME&gt;:9999/e/&lt;Managed_Environment_ID&gt;
+TARGET_API_TOKEN=&lt;your_API_token&gt;
+REQUIRE_VALID_CERTIFICATE=false
 </code></pre>
-<ol type="1">
-<li>Download the script and deploy the infrastructure.</li>
-</ol>
+<p>Download the script and deploy the infrastructure.</p>
 <pre><code language="language-bash" class="language-bash">wget -O dynatrace-aws-log-forwarder.zip https://github.com/dynatrace-oss/dynatrace-aws-log-forwarder/releases/latest/download/dynatrace-aws-log-forwarder.zip \
  &amp;&amp; unzip -qo dynatrace-aws-log-forwarder.zip \
  &amp;&amp; ./dynatrace-aws-logs.sh deploy --target-url $TARGET_URL --target-api-token $TARGET_API_TOKEN --use-existing-active-gate true --require-valid-certificate $REQUIRE_VALID_CERTIFICATE
@@ -90,11 +87,13 @@ dnsEntryPoint = https://PUBLIC_DOMAIN_NAME:9999
 <p>For the purpose of sending logs, we will create a new Lambda function.</p>
 <p>1. In the AWS portal, search for Lambda within the AWS Search Bar and go to <strong>Lambda</strong></p>
 <p>2. Click on <strong>Create Function</strong></p>
+<p class="image-container"><img alt="AWSLambda" src="img/4e6ee71f87c17bec.png"></p>
 <p>3. Use default option of <strong>Author from scratch</strong></p>
 <p>4. Give a Function name <strong>testlab6</strong></p>
 <p>5. We will create a nodejs function, leave everything else as default</p>
 <p>6. Click on <strong>Create Function</strong></p>
-<p>7. Copy the following code</p>
+<p class="image-container"><img alt="AWSLambda" src="img/2e9f10642ed78ff5.png"></p>
+<p>7. Copy the following code and paste it in the <strong>index.js</strong> tab</p>
 <pre><code language="language-nodejs" class="language-nodejs">/**
  * This is a very simply lambda function that simply executes random HTTP Requests to a randomly selected group of URLs
  * With the Dynatrace OneAgent injected you can end-to-end trace these calls
@@ -135,17 +134,24 @@ var executeRequest = function(url, callback) {
     
 }
 </code></pre>
-<p>8. Paste it in this section</p>
-<p>9. Click on <strong>deploy</strong></p>
-<p>10. Click on <strong>test</strong></p>
-<p>11. Give any name you like for this test script</p>
-<p>12. Click on <strong>save</strong></p>
+<p class="image-container"><img alt="AWSLambda" src="img/6f61d5879f0053b4.png"></p>
+<p>8. Click on <strong>deploy</strong> to deploy the Lambda function and you will see a note <strong><em>Changes deployed</em></strong></p>
+<p class="image-container"><img alt="AWSLambda" src="img/ccb3d3af0a1b7bd3.png"></p>
+<p>9. Click on <strong>test</strong> button (next to the deploy) to configure a &#34;test&#34; request the funciton.</p>
+<p>10. Give any name you like for this test script</p>
+<p>11. Click on <strong>create</strong></p>
+<p class="image-container"><img alt="AWSLambda" src="img/2119a1314d40b1c6.png"></p>
+<p>12. Click on the orange <strong>test</strong> button again.</p>
 <p>Once done, this Lambda function will create a log group. You can proceed to subscribe to the log group below.</p>
 <h2 is-upgraded>Subscribe to log groups</h2>
 <ol type="1">
-<li>Back within the AWS Cloudshell, run the following command ./dynatrace-aws-logs.sh discover-log-groups &gt; LOG_GROUPS_FILE</li>
+<li>Back within the AWS Cloudshell, run the following command  <pre><code>./dynatrace-aws-logs.sh discover-log-groups &gt; LOG_GROUPS_FILE
+</code></pre>
+</li>
 <li>You see the discovered log groups with <strong>more LOG_GROUPS_FILE</strong></li>
-<li>To subscribe, use the command below: ./dynatrace-aws-logs.sh subscribe –log-groups-from-file LOG_GROUPS_FILE</li>
+<li>To subscribe, use the command below:  <pre><code>./dynatrace-aws-logs.sh subscribe --log-groups-from-file LOG_GROUPS_FILE
+</code></pre>
+</li>
 </ol>
 <h2 is-upgraded>View Cloudwatch logs in Dynatrace</h2>
 <p>Back in Dynatrace, go to the new Log Viewer to see the new Log events from Cloudwatch logs</p>
@@ -160,9 +166,21 @@ var executeRequest = function(url, callback) {
 </aside>
 <h2 is-upgraded>Instrumenting the Lambda function with Dynatrace</h2>
 <ol type="1">
+<li>In the Dynatrace menu, go to <strong>Hub</strong>, search for <strong>lambda</strong>, click on <strong>activate AWS lambda</strong> button at the bottom left part of the screen.</li>
 <li>Using <strong>Configure with environment variables</strong>, configure the function wtih Dynatrace instrumentation  <ul>
-<li>Add environment variable to the function</li>
-<li>Add Lambda layer ARN</li>
+<li>Select <strong>ap-southeast-2</strong> region</li>
+</ul>
+</li>
+<li>Copy and add environment variable to the function  <ul>
+<li>Go to the <strong>AWS portal</strong>, in the testlab6 lambda function screen, click on <strong>Configuration</strong> -&gt; <strong>Environment variable</strong></li>
+<li>Click on edit and copy the environment variables from Dynatrace</li>
+</ul>
+</li>
+<li>Add Lambda layer ARN  <ul>
+<li>In the testlab6 lambda function screen, click on <strong>Code</strong> tab</li>
+<li>Scroll down to the section called <strong>Layers</strong> and click on <strong>Add a layer</strong></li>
+<li>Choose <strong>Specify an ARN</strong></li>
+<li>Copy the ARN value from Dynatrace</li>
 </ul>
 </li>
 <li>Once configured, click on <strong>Test</strong></li>

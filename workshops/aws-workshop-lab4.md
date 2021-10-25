@@ -1,4 +1,4 @@
-summary: This section covers the hands-on for Lab 4
+summary: Connect Dynatrace to AWS CloudWatch
 id: aws-workshop-lab4
 categories: automate-operations, aws
 tags: aws-workshop

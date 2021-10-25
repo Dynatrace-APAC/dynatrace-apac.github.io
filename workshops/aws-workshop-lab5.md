@@ -1,4 +1,4 @@
-summary: This section covers the hands-on for Lab 5
+summary: Understand how Dynatrace is able to help in speeding up software delivery
 id: aws-workshop-lab5
 categories: aws, automate-delivery
 tags: aws-workshop

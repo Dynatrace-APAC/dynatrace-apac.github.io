@@ -3,7 +3,7 @@
   "format": "html",
   "prefix": "../../elements",
   "mainga": "UA-49880327-14",
-  "updated": "2021-10-23T17:18:28+08:00",
+  "updated": "2021-10-25T14:32:50+08:00",
   "id": "aws-workshop-lab6",
   "duration": 0,
   "title": "6. Bonus!",
@@ -16,12 +16,13 @@
   ],
   "category": [
     "aws",
+    "logmon-2",
     "dt"
   ],
   "tags": [
     "aws-workshop"
   ],
-  "feedback": "mailto:alliances@dynatrace.com",
+  "feedback": "mailto:APAC-SE-Central@dynatrace.com",
   "ga": "UA-175467274-1",
   "url": "aws-workshop-lab6"
 }

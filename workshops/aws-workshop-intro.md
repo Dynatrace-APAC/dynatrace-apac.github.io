@@ -1,4 +1,4 @@
-summary: Introduction to AWS Modernization Workshop
+summary: Setting up the environment for the AWS Modernization Workshop
 id: aws-workshop-intro
 categories: aws, dt
 tags: aws-workshop

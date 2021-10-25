@@ -1,4 +1,4 @@
-summary: This section covers the hands-on for Lab 2
+summary: Understand how Dynatrace helps you in moving faster whne modernizing your workloads
 id: aws-workshop-lab2
 categories: dt
 tags: aws-workshop
@@ -7,7 +7,7 @@ authors: Rob Jahn
 Feedback Link: mailto:alliances@dynatrace.com
 Analytics Account: UA-175467274-1
 
-# 2. Modernize cloud workloads #2 - Move faster
+# 2. Modernize workloads for the cloud #2 - Move faster
 
 ## Objectives of this Lab 
 

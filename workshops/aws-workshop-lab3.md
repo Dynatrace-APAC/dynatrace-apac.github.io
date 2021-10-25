@@ -1,4 +1,4 @@
-summary: This section covers the hands-on for Lab 3
+summary: Enhance IT Operations with SLOs, SLIs and AIOps!
 id: aws-workshop-lab3
 categories: dt
 tags: aws-workshop
@@ -7,7 +7,7 @@ authors: Rob Jahn
 Feedback Link: mailto:alliances@dynatrace.com
 Analytics Account: UA-175467274-1
 
-# 3. Modernize cloud workloads #3 - Operate better
+# 3. Modernize workloads for the cloud #3 - Operate better
 
 ## Objectives of this Lab 
 In order to do more with less and scale, organizations must transcend IT silos, foster collaboration and improve productivity. Automation and a common data model are key components of this, but it takes platforms that support operational teams and workflows.

@@ -1,4 +1,4 @@
-summary: This section covers the hands-on for Lab 1
+summary: Understand how Dynatrace helps with modernization planning
 id: aws-workshop-lab1
 categories: dt
 tags: aws-workshop
@@ -7,7 +7,7 @@ authors: Rob Jahn
 Feedback Link: mailto:alliances@dynatrace.com
 Analytics Account: UA-175467274-1
 
-# 1. Modernize cloud workloads #1 - Plan Better
+# 1. Modernize workloads for the cloud #1 - Plan Better
 
 ## Objectives of this Lab
 
