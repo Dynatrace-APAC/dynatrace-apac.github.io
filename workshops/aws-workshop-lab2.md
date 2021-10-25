@@ -119,7 +119,7 @@ As you plan your migration, Database observability is critical to a successful p
 
 ### Review databases and service backtrace for the Microservices app
 1. Using the same Service Flow diagram as before, you will notice that there are 3 <a href="http://hsqldb.org/)" target="_blank"> in-memory Java databases </a> in the application architecture
-2. Click on the one that is being called by the **catelogue** service
+2. Click on the one that is being called by the **catalogue** service
 3. Click on the **...** above the database
    ![image](assets/aws-workshop/lab2-db.png)
 4. Select **backtrace**

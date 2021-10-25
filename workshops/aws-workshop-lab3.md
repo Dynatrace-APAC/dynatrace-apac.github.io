@@ -95,7 +95,7 @@ On the top right of the page, click the **edit** button and then follow these st
 <!-- -->
 ## Deploy new patch for monolith
 
-As part of day to day mainteance, you are tasked to deploy a patch for the monolith application.
+As part of day to day maintenance, you are tasked to deploy a patch for the monolith application.
 
 From the AWS CLoudShell, run these commands to set the backend service to version 2
 
@@ -259,6 +259,11 @@ cd ~/aws-modernization-dt-orders-setup/learner-scripts/
 ## Why was the monolith SLO not affected?
 
 ![image](assets/aws-workshop/lab3-backend-problem-usecase.png)
+
+***Hint***: Do recall which SLI (metric, i.e. response time, error, throughput etc.) was used for the monolith SLO.
+
+Positive
+: Take up the challenge! Explain why the monolith SLO was not affected in 3 simple points and how can Dynatrace help SREs be more pro-active. If possible, screen shot the **monolith SLO** tile with the ***problem indicator***. Please submit you answers to `jason.nai@dynatrace.com` for validation.
 
 <!-- -->
 ## Why does the problem card say 'Custom Threshold'?

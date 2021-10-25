@@ -35,7 +35,7 @@ Instead, we will manually trigger a deployment in a micro-service and see how tr
 In this way, you can see how DAVIS and Dynatrace helps to automate release validations and provide faster feedback loops.
 
 <!-- -->
-## Deploy enhacements
+## Deploy enhancements
 
 You are now an app developer and you have done some enhacements to one of the services. You will use the AWS Cloudshell to deploy version 3 of the one of the microservice. 
 
