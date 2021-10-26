@@ -124,3 +124,12 @@ In this section, you should have completed the following:
 ✅ Release observability
 
 ✅ Understand how DAVIS is able to help you spot bad code before it reaches production.
+
+<!-- -->
+## Help us improve!
+
+Take our POWER survery here: [https://www.surveymonkey.com/r/2FVT8W8](https://www.surveymonkey.com/r/2FVT8W8)
+
+Or scan the QR code to take it on the move
+
+![image](assets/aws-workshop/surveyQR.png)

@@ -1,4 +1,4 @@
-summary: Understand how Dynatrace helps you in moving faster whne modernizing your workloads
+summary: Understand how Dynatrace helps you in moving faster when modernizing your workloads
 id: aws-workshop-lab2
 categories: dt
 tags: aws-workshop
