@@ -48,13 +48,15 @@ You will be provided with an AWS account via the AWS Event Engine service.
 1. If you are currently logged in to an AWS Account, please log out using this [link](https://console.aws.amazon.com/console/logout!doLogout)
 2. Connect to the portal by clicking the button or browsing to [https://dashboard.eventengine.run](https://dashboard.eventengine.run). The following screen shows up. Enter the provided hash in the text box. The button in the bottom right corner changes to ***Accept Terms & Login***. Click on that button to continue.
 ![Image](assets/aws-workshop/event-engine-initial-screen.png)
-3. Once on the Team dashboard page, click the ***AWS console*** button that opens a popup. 
+3. Use OTP and enter the email address to recevie the OTP. 
+![Image](assets/aws-workshop/aws-eventcode.png)
+4. Once on the Team dashboard page, click the ***AWS console*** button that opens a popup. 
 ![Image](assets/aws-workshop/aws-event-engine.png)
-4. On the popup, click on ***Open AWS console*** button which opens the AWS portal.
+5. On the popup, click on ***Open AWS console*** button which opens the AWS portal.
 ![Image](assets/aws-workshop/aws-event-engine-popup.png)
-5. One the new browser tab, you should see the AWS portal.
+6. One the new browser tab, you should see the AWS portal.
 ![Image](assets/aws-workshop/setup-aws-portal.png)
-6. Once you are in the AWS portal, please select ***ap-southeast-2 (Sydney)*** as the region. We will be creating AWS resources in the Sydney region for this hands on
+7. Once you are in the AWS portal, please select ***ap-southeast-2 (Sydney)*** as the region. We will be creating AWS resources in the Sydney region for this hands on
 
 <!-- -->
 ## Clone scripts
@@ -64,7 +66,7 @@ You will be provided with an AWS account via the AWS Event Engine service.
 2. Clone the workshop scripts. Once you have the Cloudshell open, you need to get some scripts that will automate the workshop setup. Run this command:
 
 ```bash
-git clone -b add-stg-vm https://github.com/dt-alliances-workshops/aws-modernization-dt-orders-setup.git
+git clone https://github.com/dt-alliances-workshops/aws-modernization-dt-orders-setup.git
 ```
 
 <!-- -->
@@ -155,6 +157,25 @@ cd ~/aws-modernization-dt-orders-setup/workshop-config
 ```bash
 cd ~/aws-modernization-dt-orders-setup/workshop-config
 ./setup-workshop-config.sh services-vm
+```
+
+After running each of the above scripts, you should get an output similar to the following. Ensure that at the end of the script is states ***Deployment finished without errors***
+
+```
+..
+...
+2021-10-27 00:16:24 INFO  Deployment summary:
+2021-10-27 00:16:24 INFO  Deployment finished without errors
+2021-10-27 00:16:24 INFO  There is no delete file delete.yaml found in monaco-files/projects/delete.yaml. Skipping delete config.
+===================================================================================
+Setting FrequentIssueDetection OFF
+===================================================================================
+Setting ServiceAnomalyDetection
+
+-----------------------------------------------------------------------------------
+Done Setting up Workshop config
+End: Wed Oct 27 00:16:24 UTC 2021
+-----------------------------------------------------------------------------------
 ```
 
 <!--  -->

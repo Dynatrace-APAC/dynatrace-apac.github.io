@@ -66,6 +66,7 @@
 <ol type="1">
 <li>If you are currently logged in to an AWS Account, please log out using this <a href="https://console.aws.amazon.com/console/logout!doLogout" target="_blank">link</a></li>
 <li>Connect to the portal by clicking the button or browsing to <a href="https://dashboard.eventengine.run" target="_blank">https://dashboard.eventengine.run</a>. The following screen shows up. Enter the provided hash in the text box. The button in the bottom right corner changes to <strong><em>Accept Terms &amp; Login</em></strong>. Click on that button to continue. <img alt="Image" src="img/9c0efb9adaade717.png"></li>
+<li>Use OTP and enter the email address to recevie the OTP. <img alt="Image" src="img/beb09a597405b39a.png"></li>
 <li>Once on the Team dashboard page, click the <strong><em>AWS console</em></strong> button that opens a popup. <img alt="Image" src="img/9de48a1418175194.png"></li>
 <li>On the popup, click on <strong><em>Open AWS console</em></strong> button which opens the AWS portal. <img alt="Image" src="img/385740ec7d68bee7.png"></li>
 <li>One the new browser tab, you should see the AWS portal. <img alt="Image" src="img/a3df29c3124ce0c8.png"></li>
@@ -80,7 +81,7 @@
 <li>Open up Cloudshell. In this lab, we will be using AWS Cloudshell. To open the Cloudshell, click on the Cloudshell icon at the top of the AWS console. This make take a minute to complete. <img alt="Image" src="img/e5d868238546be70.png"></li>
 <li>Clone the workshop scripts. Once you have the Cloudshell open, you need to get some scripts that will automate the workshop setup. Run this command:</li>
 </ol>
-<pre><code language="language-bash" class="language-bash">git clone -b add-stg-vm https://github.com/dt-alliances-workshops/aws-modernization-dt-orders-setup.git
+<pre><code language="language-bash" class="language-bash">git clone https://github.com/dt-alliances-workshops/aws-modernization-dt-orders-setup.git
 </code></pre>
 
 
@@ -169,6 +170,22 @@ Saved credential to: ../gen/workshop-credentials.json
 <p>2. Execute the scripts to configure Dynatrace for the <strong>micro-services</strong> application:</p>
 <pre><code language="language-bash" class="language-bash">cd ~/aws-modernization-dt-orders-setup/workshop-config
 ./setup-workshop-config.sh services-vm
+</code></pre>
+<p>After running each of the above scripts, you should get an output similar to the following. Ensure that at the end of the script is states <strong><em>Deployment finished without errors</em></strong></p>
+<pre><code>..
+...
+2021-10-27 00:16:24 INFO  Deployment summary:
+2021-10-27 00:16:24 INFO  Deployment finished without errors
+2021-10-27 00:16:24 INFO  There is no delete file delete.yaml found in monaco-files/projects/delete.yaml. Skipping delete config.
+===================================================================================
+Setting FrequentIssueDetection OFF
+===================================================================================
+Setting ServiceAnomalyDetection
+
+-----------------------------------------------------------------------------------
+Done Setting up Workshop config
+End: Wed Oct 27 00:16:24 UTC 2021
+-----------------------------------------------------------------------------------
 </code></pre>
 
 
