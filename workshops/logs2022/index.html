@@ -317,7 +317,7 @@ rm -rf /home/ec2-user/logstash-6.4.2/data/plugins/inputs/file/.sincedb_*
 </ul>
 <p class="image-container"><img alt="install_oneagent_linux" src="img/68ba943713db69ad.png"></p>
 <p>Copy the complete URL and API-Tokens. A sample is listed below:</p>
-<pre><code>wget -O Dynatrace-OneAgent-Linux-1.235.185.sh &#34;https://mou612.managed-sprint.dynalabs.io/e/53d6282c-8893-40b0-ba03-4120b5f10615/api/v1/deployment/installer/agent/unix/default/latest?arch=x86&amp;flavor=default&#34; --header=&#34;Authorization: Api-Token dt0c01.JAY2HBCGHU23KVOLZSXINVJZ.4AEIDWCI7PBDJP3TADE2VSDXSGGJI5CNQ7BOL3OOAPOTM7MVVF4WSMAVARO3O4DJ&#34;
+<pre><code>wget -O Dynatrace-OneAgent-Linux-1.235.185.sh &#34;https://mou612.managed-sprint.dynalabs.io/e/53d6282c-8893-40b0-ba03-4120b5f10615/api/v1/deployment/installer/agent/unix/default/latest?arch=x86&amp;flavor=default&#34; --header=&#34;Authorization: Api-Token ######&#34;
 </code></pre>
 <p>Use the URL and API-Tokens obtained to construct the below command:</p>
 <pre><code>sudo docker run -d --restart=unless-stopped --privileged=true --pid=host --net=host -v /:/mnt/root -e ONEAGENT_INSTALLER_SCRIPT_URL=&#34;&lt;PASTE THE URL HERE&gt;&#34; -e ONEAGENT_INSTALLER_DOWNLOAD_TOKEN=&#34;&lt;PASTE THE API-TOKEN HERE&gt;&#34; dynatrace/oneagent
