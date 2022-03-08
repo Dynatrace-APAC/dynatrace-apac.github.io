@@ -1,0 +1,26 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "../../elements",
+  "mainga": "UA-49880327-14",
+  "updated": "2022-03-08T18:35:28+08:00",
+  "id": "opentelemetry2022",
+  "duration": 0,
+  "title": "OpenTelemetry + Open observerbility (2022 edition)",
+  "authors": "Myrvin Yap",
+  "summary": "OpenTelemetry + Open observerbility 2022",
+  "source": "otel2022.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "opentel"
+  ],
+  "tags": [
+    "bootcamp"
+  ],
+  "feedback": "mailto:APAC-SE-Central@dynatrace.com",
+  "ga": "UA-175467274-1",
+  "url": "opentelemetry2022"
+}

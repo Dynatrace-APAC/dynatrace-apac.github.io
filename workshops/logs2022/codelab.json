@@ -1,0 +1,26 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "../../elements",
+  "mainga": "UA-49880327-14",
+  "updated": "2022-03-08T19:24:07+08:00",
+  "id": "logs2022",
+  "duration": 0,
+  "title": "Logs deep dive (2022 edition)",
+  "authors": "Suraj",
+  "summary": "Logs deep dive (2022)",
+  "source": "logs2022.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "logmon-2"
+  ],
+  "tags": [
+    "bootcamp"
+  ],
+  "feedback": "mailto:APAC-SE-Central@dynatrace.com",
+  "ga": "UA-175467274-1",
+  "url": "logs2022"
+}

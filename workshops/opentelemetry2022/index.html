@@ -1,0 +1,574 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>OpenTelemetry &#43; Open observerbility (2022 edition)</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid="UA-175467274-1"
+                  id="opentelemetry2022"
+                  title="OpenTelemetry &#43; Open observerbility (2022 edition)"
+                  environment="web"
+                  feedback-link="mailto:APAC-SE-Central@dynatrace.com">
+    
+      <google-codelab-step label="Introduction" duration="0">
+        <p>This repository contains labs for the OpenTelemetry Hands-On Session. Content updated as of March 2022. The tech stack used are <code>java</code> and <code>Go</code></p>
+<h2 is-upgraded>Prerequisites</h2>
+<ul>
+<li>Chrome Browser (<strong>recommended</strong>)</li>
+<li>Dynatrace Tenant/Environment</li>
+</ul>
+<h2 class="checklist" is-upgraded>What You&#39;ll Learn</h2>
+<ul>
+<li>Appreciate the various methods that Dynatrace can ingest Open Telemetry data (mainly traces)</li>
+<li>Understand the different scenarios where ingestion is applied</li>
+<li>Appreciate open and intelligent observerbility</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Prepare the environment" duration="0">
+        <p>In this step we will prepare the environment for the hands on exercises</p>
+<ul>
+<li>Install OneAgent</li>
+<li>Build the app</li>
+</ul>
+<h2 is-upgraded>Accessing the environment</h2>
+<ul>
+<li>Launch browser-based VS Code Server</li>
+<li>Enter the supplied password</li>
+<li>Click on the Menu Button <img alt="button" src="img/3c53941251bace4a.png"> in the top left corner</li>
+<li>Select <strong>Terminal</strong> and in here <strong>New Terminal</strong><img alt="New Terminal" src="img/2ee0b3cbabf987ff.gif"></li>
+</ul>
+<h2 is-upgraded>Install OneAgent</h2>
+<ul>
+<li>Access the Dynatrace tenant provided to you in the email</li>
+<li>Deploy Dynatrace OneAgent (Linux)</li>
+<li>Start the installation with default settings</li>
+</ul>
+<aside class="warning"><p>Remember to use <code>sudo</code> when executing the installation shell script as your user is <code>dynatrace</code>. You will be prompted for a password when you use sudo. Use the same password supplied to you.</p>
+</aside>
+<h2 is-upgraded>Build the app</h2>
+<ul>
+<li>Click on the Menu button again &gt; File &gt; Open folder</li>
+<li>Choose the <strong>shopizer</strong> folder</li>
+<li>Click on <strong>OK</strong> buton</li>
+<li>The window will now be refreshed to show <strong>SHOPIZER</strong> in the Explorer pane <img alt="Open folder" src="img/4f52eafdafd1e846.gif"></li>
+<li>Open a new terminal again</li>
+<li>Verify that you are already in the <code>shopizer</code> directory, else change directory by executing <code>cd ~/shopizer</code></li>
+<li>execute this command to build the app</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">  mvn clean install
+</code></pre>
+<p class="image-container"><img alt="build app" src="img/4b6d80b1fa052113.gif"></p>
+<p>The final output should look like the following image</p>
+<p class="image-container"><img alt="Build app" src="img/c1942a368f6273e5.png"></p>
+<p>If you would like to download the source repo for your own use, you can get it here <code>https://github.com/Dynatrace-APAC/Workshop-otel-shopizer</code></p>
+<h2 is-upgraded>You&#39;ve arrived</h2>
+<p>You are now ready to start the hands on!</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Ex1 OOTB OneAgent &#43; Otel traces" duration="0">
+        <p><strong>Persona</strong>: IT Operations</p>
+<p><strong>Objective</strong>: OpenTelemetry complementing OOTB OneAgent instrumentation</p>
+<p><strong>Scenario</strong></p>
+<ul>
+<li>You are an operations person</li>
+<li>Developer has <strong><em>&#34;decorated&#34;</em></strong> or in another words, <strong>instrumented</strong> their code with OpenTelemetry.</li>
+<li>OneAgent is auto-instrumenting java code out of the box.</li>
+<li>Combine OneAgent auto instrumentation with OpenTelemetry instrumentation.</li>
+</ul>
+<h2 is-upgraded>Running the application</h2>
+<p>Within your terminal navigate into the folder <strong>sm-shop</strong> by entering</p>
+<pre><code language="language-bash" class="language-bash">cd sm-shop
+</code></pre>
+<p>Now we are ready to launch the Web Application using the following command.</p>
+<pre><code language="language-bash" class="language-bash">mvn spring-boot:run
+</code></pre>
+<p class="image-container"><img alt="spring-boot:run" src="img/d815de737a246b63.png"></p>
+<h2 is-upgraded>Validate that the Vintage Handbag Shop is up and running</h2>
+<p>Open a new browser window and navigate to <code>http://the.public.ip:8080</code></p>
+<p class="image-container"><img alt="Vintage Handbag Shop" src="img/18d978b79fac76fb.png"></p>
+<p>Feel free to navigate around within that application. In the interest of simplicity we have introduced a load generator that requests the pages that are relevant for todays session automatically.</p>
+<h2 is-upgraded>Verify that Service Calls are getting monitored</h2>
+<p>Switch to the Dynatrace environment.</p>
+<ul>
+<li>Go to <strong>Services</strong> via the Dynatrace menu</li>
+<li>Click on <strong>Requests executed in background threads of com.salesmanager.shop.application.ShopApplication</strong> service</li>
+</ul>
+<p>You will also notice that it contains two different kinds of service calls:</p>
+<pre><code>http://127.0.0.1:8080/shop/product/*
+</code></pre>
+<p>and</p>
+<pre><code>http://127.0.0.1:8080/shop/category/*
+</code></pre>
+<p>Take a look at a PurePath that is named similar to this.</p>
+<pre><code>http://127.0.0.1:8080/shop/category/laptop-bags.html/ref=c:3
+</code></pre>
+<p class="image-container"><img alt="Category" src="img/9adaa5f583c6b06e.png"></p>
+<p>This is what Dynatrace captures out of the box with its very own Sensors. After a small configuration change we will see that there&#39;s a lot more data available.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Ex1-1 Enable OpenTelemetry for Java" duration="0">
+        <p>The application we are working with is as a matter of fact already augmented with OpenTelemetry. We just haven&#39;t told Dynatrace yet to take advantage of it.</p>
+<ul>
+<li>Open the <strong>Dynatrace menu</strong> &gt; <strong>Settings</strong> &gt; <strong>Server-side service monitoring</strong> &gt; <strong>Deep Monitoring</strong></li>
+<li>Under the a section called <strong>OpenTelemetry and OpenTracing</strong></li>
+<li>Enable the switch <strong>OpenTelemetry for Java</strong><img alt="Enable OpenTelemetry" src="img/f129cc616e147eda.png"></li>
+</ul>
+<h2 is-upgraded>Restart the application</h2>
+<ul>
+<li>Go to VS Code Terminal</li>
+<li>Within the terminal window, execute <strong>Ctrl-C</strong> to terminate the running process</li>
+<li>Launch the Web Application again</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">   mvn spring-boot:run
+</code></pre>
+<h2 is-upgraded>Investigate the new Service Calls</h2>
+<p>Switch to the Dynatrace environment and within the <strong>Requests executed in background threads of com.salesmanager.shop.application.ShopApplication</strong> service &gt; <strong>PurePaths</strong>, look for the transaction</p>
+<pre><code>http://127.0.0.1:8080/shop/category/laptop-bags.html/ref=c:3
+</code></pre>
+<p>Among the well known PurePath nodes (Database Calls, ...) you will now notice additional entries with the OpenTelemetry Icon.</p>
+<p class="image-container"><img alt="Query-Category" src="img/e76b6e3e54e48f32.png"></p>
+<p>The developer has chosen to &#34;signal&#34; to monitoring solutions which portions of the service flow are of importance. In this case, the developer has already augment the necessary codes with the OpenTelemetry. Each of these items/nodes are called <strong><em>Spans</em></strong>. What we have just done is to tell Dynatrace to &#34;recognize* these spans as part of the PurePath.</p>
+<aside class="special"><p>In technical terms, what we have just done is to enable the <strong><em>OpenTelemetry sensors</em></strong> for <strong>Java</strong> specifically in the OneAgent.</p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Ex1-2 Controlling span capturing" duration="0">
+        <p>In this specific case the developer might have been a bit too overzealous. The Span <strong><em>query-category</em></strong> is visible countless times within the PurePath. Dynatrace by default captures every span.</p>
+<p>As a personnel in the &#34;IT Operations&#34; team, you do not have access to the application code and making the developer do this small change is not feasible. Dynatrace offers a way to configure this via the Dynatrace UI. You can control the capturing the spans by adding an exclusion rule within the <strong>Settings</strong> menu.</p>
+<ul>
+<li>Open the <strong>Dynatrace menu</strong> &gt; <strong>Settings</strong> &gt; <strong>Server-side service monitoring</strong> &gt; <strong>Span capturing</strong></li>
+<li>In our case it&#39;s sufficient enough to specify the span name that should be excluded. But you&#39;ll notice that the configuration allows for much more specific exclusion rules</li>
+</ul>
+<p class="image-container"><img alt="Span-Capturing" src="img/1e0a7e6cbe3b1794.png"></p>
+<h2 is-upgraded>In summary...</h2>
+<ul>
+<li>OneAgent automatically integrates OpenTelemetry Spans into ongoing PurePaths</li>
+<li>Additional configuration is possible in order to tweak the results</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Ex2 Extending Otel instrumention" duration="0">
+        <p><strong>Persona</strong>: Application developers</p>
+<p><strong>Objectives</strong>:</p>
+<ul>
+<li>Appreciate work required for instrumentation</li>
+<li>Hands on to add OpenTelemetry instrumenation code to another function (Java)</li>
+</ul>
+<p><strong>Scenario</strong></p>
+<ul>
+<li>A new function has been coded</li>
+<li>The same observerbility is required Extend existing OpenTelemetry instrumentation to the new function</li>
+</ul>
+<h2 is-upgraded>The &#34;vintage-courier-bag&#34; transaction</h2>
+<p>In the Dynatrace UI &gt; <strong>Services</strong> &gt; <strong>Requests executed in background threads of com.salesmanager.shop.application.ShopApplication</strong> service &gt; <strong>PurePaths</strong>, look for the transaction</p>
+<pre><code>http://127.0.0.1:8080/shop/product/vintage-courier-bag.html/ref=c:2
+</code></pre>
+<p>Take a look at the PurePath nodes:</p>
+<p class="image-container"><img alt="PurePath with Otel" src="img/b784e0af3d633835.png"></p>
+<p>You&#39;ll notice that it also contains a Span named <strong><em>calc</em></strong></p>
+<p>We are looking to introduce a bit more context information to the outgoing HTTP request following the initial call of the <strong>calc</strong> method. Let&#39;s take a look at the source code that makes it possible.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Ex2-1 Understanding implementation of OTel in Java" duration="0">
+        <p>Let&#39;s investigate and understand the Java code that provides OpenTelemetry instrumentation via the Otel Java SDK.</p>
+<p>Within Visual Studio Code expand the following folders:</p>
+<pre><code>shopizer/sm-shop/src/main/java/com/salesmanager/shop/store/controller/product
+</code></pre>
+<p class="image-container"><img alt="Product Controller" src="img/7434354210fca12.png"></p>
+<p>Select the file <strong><em>ShopProductController.java</em></strong>.</p>
+<p>Scroll down to line <strong>100</strong>. The method <code>calcPrice</code> is the one that currently produces this additional span.</p>
+<pre><code language="language-java" class="language-java">public void calcPrice(Model model) {
+	Span span = getTracer().spanBuilder(&#34;calc&#34;)
+	.setAttribute(&#34;model&#34;, model.toString())
+	.startSpan();
+	try (Scope scope = span.makeCurrent()) {
+		HttpUtil.Get(&#34;http://127.0.0.1:8090/calc&#34;);						
+	} finally {
+		span.end();
+	}
+}
+</code></pre>
+<p>The code below creates a basic span and names it  <strong><em>calc</em></strong>. Reference <a href="https://opentelemetry.io/docs/instrumentation/java/manual/#create-a-basic-span" target="_blank">Otel SDK doc - Create a basic span</a></p>
+<pre><code language="language-java" class="language-java">Span span = getTracer().spanBuilder(&#34;calc&#34;)
+</code></pre>
+<p>The code below annotates the span using <code>Span attributes</code>. Reference <a href="https://opentelemetry.io/docs/instrumentation/java/manual/#span-attributes" target="_blank">Otel SDK doc - Span Attribute</a></p>
+<pre><code language="language-java" class="language-java">.setAttribute(&#34;model&#34;, model.toString())
+</code></pre>
+<p>The code below signals the start of the span and also start timing it. The start and end time of the span is automatically set by the OpenTelemetry SDK. Reference <a href="https://opentelemetry.io/docs/instrumentation/java/manual/#create-a-basic-span" target="_blank">Otel SDK doc - Create a basic span</a></p>
+<pre><code language="language-java" class="language-java">.startSpan();
+</code></pre>
+<p>The <code>.makeCurrent()</code> function of the code below is an an automated way offered by the SDK to propagate the parent span on the current thread. After all, we want <strong>calc</strong> to be nested under the &#34;caller&#34;, which by the way, is automatically done by the OneAgent instrumentation. Reference <a href="https://opentelemetry.io/docs/instrumentation/java/manual/#create-nested-spans" target="_blank">Otel SDK doc - Create nested span</a></p>
+<pre><code language="language-java" class="language-java">try (Scope scope = span.makeCurrent())
+</code></pre>
+<p>The final code below signal the end of the span.</p>
+<pre><code language="language-java" class="language-java">span.end();
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Ex2-2 Instrument handleQuote" duration="0">
+        <p>It is now YOUR turn to augment additional methods with OpenTelemetry. A few lines above method calcPrice you will find the method <strong><em>handleQuote</em></strong> at line <strong>91</strong>.</p>
+<p>Line <strong>92</strong> makes an outbound HTTP GET call to another API called <strong>quote</strong></p>
+<pre><code language="language-java" class="language-java">public void handleQuote(final String reference) {
+	HttpUtil.Get(&#34;http://127.0.0.1:8090/quote&#34;);
+}
+</code></pre>
+<p>In the Dynatrace PurePaths, although we see a Golang icon next to the outgoing HTTP GET, the only reason why this is happening is because the HTTP call is also within the same server. What if the call is made to a remote server, or a Lambda fucntion? The call will never be listed in <strong><em>vintage-courier-bag.html</em></strong> PurePaths at all...</p>
+<aside class="special"><p>Let&#39;s augment the method <code>handleQuote</code> also with OpenTelemetry so that we can demarcate the <code>calcPrice</code> and <code>quote</code> outbound API calls . You can use <code>calcPrice</code> as a template.</p>
+</aside>
+<aside class="warning"><p><strong><em>HINT:</em></strong> You may want to report the <code>reference</code> instead of the <code>model</code> here, though.</p>
+</aside>
+<h2 is-upgraded>Restart the application after making the changes</h2>
+<ul>
+<li>Go to VS Code Terminal</li>
+<li>Within the terminal window, execute <strong>Ctrl-C</strong> to terminate the running process</li>
+<li>Launch the Web Application again</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">   mvn spring-boot:run
+</code></pre>
+<h2 is-upgraded>Inspect the new Service Calls</h2>
+<p>The new Service Calls should now contain an additional OpenTelemetry Span.</p>
+<p class="image-container"><img alt="PurePath 3" src="img/6427fa7b4ef17d73.png"></p>
+<p>Let&#39;s take a closer look at the <code>quote</code> span.</p>
+<p class="image-container"><img alt="PurePath 3" src="img/24930a243f7f9c1c.png"></p>
+<p>Dynatrace realizes, that this span comes with additional metadata - a so-called <code>Span Attribute</code>. Its value is however not getting captured by default. Click on the link below the attribute and configure Dynatrace to also collect its value.</p>
+<p>There is no requirement to rebuild or restart the application for that. The attribute is already getting reported. Dynatrace just has ignored it up to now.</p>
+<p>Wait for new Service Calls to come in and verify that the value for the reference is getting captured.</p>
+<p class="image-container"><img alt="PurePath 3" src="img/e94c63a652c7ac5e.png"></p>
+<aside class="special"><p>Up till this stage, does collecting the Open Telemetry spans consume DDU licenses? Why?</p>
+</aside>
+<h2 is-upgraded>In summary...</h2>
+<ul>
+<li>At least for the programming language Java we have explored the basics of producing additional Spans that are nested within the PurePaths.</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Ex3 TraceIngest via Dynatrace API" duration="0">
+        <p><strong>Persona</strong>: Application developer</p>
+<p><strong>Objective</strong>: Configure &#34;remote&#34; trace ingest and send OTel traces to Dynatrace</p>
+<p><strong>Scenario</strong></p>
+<ul>
+<li>Go process cannot be instrumented by OneAgent</li>
+<li>Can be residing in the same server or a different remote machine (cloud, AWS Lambda)</li>
+<li>Go process has already been pre-instrumented with OpenTelemetry</li>
+<li>Also need to extend the instrumenation</li>
+</ul>
+<p>In the previous section we successfully added context information to these outbound web requests. Unfortunately that doesn&#39;t get us insight into what&#39;s happening within the application that receives these calls. The server side of these calls is a locally running application written in Golang - unfortunately a version of Golang that&#39;s not yet supported by OneAgent.</p>
+<p>The application is however already prepared for sending OpenTelemetry Spans to Dynatrace. We just need to configure where to send that data to.</p>
+<p>Within Visual Studio Code expand the following folders and navigate to</p>
+<pre><code>shopizer/gosrvc/main.go
+</code></pre>
+<p class="image-container"><img alt="golang" src="img/88d7fb30e49f8fa3.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Ex3-1 Configure the OpenTelemetry Exporter" duration="0">
+        <p>Around line <strong>38</strong> OpenTelemetry is getting configured. In our code, we are using the <a href="https://github.com/open-telemetry/opentelemetry-go/tree/main/exporters/otlp/otlptrace#otlptracehttp" target="_blank">OLTP exporter that sends trace telemetry data to the collector using HTTP with protobuf-encoded payloads</a>. This eliminates the need for an OpenTelemetry Collector as Dynatrace has an API endpoint that can accept such contents.</p>
+<pre><code language="language-go" class="language-go">client := otlptracehttp.NewClient(
+	otlptracehttp.WithEndpoint(&#34;######.sprint.dynatracelabs.com&#34;),
+	otlptracehttp.WithURLPath(&#34;/api/v2/otlp/v1/traces&#34;),
+	otlptracehttp.WithHeaders(map[string]string{
+		&#34;Authorization&#34;: &#34;Api-Token ############################################################################################&#34;,
+	}),
+)
+</code></pre>
+<p>What is left is to configure the Dynatrace URL and also the API token.</p>
+<h2 is-upgraded>Dynatrace URL</h2>
+<pre><code language="language-go" class="language-go">// SaaS
+otlptracehttp.WithEndpoint(&#34;######.live.dynatrace.com&#34;)
+
+// Managed with Let&#39;s Encrypt SSL cert
+otlptracehttp.WithEndpoint(&#34;######.managed-dynatrace.com&#34;)
+// Domain with own SSL cert
+otlptracehttp.WithEndpoint(&#34;&lt;BASE URL&gt;&#34;)
+</code></pre>
+<p>Take note that the SDK automatically appends <code>https</code>, so you do <strong><em>NOT</em></strong> need to specify the full URL, only the full domain.</p>
+<p><strong><em>Specially for Managed</em></strong></p>
+<p>As Managed requires additonal path for the environment, the URLPath will need to also include <code>/e/Dynatrace-Environment-ID/</code></p>
+<pre><code language="language-go" class="language-go">otlptracehttp.WithURLPath(&#34;/e/&lt;EnvID&gt;/api/v2/otlp/v1/traces&#34;),
+</code></pre>
+<h2 is-upgraded>Dynatrace API token</h2>
+<p>Navigate to <strong>Access Tokens</strong> within your Dynatrace environment and generate a token with the <strong><em>OpenTelemetry trace ingest</em></strong> permissions.</p>
+<p class="image-container"><img alt="access token" src="img/3ee839699bc6504b.png"></p>
+<p>Copy and Paste the Access token in this line. Ensure that everything gets copied correctly without additional spaces or characters, especially hidden or special character sets.</p>
+<pre><code>&#34;Authorization&#34;: &#34;Api-Token ############################################################################################&#34;
+</code></pre>
+<h2 is-upgraded>Restart the application after making the changes</h2>
+<ul>
+<li>Go to VS Code Terminal</li>
+<li>Within the terminal window, execute <strong>Ctrl-C</strong> to terminate the running process</li>
+<li>Launch the Web Application again</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">   mvn spring-boot:run
+</code></pre>
+<h2 is-upgraded>Inspect the new Service Calls</h2>
+<p>In the Dynatrace UI &gt; <strong>Services</strong> &gt; <strong>Requests executed in background threads of com.salesmanager.shop.application.ShopApplication</strong> service &gt; <strong>PurePaths</strong>, look for the transaction</p>
+<pre><code>http://127.0.0.1:8080/shop/product/vintage-courier-bag.html/ref=c:2
+</code></pre>
+<p>The PurePath nodes under the Go node should now show what&#39;s going on for the <strong><em>quote</em></strong> calls.</p>
+<p class="image-container"><img alt="quote" src="img/3a120d41336cf90f.png"></p>
+<p>What&#39;s not covered yet are the <strong><em>calc</em></strong> calls.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Ex3-2 Understanding implementation of OTel in Golang" duration="0">
+        <p>Let&#39;s investigate and understand the Go code that provides OpenTelemetry instrumentation via the Otel Golang SDK.</p>
+<p>Take another look at the file <strong><em>main.go</em></strong> and scroll down to line <strong>70</strong> where function <strong><em>quote</em></strong> starts.</p>
+<pre><code language="language-go" class="language-go">func quote(w http.ResponseWriter, req *http.Request) {
+	ctx := otel.GetTextMapPropagator().Extract(req.Context(), propagation.HeaderCarrier(req.Header))
+	var span trace.Span
+	ctx, span = otel.Tracer(name).Start(ctx, &#34;quote&#34;, trace.WithSpanKind(trace.SpanKindServer))
+
+	process(ctx, uint(rand.Intn(20)))
+	span.End()
+	fmt.Fprintf(w, &#34;done\n&#34;)
+}
+</code></pre>
+<p>Since the Java code is making a call to the Go service, we need to capture the <code>traceid</code> from the caller. Perhaps we can refer to the caller (i.e. Java code/process) as the <strong>parent</strong>, and so the parent normally passes some &#34;DNA information&#34; (blood type for example) to the <strong>child</strong> (i.e. separate Golang code/process). Parent and child are different but share similar traits because of how the DNA is passed down. This is call <strong><em>trace context propagation</em></strong>.</p>
+<p>Reference</p>
+<ul>
+<li><a href="https://opentelemetry.io/docs/instrumentation/go/manual/#propagators-and-context" target="_blank">Otel SDK doc - Propagators and Context</a></li>
+<li><a href="https://www.dynatrace.com/support/help/shortlink/opentracing#span-context-propagation" target="_blank">Dynatrace doc - Span context propagation</a></li>
+</ul>
+<p>The code below extracts the <code>traceid</code> from the HTTP header.</p>
+<pre><code language="language-go" class="language-go">ctx := otel.GetTextMapPropagator().Extract(req.Context(), propagation.HeaderCarrier(req.Header))
+</code></pre>
+<p>The code below initiates a variable called <code>span</code> with type <code>trace.Span</code>.</p>
+<pre><code language="language-go" class="language-go">var span trace.Span
+</code></pre>
+<p>We need to start the span and name it. In addition, we give it a label - <code>spand kind</code>, which indicates the role a Span plays in a Trace. Since we are starting the span in the main function, we will label the role of this span as <strong><em>Server</em></strong>. This is because we are expecting the main function to call sub-functions (i.e. &#34;clients&#34;). Thereby the <code>SpanKind</code> is way to help the observerbility tool understand the relationship between the spans and can be used to represent  &#34;Client-Server&#34;, &#34;callee-caller&#34; relationship metaphorical.</p>
+<p>Reference</p>
+<ul>
+<li><a href="https://opentelemetry.io/docs/instrumentation/go/manual/#creating-spans" target="_blank">Otel SDK doc - Creating spans</a></li>
+<li><a href="https://pkg.go.dev/go.opentelemetry.io/otel/trace#SpanKind" target="_blank">Go Otel SDK pkg - Span kind</a></li>
+</ul>
+<p>The code below starts the span, names it <strong><em>quote</em></strong> and labels it as a <strong><em>Server</em></strong> type.</p>
+<pre><code language="language-go" class="language-go">ctx, span = otel.Tracer(name).Start(ctx, &#34;quote&#34;, trace.WithSpanKind(trace.SpanKindServer))
+</code></pre>
+<p>The code below calls the <code>process</code> method, however, because we also want to nest all other callees under the caller (in this case, the main go program), then we <strong><em>must</em></strong> remember to pass the trace context <code>ctx</code> with the callee (i.e. <code>process</code>).</p>
+<pre><code language="language-go" class="language-go">process(ctx, uint(rand.Intn(20)))
+</code></pre>
+<p>The final code below then ends the span and stops the timer. Reference <a href="https://opentelemetry.io/docs/instrumentation/go/manual/#creating-spans" target="_blank">Otel SDK doc - Creating spans</a></p>
+<pre><code language="language-go" class="language-go">span.End()
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Ex3-3 Instrument calc" duration="0">
+        <p>It is now YOUR turn to augment additional methods with OpenTelemetry. Line <strong>80</strong> is the code for the function <strong><em>calc</em></strong>. It handles the incoming <code>calc</code> requests.</p>
+<pre><code language="language-go" class="language-go">func calc(w http.ResponseWriter, req *http.Request) {
+	process(req.Context(), uint(rand.Intn(20)))
+	fmt.Fprintf(w, &#34;done\n&#34;)
+}
+</code></pre>
+<aside class="special"><p>Let&#39;s augment the method <code>calc</code> with OpenTelemetry so that we can get more details of what is happening inside <code>calc</code> . We can use the function <code>quote</code> as a template.</p>
+</aside>
+<aside class="warning"><p><strong><em>HINT:</em></strong> Be careful of the passing the trace context <code>ctx</code>.</p>
+</aside>
+<h2 is-upgraded>Restart the application after making the changes</h2>
+<ul>
+<li>Go to VS Code Terminal</li>
+<li>Within the terminal window, execute <strong>Ctrl-C</strong> to terminate the running process</li>
+<li>Launch the Web Application again</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">   mvn spring-boot:run
+</code></pre>
+<h2 is-upgraded>Inspect the new Service Calls</h2>
+<p>The new Service Calls should now contain an additional OpenTelemetry Spans for <code>calc</code>, in the same way as <code>quote</code>.</p>
+<p class="image-container"><img alt="calc" src="img/7575992bd8f81cf6.png"></p>
+<p>When inspecting the ingested traces together with the full trace or full PurePath, you might come across this</p>
+<p class="image-container"><img alt="warning sign" src="img/cba403c1330e50c7.png"></p>
+<aside class="special"><p>What does the <a href="https://www.dynatrace.com/support/help/extend-dynatrace/opentelemetry/opentelemetry-ingest#expand--there-is-a-warning-sign-next-to-the-spans-what-does-it-mean--2" target="_blank">warning sign next to the spans</a> mean?</p>
+</aside>
+<h2 is-upgraded>In summary...</h2>
+<ul>
+<li>We have successfully traced across process boundaries - even if OneAgent is not of assistance.</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Ex4 Open observerbility" duration="0">
+        <p><strong>Persona</strong>: IT Operations</p>
+<p><strong>Objectives</strong></p>
+<ul>
+<li>Configure an alert</li>
+<li>Build a chat via built in metrics</li>
+<li>Investigating span errors</li>
+<li>Optional SLO</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Ex4-1 Create a custom event for alerting" duration="0">
+        <ol type="1">
+<li>Go to <strong>Settings</strong> &gt; <strong>Anomaly detection</strong> &gt; <strong>Custom events for alerting</strong></li>
+<li>Click on <strong>Create custom event for alerting</strong>. <img alt="Settings" src="img/a4ad76044778dadb.gif"></li>
+<li>Under <strong>Metric</strong> section, select <strong>Span Failure Rate</strong>. <img alt="Settings" src="img/5ac306dd558dddee.png"></li>
+<li>Scroll down to the <strong>Static threshold</strong> section, configure the following parameters  <ul>
+<li>Alert anomalies with a static threshold of <strong><em>20</em></strong> percent (%), or any value that is below the average failure rate in the chart</li>
+<li>Raise alert if ... the threshold for <strong><em>1</em></strong> minute slots</li>
+<li>during any <strong><em>3</em></strong> minute period.</li>
+</ul>
+</li>
+<li>Scroll down further down to the <strong>Event description</strong> section and configure the event description as follows  <ul>
+<li>Title: <strong>Processing limits alert</strong> (or any name that you wish to give)</li>
+<li>Severity: <strong>Error</strong></li>
+</ul>
+</li>
+<li>Finally, click on <strong>Create custom event for alerting</strong> button.</li>
+<li>The final configuration screen should look like the following.</li>
+</ol>
+<p class="image-container"><img alt="Settings" src="img/9959f6dc06db4d7b.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Ex4-2 Setting up charts to track key metrics" duration="0">
+        <h2 is-upgraded>Step 1: Use the new Unified Analysis view</h2>
+<ol type="1">
+<li>In the standard Dynatrace <strong>Service</strong> view, the ingested spans via the Dynatrace API will appear with an OpenTelemetry Icon</li>
+<li>Click on the <strong>gosrvc-blackbox</strong> service. <img alt="Services" src="img/e1a2d470cc0b39a8.png"></li>
+<li>You will be brought to a new screen. This screen consolidates all relevant analysis workflows (including logs, events, problems etc.) in one screen. <img alt="Services" src="img/57b2e6b439be23cd.png"></li>
+<li>Click on the <code>...</code> button of the <strong>Failure rate</strong> chart and click on <strong>Show in Data Explorer</strong>. <img alt="Services" src="img/20e6ca09dd27b6a4.png"></li>
+</ol>
+<h2 is-upgraded>Alternatively - Browser for the relevant metrics</h2>
+<ol type="1">
+<li>Go to Dynatrace menu -&gt; <strong>Metrics</strong>.</li>
+<li>Search for <strong>span</strong>.</li>
+<li>Expand the <strong>Span Throughput</strong> metric.</li>
+<li>Click on <strong>Create chart</strong> button.</li>
+</ol>
+<p class="image-container"><img alt="Metrics browser" src="img/de0280abdb8e5551.gif"></p>
+<h2 is-upgraded>Step 2: Use the Data Explorer to configure charts</h2>
+<ol type="1">
+<li>Configure the <strong>Span Throughput</strong> metric to display <strong>SUM</strong>.</li>
+<li>And select the <strong>Area</strong> graph visualization. <img alt="Data explorer" src="img/9f4e4fa7e9bdf5a7.gif"></li>
+<li>Add a 2nd metric, select <strong>Span Failure rate</strong>.</li>
+<li>Configure <strong>Split by</strong> to <strong>Span service</strong>.</li>
+<li>Click on <strong>Run query</strong>. You will notice the chart below changes with the 2nd metric added as an overlay. <img alt="Data explorer" src="img/34c8d155adb32fd7.gif"></li>
+<li>Configure the Y-axis to display the full range of percentages.</li>
+<li>Enter <strong>Auto, 100</strong> in the <strong>Min, Max</strong> configuration box.</li>
+<li>Click on anywhere outside the configuration box to effect the changes.</li>
+<li>See the changes on the chart. <img alt="Data explorer" src="img/31b23c13d5060e39.gif"></li>
+</ol>
+<h2 is-upgraded>Step 3: Pin chart to a dashboard</h2>
+<ol type="1">
+<li>Choose either an existing dashboard or create a new dashboard.</li>
+<li>Click on <strong>Pin to Dashboard</strong>.</li>
+</ol>
+<p class="image-container"><img alt="Data explorer" src="img/bb3bdbaec70a4bc6.gif"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Ex4-3 Investigating errors" duration="0">
+        <p>A problem card should appear after a few minutes. If no problem card appears, check the threshold settings and ensure that it is below the average failure rate in the chart</p>
+<p class="image-container"><img alt="Problem card" src="img/e00514a0eb9b60a4.png"></p>
+<h2 is-upgraded>Step 1: Deep dive into the distributed traces</h2>
+<ol type="1">
+<li>Open the problem card and drill down to the <strong>gosrvc blackbox span service</strong></li>
+<li>Click on the elipsis button <code>...</code> on the top right hand corner.</li>
+<li>Click on <strong>Analyze distributed traces</strong><img alt="Analyze distributed tracces" src="img/c93c2b82a9e3c43b.gif"></li>
+<li>Filter on <strong>Failed state</strong> &gt; <strong>only failed</strong></li>
+<li>The traces view wil start to show all traces where an error occured. <img alt="Failed distributed traces" src="img/7dede9b0fb1da17d.gif"></li>
+</ol>
+<h2 is-upgraded>Step 2: Explore Span errors and events</h2>
+<ol type="1">
+<li>Expand one of the traces. All the relevant metrics/attributes of the traces are captured.</li>
+<li>Click on one of the traces. You will now see the full <strong><em>distributed traceing</em></strong> that covers the OneAgent PurePath together with the spans that were ingested from the Go service. <img alt="Full trace" src="img/dd8231767f61351a.gif"></li>
+<li>Click on the <strong>Events</strong> and <strong>Errors</strong> tabs. You will notice that it contains some information. These are retrieved from the pre-instrumented Go application.</li>
+</ol>
+<h2 is-upgraded>Span events - Events tab</h2>
+<p class="image-container"><img alt="Span Events" src="img/48a7f52b7310eeee.png"></p>
+<h2 is-upgraded>Trigger an error status - Errors tab</h2>
+<p class="image-container"><img alt="Span Errors" src="img/5711fdd5ce832524.png"></p>
+<p>These are retrieved from the pre-instrumented Go application.</p>
+<h2 is-upgraded>Bring addition context using Span attributes</h2>
+<ol type="1">
+<li>If the app developer has also included <strong>Span attributes</strong>, Dynatrace allows you to configure it very quickly.</li>
+<li>In the details of the span, under the section <strong>Attributes</strong>, expand the section by clicking on the down arrow.</li>
+<li>Following which, all available attributes are listed there for you to choose which one would you like to include in Dynatrace.</li>
+<li>Click on the <strong>+</strong> sign beside the attribute to add in.</li>
+</ol>
+<p class="image-container"><img alt="Attributes" src="img/81a784764a1c06a1.gif"></p>
+<p>Once the span attributes are added, wait a little while and inspect the latest transactions again.</p>
+<p class="image-container"><img alt="Attributes" src="img/55037dda8363a964.png"></p>
+<p>What can you tell about the conditions surounding the errors?</p>
+<p class="image-container"><img alt="Attributes" src="img/1b2b4102dde5107f.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Ex4-4 Setting up SLOs (Optional)" duration="0">
+        <p>An SRE team is responsible for finding good service-level indicators (SLIs) for a given service in order to closely monitor the reliable delivery of that service. SLIs can differ from one service to the other, as not all services are equally critical in terms of time and error constraints.</p>
+<p>Being able to use a typical <strong><em>failure rate</em></strong> metric as a SLI, this helps the SRE team understand what kind of service levels that the organization needs to uphold in order to provide a resilient service for the business. This then allows the SRE team to define and then further tweak the operational goal within a service-level objective (SLO) to further improve.</p>
+<p>Follow the online guide to <a href="https://www.dynatrace.com/support/help/shortlink/service-level-objectives#create-your-own-service-level-objective-definition" target="_blank">define an SLO</a>.</p>
+<p>For the SLO name, use <code>Processing limit SLO</code>.</p>
+<p>For the metric expression, use</p>
+<pre><code>100-builtin:span_failure_rate:filter(eq(&#34;span.kind&#34;,internal))
+</code></pre>
+<p>Target percentage, use <code>80</code>.</p>
+<p>Warning percentage, use <code>90</code>.</p>
+<p>Timeframe to evaluate, use <code>-1h</code></p>
+<aside class="special"><p>What do each of these numbers (i.e. metric expression, Target percentage, eval timeframe etc.) mean in terms of upholding the SLOs and providing a resilent service (i.e. error budgets etc.)? Further, what does the data in Dynatrace tell you? <strong><em>HINT:</em></strong> read <a href="https://www.dynatrace.com/support/help/shortlink/slo-basics" target="_blank">Dynatrace docs - Service-level objective basics</a></p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Feedback" duration="0">
+        <p>We hope you enjoyed this lab and found it useful. We would love your feedback!</p>
+<aside class="special"><p>💡 For other ideas and suggestions, please <a href="mailto:APAC-SE-Central@dynatrace.com?subject=OpenTelemetry - Ideas and Suggestions" target="_blank"><strong>reach out via email</strong></a>.</p>
+</aside>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="../../elements/codelab-elements/native-shim.js"></script>
+  <script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+  <script src="../../elements/codelab-elements/prettify.js"></script>
+  <script src="../../elements/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>
