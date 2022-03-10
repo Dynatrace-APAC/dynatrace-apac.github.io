@@ -1,0 +1,368 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Logs deep dive (2022 edition)</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid="UA-175467274-1"
+                  id="log2022"
+                  title="Logs deep dive (2022 edition)"
+                  environment="web"
+                  feedback-link="mailto:APAC-SE-Central@dynatrace.com">
+    
+      <google-codelab-step label="Introduction" duration="0">
+        <p>This repository contains the hands on session for Log Monitoring v2.0.</p>
+<h2 is-upgraded>Prerequisites</h2>
+<ul>
+<li>Dynatrace SaaS/Managed Account. Get your free SaaS trial <a href="https://www.dynatrace.com/trial/" target="_blank">here</a>.</li>
+<li>AWS account, with the ability to create an EC2 instance from a public AMI. Signup to a free trial <a href="https://aws.amazon.com/free/" target="_blank">here</a>.</li>
+<li>Modern web browser &gt;- Chromimum based, e.g. Google Chrome, MS Edge &gt;- Firefox</li>
+</ul>
+<h2 is-upgraded>Lab Setup</h2>
+<p>Following are the details used in this lab.</p>
+<ul>
+<li><a href="https://microservices-demo.github.io/deployment/docker-compose.html" target="_blank">Sock-shop application</a> is being run in docker.</li>
+<li>Docker and docker-compose is already setup in the EC2 instance for the participants.</li>
+<li>Logstash, an open-source tool for ETL, is also installed in the user&#39;s directory: /home/ec2-user/logstash-6.4.2</li>
+</ul>
+<h2 class="checklist" is-upgraded>What You&#39;ll Learn</h2>
+<ul>
+<li>Ingest logs using Logstash</li>
+<li>Transform logs to fit Dynatrace&#39;s Log monitoring platform</li>
+<li>How to use the new Log Viewer</li>
+<li>Create and use custom log attributes</li>
+<li>Create and use log metrics</li>
+<li>Create dashlet from custom log metrics</li>
+<li>Create log events</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Bootcamp Environment Setup" duration="0">
+        <p>Please claim the EC2 instance from the list. Put your name against the EC2 on the shared excel sheet. The link to the sheet will be provided on the day.</p>
+<h2 is-upgraded>SSH into your instance</h2>
+<p>You will be given the .pem (or .ppk) file so you can login to your EC2 instance.</p>
+<h2 is-upgraded>For Linux users</h2>
+<pre><code>ssh -i ~/.ssh/dt_bootcamp_suraj.pem ec2-user@ec2-54-247-46-254.eu-west-1.compute.amazonaws.com
+</code></pre>
+<h2 is-upgraded>For Windows users</h2>
+<p>Use Putty (or similar) to load the &#34;private key file&#34; under the auth section and start a ssh session.</p>
+<p class="image-container"><img alt="windows-putty" src="img/de75889dfb52333a.jpg"></p>
+<h2 is-upgraded>Start the Application</h2>
+<p>You should be logged in as ec2-user.</p>
+<h2 is-upgraded>Enter the following commands on the cli</h2>
+<p>This command will start the sock-shop application in docker.</p>
+<pre><code>cd /home/ec2-user/microservices-demo
+sudo /usr/local/bin/docker-compose -f /home/ec2-user/microservices-demo/deploy/docker-compose/docker-compose.yml up -d
+</code></pre>
+<p>The <a href="https://microservices-demo.github.io/deployment/docker-compose.html" target="_blank">Sock-shop application</a> is being run in docker. During the session we will briefly go through the application architecture.</p>
+<p class="image-container"><img alt="The SockShop Application" src="img/87dae1da12871e65.png"></p>
+<h2 is-upgraded>Install an environment ActiveGate</h2>
+<p>In order for us to ingest logs into Dynatrace, we need an active gate. The bootcamp cluster is a managed cluster, so we will be installing an environment AG.</p>
+<ol type="1">
+<li>Install/Deploy an ActiveGate</li>
+</ol>
+<p>Navigate to the Dynatrace HUB</p>
+<ul>
+<li>Using the Dynatrace Menu -&gt; Manage -&gt; HUB</li>
+<li>Search for and click on <code>ActiveGate</code><img alt="log_ag_install" src="img/1093526e387cd7a.png"></li>
+</ul>
+<p>Click on <code>Install ActiveGate</code><img alt="log_ag_install2" src="img/e1f558d569b30442.png"></p>
+<p>Install ActiveGate</p>
+<ul>
+<li>Select Linux</li>
+<li>Click on Generate Token</li>
+<li>Copy &amp; Execute WGET Command into Linux Server</li>
+<li>Copy &amp; Execute Install command into Linux Server (*Note: <code>sudo</code> is required on this step) <img alt="log_ag_install3" src="img/9c34c17388da841a.png"></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Logs via POST" duration="0">
+        <p>In this module, we&#39;ll:</p>
+<ul>
+<li>Ingest a sample log using Log Ingestion API</li>
+</ul>
+<h2 is-upgraded>Log Ingest API</h2>
+<p>The Log Ingestion API allows for you to push custom logs into Dynatrace.</p>
+<ol type="1">
+<li>POST Ingest Logs</li>
+</ol>
+<ul>
+<li>Replace ADDRESS with the environment AG URL</li>
+<li>Replace Tenant_ID with valid tenant ID</li>
+<li>Replace APITOKEN with the value of you API TOKEN</li>
+<li>Replace HOST_ID with valid host id</li>
+<li>Replace PG_ID with valid process group id</li>
+</ul>
+<pre><code>curl -X POST &#34;https://&lt;ADDRESS&gt;:9999/e/&lt;Tenant_ID&gt;/api/v2/logs/ingest&#34; -H &#34;accept: application/json; charset=utf-8&#34; -H &#34;Authorization: Api-Token &lt;APITOKEN&gt;&#34; -H &#34;Content-Type: application/json; charset=utf-8&#34; -d &#34;[{\&#34;content\&#34;:\&#34;example log content 1\&#34;,\&#34;status\&#34;:\&#34;error\&#34;,\&#34;log.source\&#34;:\&#34;/var/log/syslog\&#34;,\&#34;dt.entity.host\&#34;:\&#34;&lt;HOST ID&gt;\&#34;,\&#34;dt.entity.process_group_instance\&#34;:\&#34;&lt;PG_ID&gt;\&#34;},{\&#34;content\&#34;:\&#34;example log content 2\&#34;,\&#34;status\&#34;:\&#34;info\&#34;,\&#34;log.source\&#34;:\&#34;/var/log/syslog\&#34;,\&#34;dt.entity.host\&#34;:\&#34;&lt;HOST ID&gt;\&#34;,\&#34;dt.entity.process_group_instance\&#34;:\&#34;&lt;PG_ID&gt;\&#34;}]&#34; --insecure
+</code></pre>
+<ul>
+<li>Example LOG JSON</li>
+</ul>
+<pre><code>[
+    {
+    &#34;content&#34;: &#34;example log content 1&#34;,
+    &#34;status&#34; : &#34;error&#34;,
+    &#34;log.source&#34;: &#34;/var/log/syslog&#34;,
+    &#34;dt.entity.host&#34; : &#34;&lt;HOST ID&gt;&#34;,
+    &#34;dt.entity.process_group_instance&#34;: &#34;&lt;PG_ID&gt;&#34;
+    &#34;response&#34;:12
+  },
+  {
+    &#34;content&#34;: &#34;example log content 2&#34;,
+    &#34;status&#34; : &#34;info&#34;,
+    &#34;log.source&#34;: &#34;/var/log/syslog&#34;,
+    &#34;dt.entity.host&#34; : &#34;&lt;HOST ID&gt;&#34;,
+    &#34;dt.entity.process_group_instance&#34;: &#34;&lt;PG_ID&gt;&#34;,
+     &#34;response&#34;:1
+  }
+]
+</code></pre>
+<p class="image-container"><img alt="log_ingest_post" src="img/64fbd8132cef5ea0.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Logs via Logstash - As IS" duration="0">
+        <p>In your EC2 environment, we have installed logstash 6.4.2 (Apache version 2.0). We also have installed the Dynatrace output plugin in the logstash instance for you. For more details, see: <a href="https://github.com/dynatrace-oss/logstash-output-dynatrace" target="_blank">dynatrace-oss/logstash-output-dynatrace</a></p>
+<p>In this module, we&#39;ll:</p>
+<ul>
+<li>Create a Logstash pipeline to read local log files</li>
+<li>Ingest all the logs from the beginning of the file as is</li>
+<li>Understand why we need to transform the ingested logs</li>
+</ul>
+<h2 is-upgraded>Application logs</h2>
+<p>First, lets understand whats running in your environment.</p>
+<pre><code>sudo su
+docker ps
+</code></pre>
+<p class="image-container"><img alt="docker_ps" src="img/b2c74281b92df978.png"></p>
+<p>These container logs (by the way they are setup in this env) are going to write logs in the below folder.</p>
+<pre><code>ls /var/lib/docker/containers/
+/var/lib/docker/containers/&lt;container_id&gt;/&lt;container_id&gt;-json.log
+</code></pre>
+<p>For instance, the front-end container with ID: <code>3257c79d012c</code> will have a logfile &#34;3257c79d012c....... -json.log&#34;.</p>
+<pre><code>cat /var/lib/docker/containers/3257c79d012c1845029c59f07331c87a191bb258306e4c47b091a84877e2c011/3257c79d012c1845029c59f07331c87a191bb258306e4c47b091a84877e2c011-json.log
+</code></pre>
+<p class="image-container"><img alt="sample_app_log" src="img/a9ad15b5436f0f04.png"></p>
+<h2 is-upgraded>Create a Logstash Pipeline</h2>
+<p>Lets now create a config file (a pipeline) for Logstash so that it can read the front-end&#39;s log file from the <code>beginning</code>.</p>
+<p>Steps:</p>
+<pre><code>sudo su
+docker ps |grep front-end
+cd /home/ec2-user/logstash-6.4.2/config
+vi frontend.conf
+</code></pre>
+<p>Paste the below content into the file. Remember to change the <code>CONTAINER_ID</code>, <code>ENV_ACTIVEGATE_HOST</code>, <code>TENANT_ID</code> based on your environment.</p>
+<p>(Tip: An easier way to find the file for that container would be to hit tab after you paste the container id after /var/lib/docker/containers/ )</p>
+<pre><code>input{
+  file{
+    path =&gt; &#34;/var/lib/docker/containers/&lt;FULL_CONTAINER_ID&gt;/&lt;FULL_CONTAINER_ID&gt;-json.log&#34;
+    start_position =&gt; &#34;beginning&#34;
+    codec =&gt; json
+  }
+}
+
+output {
+  dynatrace {
+    ingest_endpoint_url =&gt; &#34;https://&lt;ENV_ACTIVEGATE_HOST&gt;:9999/e/&lt;TENANT_ID&gt;/api/v2/logs/ingest&#34;
+    api_key =&gt; &#34;&lt;API-KEY&gt;&#34;
+    ssl_verify_none =&gt; true
+  }
+}
+</code></pre>
+<h2 is-upgraded>Execute the pipeline</h2>
+<p>Test if your pipeline is fine using the below command (note the filename and path may be different each time you run it):</p>
+<pre><code>/home/ec2-user/logstash-6.4.2/bin/logstash -f /home/ec2-user/logstash-6.4.2/config/frontend.conf -t
+</code></pre>
+<p class="image-container"><img alt="test_logstash_pipeline" src="img/a3696ac796c8a19a.png"></p>
+<p>Execute it using below command:</p>
+<pre><code>/home/ec2-user/logstash-6.4.2/bin/logstash -f /home/ec2-user/logstash-6.4.2/config/frontend.conf
+</code></pre>
+<p class="image-container"><img alt="logstash_running" src="img/bcd14d2f7d33c60d.png"></p>
+<h2 is-upgraded>Check the ingested logs in Log Viewer</h2>
+<p>The logs are ingested as is. <img alt="sample_app_log" src="img/d96c3da1f016267b.png"></p>
+<h2 is-upgraded>Repeat the above steps and create another pipeline for catalogue container</h2>
+<p>Steps:</p>
+<pre><code>docker ps |grep catalogue
+cd /home/ec2-user/logstash-6.4.2/config
+cp frontend.conf catalogue.conf
+</code></pre>
+<p>Paste the below content into the file. Remember to change the <code>CONTAINER_ID</code>, <code>ENV_ACTIVEGATE_HOST</code>, <code>TENANT_ID</code> based on your environment.</p>
+<p>(Tip: An easier way to find the file for that container would be to hit tab after you paste the container id after /var/lib/docker/containers/ )</p>
+<p>REPLACE the file path to the log file of the <code>catalogue</code> container.</p>
+<p>Execute it using below command: (optionally test it using -t)</p>
+<pre><code>/home/ec2-user/logstash-6.4.2/bin/logstash -f /home/ec2-user/logstash-6.4.2/config/catalogue.conf
+</code></pre>
+<p>The logs are ingested as is. <img alt="sample_app_log" src="img/5f13d195605fbdd4.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Custom Log Attribute" duration="0">
+        <p>In this module, we&#39;ll:</p>
+<ul>
+<li>Create custom attributes</li>
+<li>Reingest the application logs</li>
+<li>Filter logs</li>
+</ul>
+<h2 is-upgraded>Create a custom log attribute</h2>
+<ul>
+<li>In the Dynatrace menu, go to Settings.</li>
+<li>Select Log Monitoring &gt; Log custom attributes and then select Add custom attribute.</li>
+<li>Enter the Key as &#34;stream&#34;</li>
+<li>Switch the &#34;Show attribute values in side bar&#34;. Save changes <img alt="log_custom_attribute" src="img/952b2fe3f360dbd5.png"></li>
+</ul>
+<p>You can filter logs based on this new attribute as per below:</p>
+<p class="image-container"><img alt="log_attribute_stream_stderr" src="img/f0b0aeaffccbdce4.png"></p>
+<p>However, the facets will be visible only when new logs with that attribute gets ingested. To emulate this behaviour, we could reingest the same application logs we did in our last step. We just need to delete the <code>.since_db*</code> files, which keep tracks of what we have already ingested.</p>
+<pre><code>sudo su
+rm -rf /home/ec2-user/logstash-6.4.2/data/plugins/inputs/file/.sincedb_*
+/home/ec2-user/logstash-6.4.2/bin/logstash -f /home/ec2-user/logstash-6.4.2/config/catalogue.conf
+</code></pre>
+<p>Once the logs are re-ingested, you will be able to see the attribute &#34;stream&#34; on the facets.</p>
+<p class="image-container"><img alt="log_attribute_stream_stderr_facet" src="img/e44d03e410c8f8af.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Logs via Logstash - Formatted" duration="0">
+        <p>In this module, we&#39;ll:</p>
+<ul>
+<li>Create transformation in Logstash pipeline to format log files</li>
+<li>Ingest all the logs from the beginning of the file again</li>
+<li>Understand why we need to transform the ingested logs</li>
+</ul>
+<h2 is-upgraded>Application logs</h2>
+<p>Lets look at the logs emitted by the catalogue container.</p>
+<p class="image-container"><img alt="catalogue_raw_logs" src="img/29aeef47487671ce.png"></p>
+<p>You will see a mixed set of log lines. Majority of them are based on key=value pairs. Based on this info, lets construct a &#34;filter&#34; (aka a transformation step) in Logstash.</p>
+<p>Steps:</p>
+<pre><code>cd /home/ec2-user/logstash-6.4.2/config
+cp catalogue.conf catalogue_filtered.conf 
+vi catalogue_filtered.conf 
+</code></pre>
+<p>Enter the below filter declaration in the file between input and output sections:</p>
+<pre><code>filter { kv { source =&gt; &#34;log&#34; } }
+</code></pre>
+<p>Execute it using below command: (optionally test it using -t)</p>
+<pre><code>sudo su
+rm -rf /home/ec2-user/logstash-6.4.2/data/plugins/inputs/file/.sincedb_*
+/home/ec2-user/logstash-6.4.2/bin/logstash -f /home/ec2-user/logstash-6.4.2/config/catalogue_filtered.conf 
+</code></pre>
+<p>Once ingested, you will be able to see the individual key-value pairs as root level attributes.</p>
+<p class="image-container"><img alt="log_catalogue_in_dt_filtered" src="img/b6b0ee09398de973.png"></p>
+<p>We want to extract the number from the attribute <code>took</code>. So lets apply one more filter as per below:</p>
+<pre><code>vi catalogue_filtered.conf 
+</code></pre>
+<pre><code>  grok {
+    match =&gt; { &#34;took&#34; =&gt; &#34;%{NUMBER:duration}&#34; }
+  }
+</code></pre>
+<p>Execute the below commands to re-injest the logs.</p>
+<pre><code>rm -rf /home/ec2-user/logstash-6.4.2/data/plugins/inputs/file/.sincedb_*
+/home/ec2-user/logstash-6.4.2/bin/logstash -f /home/ec2-user/logstash-6.4.2/config/catalogue_filtered.conf 
+</code></pre>
+<p>The result will look like below: <img alt="log_catalogue_filtered_number" src="img/9f0e1c7e7a6a2f1.png"></p>
+<p>Now, lets go and define one additional log attribute: duration.</p>
+<p class="image-container"><img alt="log_attribute_duration" src="img/d2c9cae580702fab.png"></p>
+<p>We will use this custom attribute in our next section.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Create metric using log viewer" duration="0">
+        <ul>
+<li>In the Dynatrace menu, go to Logs.</li>
+<li>Create a log viewer query or use log viewer facets to extract the log data that interests you. <img alt="log_metric_query_filter" src="img/68ba943713db69ad.png"></li>
+<li>Select Create metric. Your log viewer query is now displayed on the Log metrics page.</li>
+</ul>
+<p>Adding dimensions allows you to split the log metric occurrences according to specific log data attribute. Append the metric name to the metric key log. and save changes to create the log metric.</p>
+<p class="image-container"><img alt="log_metric_duration" src="img/847dbea4aa6183b3.png"></p>
+<h2 is-upgraded>Using the metric</h2>
+<p>Now that you have defined the metric, you can chart it, pin it to a dashboard, and even create an alert based on it.</p>
+<ul>
+<li>Chart: Go to Explore data, set Select metric... to log.duration, and select Run query. <img alt="log_duration_chart" src="img/fe01350a8443eef9.png"></li>
+<li>Dashboard: After you create a chart, select Pin to dashboard to add the chart to one of your dashboards.</li>
+<li>Alert: Go to Settings &gt; Anomaly detection &gt; Custom events for alerting, select Create custom event for alerting, and create a custom event based on log.duration. <img alt="log_custom_alert" src="img/87330a1a4de2c976.png"></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Lets use OneAgent ™ For Log Collection" duration="0">
+        <ul>
+<li>Navigate to Deploy Dynatrace -&gt; Linux</li>
+<li>Generate PaaS token</li>
+</ul>
+<p class="image-container"><img alt="install_oneagent_linux" src="img/68ba943713db69ad.png"></p>
+<p>Copy the complete URL and API-Tokens. A sample is listed below:</p>
+<pre><code>wget -O Dynatrace-OneAgent-Linux-1.235.185.sh &#34;https://mou612.managed-sprint.dynalabs.io/e/53d6282c-8893-40b0-ba03-4120b5f10615/api/v1/deployment/installer/agent/unix/default/latest?arch=x86&amp;flavor=default&#34; --header=&#34;Authorization: Api-Token ######&#34;
+</code></pre>
+<p>Use the URL and API-Tokens obtained to construct the below command:</p>
+<pre><code>sudo docker run -d --restart=unless-stopped --privileged=true --pid=host --net=host -v /:/mnt/root -e ONEAGENT_INSTALLER_SCRIPT_URL=&#34;&lt;PASTE THE URL HERE&gt;&#34; -e ONEAGENT_INSTALLER_DOWNLOAD_TOKEN=&#34;&lt;PASTE THE API-TOKEN HERE&gt;&#34; dynatrace/oneagent
+</code></pre>
+<p>A sample command would look like below:</p>
+<pre><code>sudo docker run -d --restart=unless-stopped --privileged=true --pid=host --net=host -v /:/mnt/root -e ONEAGENT_INSTALLER_SCRIPT_URL=&#34;https://mou612.managed-sprint.dynalabs.io/e/#####-#####-#####-####-#####/api/v1/deployment/installer/agent/unix/default/latest?arch=x86&amp;flavor=default&#34; -e ONEAGENT_INSTALLER_DOWNLOAD_TOKEN=&#34;&lt;PASTE THE API-TOKEN HERE&gt;&#34; dynatrace/oneagent
+</code></pre>
+<p>Execute the above command in your EC2 instance.</p>
+<h2 is-upgraded>Lets explore the log sources found by OneAgent</h2>
+<p class="image-container"><img alt="log_sources_by_oneagent" src="img/be35635396afe0cf.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Troubleshooting" duration="0">
+        <h2 is-upgraded>1. Another instance running</h2>
+<p>When running Logstash you receive error such as below:</p>
+<pre><code>[2022-03-07T06:14:10,345][FATAL][logstash.runner          ] Logstash could not be started because there is already another instance using the configured data directory.  If you wish to run multiple instances, you must change the &#34;path.data&#34; setting.
+</code></pre>
+<p>Kill the logstash process that is running.</p>
+<h2 is-upgraded>2. Mistake in pipline/no logs are ingested</h2>
+<p>If you made a typo/mistake in the pipeline config file and no logs are ingested....</p>
+<p>Delete the .since_db file. Those files are under: <code>/home/ec2-user/logstash-6.4.2/data/plugins/inputs/file/</code> and named as .sincedb_numbers</p>
+<p class="image-container"><img alt="since_db_file" src="img/c66e1b6c9f4f2b3.png"></p>
+<h2 is-upgraded>3. 404 erros</h2>
+<p>Receiving 404 errors during logstash run - Make sure your AG address and api-token are correct.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Feedback" duration="0">
+        <p>We hope you enjoyed this lab and found it useful. We would love your feedback!</p>
+<aside class="special"><p>💡 For other ideas and suggestions, please <a href="mailto:APAC-SE-Central@dynatrace.com?subject=OpenTelemetry - Ideas and Suggestions" target="_blank"><strong>reach out via email</strong></a>.</p>
+</aside>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="../../elements/codelab-elements/native-shim.js"></script>
+  <script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+  <script src="../../elements/codelab-elements/prettify.js"></script>
+  <script src="../../elements/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>
