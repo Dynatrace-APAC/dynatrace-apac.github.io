@@ -1,9 +1,9 @@
 id: kubernetes-jp
 summary: KubernetesとPrometheusの統合によるフルスタックオブザーバビリティの実現
 categories: kubernetes, prometheus, application-microservices-monitoring
-tags: kubernetes, Beginner
-status: Hidden 
-authors: Brandon Neo
+tags: kubernetes, Intermediate
+status: Published 
+authors: Katsuyoshi Sumida
 Feedback Link: mailto:DT-TYO-SE@dynatrace.com
 new: 1
 Analytics Account: UA-175467274-1
@@ -13,74 +13,76 @@ Analytics Account: UA-175467274-1
 ## はじめに
 Duration: 1
 
-このリポジトリには、Hands-On Kubernetes Sessionのラボが含まれています。今回のハンズオンでは、AWSで動作するKubernetesインスタンスを使用しますが、他のプラットフォームでも動作します。
+このリポジトリには、Kubernetes Hand-onで実施する内容が含まれています。本ラボでは、プラットフォームとしてmicrok8sを使用していますが、他のプラットフォームでも動作します。
 
 Dynatrace主催のハンズオンワークショップへ参加されている方には環境が自動で払い出されます。
 
 ### 事前準備
 * DynatraceのAccount. フリートライアルの申し込み [here](https://www.dynatrace.com/trial/)
+* Kubernetes環境
 * Chrome ブラウザ
-* SSH クライアント [mobaxterm](https://mobaxterm.mobatek.net/)
+* SSH クライアント [Tera Term](https://ja.osdn.net/projects/ttssh2/)
 
 ### 学習内容
 - Dynatrace Operatorの導入
 - 自動作成されたKubernetesのダッシュボードの確認
-- Kubernetesにおけるラベルとアノテーション
-- Kubernetesのプロセスグループネーミングとサービスネーミング
 - Dynatrace上でのKubernetes情報の確認
   - Namespace
   - ワークロード
   - コンテナ/ポッド
+- Kubernetesにおけるラベルとアノテーションの設定、環境変数の設定
+- Kubernetesのプロセスグループネーミングとサービスネーミング
+- Prometheusメトリクスのインポート
+- 
 
 <!-- Step 1 -->
 ## Dynatrace Operatorの導入
 Duration: 15
-<<snippet-jp/deploy/operator-jp.md>>
+<<setup1/operator-jp.md>>
 
-<<snippet-jp/restart/sockshop-jp.md>>
+<<setup1/k8s-settings-jp.md>>
 
-<<snippet-jp/setup/k8s-settings-jp.md>>
+<<setup1/sockshop-jp.md>>
 
 <!-- Step 2 -->
-## Prometheusメトリクスのインポート
-Duration: 10
-<<snippet-jp/setup/k8s-prometheus-jp.md>>
-
-<!-- Step 3 -->
-## Kubernetesにおけるラベルとアノテーション
-Duration: 15
-<<snippet-jp/setup/k8s-labels-jp.md>>
-
-<!-- Step 4 -->
-## コンテナ環境変数
-Duration: 15
-<<snippet-jp/setup/k8s-container-variables-jp.md>>
-
-<!-- Step 5 -->
-## Kubernetesのプロセスグループネーミングとサービスネーミング
-Duration: 15
-<<snippet-jp/setup/k8s-pg-svc-naming-rules-jp.md>>
-
-<!-- Step 6 -->
-## Monitoring-as-Code
-Duration: 10
-<<snippet-jp/deploy/monaco-jp.md>>
-
-<!-- Step 7 -->
 ## Kubernetes Dashboards
 Duration: 10
-<<snippet-jp/explore/k8s-dashboards-jp.md>>
+<<explore1/k8s-dashboards-jp.md>>
 
-<!-- Step 8 -->
+<!-- Step 3 -->
 ## Dynatrace上でのKubernetes情報の確認
 Duration: 20
-<<snippet-jp/explore/k8s-views-jp.md>>
+<<explore2/k8s-views-jp.md>>
+
+<!-- Step 4 -->
+## Kubernetesにおけるラベルとアノテーションの設定
+Duration: 15
+<<setup2/k8s-labels-jp.md>>
+
+<!-- Step 5 -->
+## コンテナ環境変数
+Duration: 10
+<<setup3/k8s-container-variables-jp.md>>
+
+<!-- Step 6 -->
+## Kubernetesのプロセスグループネーミングとサービスネーミング
+Duration: 15
+<<setup4/k8s-pg-svc-naming-rules-jp.md>>
+
+<!-- Step 7 -->
+## Kubernetesワークロードのインテリジェントオブザーバビリティ
+Duration: 20
+<<explore3/k8s-o11y-jp.md>>
+
+<!-- Step 8 -->
+## Prometheusメトリクスのインポート
+Duration: 10
+<<setup5/k8s-prometheus-jp.md>>
 
 <!-- Step 9 -->
-## Kubernetesワークロードのインテリジェントオブザーバビリティ
+## Monitoring-as-Code
 Duration: 10
-<<snippet-jp/explore/k8s-o11y-jp.md>>
-
+<<deploy/monaco-jp.md>>
 
 <!-- ------------------------ -->
 

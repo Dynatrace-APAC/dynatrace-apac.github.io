@@ -3,14 +3,13 @@
   "format": "html",
   "prefix": "../../elements",
   "mainga": "UA-49880327-14",
-  "updated": "2021-10-11T10:14:55+11:00",
+  "updated": "2022-05-04T08:16:18+08:00",
   "id": "kubernetes-jp",
-  "new": 1,
-  "duration": 124,
+  "duration": 129,
   "title": "DynatraceとKubernetes",
-  "authors": "Brandon Neo",
+  "authors": "Katsuyoshi Sumida",
   "summary": "KubernetesとPrometheusの統合によるフルスタックオブザーバビリティの実現",
-  "source": "kubernetes-v2-jp.md",
+  "source": "kubernetes-v3-jp.md",
   "theme": "",
   "status": [
     "published"
@@ -21,7 +20,7 @@
     "application-microservices-monitoring"
   ],
   "tags": [
-    "beginner",
+    "intermediate",
     "kubernetes"
   ],
   "feedback": "mailto:DT-TYO-SE@dynatrace.com",
