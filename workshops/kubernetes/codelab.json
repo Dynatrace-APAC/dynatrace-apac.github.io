@@ -3,13 +3,13 @@
   "format": "html",
   "prefix": "../../elements",
   "mainga": "UA-49880327-14",
-  "updated": "2022-05-06T11:00:52+08:00",
+  "updated": "2021-10-20T10:11:18+08:00",
   "id": "kubernetes",
-  "duration": 129,
-  "title": "DynatraceとKubernetes",
-  "authors": "Katsuyoshi Sumida",
-  "summary": "KubernetesとPrometheusの統合によるフルスタックオブザーバビリティの実現",
-  "source": "kubernetes-v3-jp.md",
+  "duration": 124,
+  "title": "Dynatrace with Kubernetes",
+  "authors": "Brandon Neo",
+  "summary": "Full Stack Observability with vanilla Kubernetes while integating with k8s and Prometheus for additional context",
+  "source": "kubernetes-v2.md",
   "theme": "",
   "status": [
     "published"
@@ -20,10 +20,10 @@
     "application-microservices-monitoring"
   ],
   "tags": [
-    "intermediate",
+    "beginner",
     "kubernetes"
   ],
-  "feedback": "mailto:DT-TYO-SE@dynatrace.com",
+  "feedback": "mailto:APAC-SE-Central@dynatrace.com",
   "ga": "UA-175467274-1",
   "url": "kubernetes"
 }
