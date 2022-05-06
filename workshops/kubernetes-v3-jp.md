@@ -1,4 +1,4 @@
-id: kubernetes-jp
+id: kubernetes
 summary: KubernetesとPrometheusの統合によるフルスタックオブザーバビリティの実現
 categories: kubernetes, prometheus, application-microservices-monitoring
 tags: kubernetes, Intermediate
@@ -18,7 +18,7 @@ Duration: 1
 Dynatrace主催のハンズオンワークショップへ参加されている方には環境が自動で払い出されます。
 
 ### 事前準備
-* DynatraceのAccount. フリートライアルの申し込み [here](https://www.dynatrace.com/trial/)
+* DynatraceのAccount：[フリートライアルの申し込み](https://www.dynatrace.com/trial/)
 * Kubernetes環境
 * Chrome ブラウザ
 * SSH クライアント [Tera Term](https://ja.osdn.net/projects/ttssh2/)
