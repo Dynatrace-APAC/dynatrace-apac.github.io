@@ -1,4 +1,4 @@
-id: kubernetes
+id: kubernetes-jp
 summary: KubernetesとPrometheusの統合によるフルスタックオブザーバビリティの実現
 categories: kubernetes, prometheus, application-microservices-monitoring
 tags: kubernetes, Intermediate
