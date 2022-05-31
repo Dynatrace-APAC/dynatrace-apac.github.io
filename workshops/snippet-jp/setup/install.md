@@ -59,7 +59,7 @@ Positive
 
 下の画像のように、接続されたホストが表示されているはずです。
 
-![Deploy](../../assets/k8s/jp/deployment-status.png)
+![Deploy](../assets/k8s/jp/deployment-status.png)
 
 Positive
 : 詳しいドキュメントは[こちら](https://www.dynatrace.com/support/help/shortlink/full-stack-dto-k8)を参照ください。
