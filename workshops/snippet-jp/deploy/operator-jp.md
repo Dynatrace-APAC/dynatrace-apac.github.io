@@ -23,7 +23,7 @@
 * **Kubernetes** を選択します。
 * 右下の **Monitor Kubernetes** ボタンを選択します。 
 
-![Deploy](../assets/cloud-observe/k8s-deploy.gif)
+![Deploy](../assets/cloud-observe/jp/k8s-deploy.gif)
 
 **Monitor Kubernetes / Openshift**ページ内で、以下の手順を行います。
 
@@ -33,7 +33,7 @@
 * **Copy** ボタンをクリックしてコマンドをコピーしてください。
 * ターミナルウィンドウに貼り付けて実行してください。
 
-![Deploy](../assets/cloud-observe/k8s-deploy-2.gif)
+![Deploy](../assets/cloud-observe/jp/k8s-deploy-2.gif)
 
 出力例
 
