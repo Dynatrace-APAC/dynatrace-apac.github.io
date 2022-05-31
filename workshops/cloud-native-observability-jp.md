@@ -11,10 +11,23 @@ Analytics Account: UA-175467274-1
 # Dynatraceによるクラウドネイティブなオブザーバビリティ
 <!-- ------------------------ -->
 ## はじめに
+Duration: 1
 
 このリポジトリには、Cloud Native Observabilityで実施する内容が含まれています。
 
 Dynatrace主催のハンズオンワークショップへ参加されている方には環境が自動で払い出されます。
+
+### 事前準備
+* DynatraceのAccount：[フリートライアルの申し込み](https://www.dynatrace.com/trial/)
+* Kubernetes環境
+* Chrome ブラウザ
+* SSH クライアント [Tera Term](https://ja.osdn.net/projects/ttssh2/)
+
+### 学習内容
+- Dynatrace Operatorの導入
+- リリース管理
+- サービスレベル目標の設定
+- Monitoring as Codeによる監視のコード化
 
 <!-- Step 1 -->
 ## Dynatrace Operatorの導入
@@ -48,6 +61,7 @@ Duration: 10
 
 <!-- ------------------------ -->
 ## アンケート
+Duration: 3
 
 このラボを楽しんでいただき、お役に立てれば幸いです。ご意見、ご感想をお待ちしております。
 <form>
