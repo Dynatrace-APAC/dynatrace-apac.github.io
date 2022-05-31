@@ -19,7 +19,7 @@ Positive
 * **Kubernetes** を選択します。
 * 右下の **Kubernetesのモニター** ボタンをクリックします。 
 
-![Deploy](../assets/k8s-jp/deploy-1.gif)
+![Deploy](../assets/k8s/jp/deploy-1.gif)
 
 **Kubernetes / Openshiftのモニター**ページ内で、以下の手順を行います。
 
@@ -28,23 +28,23 @@ Positive
 * **SSL証明書チェックのスキップ**を有効にします。
 * **ダウンロード: dynakube.yaml** ボタンをクリックしてdynakube.yamlファイルをダウンロードします。
 
-![Deploy](../assets/k8s-jp/deploy-2.gif)
+![Deploy](../assets/k8s/jp/deploy-2.gif)
 
 * メモ帳などでdynakube.yamlファイルを開き、dynakube.yamlファイルを全て選択し、コピーします。
 
-![Deploy](../assets/k8s-jp/dynakube-1.gif)
+![Deploy](../assets/k8s/jp/dynakube-1.gif)
 
 * ターミナルで`vim dynakube.yaml`などを実行し、dynakube.yamlファイルを貼り付けます。
 
-![Deploy](../assets/k8s-jp/dynakube-2.gif)
+![Deploy](../assets/k8s/jp/dynakube-2.gif)
 
 * Dynatrace UIに戻り、**コピー**ボタンをクリックして、ターミナルに貼り付け実行します。
 
-![Deploy](/../assets/k8s-jp/deploy-3.png)
+![Deploy](/../assets/k8s/jp/deploy-3.png)
 
 出力例
 
-![Deploy](../assets/k8s-jp/deploy-4.png)
+![Deploy](../assets/k8s/jp/deploy-4.png)
 
 
 Negative
@@ -59,7 +59,7 @@ Positive
 
 下の画像のように、接続されたホストが表示されているはずです。
 
-![Deploy](../../assets/k8s-jp/deployment-status.png)
+![Deploy](../../assets/k8s/jp/deployment-status.png)
 
 Positive
 : 詳しいドキュメントは[こちら](https://www.dynatrace.com/support/help/shortlink/full-stack-dto-k8)を参照ください。
