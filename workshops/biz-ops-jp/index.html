@@ -1,568 +1,494 @@
 
 <!doctype html>
+
 <html>
 <head>
-<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
-<meta name="theme-color" content="#4F7DC9">
-<meta charset="UTF-8">
-<title>DynatraceによるBizDevOps</title>
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
-<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
-<style>
-.success{color:#1e8e3e}.error{color:red} </style>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>DynatraceによるBizDevOps</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
 </head>
 <body>
-<google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
-<google-codelab codelab-gaid="UA-175467274-1" id="biz-ops-jp" title="DynatraceによるBizDevOps" environment="web" feedback-link="mailto:DT-TYO-SE@dynatrace.com">
-<google-codelab-step label="はじめに" duration="15">
-<p>このレポには、BizOps - Bridging the Gap to the Business Hands On Workshopの一環として実施されるラボが含まれています。</p>
-<p>ハンズオンの目的は、参加者のためにステップを自動化し、シームレスにすることです。</p>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid="UA-175467274-1"
+                  id="biz-ops-jp"
+                  title="DynatraceによるBizDevOps"
+                  environment="web"
+                  feedback-link="mailto:DT-TYO-SE@dynatrace.com">
+    
+      <google-codelab-step label="はじめに" duration="5">
+        <p>このリポジトリには、BizDevOpsのためのハンズオンで実施する内容が含まれています。</p>
 <h2 is-upgraded>事前準備</h2>
 <ul>
-<li>DynatraceのAccount. フリートライアルの申し込み <a href="https://www.dynatrace.com/trial/" target="_blank">here</a></li>
+<li>DynatraceのAccount：<a href="https://www.dynatrace.com/ja/trial/" target="_blank">フリートライアルの申し込み</a></li>
 <li>Chrome ブラウザ</li>
 </ul>
-<h2 is-upgraded>セットアップ</h2>
-<p>このラボでは、以下のサンプルアプリケーションを使用します。</p>
-<ul>
-<li>サンプルアプリケーション <ul>
-<li><a href="https://community.dynatrace.com/community/display/DL/easyTravel" target="_blank">easyTravel</a></li>
-<li>Easy Travelには2つのインターフェースがあります。</li>
-<li>クラシック <img alt="Intro" src="img/8df3a5d16958f2dc.png"> <ul>
-<li>Angular <img alt="Intro" src="img/4f30100251cd9994.png"></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+<p><strong>Dynatrace主催のハンズオンワークショップへ参加されている方にはDynatraceの環境が自動で払い出されるため フリートライアルから申し込んでいただく必要はありません。</strong></p>
 <h2 is-upgraded>学習内容</h2>
 <ul>
-<li>ITメトリクスにビジネスコンテキストをもたらす <ul>
-<li>セッション分析のために個々のユーザーを特定する</li>
-<li>コンバージョン目標</li>
-<li>セッションリプレイ</li>
+<li>Real User Monitoringの強化：メトリクスとビジネスコンテキストの紐付け  <ul>
+<li>セッション分析のための個別ユーザーの識別：ユーザータグの設定</li>
+<li>コンバージョンゴールの設定・確認</li>
+<li>セッションとユーザーアクションのプロパティ</li>
+<li>セッションリプレイの設定</li>
 </ul>
 </li>
-<li>データを可視化し、運用チームと基幹業務チームの連携を強化</li>
-<li>データの活用</li>
-<li>Dynatraceの以下の機能をご紹介します。 <ul>
-<li>セッションリプレイ</li>
-<li>ユーザーセッションプロパティ</li>
-<li>User Session Query Language (USQL)</li>
-<li>Dynatrace ダッシュボード</li>
+<li>ダッシュボードによるビジネスKPIの可視化</li>
+<li>Dynatraceによるフロントエンドエラーの確認</li>
+<li>Core Web Vitalsによるフロントエンドパフォーマンスの確認</li>
+<li>CSSセレクターの取得方法</li>
+<li>リクエストアトリビュートによるサーバーサイドとフロントエンドの紐付け</li>
 </ul>
-</li>
-</ul>
-</google-codelab-step>
-<google-codelab-step label="1 - ITメトリクスにビジネスコンテキストをもたらす" duration="15">
-<p>この演習の目的は、Dynatraceの基本的なReal User Monitoringの構成を強化し、ITメトリクスにビジネスコンテキストをもたらすことです。そのため、Dynatraceの基本的な設定は行わず、あらかじめ環境を設定しておきます。</p>
+<h2 is-upgraded>サンプルアプリケーション</h2>
+<p>このラボでは、サンプルアプリケーションとして<a href="https://community.dynatrace.com/t5/Getting-started/easyTravel-Documentation-and-Download/td-p/181271" target="_blank">easyTravel</a>を使用します。 easyTravelには2つのインターフェースがあります。</p>
 <ul>
-<li>アプリケーションの整理</li>
-<li>JavaScriptフレームワークのサポートを有効にする</li>
-<li>ユーザーアクションの論理的なグループ化（ユーザーアクションネーミングの設定</li>
+<li>Classic <img alt="Intro" src="img/8df3a5d16958f2dc.png"></li>
+<li>Angular <img alt="Intro" src="img/4f30100251cd9994.png"></li>
 </ul>
-<p>基本的な設定に興味のある方は、以下のラボリファレンス<a href="https://dynatrace-apac.github.io/workshops/dem/index.html?index=..%2F..index#0" target="_blank">Digital Experience Management with Dynatrace</a>を参考にしてください。</p>
-</google-codelab-step>
-<google-codelab-step label="1a - セッション分析のために個々のユーザーを特定する" duration="0">
-<p>Dynatrace Real User Monitoringの重要な機能の一つに、異なるブラウザ、デバイス、ユーザーセッション間で個々のユーザーを一意に識別する機能があります。</p>
-<p>デフォルトでは、Dynatraceは各新規ユーザーにユニークでランダムなIDを割り当てます。しかし、ユーザー名や電子メールアドレスなどで構成される、より意味のあるカスタムユーザータグを割り当てることができます。</p>
-<p>この演習では、<strong><em>ページソース</em></strong>に基づいてユーザーをタグ付けするアプローチを使用します。このユーザータグ付けのアプローチは、アプリケーションのページソースで利用可能なデータを取り込むことで機能します。</p>
-<p>Easy Travel Angularアプリでは、ユーザー名を右上に表示しています。これは、DOM要素のテキストやJavaScriptの変数を介して行われます。</p>
-<p>Dynatraceで設定するには</p>
-<ol type="1">
-<li>左のナビゲーションメニューから「Applications」を選択します。</li>
-<li><strong>EasyTravel Angular</strong> アプリケーションを選択します。</li>
-<li>参照」ボタン<strong>(...)</strong>をクリックし、「編集」**を選択する。</li>
-<li>Capturing<strong>ヘッダーの下で、</strong>User tag**を探す。 <img alt="ユーザータグ" src="img/fe59d78ee590d3d9.gif"></li>
-<li>Add user tag rule**をクリックする。 <ul>
-<li>ソースの種類 **ソースタイプ: **CSSセレクタ</li>
-<li>CSSセレクタのフィールド。 <pre><code>a.greeting
-</code></pre>
-</li>
-<li>トグル クリーンアップルールを適用 <strong>オン</strong> にする</li>
-<li>Regexボックスに以下をコピーします。 <pre><code>Hi, (.*+)
-</code></pre>
-</li>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Real User Monitoringの強化：メトリクスとビジネスコンテキストの紐付け" duration="5">
+        <p>この演習ではDynatraceの基本的なReal User Monitoringの構成を強化し、メトリクスとビジネスコンテキストを紐付ける方法について学びます。そのため、以下の基本的な設定についてはあらかじめ設定済みとなります。</p>
+<ul>
+<li>アプリケーション検出ルールの作成</li>
+<li>JavaScriptフレームワークの有効化</li>
+<li>ユーザーアクションネーミングの設定</li>
+</ul>
+<p>基本的な設定に興味のある方は<a href="https://learn.dynatracelabs.com/workshops/dem-jp/index.html" target="_blank">Dynatraceによるデジタル・エクスペリエンス・マネジメント</a>を参考にしてください。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="セッション分析のための個別ユーザーの識別：ユーザータグの設定" duration="10">
+        <p>Real User Monitoringの重要な機能の一つに、異なるブラウザ、デバイス、ユーザーセッション間で個々のユーザーを一意に識別する機能があります。</p>
+<p>デフォルトでは、Dynatraceは各新規ユーザーにユニークでランダムなIDを割り当てます。しかし、ユーザー名や電子メールアドレスなどで構成される、より意味のあるカスタムユーザータグを割り当てることができます。 この演習では、<strong>ページソース</strong>に基づいてユーザーをタグ付けします。ユーザーのタグ付けの方法は、アプリケーションのページソースから利用可能なデータを取り込むことで機能します。</p>
+<p>Easy Travel Angularアプリでは、ユーザー名は右上に表示されています。 <img alt="username" src="img/9bbaf438ba617af2.png"></p>
+<h2 is-upgraded>Dynatraceによるユーザーのタグ付け設定</h2>
+<p>ブラウザを開き、DynatraceのGUIにアクセスしてください。</p>
+<p>以下の手順で進めてください。</p>
+<ul>
+<li>左側のメニューから<strong>アプリケーションとマイクロサービス &gt; フロントエンド</strong> を開きます。</li>
+<li><strong>EasyTravel Angular</strong>を開きます。</li>
+</ul>
+<aside class="warning"><p>設定をする前に<strong>ユーザー セッションの分析</strong>を開いて、全てのユーザー名が<strong>匿名</strong>となっていることを確認します。</p>
+</aside>
+<ul>
+<li><strong>メニューボタン（...）</strong>をクリックし、<strong>編集</strong>をクリックして、設定画面を開きます。</li>
+<li><strong>Capturing &gt; User tag</strong>を開きます。 <img alt="User_tag" src="img/ff74a549b99cad26.gif"></li>
+<li><strong>Add user tag rule</strong>ボタンをクリックし、以下のように入力します。  <ul>
+<li><strong>Source type: </strong><code>CSS selector</code></li>
+<li><strong>CSS selector </strong><code>a.greeting</code></li>
+<li><strong>Apply cleanup rule</strong>を有効にします。</li>
+<li><strong>Regex </strong><code>Hi, (.*+)</code><img alt="add_user_tag_rule" src="img/2f2215523fbd606.png"></li>
 </ul>
 </li>
 <li><strong>Add user tag rule</strong>ボタンをクリックします。</li>
-<li><strong>Save changes</strong>ボタンを忘れずにクリックしてください。</li>
-</ol>
-<p>設定が完了すると、このように表示されます。 <img alt="User Tag" src="img/269a9a1eb55db9a8.png"></p>
-<aside class="special"><p>参考資料: <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/how-to-use-real-user-monitoring/cross-application-user-session-analytics/identify-individual-users-for-session-analysis/" target="_blank">Identify Individual Users for Session Analysis</a></p>
+<li><strong>変更の保存</strong>ボタンをクリックします。</li>
+</ul>
+<aside class="special"><p>詳しいドキュメントは<a href="https://www.dynatrace.com/support/help/shortlink/user-tagging" target="_blank">こちら</a>を参照ください。</p>
 </aside>
-</google-codelab-step>
-<google-codelab-step label="1b - コンバージョンレートの作成" duration="15">
-<p>コンバージョンゴールは、ユーザーがユーザージャーニーの重要なマイルストーンを満たしているかどうかを理解するのに役立ちます。例えば、チェックアウトの成功、ニュースレターの登録、デモの登録などです。</p>
-<p>この演習では、Easy Travel Angular アプリケーションのコンバージョン目標を作成します。</p>
-<ol type="1">
-<li>前のアクティビティと同じ画面で、<strong>Session Replay and behavior</strong>の見出しをスクロールダウンし、<strong>Conversion Goals</strong>を選択します。 <img alt="Conversion" src="img/cce099b144ee0181.gif"></li>
-<li><strong>Add goal</strong>ボタンをクリックし、以下を入力します。 <ul>
-<li>Name: <pre><code>Credit card validated
-</code></pre>
-</li>
-<li>Type of goal: <strong>User Action</strong></li>
-<li>Rule applies to: <strong>XHR actions</strong></li>
-<li>Rule <ul>
-<li><strong>Page URL</strong></li>
-<li><strong>contains<br></strong><code>easytravel/rest/validate-creditcard<br></code></li>
-</ul>
-</li>
-<li>完成した構成は以下のようになります。 <img alt="Conversion" src="img/5500237273f5bb83.png"></li>
-</ul>
-</li>
-</ol>
-<h2 is-upgraded>コンバージョン目標設定の検証</h2>
-<p>アプリケーションに照らし合わせて結果を確認します。<strong>EasyTravel Angular</strong> &gt; <strong>User behavior</strong>について</p>
-<p class="image-container"><img alt="Conversion" src="img/bfea93ce17688d75.png"></p>
-</google-codelab-step>
-<google-codelab-step label="1c - セッションおよびユーザーアクションのプロパティ" duration="15">
-<p>この演習では、セッションプロパティとユーザーアクションプロパティを作成して、Dynatraceに追加データを公開します。これは、分析目的でユーザーに関する追加のコンテキスト（キャンペーンのソース、ユーザーが選択したさまざまなアイテムなど）をもたらすのに便利です。</p>
-<p>Dynatraceは、タグを使ってセッションにコンテキストを与える一般的なソフトウェアのリストをあらかじめ定義しています。その一部をご紹介します。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="コンバージョンゴールの設定・確認" duration="10">
+        <p>この演習では、easyTravel Angularにコンバージョンゴールを設定し、コンバージョン結果を確認します。コンバージョンゴールとは、サイトを訪れたユーザーが行う会員登録や資料請求、購入といった重要なアクションのことであり、その割合はマーケティング指標として重要な指標となります。</p>
+<h2 is-upgraded>コンバージョンゴールの設定</h2>
 <ul>
-<li>グーグルアナリティクス</li>
-<li>アドビ・アナリティクス</li>
-<li>ティーリーフ</li>
-<li>などがあります。</li>
+<li>ユーザーのタグ付け時と同様に<strong>EasyTravel Angular</strong>の設定画面を開きます。</li>
+<li><strong>Behavior analytics &gt; Conversion goals</strong>を開きます。 <img alt="Conversion_goals" src="img/cc5436e31d80871c.png"></li>
+<li><strong>Add goal</strong>ボタンをクリックし、以下のように入力します。  <ul>
+<li><strong>Name: </strong><code>Credit card validated</code></li>
+<li><strong>Type of goal: </strong><code>User Action</code></li>
+<li><strong>Rule applies to: </strong><code>XHR actions</code></li>
+<li><strong>Rule:</strong></li>
+<li><code>Page URL</code></li>
+<li><code>contains</code></li>
+<li><code>easytravel/rest/validate-creditcard</code></li>
 </ul>
-<p>これらは、<strong>Property pack</strong>タブにあります。</p>
-<p>アプリケーションから抽出できる追加のデータソースについては、<strong>custom defined properties</strong>を使用して、監視するユーザーアクションやユーザーセッションの文字列、数値、および日付のプロパティを定義します。</p>
-<p>プロパティの値は、各ユーザーの行動の一部として取得されます。プロパティ値を活用することで、ユーザーのアプリケーションとのインタラクションの詳細を把握することができます。</p>
-<ol type="1">
-<li>前述のアクティビティと同じ画面で、<strong>Capturing</strong>の見出しに移動し、<strong>Session and Action properties</strong>を選択します。 <img alt="Session properties" src="img/8ac6f7c6c8b062f4.png"></li>
-<li>ボタン <strong>Add properties</strong> をクリックします。</li>
-</ol>
-<h2 is-upgraded>Property packs - Google Analytics/Adobe/UTM codes など</h2>
-<p>これらはあらかじめ用意されているので、あとはリストから選択するだけです。ここでは、以下のものを選択します。</p>
+</li>
+<li><strong>Add goal</strong>ボタンをクリックします。 <img alt="Conversion_goal" src="img/28c12bbfccaf5a62.png"></li>
+</ul>
+<h2 is-upgraded>コンバージョンゴールの確認</h2>
+<p>どの程度の割合でコンバージョンに至ったか結果を確認します。</p>
 <ul>
-<li>ドロップダウンをクリックして、<strong>ウェブ・プロパティ</strong>を選択します。</li>
-<li>Configuration properties<strong>では、以下の項目に対応する</strong>Add**ボタンを選択します。 <ul>
-<li>UTM Source</li>
+<li><strong>アプリケーションとマイクロサービス &gt; フロントエンド</strong>を開き、<strong>EasyTravel Angular</strong>をクリックします。</li>
+<li><strong>ユーザー行動</strong>を開くことでコンバージョンレートを確認できます。</li>
+<li><strong>全体的なコンバージョン</strong>をクリックすることで、<strong>コンバージョンの傾向</strong>を確認することができます。</li>
+<li><strong>上位コンバージョン ゴール</strong>ではコンバージョンゴールを複数設定した場合に、各コンバージョンゴールの割合を確認できます。 <img alt="Conversion_rate" src="img/47b28c8103c07cab.png"><img alt="Conversion_trend" src="img/92981ba1580b4b2a.png"><img alt="Conversion_top_list" src="img/55024e66d2266c24.png"></li>
+</ul>
+<aside class="warning"><p>トラフィックをある程度発生させる必要があるため、しばらく時間をおいてから試す必要があります。</p>
+</aside>
+<aside class="special"><p>詳しいドキュメントは<a href="https://www.dynatrace.com/support/help/shortlink/conversion-goals" target="_blank">こちら</a>を参照ください。</p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="セッションとユーザーアクションのプロパティ" duration="15">
+        <p>この演習では、セッションプロパティとユーザーアクションプロパティを作成して、ユーザーに関する追加のコンテキスト情報（キャンペーンのソースやユーザーが選択した情報やユーザーの属性など）をDynatraceで確認します。ビジネスKPIに関する情報を追加することでよりビジネスの可視性を向上させることが可能となります。</p>
+<p>Dynatraceでは、一般的なソフトウェアのリストを<strong>Property packs</strong>として予め定義しています。以下のリストはその一部となります。</p>
+<ul>
+<li>Google Analytics</li>
+<li>Adobe Analytics</li>
+<li>Web properties また、<strong>Custom defined property</strong>を使用して、セッションやユーザーアクションに文字列、数値および日付のプロパティを定義することが可能です。プロパティの値は、ユーザー毎に取得されます。プロパティ値を活用することで、ユーザーの動向の詳細を把握することができます。</li>
+</ul>
+<h2 is-upgraded>セッションとアクションプロパティの設定</h2>
+<ul>
+<li>ユーザーのタグ付け時と同様に<strong>EasyTravel Angular</strong>の設定画面を開きます。</li>
+<li><strong>Capturing &gt; Session and action properties</strong>を開きます。</li>
+<li><strong>Add property</strong>ボタンをクリックします。 <img alt="Session_and_action_properties" src="img/b0c42c209e436af4.png"></li>
+</ul>
+<h2 is-upgraded>Property packsの利用</h2>
+<p>デフォルトで定義されているプロパティについてはリストから選択するだけで簡単に登録することができます。</p>
+<ul>
+<li>ドロップダウンリストから<strong>Web properties</strong>を選択します。</li>
+<li>以下の項目に対して、<strong>追加</strong>ボタンをクリックし、<strong>次へ</strong>をクリックします。  <ul>
+<li>UTM source</li>
 <li>UTM campaign</li>
-<li>UTM term <img alt="Web property pack" src="img/441354b34c66a735.png"></li>
+<li>UTM term <img alt="Property_pack" src="img/f9ed8fbdc986b160.png"></li>
 </ul>
 </li>
-<li><strong>Next</strong>をクリックします。</li>
-<li>各項目を展開して、<strong>store as user action property</strong>を切り替えます。 <img alt="Web property pack" src="img/b490cd981baef808.png"></li>
-<li><strong>Create properties</strong>をクリックします。</li>
+<li>各項目を展開して、<strong>Store as user action property</strong>を有効にします。</li>
+<li>3項目全て、有効にしたら<strong>Create properties</strong>ボタンをクリックします。 <img alt="Web_properties" src="img/47055fae0d3785d6.png"></li>
 </ul>
-<h2 is-upgraded>Custom properties - 各ユーザーの取引額</h2>
+<h2 is-upgraded>Custom defined propertyの設定 - ユーザーの売り上げ額</h2>
+<p>ここでは、カスタム定義プロパティとして、サーバーサイドのリクエスト属性から売り上げ額を取得し、その情報をセッションと紐付けます。 Dynatraceではサーバーサイドで取得した情報をフロントエンド側へ簡単に紐付けることができるのも特徴の１つです。</p>
 <ul>
-<li>カスタム定義プロパティ &#34;タブを選択します。</li>
-<li>Expression Typeを<strong>Server side request attribute</strong>を選択します。</li>
-<li>Request attribute name: <strong>Revenue</strong></li>
-<li>Display name: <pre><code>Booking
-</code></pre>
-</li>
-<li>(auto fill) Key: <strong>booking</strong></li>
-<li>Storage type: <ul>
-<li>Store as <strong>session</strong> property</li>
+<li><strong>Add property</strong>ボタンをクリックします。</li>
+<li><strong>Custom defined property</strong>タブを選択し、以下の通りに入力します。  <ul>
+<li><strong>Expression type </strong><code>Server side request attribute</code></li>
+<li><strong>Request attribute name </strong><code>Revenue</code></li>
+<li><strong>Display name </strong><code>Booking</code></li>
+<li><code>Store as session property</code>を有効 <img alt="Custom_defined_property" src="img/3d564718dda5ed8d.png"></li>
 </ul>
 </li>
-<li>Click <strong>&#34;Save property&#34;</strong></li>
+<li><strong>Save property</strong>ボタンをクリックします。</li>
 </ul>
-<p>完成した構成はこんな感じです。 <img alt="Custom property" src="img/385d648b56d804c2.png"></p>
-<h2 is-upgraded>Custom properties - 閲覧した旅行パッケージの金額</h2>
-<p>上記の設定に続いて、引き続きCSSセレクタタイプのカスタムプロパティを追加します。</p>
+<h2 is-upgraded>Custom defined propertyの設定 - 閲覧した旅行パッケージの金額</h2>
+<p>上記の設定に続いて、CSSセレクターによるカスタムプロパティを追加します。CSSセレクターによるカスタムプロパティはページ上に表示されている情報をプロパティとして取り込むことが可能です。</p>
 <ul>
-<li>Expression type: <strong>CSS Selector</strong></li>
-<li>Data type: <strong>Double</strong></li>
-<li>CSS Selector <pre><code>#summary &gt; div:nth-child(5) &gt; p
-</code></pre>
-</li>
-<li>Display name: <pre><code>Trip Cost
-</code></pre>
-</li>
-<li>(auto fill) Key: <strong>tripcost</strong></li>
-<li>Storage type: <ul>
-<li>Store as <strong>session</strong> property</li>
+<li><strong>Add property</strong>ボタンをクリックします。</li>
+<li><strong>Custom defined property</strong>タブを選択し、以下の通りに入力します。  <ul>
+<li><strong>Expression type </strong><code>CSS selector</code></li>
+<li><strong>Data type </strong><code>Double</code></li>
+<li><strong>CSS selector </strong><code>#summary > div:nth-child(5) > p</code></li>
+<li><strong>Display name </strong><code>Trip Cost</code></li>
+<li><code>Store as session property</code>を有効 <img alt="Custom_defined_property" src="img/88951b667ef320e3.png"></li>
 </ul>
 </li>
-<li><strong>&#34;Save property&#34;</strong>をクリック</li>
+<li><strong>Save property</strong>ボタンをクリックします。</li>
 </ul>
-<p>完成した構成はこんな感じです。 <img alt="Custom property" src="img/4c146b7496919f97.png"></p>
-<h2 is-upgraded>Custom properties - 閲覧・予約した旅行先</h2>
+<h2 is-upgraded>Custom defined propertyの設定 - 閲覧・予約した旅行先</h2>
+<p>リクエスト属性から旅行先を取得し、カスタムプロパティとして取り込みます。</p>
 <ul>
-<li>Expression type: <strong>Server side request attribute</strong></li>
-<li>Request attribute name: <strong>Destination</strong></li>
-<li>Display name: <pre><code>Destination
-</code></pre>
-</li>
-<li>(auto fill) Key: <strong>destination</strong></li>
-<li>Storage type: <ul>
-<li>Store as <strong>session</strong> property</li>
-<li>Store as <strong>user action</strong> property</li>
+<li><strong>Add property</strong>ボタンをクリックします。</li>
+<li><strong>Custom defined property</strong>タブを選択し、以下の通りに入力します。  <ul>
+<li><strong>Expression type </strong><code>Server side request attribute</code></li>
+<li><strong>Request attribute name </strong><code>Destination</code></li>
+<li><strong>Display name </strong><code>Destination</code></li>
+<li><code>Store as user action property</code>と<code>Store as session property</code>の両方を有効 <img alt="Custom_defined_property" src="img/f8b18f392fff603d.png"></li>
 </ul>
 </li>
-<li><strong>&#34;Save property&#34;</strong>をクリック</li>
+<li><strong>Save property</strong>ボタンをクリックします。</li>
 </ul>
-<p>完成した構成はこんな感じです。 <img alt="Custom property" src="img/94c19a505926b06a.png"></p>
 <h2 is-upgraded>設定完了画面</h2>
-<p>すべての設定が完了すると、次のようなセッション/ユーザーアクションプロパティのリストができます。 <img alt="Session properties" src="img/f3723797561e9c3b.png"></p>
-<aside class="special"><p>参考資料: <a href="https://www.dynatrace.com/support/help/shortlink/user-session-properties" target="_blank">Session Properties Help page</a> 、 <a href="https://www.dynatrace.com/support/help/shortlink/request-attributes" target="_blank">Request Attribute Help page</a></p>
+<p>すべての設定が完了すると、次のようなセッション/ユーザーアクションプロパティのリストとなります。 <img alt="session_and_action_properties_list" src="img/810eaa0548fc3628.png"></p>
+<aside class="warning"><p>トラフィックをある程度発生させる必要があるため、しばらく時間をおいてから試す必要があります。</p>
 </aside>
-</google-codelab-step>
-<google-codelab-step label="1d - Session Replay" duration="15">
-<p>この演習では、DynatraceのSession Replayの設定について説明します。</p>
-<p>以下の手順で、セッションリプレイを有効にしてください。</p>
-<ol type="1">
-<li>前のアクティビティと同じ画面で、<strong>Session Replay and behavior</strong>の見出しまでスクロールし、<strong>Session Replay</strong>を選択します。</li>
-<li><strong>Enable Session Replay</strong>トグルON <img alt="SessionReplay" src="img/f87007a3ee540cd6.png"></li>
-<li><strong>Recoding mask settings</strong> タブへスクロールダウン、<strong>Mask user input</strong>を選択 <img alt="SessionReplay" src="img/732463cea91adf1d.png"></li>
-<li><strong>Playback masking settings</strong>タブをクリックし、<strong>Mask user input</strong>を選択 <img alt="SessionReplay" src="img/79ce0dfef44f456a.png"></li>
-<li>下までスクロールし<strong>Save</strong>をクリック <img alt="SessionReplay" src="img/67f78f7a6dfdc0d2.png"></li>
-</ol>
-<aside class="special"><p>参考資料: <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/real-user-monitoring/basic-concepts/session-replay/" target="_blank">Session Replay</a></p>
+<aside class="special"><p>詳しいドキュメントは<a href="https://www.dynatrace.com/support/help/shortlink/user-session-properties" target="_blank">こちら</a>を参照ください。</p>
 </aside>
-</google-codelab-step>
-<google-codelab-step label="2 - データの視覚化" duration="0">
-<p>Dynatraceで収集したデータを視覚化する準備が整いました。この演習では、<strong>コンバージョン目標</strong>、<strong>session/action properties</strong>が、分析のためのITメトリクスにはるかに多くの洞察力とコンテキストを提供する方法を見ることができます。</p>
-<p>これが、これから作成を目指すダッシュボードです。</p>
-<p class="image-container"><img alt="Dashboard" src="img/f6e6dd57f5ceebd6.png"></p>
-</google-codelab-step>
-<google-codelab-step label="2a - ペイメントファネルの可視化" duration="0">
-<aside class="special"><p>目標：ユーザーがサイト上で支払いを行う際のユーザー・ジャーニーを可視化すること</p>
-</aside>
-<p class="image-container"><img alt="Dashboard" src="img/b1fd44466d8f6f7b.png"></p>
-<ol type="1">
-<li>左側のメニューから<strong>Dashboards</strong>を選択してください。</li>
-<li><strong>Create Dashboard</strong>のボタンをクリックし、名前を入力して<strong>Create</strong>をクリックします。</li>
-<li><strong>User Sessions Query</strong>タイルをドラッグして、<strong>Configure tile</strong>をクリックします。 <img alt="ダッシュボード" src="img/5efe26834c2f0fef.gif"></li>
-<li>以下のようなクエリを入力します。</li>
-</ol>
-<pre><code language="language-SQL" class="language-SQL">   SELECT FUNNEL(useraction.name like &#34;*journeys*&#34; AS &#34;Journey Search&#34;, useraction.name = &#34;click on book now (xhr: /easytravel/rest/journeys/)&#34; AS &#34;Click on Book Now&#34;, useraction.name = &#34;click on sign in (xhr: /easytravel/rest/login)&#34; AS &#34;Login&#34;, useraction.name=&#34;click on book journey  (xhr: /easytravel/rest/validate-creditcard)&#34; AS &#34;Submit Payment&#34;) FROM usersession
-</code></pre>
-<ol type="1">
-<li><strong>run query</strong> ボタンをクリック。</li>
-<li>名前の変更 <pre><code>Payment funnel
-</code></pre>
-</li>
-<li><strong>save changes to dashboard</strong> ボタンをクリック。</li>
-</ol>
-<p class="image-container"><img alt="Dashboard" src="img/d963ebcd4491e070.png"></p>
-</google-codelab-step>
-<google-codelab-step label="2b - ビジネスKPI指標の可視化" duration="0">
-<aside class="special"><p>目的 - ビジネスの健全性を示すいくつかの重要なメトリクスを可視化する。</p>
-</aside>
-<h2 is-upgraded>時間軸での変換</h2>
-<aside class="special"><p>目的 - 長期にわたるコンバージョンは、コンバージョン目標を達成するための傾向を追跡するのに役立ちます。コンバージョン率が非常に低い場合は、顧客がカスタマージャーニーを完了する際に摩擦に直面していることを示しています。</p>
-</aside>
-<p class="image-container"><img alt="Dashboard" src="img/c26cd9ed1a9392f0.png"></p>
-<ol type="1">
-<li>ダッシュボードを<strong>Edit</strong>モードにして、先に作成したタイルをクリックし、<strong>clone</strong>ボタンをクリックし、<strong>configure tile</strong>ボタンをクリックします。 <img alt="Dashboard" src="img/d199a73f869a95e.gif"></li>
-<li>以下のようなクエリを入力します。</li>
-</ol>
-<pre><code language="language-SQL" class="language-SQL">   select datetime(starttime, &#34;E HH:mm&#34;, &#34;10m&#34;), count(*) as &#34;Conversions&#34; from usersession where useraction.matchingConversionGoals=&#34;Credit card validated&#34; group by datetime(starttime,&#34;E HH:mm&#34;,&#34;10m&#34;)
-</code></pre>
-<ol type="1">
-<li><strong>run query</strong>ボタンをクリックします。</li>
-<li><strong>Line chart</strong>を選びます。</li>
-<li>名前の変更 <pre><code>Conversions over time
-</code></pre>
-</li>
-<li><strong>save changes to dashboard</strong>ボタンをクリックします。</li>
-</ol>
-<p class="image-container"><img alt="Dashboard" src="img/3020b3a29ad12410.png"></p>
-<h2 is-upgraded>予約収益</h2>
-<aside class="special"><p>目的 - Easy Travelは旅行予約サイトなので、主なビジネスKPIは予約収入を安定的に確保することです。あなたの「ビジネス」の原動力によって、これらのKPIは幅広い範囲になります。</p>
-</aside>
-<p class="image-container"><img alt="Dashboard" src="img/1618374a6166593c.png"></p>
-<ol type="1">
-<li>上のタイルをクローンして、<strong>configure tile</strong>をクリックします。</li>
-<li>クエリを変更します。</li>
-</ol>
-<pre><code language="language-SQL" class="language-SQL">   select sum (doubleProperties.booking) as Revenue from usersession
-</code></pre>
-<ol type="1">
-<li><strong>run query</strong>ボタンをクリックします。</li>
-<li><strong>Single value</strong>を自動的に選択してくれます。</li>
-<li>名前の変更 <pre><code>Booking revenue
-</code></pre>
-</li>
-<li><strong>save changes to dashboard</strong>ボタンをクリックします。</li>
-</ol>
-<p class="image-container"><img alt="Dashboard" src="img/d2574f1ce3d20463.png"></p>
-<h2 is-upgraded>放置されたカートの合計</h2>
-<aside class="special"><p>目的 - 多くの場合、仮想の「ショッピングカート」の「バスケットの値」は、あなたのサイトへの訪問者が潜在的に取引をする金額です。しかし、支払いの失敗や無効なプロモーションコードなど、何らかの理由で訪問者が取引全体を放棄したり、「ショッピングカート」内のアイテムを変更したりする場合があります。この値と、影響を受けたユーザーのリストを追跡することで、訪問者が「チェックアウト」や「購入」の前にドロップアウトしているかどうかがわかり、ビジネスに影響を与える前に問題を解決することができます。</p>
-</aside>
-<p class="image-container"><img alt="Dashboard" src="img/d65a5ef5688b19bc.png"></p>
-<ol type="1">
-<li>上のタイルをクローンして、<strong>configure tile</strong>をクリックします。</li>
-<li>クエリを変更します。</li>
-</ol>
-<pre><code language="language-SQL" class="language-SQL">   SELECT sum (doubleProperties.tripcost) as &#34;Revenue Lost&#34; from usersession where useraction.matchingConversionGoals IS NULL AND doubleProperties.tripcost &gt; 0
-</code></pre>
-<ol type="1">
-<li><strong>run query</strong>ボタンをクリックします。</li>
-<li><strong>Single value</strong>を自動的に選択してくれます。</li>
-<li>名前の変更 <pre><code>Abandoned cart value
-</code></pre>
-</li>
-<li><strong>save changes to dashboard</strong>ボタンをクリックします。</li>
-</ol>
-<p class="image-container"><img alt="Dashboard" src="img/e5da3a790619a258.png"></p>
-<h2 is-upgraded>カートの放棄によって影響を受けるユーザー</h2>
-<p class="image-container"><img alt="Dashboard" src="img/6a4a7860a781aff0.png"></p>
-<ol type="1">
-<li>上のタイルをクローンして、<strong>configure tile</strong>をクリックします。</li>
-<li>クエリを変更します。</li>
-</ol>
-<pre><code language="language-SQL" class="language-SQL">   SELECT userid from usersession where useraction.name = &#34;click on book journey  (xhr: /easytravel/rest/validate-creditcard)&#34; and doubleProperties.booking is null
-</code></pre>
-<ol type="1">
-<li><strong>run query</strong>ボタンをクリックします。</li>
-<li><strong>Single value</strong>を自動的に選択してくれます。</li>
-<li>名前の変更 <pre><code>Users affected by abandoned cart
-</code></pre>
-</li>
-<li><strong>save changes to dashboard</strong>ボタンをクリックします。</li>
-</ol>
-<p class="image-container"><img alt="Dashboard" src="img/71e126409409fb45.png"></p>
-</google-codelab-step>
-<google-codelab-step label="3 - データに対するアクション" duration="15">
-<p>DAVIS™️に挑戦しよう!</p>
-<p>EasyTravel Angularの実際の予約アプリケーションにアクセスする</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Session Replay" duration="10">
+        <p>この演習では、Session Replayの設定について説明します。Session Replayを使用することで、ユーザー体験や実際の操作内容をムービーライクに確認することができるためトラブルシューティングなどにより効果的です。</p>
+<h2 is-upgraded>Session Replayの設定</h2>
 <ul>
-<li>ダッシュボードを開く</li>
-<li><strong>...Welcome to the Dynatrace Workshop 🔬</strong> ダッシュボードをクリックします。</li>
-<li><strong>Booking Portals:✈ EasyTravel Angular</strong>のリンクをクリックします。</li>
+<li>ユーザーのタグ付け時と同様に<strong>EasyTravel Angular</strong>の設定画面を開きます。</li>
+<li><strong>General settings &gt; Enablement and cost control</strong>を開きます。</li>
+<li><strong>Enable Session Replay</strong>を有効にし、<strong>Cost and traffic control</strong>を適切な値に設定します。ハンズオンでは<code>100</code>%のままにします。</li>
+<li><strong>変更の保存</strong>ボタンをクリックします。 <img alt="Enablement_and_cost_control" src="img/9569887c53627913.png"></li>
 </ul>
-<p class="image-container"><img alt="Action on the data" src="img/7d34569ee98d21fa.gif"></p>
+<p>続いてマスキングの設定を行います。マスキングについてはレコーディング時にマスキングする内容と再生時にマスキングする項目を選ぶことができます。レコーディング時にマスキングすると設定した内容については、データが保存されないため秘匿性は高くなりますが、実際の表示内容を確認することができません。</p>
 <ul>
-<li>旅行パッケージの予約</li>
-<li>ユーザーIDは <strong>alex</strong> または <strong>peter</strong> です。</li>
-<li>お気づきですか？</li>
-<li><strong>(3) Payment</strong>を複数回クリックしてみてください。</li>
-<li>ブラウザを閉じる前に、以下の作業を行ってください。 <ul>
-<li>ブラウザの<strong>開発者ツール</strong>を開く</li>
+<li><strong>Data privacy &gt; Session Replay</strong>を開きます。</li>
+<li><strong>Recoding masking settings</strong>へスクロールダウン、<strong>Mask user input</strong>を選択します。</li>
+<li><strong>Playback masking settings</strong>へスクロールダウン、<strong>Mask user input</strong>を選択します。</li>
+<li><strong>変更の保存</strong>ボタンをクリックします。 <img alt="Data_privacy" src="img/9ce941ed85a21930.png"></li>
 </ul>
-</li>
-</ul>
-<p class="image-container"><img alt="Action on the data" src="img/c8eeb6927ae39ad3.png"></p>
+<h2 is-upgraded>Session Replayの確認</h2>
 <ul>
-<li><strong>コンソール</strong>タブに移動します。</li>
-<li>次のように入力します。 <br><code>dtrum.endSession()<br></code></li>
+<li><strong>アプリケーションとマイクロサービス &gt; フロントエンド</strong>を開き、<strong>EasyTravel Angular</strong>をクリックします。</li>
+<li><strong>ユーザーセッションの分析</strong>ボタンをクリックします。</li>
+<li>Replay欄にアイコンが表示されているセッションがSession Replayを保存しているセッションになります。 <img alt="Session_replay" src="img/2f042552ad955c5b.png"></li>
+<li>ユーザーセッションの下の<strong>日時</strong>をクリックし、画面を下にスクロールして分析ビューで<strong>セッションリプレイ</strong>を選びます。</li>
+<li>Chrome拡張をインストールします。</li>
+<li>インストールが終わったら、ブラウザを更新するとSession Replayを再生することができます。 <img alt="Session_replay" src="img/9ccc333c08271123.png"></li>
 </ul>
-<p class="image-container"><img alt="Action on the data" src="img/a8aaaff39e9fdbd8.png"></p>
-<h2 is-upgraded>シナリオ #1</h2>
-<p><strong>コンバージョン</strong>が減少しています。そして、<strong>Revenue</strong>も減少しています。</p>
-<p class="image-container"><img alt="Scenario1" src="img/2ff2c0b30f7ea3b8.png"></p>
-<p>しかし、ITオペレーションチームの監視ダッシュボードでは、すべてのシステムが<strong>グリーン</strong>になっています。 <img alt="Scenario1" src="img/51851c767acc086.png"></p>
-<p>ITの問題ではないにしても、何かが原因でユーザーが不満を感じ、取引が完了しないのではないでしょうか。</p>
-<aside class="warning"><p>Dynatraceを使って、何が訪問者の摩擦の原因になっているかを調べます。</p>
+<aside class="special"><p>詳しいドキュメントは<a href="https://www.dynatrace.com/support/help/shortlink/session-replay-personal-data" target="_blank">こちら</a>を参照ください。</p>
 </aside>
-<p><strong><em>ヒント:</em></strong></p>
-<p><strong>Sample BizDevOps Dashboard</strong>のいくつかのダッシュボードは、何が起こっているかを知る手がかりになるかもしれません。</p>
-<p class="image-container"><img alt="Scenario1" src="img/7a502a0a4c6d2f36.png"></p>
-<p>また、<strong>Session Replay</strong>を使用してユーザーセッションを調査すると、ログやアプリケーションコードの調査では検出できないアプリケーションの事実が判明することがあります。</p>
-<h2 is-upgraded>シナリオ #2</h2>
-<p>DAVISが異常を検出しました! また、影響を受けて予約プロセスを放棄したユーザーがいることも確認されました。</p>
-<p class="image-container"><img alt="Scenario2" src="img/34e1997edff48409.png"></p>
-<aside class="warning"><p>DAVISよりも早く原因を究明することができるのか？</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="ダッシュボードによるビジネスKPIの可視化" duration="25">
+        <p>Dynatraceで収集したデータを可視化する準備が整いました。この演習では、設定した<strong>コンバージョン目標</strong>、<strong>session/action properties</strong>などの情報を基にビジネスKPIを確認するためのダッシュボード作成を行います。</p>
+<p>これが、これから作成するダッシュボードの完成イメージになります。 <img alt="Dashboard" src="img/7265092055e11b75.png"></p>
+<h2 is-upgraded>ダッシュボードの作成</h2>
+<p>まずはじめにベースとなる空のダッシュボードの作成を行います。</p>
+<ul>
+<li>左側のメニューの<strong>お気に入り</strong>もしくは<strong>観察と探索</strong>から<strong>ダッシュボード</strong>を開きます。</li>
+<li><strong>ダッシュボードの作成</strong>ボタンをクリックします。 <img alt="Dashboard" src="img/e99dcbe1ad7ecf4.png"></li>
+<li>ダッシュボード名に任意の名前を入力します（例：<code>ビジネスダッシュボード</code>） <img alt="Empty_dashboard" src="img/17984a7c491de9f9.png"></li>
+</ul>
+<h2 is-upgraded>収益額</h2>
+<aside class="special"><p>Easy Travelは旅行予約サイトなので、主なビジネスKPIとして売り上げ金額は最重要な指標となります。</p>
 </aside>
-<p><strong><em>ヒント:</em></strong></p>
-<p>先ほど作成したダッシュボードには、何がエラーの原因になっているかを理解するための情報がすべて含まれています。</p>
-<p><strong>Problems</strong>のタイルから始めて、そこからドリルダウンすることができます。</p>
-<p>また、問題に直面しているユーザー名をリストアップしたタイルを使って、個々のユーザーセッションを調査することもできます。</p>
-</google-codelab-step>
-<google-codelab-step label="4 - BizDevOpsのユースケース" duration="0">
-<p>Dynatraceにビジネスアナリティクスを適用することで、以下の目標を容易に達成することができました。</p>
-<p class="image-container"><img alt="BizDevOps Use case" src="img/32dcd2ba746647c8.png"></p>
-</google-codelab-step>
-<google-codelab-step label="4a - エラーを減らして &#34;フリクションレス &#34;なユーザーエクスペリエンスを実現する" duration="15">
-<p>ドロップアウトやユーザーの不満の原因の第一は、エラーです。</p>
-<p>エラーの原因はさまざまです。</p>
 <ul>
-<li>サーバーサイドアプリケーション - ビジネスロジック、コーディングエラーなど。</li>
-<li>クライアントサイドアプリケーション（ブラウザ/モバイルアプリ） - JavaScriptエラー、AJAXコール、ポップアップ画面など。</li>
-<li>サードパーティ - CDN、FacebookやTwitterなどの外部プロバイダなど。</li>
+<li>ダッシュボードが編集モードでない場合は、<strong>編集</strong>ボタンをクリックして編集モードにします。 <img alt="Edit_dashboard" src="img/b4fcba0d19cf485a.png"></li>
+<li><strong>タイルのフィルタリング</strong>欄に<code>クエリ</code>と入力し、<strong>ユーザーセッションのクエリ</strong>タイルをダッシュボードの任意の部分にドラッグアンドドロップします。 <img alt="Filter_tiles" src="img/f8668acaf7233710.gif"></li>
+<li><strong>タイルの設定</strong>をクリックします。ユーザー セッションのクエリ画面に遷移します。</li>
+<li>クエリ入力欄に以下を入力し、<strong>クエリの実行</strong>ボタンをクリックします。</li>
 </ul>
-<p>さらに言えば、<a href="https://www.dynatrace.com/news/blog/automatically-detect-potential-frontend-attacks-that-cause-content-security-policy-csp-violations/" target="_blank">コンテンツ・セキュリティ・ポリシー（CSP）違反</a> を引き起こすDDoS攻撃やクロスサイトスクリプティング攻撃もあります。 ウェブサイトの応答性を低下させたり、ユーザーのデータや個人情報を盗んだりします。</p>
-<p>エラーには多くの種類があり、1つ1つ分析していては効率が悪いため、何を修正すべきか優先順位をつけるのは通常困難な作業です。</p>
-<p class="image-container"><img alt="BizDevOps Use case" src="img/cbbf75024e7b6eff.png"></p>
-<aside class="special"><p>この活動の目的は、次のようなことを行うことです。(1)コンバージョンとカスタマーエンゲージメントの向上、(2)最適化、(3)オペレーションクオリティーとレポーティング</p>
+<pre><code language="language-SQL" class="language-SQL">  SELECT SUM(doubleProperties.booking) as &#34;売上高&#34; FROM usersession
+</code></pre>
+<ul>
+<li><strong>単一の値</strong>が自動的に選択されていることを確認します。</li>
+<li>名前（User sessions query results）の横のペンシルマークをクリックして、名前をわかりやすいものに変更します（例：<code>予約サイトの売上高</code>）。 <img alt="Revenue_query" src="img/edad0c64cf98a891.png"></li>
+<li><strong>変更をダッシュボードに保存します</strong>ボタンをクリックします。自動でダッシュボードの画面に戻ります。</li>
+</ul>
+<h2 is-upgraded>コンバージョン数の時間軸グラフの作成</h2>
+<p>時間帯によってコンバージョン数がどのように変化するかを確認するためのグラフを作成します。</p>
+<ul>
+<li>ダッシュボードが編集モードでない場合は、<strong>編集</strong>ボタンをクリックして編集モードにします。</li>
+<li><strong>タイルのフィルタリング</strong>欄に<code>クエリ</code>と入力し、<strong>ユーザーセッションのクエリ</strong>タイルをダッシュボードの任意の部分にドラッグアンドドロップします。</li>
+<li><strong>タイルの設定</strong>をクリックします。ユーザー セッションのクエリ画面に遷移します。</li>
+<li>クエリ入力欄に以下を入力し、<strong>クエリの実行</strong>ボタンをクリックします。</li>
+</ul>
+<pre><code language="language-SQL" class="language-SQL">  SELECT DATETIME(startTime, &#34;E HH:mm&#34;, &#34;10m&#34;), COUNT(*) AS &#34;コンバージョン&#34; FROM usersession WHERE useraction.matchingConversionGoals=&#34;Credit card validated&#34; GROUP BY DATETIME(startTime,&#34;E HH:mm&#34;,&#34;10m&#34;)
+</code></pre>
+<ul>
+<li>視覚化の種類は<strong>折れ線グラフ</strong>を選びます。</li>
+<li>名前をわかりやすいものに変更します（例：<code>コンバージョン数の推移</code>） <img alt="Conversion_query" src="img/3eea81b959c97468.png"></li>
+<li><strong>変更をダッシュボードに保存します</strong>ボタンをクリックします。自動でダッシュボードの画面に戻ります。</li>
+<li>作成したタイルの右下の●の部分をドラッグして任意の大きさに広げたり、必要に応じてドラッグすることでタイルの場所を移動させます。</li>
+</ul>
+<h2 is-upgraded>ファンネルチャートの作成</h2>
+<p>ステップ毎の割合を表示するファンネルチャートを作成します。ファンネルチャートは各ステップでどの程度のユーザーが次のステップに進んでいるのか確認するのに役立ち、どこの段階に問題があるのかを視覚的に把握することができます。</p>
+<ul>
+<li>ダッシュボードが編集モードでない場合は、<strong>編集</strong>ボタンをクリックして編集モードにします。</li>
+<li><strong>タイルのフィルタリング</strong>欄に<code>クエリ</code>と入力し、<strong>ユーザーセッションのクエリ</strong>タイルをダッシュボードの任意の部分にドラッグアンドドロップします。</li>
+<li><strong>タイルの設定</strong>をクリックします。ユーザー セッションのクエリ画面に遷移します。</li>
+<li>クエリ入力欄に以下を入力し、<strong>前の時間枠と比較する</strong>を有効にします。これにより以前の時間枠との比較が容易に行うことができます。また、ここでは<strong>動的時間枠シフト</strong>のままにしておきます。</li>
+<li><strong>クエリの実行</strong>ボタンをクリックします。</li>
+</ul>
+<pre><code language="language-SQL" class="language-SQL">  SELECT FUNNEL(useraction.name like &#34;*journeys*&#34; AS &#34;旅行先の検索&#34;, useraction.name = &#34;click on book now (xhr: /easytravel/rest/journeys/)&#34; AS &#34;パッケージ予約の実行&#34;, useraction.name = &#34;click on sign in (xhr: /easytravel/rest/login)&#34; AS &#34;ログイン&#34;, useraction.name=&#34;click on book journey  (xhr: /easytravel/rest/validate-creditcard)&#34; AS &#34;パッケージの購入&#34;) FROM usersession
+</code></pre>
+<ul>
+<li>名前をわかりやすいものに変更します（例：<code>検索から購入までの数と割合</code>）。 <img alt="Funnel_chart" src="img/cbea3bdf96b449e5.png"></li>
+<li><strong>変更をダッシュボードに保存します</strong>ボタンをクリックします。自動でダッシュボードの画面に戻ります。</li>
+<li>作成したタイルの右下の●の部分をドラッグして任意の大きさに広げたり、必要に応じてドラッグすることでタイルの場所を移動させます。</li>
+</ul>
+<h2 is-upgraded>購入に至らなかったカートの金額</h2>
+<p>多くの場合、「カート」に入れられた商品・パッケージはユーザーが潜在的に取引を行う金額です。しかし、支払いの失敗や無効なプロモーションコードなど何らかの理由で取引を放棄したり、「カート」内のアイテムを変更する場合があります。サイト訪問者が「購入」の前にどれぐらいドロップアウトしているかどうかがわかり、ビジネスに影響を与える前に問題解決に繋げることができるようになります。</p>
+<ul>
+<li>ダッシュボードが編集モードでない場合は、<strong>編集</strong>ボタンをクリックして編集モードにします。</li>
+<li><strong>タイルのフィルタリング</strong>欄に<code>クエリ</code>と入力し、<strong>ユーザーセッションのクエリ</strong>タイルをダッシュボードの任意の部分にドラッグアンドドロップします。</li>
+<li><strong>タイルの設定</strong>をクリックします。ユーザー セッションのクエリ画面に遷移します。</li>
+<li>クエリ入力欄に以下を入力し、<strong>クエリの実行</strong>ボタンをクリックします。</li>
+</ul>
+<pre><code language="language-SQL" class="language-SQL">  SELECT SUM(doubleProperties.tripcost) AS &#34;未購入額&#34; FROM usersession WHERE useraction.matchingConversionGoals IS NULL AND doubleProperties.tripcost &gt; 0
+</code></pre>
+<ul>
+<li>名前をわかりやすいものに変更します（例：<code>購入に至らなかった金額</code>）。 <img alt="Abandoned_cart_value" src="img/972f191173820894.png"></li>
+<li><strong>変更をダッシュボードに保存します</strong>ボタンをクリックします。自動でダッシュボードの画面に戻ります。</li>
+<li>作成したタイルの右下の●の部分をドラッグして任意の大きさに広げたり、必要に応じてドラッグすることでタイルの場所を移動させます。</li>
+</ul>
+<h2 is-upgraded>商品の購入ができなかったユーザーの特定</h2>
+<p>商品の購入を実施しようとしたが、何らかの理由により購入に至らなかったユーザーを確認するためのリストを作成します。</p>
+<ul>
+<li>ダッシュボードが編集モードでない場合は、<strong>編集</strong>ボタンをクリックして編集モードにします。</li>
+<li><strong>タイルのフィルタリング</strong>欄に<code>クエリ</code>と入力し、<strong>ユーザーセッションのクエリ</strong>タイルをダッシュボードの任意の部分にドラッグアンドドロップします。</li>
+<li><strong>タイルの設定</strong>をクリックします。ユーザー セッションのクエリ画面に遷移します。</li>
+<li>クエリ入力欄に以下を入力し、<strong>クエリの実行</strong>ボタンをクリックします。</li>
+</ul>
+<pre><code language="language-SQL" class="language-SQL">  SELECT userId FROM usersession WHERE useraction.name = &#34;click on book journey  (xhr: /easytravel/rest/validate-creditcard)&#34; AND doubleProperties.booking IS NULL AND userId IS NOT NULL
+</code></pre>
+<ul>
+<li>名前をわかりやすいものに変更します（例：<code>購入できなかったユーザー一覧</code>）。 <img alt="Non_purchase_user_list.png" src="img/3ac6d6b078a86693.png"></li>
+<li><strong>変更をダッシュボードに保存します</strong>ボタンをクリックします。自動でダッシュボードの画面に戻ります。</li>
+<li>作成したタイルの右下の●の部分をドラッグして任意の大きさに広げたり、必要に応じてドラッグすることでタイルの場所を移動させます。</li>
+</ul>
+<aside class="warning"><p>該当ユーザーが存在しない場合は、右上のタイムフレームの設定を長めに変更することで確認できるようになります。</p>
 </aside>
-<p>このワークフローは、次のような人たちに有益です。</p>
+<h2 is-upgraded>その他</h2>
+<p><strong>Sample BizDevOps Dashboard</strong>には今作成したダッシュボード以外にもいくつかのサンプルが作られています。これらを参考にダッシュボードに情報を表示させてみましょう。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Dynatraceによるフロントエンドエラーの確認" duration="10">
+        <p>ユーザーが商品の購入を諦めたり、不満を持つ原因の1つはエラーの発生です。エラーの原因はさまざまで、例えば以下のようなものが考えられます。</p>
 <ul>
-<li>UXデザイナー／デベロッパー</li>
-<li>カスタマー・エクスペリエンス・リード</li>
-<li>ウェブプログラマー／開発者</li>
+<li>サーバーサイド: ビジネスロジック、コーディングエラーなど</li>
+<li>クライアントサイド（ブラウザ/モバイルアプリ）: JavaScriptエラー、AJAXコール、ポップアップ画面など</li>
+<li>サードパーティー: CDNサービスの障害、FacebookやTwitterなどの外部のコンテンツプロバイダーなど</li>
 </ul>
-<p>分析を始めるためのいくつかのエントリーポイント</p>
+<p>エラーには多くの種類があり、1つ1つ分析していては効率が悪いため、何を修正すべきか優先順位をつけるのは通常困難な作業です。また、<a href="https://developer.mozilla.org/ja/docs/Web/HTTP/CSP" target="_blank">コンテンツセキュリティポリシー</a>を適切に扱うことでXSS攻撃を軽減することが可能となります。</p>
+<p>このセクションでは、DynatraceがeasyTravelアプリケーション上で検知したエラーについて確認をします。エラーの確認については、大別すると以下の2つの視点から確認することが可能です。</p>
 <ul>
-<li>特定のアプリケーションで発生したすべてのエラーの概要</li>
-<li>特定のユーザーアクションで発生したエラー</li>
-<li>特定のユーザーセッションのグループに発生したエラー</li>
-<li>ダッシュボードのタイル</li>
-<li>などがあります。</li>
+<li>ユーザーアクションの視点 - アプリケーションの観点からどのアクションでどのエラーがどれぐらい発生しているのか追っていきます。</li>
+<li>ユーザーセッションの視点 - エラーを受けたユーザーがどれぐらいいるのかを追っていきます。</li>
 </ul>
-<p>2つのワークフローを例に説明します。</p>
-<h2 is-upgraded>ワークフロー #1 - 特定のアプリケーションの概要からナビゲートする</h2>
-<ol type="1">
-<li>Applications -&gt; Easy Travel Angular -&gt; Errorsへ進みます。</li>
-<li><strong>Analyze errors</strong>をクリックします。</li>
-<li>いくつかのエラーが表示されるので、<strong>HTTP request</strong>タブで<strong>HTTP 500</strong>と表示されているものを選択します。</li>
-<li><strong>dectection rules</strong>を変更することができます。</li>
-<li>ルールの1つは、<strong>CSP errors</strong>の検出をカバーしています。 <img alt="BizDevOps Use case" src="img/ad202d43d623abe6.png"></li>
-</ol>
-<h2 is-upgraded>ワークフロー #2 - Navigate from User Sessions</h2>
-<ol type="1">
-<li><strong>User Sessions</strong>へ進みます。</li>
-<li>上のフィルターを使う</li>
-<li>データ設定をより詳細に操作するには、USQLを使用します。</li>
-</ol>
-<h2 is-upgraded>参考</h2>
+<h2 is-upgraded>ユーザーアクションの視点</h2>
 <ul>
-<li><a href="https://www.dynatrace.com/news/blog/automatically-detect-potential-frontend-attacks-that-cause-content-security-policy-csp-violations/" target="_blank">Automatically detect potential frontend attacks that cause Content Security Policy (CSP) violations</a></li>
-<li><a href="https://www.dynatrace.com/news/blog/extended-davis-awareness-of-http-and-custom-errors/" target="_blank">Ensure unrivaled customer experience with Davis® AI-powered HTTP and custom error analytics</a></li>
-<li><a href="https://www.dynatrace.com/news/blog/abandoned-shopping-cart-minimizing-errors-maximizing-revenue/" target="_blank">Abandoned Shopping Cart – Minimizing errors, maximizing revenue</a></li>
-<li><a href="https://www.dynatrace.com/news/blog/how-to-detect-impacting-3rd-party-api-calls-with-dynatrace-real-user-monitoring/" target="_blank">How to detect impacting 3rd Party API calls with Dynatrace Real User Monitoring (RUM)</a></li>
-<li><a href="https://www.dynatrace.com/news/blog/optimize-your-marketing-campaign-investment-by-leveraging-bizdevops/" target="_blank">Optimize your marketing campaign investment by leveraging BizDevOps</a></li>
-<li><a href="https://www.dynatrace.com/news/blog/improve-user-experience-with-more-visibility-into-cdn-related-http-errors-part-1/" target="_blank">Improve user experience with more visibility into CDN-related HTTP errors</a></li>
+<li><strong>アプリケーションとマイクロサービス &gt; フロントエンド</strong>を開き、<strong>EasyTravel Angular</strong>をクリックします。</li>
+<li><strong>エラー</strong>をクリックします。下の表示が<strong>種類別のエラー数、ユーザー アクション時のエラー数、発生元別のエラー数、上位のエラー</strong>に切り替わります。 <img alt="Application_erro" src="img/97e2002f7380b6db.png"></li>
+<li>上位のエラーの下にある<strong>エラーの分析</strong>をクリックします。</li>
+<li>CSP違反が多く発生していることが確認できるので、<strong>CSP違反</strong>行をクリックします。 <img alt="CSPviolation" src="img/b624e4a8da149f38.png"></li>
+<li>CSP違反エラーに関する様々な情報からエラーの改善に役立てることが可能です。 <img alt="CSP_detail" src="img/d525ca5216863ebf.png"></li>
 </ul>
-</google-codelab-step>
-<google-codelab-step label="4b - 使いやすさを追求したパフォーマンスの最適化" duration="15">
-<p>Googleは昨年、<a href="https://web.dev/vitals/" target="_blank">Core Web Vitals</a>という取り組みを発表しました。</p>
-<p>目標は、「ウェブ上で優れたユーザー体験を提供するために不可欠な品質シグナル」を提供するための測定値を<strong>標準化</strong>することです。</p>
-<p>Googleは最近、これらのメトリクスを<a href="https://developers.google.com/search/blog/2020/11/timing-for-page-experience" target="_blank">ユーザーエクスペリエンスシグナル</a>として検索結果ランキングに含めました。これは、これらのメトリクスが単にあると便利なものではなく、必要不可欠なものであることを示しています。</p>
-<p>Dynatraceは、Google Core Web Vitalの測定結果を、アプリケーションのフロントエンドとバックエンド全体のインサイトで補完します。Dynatraceでは、3つのCore Web Vitalメトリクスをすべて活用することができ、数回のクリックで詳細を確認することができます。</p>
-<h2 is-upgraded>ページとページグループの解析ワークフロー</h2>
-<ol type="1">
-<li>アプリケーションの概要ページからスタートします（<strong>Applications</strong>に進み、アプリケーション名を選択します）。</li>
-<li>2. アプリケーションの概要ページには、<strong>Top 3 pages</strong>が表示され、ページグループとページのタブがあります。必要な粒度を表示するタブを選択します。 <ul>
-<li>グループ名を選択すると、選択したグループのページグループ概要が表示されます。</li>
-<li>すべてのページグループを表示」を選択すると、すべてのページグループの多次元分析が表示されます。</li>
-</ul>
-</li>
-</ol>
-<aside class="special"><p><strong><em>ポイント</em></strong> 多次元解析では、すべてのページまたはページグループの特に有用な概要を提供し、以下のような質問に対する答えを提供します。最も閲覧されているページ」「最も訪問されているページ」「多くのアクションが発生するビジーなページ」「最も多くのエラーを含むページ」「最初のページロードで遅いページ」「ルート変更時に遅いページ」などです。</p>
-</aside>
-<h2 is-upgraded>分析ワークフロー</h2>
-<ol type="1">
-<li><strong>View all page groups</strong>を選択します。 <img alt="BizDevOps Use case" src="img/a2f5e04fdcb27e93.png"></li>
-<li><strong>Performance metric</strong>のドロップダウンで、<strong>Largest contenful paint</strong>を選択します。その他はデフォルトのままです。</li>
-<li><strong>home</strong>をクリックしてください。 <img alt="BizDevOps Use case" src="img/dcc38545eb64e88a.png"></li>
-<li><strong>Performance</strong>セクションまでスクロールダウンし、<strong>Perform waterfall analysis</strong>をクリックします。 <img alt="BizDevOps Use case" src="img/848bd8134c7ee6f0.png"></li>
-<li>ウォーターフォール分析では、これらのページのルート変更の根本的な動作を分析することができます。ここでは、詳細なパフォーマンスとエラー情報を文脈に沿って表示することができます。</li>
-</ol>
-<p class="image-container"><img alt="BizDevOps Use case" src="img/21423ff7df3f8a5b.png"></p>
-<h2 is-upgraded>ダッシュボード・ワークフロー</h2>
-<ol type="1">
-<li>画面上部のパンくずを使って、1画面戻る。例：Applications &gt; EasyTravel Angular &gt; Page groups &gt; home <img alt="BizDevOps Use case" src="img/d36983575f901234.png"> 2.<strong>Performance</strong>セクションまでスクロールダウンし、<strong>Analyze performance</strong>をクリックします。 <img alt="BizDevOps Use case" src="img/faaf49348f1de1f2.png"></li>
-<li>下にスクロールして、<strong>Detailed analysis...</strong>のセクションに移動します。</li>
-<li>&#34;Analyze by&#34; ドロップダウンから <strong>UTM source</strong>を選択します。</li>
-<li>Performance metric &#34;ドロップダウンから <strong>Largest contenful paint</strong>または <strong>First contentful paint</strong>のいずれかを選択する。</li>
-<li><strong>Create metric</strong>をクリックする。</li>
-</ol>
-<p class="image-container"><img alt="BizDevOps Use case" src="img/b72225f7434a38e7.png"></p>
-<ol type="1">
-<li><strong>Split by UTM source</strong>を有効にして、<strong>5</strong>を入力します。 <img alt="BizDevOps Use case" src="img/1ee612f1fe8b37fb.png"></li>
-<li><strong>Create metric</strong>をクリックして、メトリックの作成を完了します。</li>
-<li>ダッシュボードにチャート表示できるようになりました。</li>
-</ol>
-<h2 is-upgraded>参考</h2>
+<h2 is-upgraded>ユーザーセッションの視点</h2>
 <ul>
-<li><a href="https://www.dynatrace.com/news/blog/core-web-vitals-practical-metrics-for-optimal-user-experiences/" target="_blank">Core Web Vitals: Practical metrics for optimal user experiences</a></li>
-<li><a href="https://www.dynatrace.com/news/blog/full-support-for-googles-core-web-vitals-improves-your-user-experience-and-search-rankings/" target="_blank">Full support for Google&#39;s Core Web Vitals improves your user experience and search rankings</a></li>
-<li><a href="https://www.dynatrace.com/news/blog/optimize-modern-web-applications-with-automatic-insights-into-pages-and-page-groups/" target="_blank">Optimize modern web applications with automatic insights into pages and page groups</a></li>
-<li><a href="https://www.dynatrace.com/news/blog/business-insights-for-core-web-vitals/" target="_blank">Business Insights extends support for optimizing Core Web Vitals</a></li>
+<li><strong>EasyTravel Angular</strong>のトップ画面に戻り、<strong>ユーザー セッションの分析</strong>ボタンをクリックします。 <img alt="EasyTravel_Angular" src="img/42a56db149d273d6.png"></li>
+<li>フィルター条件に<strong>Application: EasyTravel Angular</strong>（入力済み）、<strong>Has error* Yes, User experience score: Frustrating</strong>を選び、適当なユーザーセッションを1つ開きます。 <img alt="Usersession_error" src="img/91f89bb516af0d0c.png"></li>
+<li>エラーが発生しているイベントの詳細を開き、<strong>ウォーターフォール分析を実行</strong>ボタンをクリックします。 <img alt="Session_detail" src="img/2a2d53d8de9c4303.png"></li>
+<li>ウォーターフォール分析からどのリクエストでエラーが発生していたのか特定することができます。 <img alt="Waterfall" src="img/97817a3bb57714fd.png"></li>
 </ul>
-</google-codelab-step>
-<google-codelab-step label="CSSセレクタを取得するには？" duration="0">
-<ol type="1">
-<li>EasyTravel Angularホームページを評価する <img alt="CSS" src="img/4f30100251cd9994.png"></li>
-<li>任意の旅行パッケージを選択し、<strong>book</strong>をクリックし、ユーザー名<strong>alex</strong>とパスワード<strong>alex</strong> でログインします。 <img alt="CSS" src="img/22881b227a0c4fa6.png"></li>
-<li>名前の<strong>Alex Elliot</strong>を右クリックし、<strong>Inspect</strong>をクリックします。</li>
-<li>ハイライトされた行の<strong>...</strong>をクリックし、<strong>Copy</strong> &gt; <strong>Copy Selector</strong>を選択します。 <img alt="CSS" src="img/75c89477e049fa8b.gif"></li>
-<li>これは、Webアプリケーションで定義されている任意のDOM要素に対して行うことができます。</li>
-</ol>
-</google-codelab-step>
-<google-codelab-step label="リクエスト属性をどのように活用するか？" duration="15">
-<p>先ほど示したように、2つのリクエスト属性 <strong>revenue</strong> と <strong>destination</strong> があらかじめ作成されています。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Core Web Vitalsによるパフォーマンス分析" duration="10">
+        <p>Googleが発表した<a href="https://web.dev/vitals" target="_blank">Core Web Vitals</a>は「ウェブ上で優れたユーザー体験を提供するための指標」であり<strong>業界の標準</strong>として利用することができます。 Dynatraceは、Core Web Vitalsを自動で測定し、数回のクリックで詳細を確認することができます。</p>
+<h2 is-upgraded>Core Web Vitalsの3つの指標</h2>
+<p>Core Web Vitalsは以下の3つの指標が含まれています。</p>
+<ul>
+<li>Largest Contentful Paint (最大視覚コンテンツの表示時間、LCP): 読み込みのパフォーマンスを測定するための指標です。優れたユーザー エクスペリエンスを提供するためには、ページの読み込みが開始されてからの LCP を 2.5 秒以内にする必要があります。</li>
+<li>First Input Delay (初回入力までの遅延時間、FID): インタラクティブ性を測定するための指標です。優れたユーザー エクスペリエンスを提供するためには、ページの FID を 100 ミリ秒以下にする必要があります。</li>
+<li>Cumulative Layout Shift (累積レイアウト シフト数、CLS): 視覚的な安定性を測定するための指標です。優れたユーザー エクスペリエンスを提供するためには、ページの CLS を 0.1 以下に維持する必要があります。</li>
+</ul>
+<p>Core Web Vitalsでは、上記の指標をモバイル デバイスとデスクトップ デバイスに分けた上で、総ページロード数の 75 パーセンタイルをしきい値として設定しています。</p>
+<h2 is-upgraded>ページとページグループの視点での解析</h2>
+<ul>
+<li><strong>EasyTravel Angular</strong>のトップ画面に戻り、画面を下にスクロールさせ、<strong>すべてのページグループを表示</strong>ボタンをクリックします。 <img alt="View_all_page_groups" src="img/f20dea21e205b719.png"></li>
+<li><strong>パフォーマンス メトリック</strong>ドロップダウンメニューから<strong>Largest contenful paint</strong>を選択し、<strong>集計</strong>ドロップダウンメニューから<strong>75th percentile</strong>を選択します。</li>
+<li>同様に<strong>パフォーマンス メトリック</strong>ドロップダウンメニューから<strong>First Input Delay</strong>や<strong>Cumulative Layout Shift</strong>を選択することでページグループごとの値を確認することができます。 <img alt="Performance_metrics" src="img/b6018ee5682103cc.png"></li>
+<li>また、気になるページの名前をクリックすることで、該当ページの詳細を確認することができます。ここでは試しに<strong>home</strong>をクリックします。</li>
+<li>パフォーマンスビューの下の<strong>すべてのメトリックを表示</strong>を開くことで、上記の指標を含めて該当ページの様々なメトリクスを確認することができます。 <img alt="metrics" src="img/cf16230ffc00052a.png"></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="参考：CSSセレクターの取得方法" duration="5">
+        <p>ユーザーのタグ付けやセッションとユーザーアクションのプロパティで指定する<strong>CSSセレクター</strong>についてGoogle Chromeで取得する方法について、説明します。</p>
+<ul>
+<li><strong>EasyTravel Angular</strong>サイトにアクセスし、画面右上の<strong>Login</strong>からログインページに移動します。 <img alt="EasyTravel_Angular" src="img/22881b227a0c4fa6.png"></li>
+<li>email、passwordともに<code>alex</code>と入力して、<strong>Sign In</strong>ボタンをクリックします。</li>
+<li>画面右上に表示された<strong>Alex Elliott</strong>を右クリックし、<strong>検証</strong>を選びます。</li>
+<li>ハイライトされた行を右クリックし、<strong>Copy &gt; Copy Selector</strong>を選択します。</li>
+</ul>
+<p>上記、操作は任意のDOM要素に対して行うことができます。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="参考：リクエスト属性の設定" duration="15">
+        <p>ハンズオン環境では、デフォルトで<strong>revenue</strong>と<strong>destination</strong>という2つのリクエスト属性が設定されています。</p>
 <h2 is-upgraded>新しいリクエスト属性の定義</h2>
-<p>様々なデータソースからリクエスト属性を作成することができます。今回のハンズオンでは、旅行パッケージに申し込んだお客様の<strong>忠誠度</strong>を公開します。</p>
-<p class="image-container"><img alt="RequestAttribute" src="img/c96b727ba9a6635d.png"></p>
-<ol type="1">
-<li>Settings &gt; Server side service monitoring &gt; Request Attributes を選択します。</li>
-<li><strong>Define a new request attribute</strong>ボタンをクリックします。 <img alt="RequestAttribute" src="img/9d70ec70632f3974.png"></li>
-<li><strong>Request attribute name</strong>を<code>loyalty status</code>として入力してください。</li>
-<li>データタイプは <strong>text</strong> のままにしておきます。</li>
-<li><strong>Add new data source</strong>ボタンをクリックします。 <img alt="RequestAttribute" src="img/6e5fbfe2c39814eb.png"></li>
-<li>Configure 1st source: <ul>
-<li>Request attribute source: <strong>Web request URL query parameter</strong></li>
-<li>Parameter name: <strong>loyalty</strong></li>
-<li><strong>Save</strong>ボタンを押してください。 <img alt="RequestAttribute" src="img/eb10aca56e9f9c56.png"></li>
-</ul>
-</li>
-<li><strong>Add new data source</strong>ボタンをクリックします。</li>
-<li>2ndソースの設定 <ul>
-<li>Request attribute source: <strong>Java method parameter</strong></li>
-<li><strong>Select method sources</strong>ボタンをクリックします <img alt="RequestAttribute" src="img/ed0b437a9080a963.png"></li>
-<li>Select the process group: <strong>com.dynatrace.easytravel.business.backend.jar easytravel</strong><img alt="RequestAttribute" src="img/e7e979d91e073a35.png"></li>
-<li><strong>Continue</strong>ボタンを押してください。</li>
-<li>検索ボックスにこれを入力して、<strong>Search</strong>をクリックします。 <pre><code>com.dynatrace.easytravel.business.webservice.BookingService
-</code></pre>
-</li>
-<li>クラスを選択し、<strong>Continue</strong>をクリックします。 <img alt="RequestAttribute" src="img/2a9f790990cd695b.png"></li>
-<li><strong>Use the selected class</strong>のラジオボタンをクリックし、<strong>Continue</strong>をクリックします。 <img alt="RequestAttribute" src="img/b7e742ece1af5159.png"></li>
-<li>Select the method: <strong>private void checkLoyaltyStatus</strong></li>
-<li><strong>Finish</strong>ボタンをクリックします。 <img alt="RequestAttribute" src="img/fd7ef3b49c2aa748.png"></li>
-<li>キャプチャードロップダウンでは <strong>2: java.lang.String</strong>を選択します。</li>
-<li><strong>Save</strong>をクリックします。 <img alt="RequestAttribute" src="img/bd457ceb07ec6b83.png"></li>
-</ul>
-</li>
-<li>最終的な設定は以下の画面のようになります。</li>
-<li>最後に<strong>右上</strong>の<strong>Save</strong>ボタンを忘れずにクリックしてください。</li>
-</ol>
-<p class="image-container"><img alt="RequestAttribute" src="img/c38106f7ad4b5d2.png"></p>
-<h2 is-upgraded>セッションプロパティでのリクエスト属性の追加</h2>
-<ol type="1">
-<li>左のナビゲーションメニューから<strong>Applications</strong>を選択します。</li>
-<li><strong>EasyTravel Angular</strong>アプリケーションを選択します。</li>
-<li><strong>(...)</strong> ボタンをクリックし、<strong>Edit</strong>を選択します。</li>
-<li><strong>Capturing</strong>ヘッダーの下にある<strong>Session and action properties</strong>を探す。</li>
-<li><strong>Add properties</strong>ボタンをクリックする</li>
-<li><strong>Custom defined property</strong>タブを選択する</li>
-<li>Expression type: に<strong>Server side request attribute</strong>を選択する</li>
-<li>Request attribute name: <strong>loyalty status</strong></li>
-</ol>
+<p>ここでは新しくユーザーのステータス（<strong>loyalty</strong>）をリクエスト属性として取得する方法について説明します。</p>
 <ul>
-<li>Display name: <pre><code>Member Status
-</code></pre>
-</li>
-<li>(auto fill) Key: <strong>memberstatus</strong></li>
-<li>Storage type: <ul>
-<li>Store as <strong>session</strong> property</li>
+<li>左側のメニューから<strong>管理 &gt; 設定</strong>を開き、<strong>Server-side service monitoring &gt; Request attributes</strong>を開きます。 <img alt="Request_attribute" src="img/bbaaeb6bce891ae4.gif"></li>
+<li><strong>Define a new request attribute</strong>ボタンをクリックします。</li>
+<li><strong>Request attribute name</strong>に<code>Loyalty status</code>と入力します。 <img alt="Define_request_attribute" src="img/d08110ceddc9870c.png"></li>
+<li>他の設定についてはデフォルトのままとします。</li>
+<li><strong>Add new data source</strong>ボタンをクリックし、1つ目のソースとして以下を入力します。  <ul>
+<li><strong>Request attribute source</strong>ドロップダウンメニュー <code>Web request URL query parameter</code></li>
+<li><strong>Parameter name </strong><code>loyalty</code></li>
+<li><strong>Save</strong>ボタンをクリックします。 <img alt="Define_request_attribute" src="img/392eb3ee9c62d67f.png"></li>
 </ul>
 </li>
-<li><strong>&#34;Save property&#34;</strong>をクリックします。</li>
+<li><strong>Add new data source</strong>ボタンをクリックし、2つ目のソースとして以下を入力します。  <ul>
+<li><strong>Request attribute source</strong>ドロップダウンメニュー <code>Java method parameter(s)</code></li>
+<li><strong>Select method sources</strong>ボタンをクリック</li>
+<li>Process Groupフィールドに<code>com.dynatrace.easytravel.business.backend.jar easytravel-*-x*</code>と入力し、<strong>Continue</strong>ボタンをクリックします。</li>
+<li>検索フィールドに<code>bookingservice</code>と入力し、<strong>Search</strong>ボタンをクリックします。</li>
+<li><strong>com.dynatrace.easytravel.business.webservice.BookingService</strong>が表示されたら、それを選択して<strong>Continue</strong>ボタンをクリックします。 <img alt="Define_request_attribute" src="img/94040f894e28f33a.png"></li>
+<li><strong>Use the selected class</strong>を選択し、<strong>Continue</strong>をクリックします。</li>
+<li><strong>プライベート void checkLoyaltyStatus</strong>を選択し、<strong>Finish</strong>ボタンをクリックします。</li>
+<li><strong>Capture</strong>ドロップダウンメニューから<code>2: java.lang.String</code>を選択し、<strong>Save</strong>をクリックします。</li>
 </ul>
-<h2 is-upgraded>USQLによるデータの可視化</h2>
-<ol type="1">
-<li>ステップ2の手順で、ダッシュボードに<strong>USQLタイル</strong>を追加します。</li>
-<li>以下のUSQLを使用し、<strong>pie chart</strong>を選びます。</li>
-</ol>
-<pre><code language="language-SQL" class="language-SQL">   select stringProperties.memberstatus, sum (doubleProperties.booking) as Revenue from usersession where stringProperties.memberstatus IS NOT NULL group by stringProperties.memberstatus order by sum(doubleProperties.booking) DESC
+</li>
+<li><strong>Add new data source</strong>ボタンをクリックし、3つ目のソースとして以下を入力します。  <ul>
+<li><strong>Request attribute source</strong>ドロップダウンメニュー <code>Java method parameter(s)</code></li>
+<li><strong>Select method sources</strong>ボタンをクリック</li>
+<li>Process Groupフィールドに<code>com.dynatrace.easytravel.business.backend.jar easytravel-*-x*</code>と入力し、<strong>Continue</strong>ボタンをクリックします。</li>
+<li>検索フィールドに<code>authentication</code>と入力し、<strong>Search</strong>ボタンをクリックします。</li>
+<li><strong>com.dynatrace.easytravel.business.webservice.AuthenticationService</strong>が表示されたら、それを選択して<strong>Continue</strong>ボタンをクリックします。</li>
+<li><strong>Use the selected class</strong>を選択し、<strong>Continue</strong>をクリックします。</li>
+<li><strong>パブリック java.lang.String getLoyaltyStatus</strong>を選択し、<strong>Finish</strong>ボタンをクリックします。 <img alt="Define_request_attribute" src="img/f42d97bfeb05516b.png"></li>
+<li><strong>Capture</strong>ドロップダウンメニューから<code>Return value</code>を選択し、<strong>Save</strong>をクリックします。</li>
+</ul>
+</li>
+<li><strong>Data sources</strong>として、以下の画面のように表示されます。 <img alt="Define_request_attribute" src="img/b883d843f4e3d02b.png"></li>
+<li>右上の<strong>Save</strong>ボタンを忘れずにクリックします。</li>
+</ul>
+<h2 is-upgraded>easyTravelアプリの再起動</h2>
+<p>リクエスト属性をメソッドパラメーターから取得する場合、該当プロセスを再起動する必要があるため、easyTravelアプリを再起動させます。</p>
+<ul>
+<li>easyTravelのコンフィグレーションUIにページにアクセスします（コンフィグレーションUIについてはメールを参照ください）。</li>
+<li><strong>Stop</strong>ボタンをクリックし、easyTravelアプリが止まるのを待ちます。</li>
+<li>easyTravelアプリが停止したら、<strong>Standard with REST Service and Angular2 frontend</strong>をクリックします。数分で再開するはずです。</li>
+</ul>
+<h2 is-upgraded>セッションプロパティでのリクエスト属性の追加</h2>
+<p>RevenueとDestinationを設定したときと同様の手順で、Loyalty statusをセッションプロパティに設定します。</p>
+<ul>
+<li><strong>アプリケーションとマイクロサービス &gt; フロントエンド</strong>を開き、<strong>EasyTravel Angular</strong>をクリックします。</li>
+<li><strong>メニューボタン（...）</strong>をクリックし、<strong>編集</strong>をクリックして、設定画面を開きます。</li>
+<li><strong>Capturing &gt; Session and action properties</strong>を開きます。</li>
+<li><strong>Add property</strong>ボタンをクリックします。</li>
+<li><strong>Custom defined property</strong>タブを選択し、以下の通りに入力します。  <ul>
+<li><strong>Expression type </strong><code>Server side request attribute</code></li>
+<li><strong>Request attribute name </strong><code>Loyalty status</code></li>
+<li><strong>Display name </strong><code>Member status</code></li>
+<li><code>Store as session property</code>を有効 <img alt="Session_and_action_properties" src="img/f15c3836500f513d.png"></li>
+<li><strong>Save property</strong>ボタンをクリックします。</li>
+</ul>
+</li>
+</ul>
+<h2 is-upgraded>メンバーステータス毎の売上高の可視化</h2>
+<p>先ほど作成したダッシュボードにメンバーステータス毎の売上高を表示するタイルを追加します。</p>
+<ul>
+<li><strong>観察と探索 &gt; ダッシュボード</strong>から先ほど作成したダッシュボード（<code>ビジネスダッシュボード</code>）を開きます。</li>
+<li>ダッシュボードが編集モードでない場合は、<strong>編集</strong>ボタンをクリックして編集モードにします。</li>
+<li><strong>タイルのフィルタリング</strong>欄に<code>クエリ</code>と入力し、<strong>ユーザーセッションのクエリ</strong>タイルをダッシュボードの任意の部分にドラッグアンドドロップします。</li>
+<li><strong>タイルの設定</strong>をクリックします。ユーザー セッションのクエリ画面に遷移します。</li>
+<li>クエリ入力欄に以下を入力し、<strong>クエリの実行</strong>ボタンをクリックします。クエリに一致するデータがありません。と表示される場合は少し時間をおいてから確認します。</li>
+</ul>
+<pre><code language="language-SQL" class="language-SQL">  SELECT stringProperties.memberstatus AS &#34;メンバーステータス&#34;, SUM(doubleProperties.booking) AS &#34;売上高&#34; FROM usersession WHERE stringProperties.memberstatus IS NOT NULL GROUP BY stringProperties.memberstatus ORDER BY sum(doubleProperties.booking) DESC
 </code></pre>
-<ol type="1">
-<li>次のようなタイルが表示されます。</li>
-</ol>
-<p class="image-container"><img alt="RequestAttribute" src="img/be415a431a83ec78.png"></p>
-</google-codelab-step>
-<google-codelab-step label="アンケート" duration="0">
-<p>このラボを楽しんでいただき、お役に立てれば幸いです。ご意見、ご感想をお待ちしております。 </p>
+<ul>
+<li>名前を<code>メンバーステータス毎の売上割合</code>などに変更し、<strong>円グラフ</strong>を選択します。 <img alt="Member_status_query" src="img/86d1ed16d579f4a0.png"></li>
+<li><strong>変更をダッシュボードに保存します</strong>ボタンをクリックします。自動でダッシュボードの画面に戻ります。</li>
+<li>作成したタイルの右下の●の部分をドラッグして任意の大きさに広げたり、必要に応じてドラッグすることでタイルの場所を移動させます。</li>
+</ul>
 <google-codelab-survey survey-id="biz-ops-jp-1">
-<h4>このラボでの全体的な経験はどうでしたか？</h4>
-<paper-radio-group>
-<paper-radio-button>とても良い</paper-radio-button>
-<paper-radio-button>良い</paper-radio-button>
-<paper-radio-button>普通</paper-radio-button>
-<paper-radio-button>悪い</paper-radio-button>
-<paper-radio-button>とても悪い</paper-radio-button>
-</paper-radio-group>
-</google-codelab-survey>
-<google-codelab-survey survey-id="biz-ops-jp-2">
 <h4>このラボで最も役立ったことは何ですか？</h4>
 <paper-radio-group>
 <paper-radio-button>デジタルビジネスアナリティクスの学習</paper-radio-button>
@@ -571,7 +497,7 @@
 <paper-radio-button>USQLの使い方</paper-radio-button>
 </paper-radio-group>
 </google-codelab-survey>
-<google-codelab-survey survey-id="biz-ops-jp-3">
+<google-codelab-survey survey-id="biz-ops-jp-2">
 <h4>このラボを友人や同僚に勧める可能性はどの程度ありますか？</h4>
 <paper-radio-group>
 <paper-radio-button>強く勧めたい</paper-radio-button>
@@ -583,12 +509,17 @@
 </google-codelab-survey>
 <aside class="special"><p>💡 その他のアイデアや提案については、<a href="mailto:DT-TYO-SE@dynatrace.com?subject=DynatraceによるBizDevOps - アイデア、提案" target="_blank">メールでのお問い合わせ</a>をお願いします。</p>
 </aside>
-</google-codelab-step>
-</google-codelab>
-<script src="../../elements/codelab-elements/native-shim.js"></script>
-<script src="../../elements/codelab-elements/custom-elements.min.js"></script>
-<script src="../../elements/codelab-elements/prettify.js"></script>
-<script src="../../elements/codelab-elements/codelab-elements.js"></script>
-<script src="//support.google.com/inapp/api.js"></script>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="../../elements/codelab-elements/native-shim.js"></script>
+  <script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+  <script src="../../elements/codelab-elements/prettify.js"></script>
+  <script src="../../elements/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
 </body>
 </html>

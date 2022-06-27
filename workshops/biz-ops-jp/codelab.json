@@ -3,12 +3,13 @@
   "format": "html",
   "prefix": "../../elements",
   "mainga": "UA-49880327-14",
-  "updated": "2021-07-19T15:18:38+10:00",
+  "updated": "2022-06-28T07:38:49+08:00",
   "id": "biz-ops-jp",
-  "duration": 135,
+  "duration": 120,
   "title": "DynatraceによるBizDevOps",
+  "authors": "Katsuyoshi Sumida",
   "summary": "Davis AIによるBizDevOpsの実現",
-  "source": "bizops2021-jp.md",
+  "source": "bizops2022-jp.md",
   "theme": "",
   "status": [
     "published"
