@@ -1,0 +1,28 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "../../elements",
+  "mainga": "UA-49880327-14",
+  "updated": "2022-09-13T13:36:45+08:00",
+  "id": "cloud-automation-rel-val",
+  "duration": 69,
+  "title": "Cloud Automation - Quality Gates with Dynatrace",
+  "authors": "Ram Vasu",
+  "summary": "Cloud Automation - Releasee validation (aka Quality Gates)",
+  "source": "cloud-automation-releasevalidation.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "cloudautomation",
+    "cloud-automation"
+  ],
+  "tags": [
+    "cloud-obs",
+    "intermediate"
+  ],
+  "feedback": "mailto:APAC-SE-Central@dynatrace.com",
+  "ga": "UA-54510554-1, UA-49880327-14",
+  "url": "cloud-automation-rel-val"
+}
