@@ -3,7 +3,7 @@
   "format": "html",
   "prefix": "../../elements",
   "mainga": "UA-49880327-14",
-  "updated": "2022-09-13T13:36:45+08:00",
+  "updated": "2022-09-15T09:29:03+08:00",
   "id": "cloud-automation-rel-val",
   "duration": 69,
   "title": "Cloud Automation - Quality Gates with Dynatrace",
@@ -23,6 +23,6 @@
     "intermediate"
   ],
   "feedback": "mailto:APAC-SE-Central@dynatrace.com",
-  "ga": "UA-54510554-1, UA-49880327-14",
+  "ga": "UA-54510554-1",
   "url": "cloud-automation-rel-val"
 }

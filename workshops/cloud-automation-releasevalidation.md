@@ -5,7 +5,8 @@ tags: cloud-Obs, Intermediate
 status: Published 
 authors: Ram Vasu
 Feedback Link: mailto:APAC-SE-Central@dynatrace.com
-Analytics Account: UA-54510554-1, UA-49880327-14
+new: 1
+Analytics Account: UA-54510554-1
 
 
 # Cloud Automation - Quality Gates with Dynatrace
