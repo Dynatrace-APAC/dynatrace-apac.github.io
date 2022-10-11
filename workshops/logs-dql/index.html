@@ -1,0 +1,231 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Using DQL for Logs and Events</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid="UA-54510554-1"
+                  id="logs-dql"
+                  title="Using DQL for Logs and Events"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="Using DQL for Logs and Events" duration="1">
+        <p>This Repo contains the labs we are going to work though as part of the Log on Grail - DQL Hands On Workshop.</p>
+<p>For the purposes of the Hands-On, we will automate and make the steps seamless for the participants</p>
+<h2 is-upgraded>Prerequisites</h2>
+<ul>
+<li>Access the environment used in this workshop <a href="https://guu84124.live.dynatrace.com/ui/logs-events?gtf=-2h&gf=all" target="_blank">here</a>.</li>
+<li>get an overview of the DQL documentation <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/dynatrace-query-language" target="_blank">here</a></li>
+</ul>
+<h2 class="checklist" is-upgraded>What You&#39;ll Learn</h2>
+<p>We will start with simple use-cases such as simple filters and aggregations to more refined scenarios where arithmetics is used to calculate time distances between significant events.</p>
+<ul>
+<li>DQL Goals from a business perspective</li>
+<li>What DQL is and it&#39;s building blocks  <ul>
+<li>DQL overview and introduction</li>
+<li>DQL Syntax and top things to know about</li>
+</ul>
+</li>
+<li>What DQL can do for Log and Event data  <ul>
+<li>DQL overview and introduction</li>
+<li>Field selection and typecasting</li>
+<li>First level and conditional aggregates</li>
+<li>Getting in touch with Log parsing on read</li>
+<li>Arithmetic calculations</li>
+</ul>
+</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="DQL Introduction" duration="10">
+        <p>In this part the workshop tutor will explain the fundamentals of DQL.</p>
+<p><strong>Task: Get an Overview of the current state of the DQL capabilities by exploring the documentation</strong></p>
+<ul>
+<li>Access the DQL doc landing page <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/dynatrace-query-language" target="_blank">here</a>.</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Hands-on 1 - Explorative analysis" duration="5">
+        <p><strong>Task: Try to find narrow down the hosts where hipstershop is running</strong></p>
+<ul>
+<li>Set the query start timestamp to now()-10m</li>
+<li>Look whether the string „hipster&#34; occurs in the log content field</li>
+<li>Inspect the results. Look for the host.name field</li>
+<li>Finalize the result by selecting the field host.name</li>
+</ul>
+<p><strong>Intended result:</strong><img alt="assets/bootcamp/logs-dql/DQL_Logs_H1_intendedresult.png" src="img/fc76dff84cd4bb5.png"></p>
+<p><strong>Directions and supporting material</strong></p>
+<ul>
+<li>Start with <code>fetch logs</code></li>
+<li>Use and inspect the suggestions</li>
+<li><a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/log-monitoring/logs-on-grail/logs-on-grail-examples" target="_blank">Logs on Grail DQL examples:</a>.</li>
+<li><a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/dynatrace-query-language/commands" target="_blank">Commands:</a>.</li>
+<li><a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/dynatrace-query-language/functions#dql-string-functions" target="_blank">String matching functions:</a>.</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Hands-on 2 - Explorative analysis" duration="15">
+        <p><strong>Task: Get an overview about whether processes suffer from significant logs on a specific host.</strong></p>
+<ul>
+<li>Start with <code>fetch logs</code> and extend the timeframe to <code>last 3h</code></li>
+<li>Filter the logs by the host name we found in hands-on 1. If you were not successful, use host.name <code>"i-040585ffc09e5c519"</code>.</li>
+<li>Aggregate (summarize) the result into table showing the event count grouped by loglevel.</li>
+<li>Get rid of the „NONE&#34; loglevel in the final result.</li>
+</ul>
+<p><strong>Intended result:</strong><img alt="assets/bootcamp/logs-dql/DQL_Logs_H2_intendedresult.png" src="img/4fca0d82bb32d5f2.png"></p>
+<p><strong>Directions and supporting material</strong></p>
+<ul>
+<li><a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/dynatrace-query-language/commands#summarize" target="_blank">Summarize command:</a>.</li>
+<li><a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/dynatrace-query-language/functions#dql-aggregation-functions" target="_blank">Aggregation functions:</a>.</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Hands-on 3 - Timing and atithmetics" duration="5">
+        <p><strong>Task: Find the most recent ERROR log for a specific host</strong></p>
+<ul>
+<li>Start with this query:  <pre><code>fetch logs, from:now()-6h
+| filter contains(dt.process.name,&#34;reverseproxy&#34;) and loglevel == &#34;ERROR&#34;
+</code></pre>
+</li>
+<li>Try to sort the result to see the newest ERROR log</li>
+<li>Get rid of all but the newest logline</li>
+<li>You can also use <code>filter host.name == "i-040585ffc09e5c519" and loglevel == "ERROR"</code>, assuming this host exists</li>
+</ul>
+<p><strong>Intended result:</strong></p>
+<p class="image-container"><img alt="assets/bootcamp/logs-dql/DQL_Logs_H3_intendedresult.png" src="img/baf103e0695e6e79.png"></p>
+<p><strong>Directions and supporting material</strong></p>
+<ul>
+<li><a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/dynatrace-query-language/commands#sort" target="_blank">Sort command:</a>.</li>
+<li><a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/dynatrace-query-language/commands#limit" target="_blank">Limit command:</a>.</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Hands-on 4 - Timing and atithmetics" duration="5">
+        <p><strong>Task: Calculate the age in seconds and minutes of the most recent Error log</strong></p>
+<ul>
+<li>Start with this query:  <pre><code>fetch logs, from:now()-1h
+| filter host.name == &#34;i-040585ffc09e5c519&#34; and loglevel == &#34;ERROR&#34;
+| sort timestamp desc 
+| limit 1
+| fieldsAdd age_seconds = (now()-timestamp)/1000000000
+</code></pre>
+</li>
+<li>If you did not find a match, extend the query time frame to last 2h or more.</li>
+<li>Now, add a new field called age_minutes and devide the number of seconds by 60</li>
+<li>Select only the timestamp, age_seconds, age_minutes,  loglevel fields!</li>
+</ul>
+<p><strong>Intended result:</strong><img alt="assets/bootcamp/logs-dql/DQL_Logs_H4_intendedresult.png" src="img/1bc33f71228ce767.png"></p>
+<p><strong>Directions and supporting material</strong></p>
+<ul>
+<li><a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/dynatrace-query-language/commands#fields-add" target="_blank">fieldsAdd command:</a>.</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Hands-on 5 - Application monitoring - Parsing, typecasts and more" duration="10">
+        <p><strong>Task: Did the same ip-address have both a successful and unsuccessful checkout event within a 10 minute time window?</strong></p>
+<ul>
+<li>Start with this query  <pre><code>fetch logs, from: now()-1h
+| filter host.name == &#34;i-040585ffc09e5c519&#34; 
+| filter contains(content, &#34;POST /cart/checkout&#34;)
+| sort timestamp desc
+| parse content, &#34;IPADDR:ip LD &#39;HTTP/1.1&#39; SPACE LONG:http_s SPACE LD &#34; 
+</code></pre>
+</li>
+<li>Select the timestamp, content, ip, http_s fields!</li>
+<li>Use the <code>summarize</code> command in combination with the countIf() function to callculate the number of successful checkouts and failed checkouts</li>
+<li>In this example we consider a successful checkout if the http status is below 302</li>
+<li>Use the <code>by:</code> Parameter of summarize to group the result by ip and 10 minte timebuckets</li>
+<li>If successful, explore the current visualization options the UI provides.</li>
+</ul>
+<p><strong>Intended result:</strong><img alt="assets/bootcamp/logs-dql/DQL_Logs_H5_intendedresult.png" src="img/3e7fde503251ea54.png"></p>
+<p><strong>Directions and supporting material</strong></p>
+<pre><code>...
+| summarize success = countIf(http_s&gt;=200 and http_s &lt;=400), fail = ...  , by:{ip, bin(timestamp, 10m)}  | sort fail desc
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Hands-on 6 - Application monitoring - Event sequences" duration="15">
+        <p>Now let&#39;s go a few steps ahead and get a glimps what can already be done with DQL!</p>
+<p><strong>Task 6.1: Let‘s find all IP addresses that first have put a product into the cart and afterwards failed to checkout. Also, let‘s calculate the time distance between those events</strong></p>
+<ul>
+<li>Start with this query:  <pre><code>fetch logs, from:now()-30m
+| filter host.name == &#34;i-040585ffc09e5c519&#34;
+| filter contains(content, &#34;POST /cart&#34;)
+| parse content, &#34;IPADDR:ip LD &#39;HTTP/1.1&#39; SPACE LONG:http_s SPACE LD&#34;
+| fields timestamp, content, ip, http_s
+</code></pre>
+</li>
+<li>Inspect and observe the events over time. See how the same IP-s have sequences of successful and failed events</li>
+</ul>
+<p><strong>Intended result:</strong></p>
+<p class="image-container"><img alt="assets/bootcamp/logs-dql/DQL_Logs_H61_intendedresult.png" src="img/8630c617d945d8b3.png"></p>
+<p><strong>Task 6.2: Calculating the time distance between cart events and checkout fails</strong></p>
+<p>Extend the query used in task 6.1 and add the following five pipeline processing steps and try to understand what happens. Feel free to add each line sequentially to see the intermediate results up to the final stage!</p>
+<pre><code>...
+| fieldsAdd isCheckout = contains(content,&#34;checkout&#34;)
+| fieldsAdd checkout_fail_ts = if(isCheckout and http_s == 500, toLong(timestamp)), 
+            cart_success_ts = if(NOT isCheckout and http_s &lt;= 302, toLong(timestamp))
+| summarize cart_success_first = first(cart_success_ts), checkout_fail_first = first(checkout_fail_ts), by:ip
+| fieldsAdd delay_seconds = (checkout_fail_first - cart_success_first)/1000000000 
+| fieldsAdd failAfterCart = if(delay_seconds &gt; 0, true, else:false)
+</code></pre>
+<p><strong>Intended result:</strong></p>
+<pre><code>fetch logs, from:now()-30m
+| filter host.name == &#34;i-040585ffc09e5c519&#34;
+| filter contains(content, &#34;POST /cart&#34;)
+| parse content, &#34;IPADDR:ip LD &#39;HTTP/1.1&#39; SPACE LONG:http_s SPACE LD&#34;
+| fields timestamp, content, ip, http_s
+| fieldsAdd isCheckout = contains(content,&#34;checkout&#34;)
+| fieldsAdd checkout_fail_ts = if(isCheckout and http_s == 500, toLong(timestamp)), 
+ cart_success_ts = if(NOT isCheckout and http_s &lt;= 302, toLong(timestamp))
+| summarize cart_success_first = first(cart_success_ts), checkout_fail_first = first(checkout_fail_ts), by:ip
+| fieldsAdd delay_seconds = (checkout_fail_first - cart_success_first)/1000000000 
+| fieldsAdd failAfterCart = if(delay_seconds &gt; 0, true, else:false)
+</code></pre>
+<p class="image-container"><img alt="assets/bootcamp/logs-dql/DQL_Logs_H62_intendedresult.png" src="img/81a074d4c0e7c60c.png"></p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="../../elements/codelab-elements/native-shim.js"></script>
+  <script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+  <script src="../../elements/codelab-elements/prettify.js"></script>
+  <script src="../../elements/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

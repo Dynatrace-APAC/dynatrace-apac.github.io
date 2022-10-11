@@ -1,0 +1,26 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "../../elements",
+  "mainga": "UA-49880327-14",
+  "updated": "2022-10-11T07:08:30+08:00",
+  "id": "logs-dql",
+  "duration": 66,
+  "title": "Using DQL for Logs and Events",
+  "authors": "Peter Zahrer",
+  "summary": "Unleashing the value in logs with DQL",
+  "source": "logs-dql-demolive.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "logmon-2"
+  ],
+  "tags": [
+    "bootcamp",
+    "dql"
+  ],
+  "ga": "UA-54510554-1",
+  "url": "logs-dql"
+}

@@ -1,0 +1,422 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Log Monitoring - Data onboarding, processing and analysis</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="../../elements/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid="UA-54510554-1"
+                  id="logs2022-adv"
+                  title="Log Monitoring - Data onboarding, processing and analysis"
+                  environment="web"
+                  feedback-link="mailto:APAC-SE-Central@dynatrace.com">
+    
+      <google-codelab-step label="Introduction" duration="5">
+        <h2 is-upgraded>Get more insights from logs</h2>
+<p>Logs as pillars of observability (together with Metrics and Traces) can provide answers to what is really happening in your infrastructure, software, and environment. Not only simple application troubleshooting.</p>
+<p>Today, logs can contain simple contextual information like timestamps or log level but also business contexts like shopping cart value or PII of a user who triggered a transaction. Additionally, Dynatrace adds context by connecting logs to monitored entities, traces, and user sessions to provide an e2e view and enable Davis AI.</p>
+<p>In order to start log analysis, we first need to ingest and process data. Enterprises generate hundreds of TB of log data every data. It is important to not only bring the logs to Dynatrace but also ensure configuration at scale and privacy compliance - as the starting point.</p>
+<p>Once data is on the platform you&#39;ll see many different log formats from log4j to JSON. To add meaning to raw data we must extract attributes to cover customers&#39; use cases like filtering, dashboarding, anomaly detection, automation, and more...</p>
+<h2 is-upgraded>Today, you will learn how to:</h2>
+<ul>
+<li>Onboard log data from files auto-detected by OneAgent</li>
+<li>Set log filtering to limit data transfer and focus only on Logs that matter</li>
+<li>Stay compliant and mask data on the source</li>
+<li>Write log processing rules to extract attributes from log events and use them for:  <ul>
+<li>filtering in log viewer using indexed custom attributes,</li>
+<li>custom metrics for dashboarding and alerting</li>
+<li>report problems based on events from logs</li>
+</ul>
+</li>
+</ul>
+<h2 is-upgraded>Notice</h2>
+<p>Every exercise that you do today will work on both Dynatrace Managed with Log Monitoring v2 AND Dynatrace SaaS with Log powered by Grail.</p>
+<h2 is-upgraded>Reference materials</h2>
+<ul>
+<li><a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/log-monitoring" target="_blank">Log monitoring documentation</a></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="New log storage and data filtering configuration" duration="5">
+        <p>In the first steps of this lab you will learn how to configure log storage, filter data, and mask sensitive data.</p>
+<p>The goal of those actions is to send logs to Dynatrace cluster in a way that gives you flexibility in log source selection. Filtering and sensitive data masking features lets you perform the transformation and more granular selection of logs before sending them to the Dynatrace cluster.</p>
+<h2 is-upgraded>OneAgent log storage configuration</h2>
+<p>All tasks, that you&#39;ll be working on within the first part of this workshop will result in defining configurations that are stored on the Dynatrace cluster and then automatically sent to OneAgents. OneAgnets perform logs acquisition of autodetected logs and transformations on them before sending data to the Dynatrace cluster.</p>
+<h2 is-upgraded>Settings 2.0 frameworks implementation</h2>
+<p>Log storage, data filtering configuration, and sensitive data masking are built on the basis of the Settings 2.0 framework. As a result, you&#39;ll be able to define a set of rules in three hierarchy scopes:</p>
+<ul>
+<li>Host</li>
+<li>Host group</li>
+<li>Environment</li>
+</ul>
+<p>The following image illustrates rule processing priority.</p>
+<p class="image-container"><img alt="Log storage rule priority" src="img/58d55afd451bd80d.png"></p>
+<p>Rules are executed in the order in which they&#39;re listed, from top to bottom. Order is critical because a preceding rule may impact the log configuration that a subsequent rule uses in its definition. This means that if a mechanism discovers a rule that has matched a given log line it stops iterating the next rules.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Enabling new Log storage and data filtering configuration" duration="5">
+        <p>In this lab, we will enable new Log storage and data filtering configuration.</p>
+<p>Log storage configuration is a mechanism that lets you define which auto-detected by OneAgent log sources will be collected by Dynatrace.</p>
+<p>Version requirements:</p>
+<ul>
+<li>Dynatrace cluster version 1.251</li>
+<li>OneAgent version 1.243</li>
+</ul>
+<h2 is-upgraded>Enable new Log storage and data filtering</h2>
+<ol type="1">
+<li>In the Dynatrace menu go to <strong>Settings &gt; Log Monitoring &gt; Log sources and storage</strong></li>
+<li>Expand the teaser at the top of the page by clicking <strong>Learn more and update</strong><img alt="Enable new Log storage" src="img/bf607342318f3eca.png"></li>
+<li>Check if all conditions are met</li>
+</ol>
+<p>Prerequisites met: <img alt="Enable new Log storage" src="img/f6a346c3c928138f.png"></p>
+<h3 is-upgraded>Prerequisites not met:</h3>
+<p>In case prerequisites are not met, you&#39;ll get an appropriate message with the reasons explained. You would still be able to update the configuration. It would be useful if the customer is aware of the consequences and still wants to use new configurations. For example, if a small number of OneAgents with older versions run in testing environments. <img alt="Enable new Log storage" src="img/370499e9b4c52703.png"></p>
+<ol type="1">
+<li>Click <strong>Update configuration</strong> at the bottom of the teaser</li>
+<li>At this point you should be able to see the new <strong>Log storage configuration</strong> screen.</li>
+</ol>
+<p class="image-container"><img alt="Enable new Log storage" src="img/6165a0d9897bcf65.png"></p>
+<p><strong>Note:</strong></p>
+<p>If log storage rules would have been defined before updating configuration they will be converted.</p>
+<ul>
+<li>Rule configured on Process group level would be converted to environment scope rules.</li>
+<li>Rule configured on the host level would be converted to host scope rules.</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Log storage configuration rules" duration="10">
+        <p>In this lab, we will be configuring log storage of auto-detected Kubernetes logs.</p>
+<p>At this point, no logs are collected. Log viewer shows an empty list. You can check this by navigating from the Dynatrace menu to <strong>Observe and explore &gt; Logs</strong></p>
+<h2 is-upgraded>Creating rules for k8s deployments</h2>
+<p>Let&#39;s work on the use case where we want to include logs for chosen k8s deployments from the online shop and we want to exclude logs generated by health service.</p>
+<p>In the Dynatrace menu go to <strong>Settings &gt; Log Monitoring &gt; Log sources and storage</strong> to view log storage rules that are in effect. If you work in a freshly created environment list of rules is empty. You may also need to enable the new log storage configuration first. You can reorder the existing rules, and create new rules here.</p>
+<p>Let&#39;s upload logs for k8s <strong>frontend-*</strong> and <strong>paymentservice-*</strong> deployments.</p>
+<p><img alt="ws-demo-deployment-form-filled.png" src="img/743041c227791f3a.png"> You need to submit matcher configurations with <strong>Add matcher</strong> before saving changes to the rule with <strong>Save changes</strong> button.</p>
+<h2 is-upgraded>Configure k8s deployment ‘frontend-*&#39; and ‘paymentservice-*&#39; logs acquisition at the environment scope</h2>
+<ol type="1">
+<li>In the Dynatrace menu, go to <strong>Settings &gt; Log Monitoring &gt; Log storage configuration</strong> and click on <strong>Add rule</strong> button</li>
+<li>Fill out the form  <ul>
+<li>Insert name</li>
+<li>Select rule type <strong>Include in storage</strong></li>
+<li>Click <strong>Add matcher  </strong><ul>
+<li>From the <strong>Matcher attribute</strong> dropdown select <strong>K8s deployment name</strong></li>
+<li>Copy <strong>frontend-*</strong> and paste in <strong>Value</strong> field and click on the &#34;drop down&#34; to select it</li>
+<li>Copy <strong>paymentservice-*</strong> and paste in <strong>Value</strong> field and click on the &#34;drop down&#34; to select it</li>
+<li>Confirm inserted value and click <strong>Add matcher</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Click <strong>Save changes</strong> at the bottom of the screen</li>
+</ol>
+<p class="image-container"><img alt="Configure log storage rule at environment scope" src="img/2207dafff11040af.png"></p>
+<p><strong>Note:</strong></p>
+<ul>
+<li>There is <strong>OR relation</strong> between values of the matcher</li>
+<li>There is <strong>AND relation</strong> between matchers inside the rule</li>
+</ul>
+<h2 is-upgraded>Excluding logs with log storage configuration rule</h2>
+<p>Now, we want to exclude health logs on environment scope (e.g. because of cost control reasons). Please note that this time we choose <strong>Exclude from storage</strong> rule type.</p>
+<p>You need to submit matcher configurations with <strong>Add matcher</strong> before saving changes to the rule.</p>
+<ol type="1">
+<li>In the Dynatrace menu, go to <strong>Settings &gt; Log Monitoring &gt; Log storage configuration</strong> and click on <strong>Add rule</strong> button</li>
+<li>Fill out the form  <ul>
+<li>Insert name</li>
+<li>Select rule type <strong>Exclude from storage</strong></li>
+<li>Click <strong>Add matcher  </strong><ul>
+<li>From the <strong>Matcher attribute</strong> dropdown select <strong>Log content</strong></li>
+<li>Type in <strong>*_healthz*</strong> in <strong>Value</strong> field (* - asterisk is used as a wildcard)</li>
+<li>Confirm inserted value and click <strong>Add matcher</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Click <strong>Save changes</strong> at the bottom of the screen</li>
+</ol>
+<p class="image-container"><img alt="ws-demo-healthz-form-filled.png" src="img/94606d4906c10783.png"></p>
+<p><strong>Make sure that ‘Exclude from storage&#39; rule type is first on the list</strong>.</p>
+<p>Rules that have a higher position on the list take precedence over those placed in the following positions. This means that if a mechanism discovers a rule that has matched a given log line it stops iterating the next rules. For this reason, excluded from storage rule type in our example needs to be first on our list.</p>
+<p>Rules that have a higher position on the list take precedence over those placed in the following positions. This means that if a mechanism discovers a rule that has matched a given log line it stops iterating the next rules. For this reason, excluded from storage rule type in our example needs to be first on the list.</p>
+<p>You can preview created rules on the list <img alt="ws-demo-k8s-demo-rule-preview.png" src="img/7cd6a054ccd2d794.png"></p>
+<p>At this point, logs containing keyword ‘_healthz&#39; will not be sent do Dynatrace cluster.</p>
+<p><strong>Congratulations</strong> :) You have created your first log storage configuration rule. In a moment the rule will be propagated to OneAgents and you&#39;ll be able to explore logs collected by OneAgent.</p>
+<aside class="special"><p>Configurations will be applied and visible in the log viewer after around 3 minutes.</p>
+</aside>
+<p>In the Dynatrace menu go to <strong>Observe and explore &gt; Logs</strong> to check the effects.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Sensitive data masking" duration="5">
+        <p>The frequent use case is masking credit card numbers. In the log viewer, we can observe that logs contain strings like this one ‘credit_card_number&#34;:&#34;4432-8015-6152-0454&#39; and we want to anonymise it by replacing it with a string.</p>
+<p>In the Dynatrace menu go to <strong>Settings &gt; Log Monitoring &gt; Sensitive data masking</strong>.</p>
+<p class="image-container"><img alt="ws-cc-masked.png" src="img/e2b8015fec1899c4.png"></p>
+<p>After around 3 minutes you will see the effects of masking in log viewer. In the following example image, you can see a moment when sensitive data started to be masked.</p>
+<p class="image-container"><img alt="ws-credit-card-nubmer-masked.png" src="img/70e6ebf56b5f44d1.png"></p>
+<h2 is-upgraded>Reference materials</h2>
+<ul>
+<li>Log storage configuration <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/log-monitoring/log-monitoring-configuration/log-storage" target="_blank">https://www.dynatrace.com/support/help/how-to-use-dynatrace/log-monitoring/log-monitoring-configuration/log-storage</a></li>
+<li>Sensitive data masking <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/log-monitoring/log-monitoring-configuration/sensitive-data-masking" target="_blank">https://www.dynatrace.com/support/help/how-to-use-dynatrace/log-monitoring/log-monitoring-configuration/sensitive-data-masking</a></li>
+<li>Additional reference: <a href="https://dynatrace.sharepoint.com/sites/Infrastructuresolution/SitePages/How-to-take-part-in-new-Log-Storage-Configuration-&-Masking-Preview.aspx" target="_blank">https://dynatrace.sharepoint.com/sites/Infrastructuresolution/SitePages/How-to-take-part-in-new-Log-Storage-Configuration-&amp;-Masking-Preview.aspx</a></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Why do we process logs?" duration="5">
+        <p>In this introduction you will learn more about why do we process logs.</p>
+<h2 is-upgraded>Why do we need attributes from logs?</h2>
+<p>Information can be logged in a very wide variety of formats depending on the application or process, operating system or other factors. Extracting attributes from logs bring meaning to data and helps with troubleshooting, analysis and allows for automation.</p>
+<p>Example use cases enabled by log processing:</p>
+<ul>
+<li>unification of log formats among multiple microservices (userId attribute present in many services)</li>
+<li>faster filtering on indexed data</li>
+<li>additional dimensions for metrics that can be later used for automation</li>
+<li>content manipulation: masking, replacing, categorization</li>
+</ul>
+<h2 is-upgraded>Introduction to Log processing</h2>
+<p>In the Dynatrace menu, go to <strong>Settings &gt; Log Monitoring &gt; Log processing</strong> to view log processing rules that are in effect, reorder the existing rules, and create new rules. Rules are executed in the order in which they&#39;re listed, from top to bottom. This order is critical because a preceding rule may impact the log data that a subsequent rule uses in its definition.</p>
+<aside class="special"><p>You can test the entire pipeline if you use <strong>Test all the rules</strong> mode.</p>
+</aside>
+<p class="image-container"><img alt="Log processing settings" src="img/211231944e5b30dc.png"></p>
+<h2 is-upgraded>Example of attributes extraction from payment-service</h2>
+<p>In this lab you will use an onlineshop as sample application. Onlineshop runs a payment-service which writes logs in JSON format.</p>
+<pre><code>{
+  &#34;severity&#34;: &#34;info&#34;,
+  &#34;time&#34;: 1661408972959,
+  &#34;pid&#34;: 1,
+  &#34;hostname&#34;: &#34;paymentservice-7dd8c8d7bf-892rf&#34;,
+  &#34;name&#34;: &#34;paymentservice-charge&#34;,
+  &#34;message&#34;: &#34;Transaction processed: visa ending 0454     Amount: CAD111.1114552&#34;,
+  &#34;v&#34;: 1
+}
+</code></pre>
+<p>For us it&#39;s important to:</p>
+<ul>
+<li>identify most popular currencies for credit card processor</li>
+<li>summarize daily total transactions per currency</li>
+<li>mask credit card endings</li>
+</ul>
+<p>To achieve it we need to write a <strong>Processer rule definition</strong> that</p>
+<ul>
+<li>parses JSON like in this <a href="https://dynatrace.com" target="_blank">example</a></li>
+<li>extracts credit card processor, currency and amount</li>
+<li>masks ending</li>
+</ul>
+<pre><code language="language-SQL" class="language-SQL">USING(INOUT content) | 
+PARSE(content, &#34;JSON{STRING:message}(flat=true)&#34;) | 
+FIELDS_ADD(message: REPLACE_PATTERN(message, &#34;&#39;ending &#39; INT&#34;, &#34;ending ****&#34;)) |
+PARSE(message, &#34;&#39;Transaction processed: &#39; NSPACE:card_processor &#39; ending ****&#39; BLANK* &#39;Amount: &#39; UPPER:currency DOUBLE:amount&#34;) | 
+FIELDS_ADD(content: message) | 
+FIELDS_REMOVE(message)
+</code></pre>
+<p>As a result of processing your log event is enriched with extracted attributes. You can see the output of processing in log viewer.</p>
+<p class="image-container"><img alt="Log processing settings" src="img/e17132cb21296e8f.png"></p>
+<h2 is-upgraded>What comes next?</h2>
+<p>In the next labs you will learn how to:</p>
+<ul>
+<li>write your own processing rules</li>
+<li>use extracted attributes for filtering</li>
+<li>use log data as source for metrics</li>
+<li>generate events based on logs to report problems</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Process logs to extract attributes for filtering" duration="15">
+        <p>In this lab you will extract attribute from log and use it as filter in log viewer.</p>
+<h2 is-upgraded>Before you start</h2>
+<p>Make sure that you have logs from <code>k8s.deployment.name = 'frontend-*'</code> available in Log Viewer. If not configure storage under <strong>Settings &gt; Log Monitoring &gt; Log sources and storage</strong></p>
+<p class="image-container"><img alt="Log processing settings" src="img/4c3cd6b419ddc154.png"></p>
+<h2 is-upgraded>Configure log processing to extract attributes</h2>
+<p>Difficult to start? Check the example from previous section, and <em>Reference materials</em> at the end of this section.</p>
+<ul>
+<li>In the Dynatrace menu, go to <strong>Settings &gt; Log Monitoring &gt; Log processing</strong> and <strong>Add a processing rule</strong></li>
+<li>set a <strong>matcher </strong><code>k8s.deployment.name="frontend-\*" AND content="request complete"</code> and <strong>download sample log</strong></li>
+</ul>
+<p class="image-container"><img alt="Matcher conifguration and sample" src="img/db6c58e32dec7905.png"></p>
+<ul>
+<li>make sure that the downloaded example has <code>http.req.path</code> starting with <code>/product/</code>. If not replace the value with <code>/product/ABC</code> or click <strong>download sample log</strong> again</li>
+<li>parse <code>content</code> as JSON and extract <code>http.req.path</code></li>
+<li>use <strong>test the rule</strong> to <strong>run the test</strong> and check the <strong>Test results</strong>, you should see <code>http.req.path</code> attribute extracted</li>
+<li>parse <code>http.req.path</code> to extract <code>shop.product</code> from the uri and <strong>test the rule</strong> you should see <code>shop.product</code> extracted</li>
+</ul>
+<p class="image-container"><img alt="Matcher conifguration and sample" src="img/dd5e60128578a006.png"></p>
+<ul>
+<li><strong>Save changes</strong> and go to <strong>Log viewer</strong> and wait for new log lines - processing rules will apply to new lines only</li>
+</ul>
+<p class="image-container"><img alt="Matcher conifguration and sample" src="img/7d3228cbd5a3c82e.png"></p>
+<h2 is-upgraded>Configure log custom attribute for filtering</h2>
+<ul>
+<li>to make <code>shop.product</code> an attribute that can be used as filter in Log viewer you must configure <strong>Log custom attributes</strong></li>
+<li>In the Dynatrace menu, go to <strong>Settings &gt; Log Monitoring &gt; Log custom attributes</strong></li>
+</ul>
+<p class="image-container"><img alt="Custom attributes configuration" src="img/9c5cb545d108e7b7.png"></p>
+<ul>
+<li>When you go back to <strong>Log viewer</strong> you will see <code>shop.product</code> under <strong>Available attributes &gt; Other &gt; shop.product</strong></li>
+</ul>
+<p class="image-container"><img alt="Custom attribue as filter" src="img/3a23d0086dab64a2.png"></p>
+<ul>
+<li>You can use it as filter and to <strong>format table</strong></li>
+</ul>
+<p class="image-container"><img alt="Usage of attributes" src="img/3969ffcbc845519e.png"></p>
+<h2 is-upgraded>Reference materials</h2>
+<ul>
+<li>Log processing example: <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/log-monitoring/acquire-log-data/log-processing/log-processing-examples#example-4-parse-out-specific-fields-from-json-content" target="_blank">Parse out specific fields from JSON content</a></li>
+<li>Log processing example: <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/log-monitoring/acquire-log-data/log-processing/log-processing-examples#lpexample6" target="_blank">Multiple PARSE commands within a single processing rule</a></li>
+<li>Log processing example: <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/log-monitoring/acquire-log-data/log-processing/log-processing-examples#example-7-use-specialized-matchers" target="_blank">Use specialized matchers</a></li>
+<li><a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/dynatrace-pattern-language" target="_blank">Dynatrace Pattern Language</a></li>
+<li><a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/log-monitoring/analyze-log-data/log-custom-attributes" target="_blank">Log custom attributes</a></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Use logs as metrics for dashboarding" duration="15">
+        <p>In this lab you will create metric from logs to monitor average times for loading product details in an onlineshop.</p>
+<h2 is-upgraded>Extract shop.product.time_took_ms attribute from log event</h2>
+<ul>
+<li>Go to <strong>Settings &gt; Log Monitoring &gt; Log processing</strong>  and modify previously created processing rule to extract <code>http.resp.took_ms</code> as INTEGER</li>
+<li>Use <code>FIELDS_RENAME</code> and change <code>http.resp.took_ms</code> to <code>shop.product.time_took_ms</code></li>
+<li>Run the and validate the output <img alt="Attribute extraction" src="img/c222de98c2a60d0c.png"></li>
+<li>Go to <strong>Log Viewer</strong> and validate if <code>shop.product.time_took_ms</code> attribute was extracted properly</li>
+</ul>
+<h2 is-upgraded>Create metric</h2>
+<ul>
+<li>To use extracted attribute as metric value or dimension you must create a <strong>custom attribute</strong></li>
+<li>Go to <strong>Settings &gt; Log Monitoring &gt; Log custom attributes</strong> and create a custom attribute <code>shop.product.time_took_ms</code> - do NOT enabled <strong>Show attribute values in side bar</strong>. When attribute is added you will be able to use it as value for your new metric.</li>
+<li>use Log Viewer to find logs you processed: <code>k8s.deployment.name="frontend-\*" AND content="request complete"</code></li>
+<li>click on <strong>Create metric</strong> and set <strong>Key </strong><code>log.shop.product.time_took_ms</code></li>
+<li>from <strong>Measure</strong> drop-down select <strong>Attribute value</strong> and as <strong>Attribute</strong> select <code>shop.product.time_took_ms</code></li>
+<li><strong>Add dimension</strong> an new <code>shop.product</code> and <strong>Save changes</strong></li>
+</ul>
+<p class="image-container"><img alt="Metric creation flow" src="img/92967fde6e096007.png"></p>
+<h2 is-upgraded>Visualize metric data</h2>
+<ul>
+<li>Metric will start collecting data points once it&#39;s created - so you have to wait for the first data points.</li>
+<li>Go to <strong>Data explorer</strong> and search for <code>log.shop.product.time_took_ms</code></li>
+<li>Try different visualizations like: top 10 slowest products or average time for product request to finish</li>
+</ul>
+<p class="image-container"><img alt="Metric visualizition" src="img/bb4a8abbe9cf3a40.png"></p>
+<h2 is-upgraded>Reference materials</h2>
+<ul>
+<li>Log processing example: <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/log-monitoring/acquire-log-data/log-processing/log-processing-examples#example-14-rename-attributes" target="_blank">Rename attributes</a></li>
+<li><a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/log-monitoring/analyze-log-data/log-metrics" target="_blank">Metrics from logs</a></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Use logs as metrics for events" duration="15">
+        <p>In this lab you will use logs, metrics and events all combined to report Problems.</p>
+<h2 is-upgraded>Before you start</h2>
+<p>Run a few request to your onlineboutique instance with uri /product/OLD. This will generate errors in logs. Check in <strong>Log Viewer</strong> that errors are ingested. You can filter by <code>shop.product</code> attribute you created before.</p>
+<p class="image-container"><img alt="Error logs examples" src="img/e78cbd5893e17ee6.png"></p>
+<h2 is-upgraded>Extract status code and set log status to error</h2>
+<ul>
+<li>Go to <strong>Settings &gt; Log Monitoring &gt; Log processing</strong> and update previously created processing rule to extract <code>http.resp.status</code> as INTEGER</li>
+<li>Use <code>FIELDS_RENAME</code> to rename it to <code>http.status_code</code>. It is important because <code>http.status_code</code> is a common attribute for Dynatrace. This means there is not need to create a custom attribute.</li>
+<li>Use <code>FIELDS_ADD</code> and <code>IF</code> expression to set <code>status</code> attribute to <code>ERROR</code> if <code>http.status_code >= 500</code> else <code>INFO</code></li>
+<li>Use <code>FIELDS_ADD</code> and <code>IF</code> expression to set <code>loglevel</code> attribute to <code>ERROR</code> if <code>http.status_code >= 500</code> else <code>DEBUG</code></li>
+<li>Before you test new rules adjust <strong>Log sample</strong>. Change <code>http.resp.status</code> to <code>500</code></li>
+</ul>
+<p class="image-container"><img alt="Error logs examples" src="img/7de6323f2eca9050.png"></p>
+<ul>
+<li>When click <strong>Test the rule</strong> you should see <code>status</code> and <code>loglevel</code> set to error. <img alt="Error logs examples" src="img/572e0b1644d5dda4.png"></li>
+<li>Run a few request to your onlineboutique instance with uri /product/OLD. This will generate errors in logs.</li>
+<li>Go to <strong>Log Viewer</strong> and use <strong>Advanced mode</strong> query for <code>k8s.deployment.name="frontend-\*" AND content="product/\*" AND (status = "ERROR" OR status = "INFO")</code><img alt="Logs with fixed status" src="img/8f96ab162bef4e66.png"></li>
+</ul>
+<h2 is-upgraded>Configure Davis events from logs</h2>
+<ul>
+<li>Go to <strong>Settings &gt; Log Monitoring &gt; Log events</strong> add a new event configuration using <strong>Add log event</strong></li>
+<li>Fill in required fields including <strong>Log query</strong> you can use <code>k8s.deployment.name="frontend-\*" AND http.status_code="500"</code></li>
+<li>From <strong>Event type</strong> drop-down select <strong>Error</strong></li>
+</ul>
+<p class="image-container"><img alt="Event configuration details" src="img/677e8b774be12359.png"></p>
+<ul>
+<li>For automation or more details you can add <strong>Properties</strong></li>
+</ul>
+<p class="image-container"><img alt="Event properties configuration" src="img/7bae23328e312d95.png"></p>
+<ul>
+<li>Run a few request to your onlineboutique instance with uri /product/OLD to trigger Problem (in 1-3 minutes)</li>
+</ul>
+<p class="image-container"><img alt="Event properties configuration" src="img/46494d5d7d2f81c1.png"></p>
+<h2 is-upgraded>Using thresholds for anomaly detection</h2>
+<p>You can also use <strong>Custom events for alerting</strong> if you want to report a Problem depending on the thresholds. It will require you to create <strong>Log metric</strong> before.</p>
+<h2 is-upgraded>Reference materials</h2>
+<ul>
+<li>Log processing <a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/log-monitoring/acquire-log-data/log-processing/log-processing-functions/log-processing-functions-flow-control#if" target="_blank">IF function</a></li>
+<li><a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/log-monitoring/analyze-log-data/log-viewer#search" target="_blank">Advanced queries for Log Viewer</a> - this will change with Log powered by Grail and DQL!</li>
+<li><a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/log-monitoring/analyze-log-data/log-events" target="_blank">Log events configuration</a></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Summary" duration="5">
+        <p>We configured storage to ingest logs from our onlineshop and processed them to add more meaning to data using a simple processing rule, similar to this one:</p>
+<pre><code>PARSE(content, &#34;JSON{
+   STRING:http.req.path, 
+   INTEGER:http.resp.took_ms, 
+   INTEGER:http.resp.status}(flat=true)&#34;
+) | 
+PARSE(http.req.path, &#34;&#39;/product/&#39;STRING:shop.product&#34;) |
+FIELDS_RENAME(
+  shop.product.time_took_ms: http.resp.took_ms,
+  http.status_code: http.resp.status
+) |
+FIELDS_ADD(
+  status: IF (http.status_code &gt;= 500, &#39;ERROR&#39;, &#39;INFO&#39;),
+  loglevel: IF (http.status_code &gt;= 500, &#39;ERROR&#39;, &#39;DEBUG&#39;)
+) 
+</code></pre>
+<h2 is-upgraded>You have learned how to:</h2>
+<ul>
+<li>Extract attributes using Log processing, learn more in docs</li>
+<li>Create custom attributes for filtering, learn more in docs</li>
+<li>Create metrics based on logs, learn more in docs</li>
+<li>Generate problems using events from Logs, learn more in docs</li>
+</ul>
+<p>Everything that you learned today will work on both Dynatrace Managed and Dynatrace SaaS with Log powered by Grail.</p>
+<h2 is-upgraded>You need help or have feedback?</h2>
+<ul>
+<li>Dynatrace community</li>
+<li><a href="https://www.dynatrace.com/support/help/how-to-use-dynatrace/log-monitoring" target="_blank">Log monitoring documentation</a></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="../../elements/codelab-elements/native-shim.js"></script>
+  <script src="../../elements/codelab-elements/custom-elements.min.js"></script>
+  <script src="../../elements/codelab-elements/prettify.js"></script>
+  <script src="../../elements/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>
