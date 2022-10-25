@@ -1,5 +1,9 @@
 <!-- Code for k8s dashboards -->
 
+Explore the various preset dashboards and some customized dashboards.
+
+On the Dynatrace menu, filter for **Dashboards** and explore any of the preset kubernetes dashboards. We have also created a custom dashboard named ***Prometheus ovewview***
+
 ### Kubernetes Cluster Overview
 See the Kubernetes cluster utilization. CPU and Memory Request and limits over time for all nodes and splitted by namespaces.
 You could also use the **filter bar** to filter the dashboard. 

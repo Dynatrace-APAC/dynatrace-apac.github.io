@@ -21,7 +21,7 @@
 </head>
 <body>
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
-  <google-codelab codelab-gaid="UA-175467274-1"
+  <google-codelab codelab-gaid="UA-54510554-1"
                   id="kubernetes"
                   title="Dynatrace with Kubernetes"
                   environment="web"
@@ -57,9 +57,9 @@
         <p>In this exercise, we will deploy the OneAgent to a Linux instance running Kubernetes(Microk8s) and let the OneAgent discover what is running in that instance.</p>
 <h2 is-upgraded>Using Terminal via Web Browser</h2>
 <p>To faciliate the labs, we will access the Linux instance <strong>via terminal through a web browser</strong>.</p>
-<p>Use the <strong>URL</strong> was provided in your email to access the SSH terminal. Make sure the URL looks like <code>Public IP Address:8080/wetty</code></p>
-<p>Use the <strong>login name</strong> and <strong>password</strong> as provided in your email.</p>
-<p class="image-container"><img alt="Deploy" src="../assets/dem/wetty.png"></p>
+<p>Use the <strong>URL</strong> was provided in your email to access the browser-based terminal. Please follow the instructions in your email.</p>
+<p>If you are still not able to use the web browser, you can download any SSH client like PuTTy or MobaXterm and access the session via the SSH client.</p>
+<p>Use the <strong>login name</strong> and <strong>password</strong> as provided in your email. It works for any method of access.</p>
 <h2 is-upgraded>Download the OneAgent</h2>
 <p>Open your browser and access the Dynatrace URL.</p>
 <p>Follow these steps below:</p>
@@ -72,69 +72,15 @@
 <p class="image-container"><img alt="Deploy" src="../assets/cloud-observe/k8s-deploy.gif"></p>
 <p>Within the <strong>Monitor Kubernetes / Openshift</strong> page, follow these steps below:</p>
 <ul>
-<li>Enter a <strong>Name</strong> for the connection Eg. <code>k8s</code></li>
-<li>Click on <strong>Create tokens</strong> to create PaaS and API tokens with appropriate permissions</li>
+<li>Enter a <strong>Name</strong> for the connection Example: <code>k8s</code> or <code>workshop</code></li>
+<li>Click on <strong>Create token</strong> to create the <strong>Dynatrace operator token</strong> (all other tokens are optional)</li>
 <li><strong>Toggle ON</strong> Skip SSL Certificate Check</li>
+<li><strong>Download</strong> the dynakube.yaml file</li>
+<li><strong>Either upload</strong> it to the browser-based terminal <strong>or create a yaml file and copy</strong> the contents to that file in the terminal session.</li>
 <li>Click <strong>Copy</strong> button to copy the commands.</li>
 <li><strong>Paste</strong> the command into your terminal window and execute it.</li>
 </ul>
-<p class="image-container"><img alt="Deploy" src="../assets/cloud-observe/k8s-deploy-2.gif"></p>
-<p>Example:</p>
-<pre><code language="language-bash" class="language-bash">Connecting to github-releases.githubusercontent.com (github-releases.githubusercontent.com)|185.199.108.154|:443... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: 7310 (7.1K) [application/octet-stream]
-Saving to: ‘install.sh&#39;
-
-install.sh                      100%[=====================================================&gt;]   7.14K  --.-KB/s    in 0s      
-
-2021-06-01 05:46:36 (40.7 MB/s) - ‘install.sh&#39; saved [7310/7310]
-
-
-Check for token scopes...
-
-Check if cluster already exists...
-
-Creating Dynatrace namespace...
-
-Applying Dynatrace Operator...
-Warning: apiextensions.k8s.io/v1beta1 CustomResourceDefinition is deprecated in v1.16+, unavailable in v1.22+; use apiextensions.k8s.io/v1 CustomResourceDefinition
-customresourcedefinition.apiextensions.k8s.io/dynakubes.dynatrace.com created
-serviceaccount/dynatrace-dynakube-oneagent created
-serviceaccount/dynatrace-dynakube-oneagent-unprivileged created
-serviceaccount/dynatrace-kubernetes-monitoring created
-serviceaccount/dynatrace-operator created
-serviceaccount/dynatrace-routing created
-podsecuritypolicy.policy/dynatrace-dynakube-oneagent created
-podsecuritypolicy.policy/dynatrace-dynakube-oneagent-unprivileged created
-podsecuritypolicy.policy/dynatrace-kubernetes-monitoring created
-podsecuritypolicy.policy/dynatrace-operator created
-podsecuritypolicy.policy/dynatrace-routing created
-role.rbac.authorization.k8s.io/dynatrace-dynakube-oneagent created
-role.rbac.authorization.k8s.io/dynatrace-dynakube-oneagent-unprivileged created
-role.rbac.authorization.k8s.io/dynatrace-kubernetes-monitoring created
-role.rbac.authorization.k8s.io/dynatrace-operator created
-role.rbac.authorization.k8s.io/dynatrace-routing created
-clusterrole.rbac.authorization.k8s.io/dynatrace-kubernetes-monitoring created
-clusterrole.rbac.authorization.k8s.io/dynatrace-operator created
-rolebinding.rbac.authorization.k8s.io/dynatrace-dynakube-oneagent created
-rolebinding.rbac.authorization.k8s.io/dynatrace-dynakube-oneagent-unprivileged created
-rolebinding.rbac.authorization.k8s.io/dynatrace-kubernetes-monitoring created
-rolebinding.rbac.authorization.k8s.io/dynatrace-operator created
-rolebinding.rbac.authorization.k8s.io/dynatrace-routing created
-clusterrolebinding.rbac.authorization.k8s.io/dynatrace-kubernetes-monitoring created
-clusterrolebinding.rbac.authorization.k8s.io/dynatrace-operator created
-deployment.apps/dynatrace-operator created
-W0601 05:46:39.025776   29593 helpers.go:553] --dry-run is deprecated and can be replaced with --dry-run=client.
-secret/dynakube configured
-
-Applying DynaKube CustomResource...
-dynakube.dynatrace.com/dynakube created
-
-Adding cluster to Dynatrace...
-Kubernetes monitoring successfully setup.
-$
-
-</code></pre>
+<p class="image-container"><img alt="Deploy" src="../assets/cloud-observe/k8s-deploy-2.png"></p>
 <aside class="warning"><p>Note that it will take about 5 mins for data to appear within Dynatrace</p>
 </aside>
 <aside class="special"><p>Dynatrace handles automatic deployment of OneAgents as well as automatic k8s integration.</p>
@@ -166,16 +112,18 @@ kubectl delete pods --all -n production
 </code></pre>
 
 <h2 is-upgraded>Configuring Kubernetes integration</h2>
-<p>In Dynatrace, go to <strong>Settings &gt; Cloud and virtualization &gt; Kubernetes</strong></p>
+<p>In Dynatrace, open the Dynatrace menu on the left hand side of the screen, you can search for kubernetes and select <strong>Kubernetes</strong> under the Infrastructure menu.</p>
+<p>Click on <strong>...</strong> beside the k8s cluster that you named to bring up the context menu.</p>
+<p class="image-container"><img alt="settings" src="../assets/k8s/k8s-settings1.png"></p>
+<p>Once you open up the context menu, click on <strong>Settings</strong></p>
+<p class="image-container"><img alt="settings" src="../assets/k8s/k8s-settings2.png"></p>
 <p>Follow the configuration steps below:</p>
 <ul>
-<li>Click on the <strong>pencil icon</strong> to edit the automatically created Kubernetes integration</li>
 <li><strong>Toggle ON</strong> Monitor annotated Prometheus exporters</li>
 <li><strong>Toggle ON</strong> Monitor events</li>
-<li><strong>Toggle ON</strong> Include all events relevant for Davis</li>
 <li>Click on <strong>Save</strong></li>
 </ul>
-<p class="image-container"><img alt="settings" src="../assets/k8s/k8s-configure.gif"></p>
+<p class="image-container"><img alt="settings" src="../assets/k8s/k8s-settings3.png"></p>
 
 
 
@@ -363,9 +311,9 @@ wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/ma
 ./deploy-monaco.sh
 </code></pre>
 <p>After setting it up, configure the <strong>DT_TENANT</strong> and <strong>DT_API_TOKEN</strong> and <strong>DT_DASHBOARD_OWNER</strong> variables. These can be found within the lab registration email.</p>
-<pre><code language="language-bash" class="language-bash">export DT_TENANT= https://mou612.managed-sprint.dynalabs.io/e/&lt;ENV&gt;
-export DT_API_TOKEN=dt0c01.IH6********************************************
-export DT_DASHBOARD_OWNER=&lt;your email address&gt;
+<pre><code language="language-bash" class="language-bash">export DT_TENANT=&lt;replace with the information given to you in the email&gt;
+export DT_API_TOKEN=&lt;replace with the information given to you in the email&gt;
+export DT_DASHBOARD_OWNER=&lt;replace with the information given to you in the email&gt;
 </code></pre>
 <p>After setting up, run the following command to configure Dynatrace:</p>
 <pre><code language="language-bash" class="language-bash">./push-monaco.sh 
@@ -386,7 +334,9 @@ export DT_DASHBOARD_OWNER=&lt;your email address&gt;
       </google-codelab-step>
     
       <google-codelab-step label="Kubernetes Dashboards" duration="10">
-        <h2 is-upgraded>Kubernetes Cluster Overview</h2>
+        <p>Explore the various preset dashboards and some customized dashboards.</p>
+<p>On the Dynatrace menu, filter for <strong>Dashboards</strong> and explore any of the preset kubernetes dashboards. We have also created a custom dashboard named <strong><em>Prometheus ovewview</em></strong></p>
+<h2 is-upgraded>Kubernetes Cluster Overview</h2>
 <p>See the Kubernetes cluster utilization. CPU and Memory Request and limits over time for all nodes and splitted by namespaces. You could also use the <strong>filter bar</strong> to filter the dashboard.</p>
 <p class="image-container"><img alt="#" src="../assets/k8s/k8s-cluster-overview.png"></p>
 <h2 is-upgraded>Kubernetes Workload Overview</h2>
@@ -402,9 +352,7 @@ export DT_DASHBOARD_OWNER=&lt;your email address&gt;
     
       <google-codelab-step label="Exploring Kubernetes View" duration="20">
         <p>Explore the various functionalities within the Kubernetes View such as Cluster Utilization, Cluster Workloads, K8S Events</p>
-<ul>
-<li>On the left menu, filter for <strong>Kubernetes</strong> to view the Kubernetes dashboards</li>
-</ul>
+<p>On the Dynatrace menu, filter for <strong>Kubernetes</strong> and select the kubernetes cluster that you named. These are built-in analysis and explorative views starting from the Kubernetes cluster and drilling down all the way into the pods.</p>
 <p class="image-container"><img alt="KubernetesUI" src="../assets/get-started-openshift/k8s-ui.png"></p>
 <h2 is-upgraded>Analyze the Kubernetes Cluster utilization</h2>
 <ul>

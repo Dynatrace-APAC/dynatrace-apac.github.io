@@ -6,11 +6,11 @@ In this exercise, we will deploy the OneAgent to a Linux instance running Kubern
 
 To faciliate the labs, we will access the Linux instance **via terminal through a web browser**.
 
-Use the **URL** was provided in your email to access the SSH terminal. Make sure the URL looks like `Public IP Address:8080/wetty`
+Use the **URL** was provided in your email to access the browser-based terminal. Please follow the instructions in your email.
 
-Use the **login name** and **password** as provided in your email.
+If you are still not able to use the web browser, you can download any SSH client like PuTTy or MobaXterm and access the session via the SSH client.
 
-![Deploy](../assets/dem/wetty.png)
+Use the **login name** and **password** as provided in your email. It works for any method of access.
 
 ### Download the OneAgent
 
@@ -27,72 +27,15 @@ Follow these steps below:
 
 Within the **Monitor Kubernetes / Openshift** page, follow these steps below:
 
-* Enter a **Name** for the connection Eg. `k8s`
-* Click on **Create tokens** to create PaaS and API tokens with appropriate permissions
+* Enter a **Name** for the connection Example: `k8s` or `workshop`
+* Click on **Create token** to create the **Dynatrace operator token** (all other tokens are optional)
 * **Toggle ON** Skip SSL Certificate Check
+* **Download** the dynakube.yaml file
+* **Either upload** it to the browser-based terminal **or create a yaml file and copy** the contents to that file in the terminal session.
 * Click **Copy** button to copy the commands. 
 * **Paste** the command into your terminal window and execute it.
 
-![Deploy](../assets/cloud-observe/k8s-deploy-2.gif)
-
-Example:
-
-```bash
-Connecting to github-releases.githubusercontent.com (github-releases.githubusercontent.com)|185.199.108.154|:443... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: 7310 (7.1K) [application/octet-stream]
-Saving to: ‘install.sh’
-
-install.sh                      100%[=====================================================>]   7.14K  --.-KB/s    in 0s      
-
-2021-06-01 05:46:36 (40.7 MB/s) - ‘install.sh’ saved [7310/7310]
-
-
-Check for token scopes...
-
-Check if cluster already exists...
-
-Creating Dynatrace namespace...
-
-Applying Dynatrace Operator...
-Warning: apiextensions.k8s.io/v1beta1 CustomResourceDefinition is deprecated in v1.16+, unavailable in v1.22+; use apiextensions.k8s.io/v1 CustomResourceDefinition
-customresourcedefinition.apiextensions.k8s.io/dynakubes.dynatrace.com created
-serviceaccount/dynatrace-dynakube-oneagent created
-serviceaccount/dynatrace-dynakube-oneagent-unprivileged created
-serviceaccount/dynatrace-kubernetes-monitoring created
-serviceaccount/dynatrace-operator created
-serviceaccount/dynatrace-routing created
-podsecuritypolicy.policy/dynatrace-dynakube-oneagent created
-podsecuritypolicy.policy/dynatrace-dynakube-oneagent-unprivileged created
-podsecuritypolicy.policy/dynatrace-kubernetes-monitoring created
-podsecuritypolicy.policy/dynatrace-operator created
-podsecuritypolicy.policy/dynatrace-routing created
-role.rbac.authorization.k8s.io/dynatrace-dynakube-oneagent created
-role.rbac.authorization.k8s.io/dynatrace-dynakube-oneagent-unprivileged created
-role.rbac.authorization.k8s.io/dynatrace-kubernetes-monitoring created
-role.rbac.authorization.k8s.io/dynatrace-operator created
-role.rbac.authorization.k8s.io/dynatrace-routing created
-clusterrole.rbac.authorization.k8s.io/dynatrace-kubernetes-monitoring created
-clusterrole.rbac.authorization.k8s.io/dynatrace-operator created
-rolebinding.rbac.authorization.k8s.io/dynatrace-dynakube-oneagent created
-rolebinding.rbac.authorization.k8s.io/dynatrace-dynakube-oneagent-unprivileged created
-rolebinding.rbac.authorization.k8s.io/dynatrace-kubernetes-monitoring created
-rolebinding.rbac.authorization.k8s.io/dynatrace-operator created
-rolebinding.rbac.authorization.k8s.io/dynatrace-routing created
-clusterrolebinding.rbac.authorization.k8s.io/dynatrace-kubernetes-monitoring created
-clusterrolebinding.rbac.authorization.k8s.io/dynatrace-operator created
-deployment.apps/dynatrace-operator created
-W0601 05:46:39.025776   29593 helpers.go:553] --dry-run is deprecated and can be replaced with --dry-run=client.
-secret/dynakube configured
-
-Applying DynaKube CustomResource...
-dynakube.dynatrace.com/dynakube created
-
-Adding cluster to Dynatrace...
-Kubernetes monitoring successfully setup.
-$
-
-```
+![Deploy](../assets/cloud-observe/k8s-deploy-2.png)
 
 Negative
 : Note that it will take about 5 mins for data to appear within Dynatrace

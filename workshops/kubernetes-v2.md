@@ -3,10 +3,10 @@ summary: Full Stack Observability with vanilla Kubernetes while integating with 
 categories: kubernetes, prometheus, application-microservices-monitoring
 tags: kubernetes, Beginner
 status: Published 
-authors: Brandon Neo
+authors: Myrvin Yap
 Feedback Link: mailto:APAC-SE-Central@dynatrace.com
 new: 1
-Analytics Account: UA-175467274-1
+Analytics Account: UA-54510554-1
 
 # Dynatrace with Kubernetes
 <!-- ------------------------ -->

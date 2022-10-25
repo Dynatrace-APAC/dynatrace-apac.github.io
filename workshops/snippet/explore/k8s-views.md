@@ -2,7 +2,7 @@
 
 Explore the various functionalities within the Kubernetes View such as Cluster Utilization, Cluster Workloads, K8S Events
 
-* On the left menu, filter for **Kubernetes** to view the Kubernetes dashboards
+On the Dynatrace menu, filter for **Kubernetes** and select the kubernetes cluster that you named. These are built-in analysis and explorative views starting from the Kubernetes cluster and drilling down all the way into the pods.
 
 ![KubernetesUI](../assets/get-started-openshift/k8s-ui.png)
 

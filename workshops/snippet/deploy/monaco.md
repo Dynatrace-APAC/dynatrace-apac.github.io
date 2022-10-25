@@ -22,9 +22,9 @@ After setting it up, configure the **DT_TENANT** and **DT_API_TOKEN** and **DT_D
 These can be found within the lab registration email.
 
 ```bash
-export DT_TENANT= https://mou612.managed-sprint.dynalabs.io/e/<ENV>
-export DT_API_TOKEN=dt0c01.IH6********************************************
-export DT_DASHBOARD_OWNER=<your email address>
+export DT_TENANT=<replace with the information given to you in the email>
+export DT_API_TOKEN=<replace with the information given to you in the email>
+export DT_DASHBOARD_OWNER=<replace with the information given to you in the email>
 ```
 
 After setting up, run the following command to configure Dynatrace:
