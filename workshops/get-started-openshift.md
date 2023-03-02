@@ -87,15 +87,10 @@ Within the **Monitor Kubernetes / Openshift** page, follow these steps below:
 
 * Enter a **Name** for the connection Eg. `openshift`
 * Click on **Create tokens** to create PaaS and API tokens with appropriate permissions
-* Copy both **API and PaaS tokens** and use them in Openshift 
-
-![Deploy](assets/get-started-openshift/deploy-openshift.gif)
-
+* Copy the tokens and use them in Openshift 
 * Back in Openshift, go to **Workload > Secrets**
 * Name the key **dynakube**
-* Click on **Add Key/Value** and 
-    * Name the first Key as **apiToken** and paste the token value from Dynatrace
-    * Name the second Key as **paasToken** and paste the token value from Dynatrace
+* Click on **Add Key/Value** and paste the token value from Dynatrace
 * Click on **Save**
 
 ![Deploy](assets/get-started-openshift/OpenShiftDedicated-secret.png)

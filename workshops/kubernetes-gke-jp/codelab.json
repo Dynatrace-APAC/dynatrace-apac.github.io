@@ -3,7 +3,7 @@
   "format": "html",
   "prefix": "../../elements",
   "mainga": "UA-49880327-14",
-  "updated": "2021-07-19T15:13:27+10:00",
+  "updated": "2023-03-02T19:55:13+08:00",
   "id": "kubernetes-gke-jp",
   "duration": 34,
   "title": "GKEにおけるKubernetesのフルスタック・オブザーバビリティ",
@@ -24,6 +24,6 @@
     "kubernetes"
   ],
   "feedback": "mailto:DT-TYO-SE@dynatrace.com",
-  "ga": "UA-175467274-1",
+  "ga": "UA-54510554-1",
   "url": "kubernetes-gke-jp"
 }

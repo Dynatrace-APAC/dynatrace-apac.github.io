@@ -5,7 +5,7 @@ tags: kubernetes, Beginner
 status: Published 
 authors: Brandon Neo
 Feedback Link: mailto:DT-TYO-SE@dynatrace.com
-Analytics Account: UA-175467274-1
+Analytics Account: UA-54510554-1
 
 # GKEにおけるKubernetesのフルスタック・オブザーバビリティ
 <!-- ------------------------ -->
@@ -99,8 +99,7 @@ Kubernetesインテグレーションの公式説明書[こちら](https://www.d
 3. ページ下部の「Install Activegate」をクリックします。
 4. "Linux "をクリックします。
 5. 手順2をコピーし、ターミナルに貼り付ける。
-6. 6. 手順4をコピーして、"sudo"(rootとしてインストール)をターミナルに追加する
-![Copy-AG-Commands](assets/k8s/activegate-2.png)
+6. 手順4をコピーして、"sudo"(rootとしてインストール)をターミナルに追加する
 
 インストールが完了すると、「Deployment Status」にActivegateが表示されます。
 

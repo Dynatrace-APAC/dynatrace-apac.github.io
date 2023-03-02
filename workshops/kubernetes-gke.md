@@ -5,7 +5,7 @@ tags: kubernetes, Beginner
 status: Published 
 authors: Brandon Neo
 Feedback Link: mailto:APAC-SE-Central@dynatrace.com
-Analytics Account: UA-175467274-1
+Analytics Account: UA-54510554-1
 
 # Dynatrace with Kubernetes on GKE
 <!-- ------------------------ -->
@@ -81,63 +81,7 @@ Once completed, you will have a running GKE Cluster!
 Running **kubectl get nodes** will reveal number of nodes 
 
 <!-- ------------------------ -->
-## Setting up your Kubernetes Integration
-Duration: 5
-
-As per the official instructions [here](https://www.dynatrace.com/support/help/technology-support/cloud-platforms/kubernetes/monitoring/connect-kubernetes-clusters-to-dynatrace/) for the Kubernetes integration, you will need to setup an Environment Activegate first.
-
-### SSH into Dynatrace-Activegate terminal and install Activegate
-
-
-1. On the left navigation bar in Google Cloud, go to **Compute Engine** -> **VM instances**
-![Activegate-connected](assets/k8s/activegate-0.png)
-
-2. Click on the SSH button on the **dynatrace-activegate** row and SSH into the instance
-![Activegate-connected](assets/k8s/activegate.png)
-
-2. Within Dynatrace, click on Deploy Dynatrace on the left menu
-3. Click on "Install Activegate" at the bottom of the page
-4. Click on "Linux"
-5. Copy Step 2 and paste into your terminal.
-6. Copy Step 4 and append "sudo" (installing as root) onto terminal
-![Copy-AG-Commands](assets/k8s/activegate-2.png)
-
-Once completed, you should see Activegate under Deployment Status.
-
-![Activegate-connected](assets/k8s/Picture9.1.png)
-
-### Setup the K8S Overview Dashboard
-
-Go to Settings -> Process and Containers -> Process group detection -> Enable Cloud Application and workload detection
-
-![Enable Cloud Workload](assets/k8s/enablecloud.png)
-
-Automating the steps from our offical [documentation page](https://www.dynatrace.com/support/help/technology-support/cloud-platforms/kubernetes/installation-and-operation/further-integrations/connect-your-kubernetes-clusters-to-dynatrace/), we provided the API URL and bearer token automatically via API. Back in your main Cloud Shell terminal, enter the below
-
-``` bash
-wget -O- https://raw.githubusercontent.com/Dynatrace-APAC/Workshop-Kubernetes/master/setup-k8s-ui.sh | bash
-```
-With the above results, enter the values to **Settings** -> **Cloud and Virtualization** -> **Kubernetes**
-
-![K8S-integration](assets/k8s/activegate-4.png)
-1. Give a name for the connection eg. GKE K8S
-2. Enter in your Kubernetes API URL Target 
-   - Copy the Kubernetes API URL from the SSH terminal
-3. Enter in the Kubernetes Bearer Token
-   - Copy the Bearer Token from the SSH terminal
-4. Disable "Require valid certificates for communication with API server"
-5. Add another event field selector
-6. User the below for the field selector name
-`Hipster shop`
-7. User the below for the Field selector expression
-`metadata.namespace=hipster-shop`
-8. Save and Click on Connect
-
-Once successfully connected, click on Kubernetes on the left menu and explore the Kubernetes UI. 
-
-![K8S-integration](assets/k8s/k8s.png)
-<!-- ------------------------ -->
-## Install Dynatrace OneAgent Operator for Kubernetes
+## Install Dynatrace Operator for Kubernetes
 Duration: 5
 
 1. On your Google Cloud Console, on the left navigational bar, go to Kubernetes Engine -> Applications
@@ -145,24 +89,7 @@ Duration: 5
 3. Search for Dynatrace in the search field above
 ![Activegate-connected](assets/k8s/operator.png)
 4. Click on Dynatrace OneAgent Operator and click on Configure
-5. Fill in the following fields<br>
-- API URL <br>
-Copy your Dynatrace URL and append **"/api"** to the end<br>
-![API-URL](assets/k8s/operator-1-withURL.png)
-
-- API Token <br>
-Create one from Settings -> Integration -> Dynatrace API
-  - Enable Access problem and event feed, metrics, and topology toggle
-  - Enable Write Configuration toggle (needed for Activegate setup for the next step)<br>
-![API-Token](assets/k8s/api-token.png)
-
-- PaaS token <br>
-Create one from Settings -> Integration -> Platform as a Service
-![PaaS-Token](assets/k8s/paas-token.png)
-
-Copy the values into your GCP console
-![Activegate-connected](assets/k8s/operator-1.png)
-
+5. Fill up the fields, taking the value from the Dynatrace UI
 6. Click on Deploy<br>
 ![Activegate-connected](assets/k8s/operator-2.png)<br>
 

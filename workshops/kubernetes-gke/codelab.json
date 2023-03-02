@@ -3,12 +3,12 @@
   "format": "html",
   "prefix": "../../elements",
   "mainga": "UA-49880327-14",
-  "updated": "2020-08-26T14:45:15+10:00",
+  "updated": "2023-03-02T19:55:16+08:00",
   "id": "kubernetes-gke",
-  "duration": 34,
+  "duration": 29,
   "title": "Dynatrace with Kubernetes on GKE",
   "authors": "Brandon Neo",
-  "summary": "Full Stack Observability with K8s on GKE while discovering automatic gRPC services",
+  "summary": "Full Stack Observability with K8s on GKE",
   "source": "kubernetes-gke.md",
   "theme": "",
   "status": [
@@ -20,10 +20,10 @@
     "application-microservices-monitoring"
   ],
   "tags": [
-    "kubernetes",
-    "Beginner"
+    "beginner",
+    "kubernetes"
   ],
   "feedback": "mailto:APAC-SE-Central@dynatrace.com",
-  "ga": "UA-175467274-1",
+  "ga": "UA-54510554-1",
   "url": "kubernetes-gke"
 }
