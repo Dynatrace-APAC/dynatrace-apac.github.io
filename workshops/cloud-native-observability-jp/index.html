@@ -41,18 +41,17 @@
 <ul>
 <li>Dynatrace Operatorの導入</li>
 <li>リリース管理</li>
-<li>サービスレベル目標の設定</li>
-<li>Monitoring as Codeによる監視のコード化</li>
+<li>サービスレベル目標の設定（基本・応用）</li>
 </ul>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="Dynatrace Operatorの導入" duration="15">
+      <google-codelab-step label="Dynatrace Operatorの導入" duration="20">
         <p>この演習では、Kubernetes(Microk8s)を実行しているLinuxインスタンスにDynatrace Operatorをデプロイします。</p>
 <h2 is-upgraded>Linuxターミナルへアクセス</h2>
 <p>Linuxインスタンスの<strong>ターミナル</strong>にアクセスします。</p>
-<aside class="special"><p>ハンズオンワークショップへ参加されている方はメールに記載されている<strong>EC2インスタンスの情報</strong>を使用して、SSHでアクセスします。メールに記載されている<strong>SSH Username</strong>と<strong>SSH Password</strong>を使用します。</p>
+<aside class="special"><p>ハンズオンワークショップへ参加されている方はメールに記載されている<strong>EC2インスタンスの情報</strong>を使用して、SSHでアクセスします。メールに記載されている<strong>SSH Username</strong>と<strong>SSH Password</strong>を使用します。 もしくは、ブラウザ上からcode-server経由でアクセスすることも可能です。メールに記載されているURLからアクアクセスをしてください。</p>
 </aside>
 <h2 is-upgraded>Dynatrace Operatorのインストール</h2>
 <p>ブラウザを開き、DynatraceのGUIにアクセスしてください。</p>
@@ -82,7 +81,7 @@
 <ul>
 <li>Dynatrace UIに戻り、<strong>コピー</strong>ボタンをクリックして、ターミナルに貼り付け実行します。</li>
 </ul>
-<p class="image-container"><img alt="Deploy" src="/../assets/k8s/jp/deploy-3.png"></p>
+<p class="image-container"><img alt="Deploy" src="../assets/k8s/jp/deploy-3.png"></p>
 <p>出力例</p>
 <p class="image-container"><img alt="Deploy" src="../assets/k8s/jp/deploy-4.png"></p>
 <aside class="warning"><p>Dynatraceにデータが表示されるまで約5分かかります。</p>
@@ -106,11 +105,10 @@
 </aside>
 <aside class="warning"><p>公式サイトのトラブルシューティングページは<a href="https://www.dynatrace.com/support/help/shortlink/kubernetes-troubleshoot" target="_blank">こちら</a>を参照ください。</p>
 </aside>
-<h2 is-upgraded>Sockshopアプリケーションの再起動</h2>
+<h2 is-upgraded>easytravelアプリケーションの再起動</h2>
 <p>様々なプロセスが自動的に検出されているのがわかりますが、Dynatraceはそれらを再起動するよう促します。これは、コードを変更せずに自動的に監視を行うために必要です。</p>
-<p>以下のコマンドを実行して、<strong>devとproduction</strong>の2つのNamespacesに含まれるPodsを作り直します。</p>
-<pre><code language="language-bash" class="language-bash">kubectl delete pods --all -n dev
-kubectl delete pods --all -n production
+<p>以下のコマンドを実行して、<strong>easytravel</strong>のNamespacesに含まれるPodsを作り直します。</p>
+<pre><code language="language-bash" class="language-bash">kubectl delete pods --all -n easytravel
 </code></pre>
 
 
@@ -120,16 +118,16 @@ kubectl delete pods --all -n production
       <google-codelab-step label="リリース管理" duration="10">
         <p>Dynatraceにはリリース監視機能が組み込まれており、導入したアプリケーションのバージョンやステージ（名前空間）、プロダクトを判断することが可能です。</p>
 <h2 is-upgraded>リリースの確認</h2>
-<p>メニューから<strong>クラウドオートメーション &gt; リリース</strong>を開きます。</p>
+<p>メニューから<strong>オートメーション &gt; リリース</strong>を開きます。</p>
 <p class="image-container"><img alt="releases" src="../assets/cloud-observe/jp/releases.png"></p>
 <p>これは、<strong>リリースインベントリ、リリースイベント、追跡された問題点</strong>、の概要を示しています。</p>
 <p>各コンポーネントの詳細を見ると、それぞれのコンポーネントの追加メタデータが表示されます。 これにより、監視対象のコンポーネントのコンテキスト情報や、コンポーネントの<strong>ライフサイクル</strong>および<strong>問題の追跡</strong>に関する情報を確認できます。</p>
-<p>下の画像は<strong>catalogue catalogue-*</strong>を開いた例です。</p>
+<p>下の画像は<code>nginx easytravel-www-\*\*\*</code>を開いた例です。</p>
 <p class="image-container"><img alt="releases-detail" src="../assets/cloud-observe/jp/releases-detail.png"></p>
 <p>リリースバージョン、ステージ、製品はKubernetesの以下と一致します。</p>
 <ul>
 <li>リリースバージョン：<code>app.kubernetes.io/version</code></li>
-<li>ステージ：<code>Namespace*</code></li>
+<li>ステージ：<code>Namespace</code></li>
 <li>製品：<code>app.kubernetes.io/part-of</code></li>
 </ul>
 <p class="image-container"><img alt="k8s-describe" src="../assets/cloud-observe/jp/k8s-describe.png"></p>
@@ -140,69 +138,100 @@ kubectl delete pods --all -n production
 
       </google-codelab-step>
     
-      <google-codelab-step label="SLO設定（基礎）" duration="10">
+      <google-codelab-step label="CUJの特定" duration="10">
+        <p>SLOを決定するためには、はじめにクリティカルユーザージャーニー（CUJ）を選ぶ必要があります。CUJとは、ユーザーにとって重要な体験、期待です。 そのため本来、CUJを決定するにはSREだけでなくビジネス部門にも参加してもらい決定する必要があります。  </p>
+<h2 is-upgraded>フロントエンドからのサービスフローの確認 </h2>
+<p> ここでは、Dynatraceのサービスフローによりどのサービスがどれぐらいリクエストを受け付けているか確認し、そこからクリティカルユーザージャーニーを決定する方法について考えてみたいと思います。  </p>
+<ul>
+<li>メニューから<strong>アプリケーションオブザーバビリティ &gt; フロントエンド</strong>を開きます。 </li>
+<li><strong>Angular easyTravel</strong>をクリックします。 </li>
+<li><strong>サービス</strong>をクリックし、呼び出されたサービスの右下の<strong>View service flow</strong>をクリックします。 </li>
+<li>サービスフローが確認できるので、表示を<strong>スループット</strong>に変更します。  <img alt="service-flow" src="../assets/cloud-observe/jp/service-flow.gif">  今回のケースでは<strong>EasytravelService &gt; JourneyService &gt; easyTravel-Business</strong>というフローをクリティカルユーザージャーニーと考えることができそうです。  <strong>easyTravel-Business</strong>はDBへのアクセスなので、今回のハンズオンでは<strong>EasytravelService</strong>と<strong>JourneyService</strong>の2つに対して、SLOを設定していきます。 </li>
+</ul>
+
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="SLO設定（基礎）" duration="15">
         <p>基本的なサービスレベル目標(SLO)を設定していきます。Dynatraceが標準で監視しているメトリクスを用いることで簡単に、サービスレベル指標（SLI）を定義し、その閾値としてSLOを設定することができます。</p>
-<h2 is-upgraded>基礎SLOの作成</h2>
+<h2 is-upgraded>SLOの作成 (EasytravelService)</h2>
 <p>以下の手順で進めてください。</p>
 <ul>
-<li>メニューから<strong>クラウドオートメーション &gt; サービス レベル目標</strong>を開きます。</li>
+<li>メニューから<strong>オートメーション &gt; サービス レベル目標</strong>を開きます。</li>
 <li>画面右上の<strong>新しいSLOの追加</strong>ボタンをクリックします。</li>
 </ul>
 <p class="image-container"><img alt="basic-slo" src="../assets/cloud-observe/jp/basic-slo1.gif"></p>
-<p>ここでは、Sockshopアプリケーションのproduction名前空間のfrontendに対する可用性に関するSLOを作成します。以下のように使用します。</p>
+<p>ここでは、easyTravelアプリケーションの<code>easytravel-angular-frontend</code>デプロイメント上で稼働している<code>EasytravelService</code>に対する可用性に関するSLOを作成します。</p>
 <ol type="1">
 <li><strong>サービスレベル可用性ボタン</strong>をクリックします。</li>
-<li>下にスクロールされるので一旦上に戻り、このSLOに名前を付けます：<code>Sockshop Frontend Error SLO</code></li>
-<li>メトリック名やメトリック式はデフォルトのままにしておきます。</li>
-<li>フィルターの定義では時間枠のフィルターは<code>-1h</code>（過去1時間）を指定します。</li>
-<li>エンティティ セレクターは<code>type("SERVICE"),tag("[Kubernetes]tier:frontend"),tag("[Kubernetes]stage:prod")</code>を入力し、<strong>プレビュー</strong>をクリックします。エンティティが1つ表示されていることを確認します。</li>
-<li>成功条件の追加では、ターゲットを<code>90</code>%、警告を<code>95</code>%に設定します。</li>
+<li><strong>この service-level availabilitySLO に名前付け</strong>で、このSLOに名前を付けます：<code>EasytravelService Availability SLO</code></li>
+<li>メトリックを定義を開きます。メトリック名やメトリック式はデフォルトのままにしておきます。</li>
+<li>フィルターの定義を開きます。時間枠のフィルターは<code>-1h</code>（過去1時間）を指定します。</li>
+<li>エンティティ セレクターは<code>type("SERVICE"), tag("[KUBERNETES]app:easytravel-k8s"), tag("[KUBERNETES]type:angular-frontend"), webServiceName("EasytravelService")</code>を入力し、<strong>プレビュー</strong>をクリックします。エンティティが1つ表示されていることを確認します。</li>
+<li>成功条件の追加を開きます。ターゲットを<code>98</code>%、警告を<code>99</code>%に設定します。</li>
 <li><strong>評価</strong>ボタンをクリックし、グラフが表示されることを確認します。</li>
 <li><strong>作成</strong>ボタンをクリックして、SLOを作成します。</li>
 </ol>
 <p class="image-container"><img alt="basic-slo" src="../assets/cloud-observe/jp/basic-slo2.png"></p>
 <p>サービスレベル目標が作成され、現在のステータスなどが確認できます。</p>
 <p class="image-container"><img alt="basic-slo" src="../assets/cloud-observe/jp/basic-slo3.png"></p>
+<h2 is-upgraded>SLOの作成 (JourneyService)</h2>
+<p>もう1つ<code>JourneyService</code>に対する可用性に関するSLOを作成します。</p>
+<p>サービスレベル目標のページを開き、<strong>新しいSLOの追加</strong>ボタンをクリックします。</p>
+<ol type="1">
+<li><strong>サービスレベル可用性ボタン</strong>をクリックします。</li>
+<li><strong>この service-level availabilitySLO に名前付け</strong>で、このSLOに名前を付けます：<code>JourneyService Availability SLO</code></li>
+<li>メトリックを定義を開きます。メトリック名やメトリック式はデフォルトのままにしておきます。</li>
+<li>フィルターの定義を開きます。時間枠のフィルターは<code>-1h</code>（過去1時間）を指定します。</li>
+<li>エンティティ セレクターは<code>type("SERVICE"), tag("[KUBERNETES]app:easytravel-k8s"), tag("[KUBERNETES]type:backend"), webServiceName("JourneyService")</code>を入力し、<strong>プレビュー</strong>をクリックします。エンティティが1つ表示されていることを確認します。</li>
+<li>成功条件の追加を開きます。ターゲットを<code>98</code>%、警告を<code>99</code>%に設定します。</li>
+<li><strong>評価</strong>ボタンをクリックし、グラフが表示されることを確認します。</li>
+<li><strong>作成</strong>ボタンをクリックして、SLOを作成します。</li>
+</ol>
+<h2 is-upgraded>SLO作成の確認</h2>
+<p>2つのサービス可用性に関するSLOがこれで定義できました。</p>
+<p class="image-container"><img alt="basic-slo" src="../assets/cloud-observe/jp/basic-slo4.png"></p>
+<p>Dynatraceでは、エラーバジェットやバーンレートに関するメトリクスも自動で生成されますので、ダッシュボードで管理を簡単に行うことができるようになります。</p>
+<p>また、本ハンズオンには含まれておりませんが<strong>サービスのパフォーマンス</strong>やフロントエンドの<strong>ユーザーエクスペリエンス</strong>などもSLOとして定義することが可能です。</p>
+<aside class="special"><p>詳しいドキュメントは<a href="https://docs.dynatrace.com/docs/shortlink/objectives-hub" target="_blank">こちら</a>を参照ください。</p>
+</aside>
 
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="SLO設定（応用）" duration="15">
-        <p>カスタムメトリックを作成し、それに対するSLOの設定をしていきます。本手順により標準では提供されていない特定のリクエスト毎のSLOを設定することが可能になります。</p>
+      <google-codelab-step label="SLO設定（応用）" duration="20">
+        <p>本セッションでは、カスタムメトリックを作成し、それに対するSLOの設定をしていきます。本手順により標準では提供されていない特定のリクエスト毎のSLOを設定することが可能になります。</p>
 <h2 is-upgraded>カタログページのメトリック作成</h2>
-<p>カタログページへのリクエスト成功数のカスタムメトリックを作成します。</p>
+<p>カタログページへのリクエスト成功数のカスタムメトリックを作成します。s</p>
 <ul>
-<li>ナビゲーションメニューから<strong>アプリケーションとマイクロサービス &gt; サービス</strong>を開きます。</li>
-<li>フィルタリング基準で<strong>タグ &gt; [Kubernetes]stage &gt;prod</strong>を入力し、<code>front-end</code>サービスをクリックします。</li>
+<li>ナビゲーションメニューから<strong>アプリケーション オブザーバビリティ &gt; サービス</strong>を開きます。</li>
+<li><code>JourneyService</code>サービスをクリックします。</li>
+<li><strong>Key requests/endpoints</strong>の右側にある<strong>Top web requests</strong>ボタンをクリックします。</li>
 </ul>
-<p class="image-container"><img alt="service" src="../assets/cloud-observe/jp/service1.gif"></p>
+<p class="image-container"><img alt="requests" src="../assets/cloud-observe/jp/requests.gif"></p>
 <ul>
-<li><strong>ダイナミック リクエストの表示</strong>をクリックします。</li>
-<li>スクロールダウンして、<strong>/catalogue</strong>リクエストで、<strong>graphアイコン（分析ビューの作成）</strong>を選択します。</li>
-<li>メトリックの下のドロップダウンメニューから<strong>成功した要求の数</strong>を選択し、<strong>メトリックの作成</strong>ボタンをクリックします。</li>
-<li>メトリック名に<code>cataloguesuccesscount</code>を入力し、<strong>メトリックの作成</strong>ボタンをクリックします。</li>
+<li><strong>findJourneys</strong>リクエストの右側にある<strong>フィルターアイコン</strong>をクリックします。</li>
+<li><strong>メトリックの作成</strong>ボタンをクリックします。</li>
+<li>メトリック名に<code>findjourneyscount</code>を入力し、<strong>メトリックの作成</strong>ボタンをクリックします。</li>
 </ul>
 <p class="image-container"><img alt="custom-metric" src="../assets/cloud-observe/jp/custom-metric1.gif"></p>
 <ul>
-<li>メトリックの下のドロップダウンメニューから<strong>リクエスト数</strong>に変更し、<strong>メトリックの作成</strong>ボタンをクリックします。</li>
-<li>メトリック名に<code>cataloguecount</code>を入力し、<strong>メトリックの作成</strong>ボタンをクリックします。</li>
-<li><strong>Metric</strong> の下のドロップダウンメニューで、<strong>request count</strong> を変更して選択します。</li>
-<li><strong>Create metric</strong> をクリックしてください。</li>
-<li>Metric nameのところで、<code>cataloguecount</code>とします。</li>
-<li><strong>Create metric</strong> をクリックしてください。</li>
+<li>メトリックの下のドロップダウンメニューから<strong>成功した要求の数</strong>を選択し、<strong>メトリックの作成</strong>ボタンをクリックします。</li>
+<li>メトリック名に<code>findjourneyssuccesscount</code>を入力し、<strong>メトリックの作成</strong>ボタンをクリックします。</li>
 </ul>
 <p class="image-container"><img alt="custom-metric" src="../assets/cloud-observe/jp/custom-metric2.gif"></p>
-<h2 is-upgraded>カタログ用SLOの作成</h2>
+<h2 is-upgraded>findJourneys用SLOの作成</h2>
 <p>カスタムメトリックを作成したので、その2つを使用したSLOを設定していきます。</p>
 <ol type="1">
-<li>メニューから<strong>クラウドオートメーション &gt; サービス レベル目標</strong>を開きます。</li>
+<li>メニューから<strong>オートメーション &gt; サービス レベル目標</strong>を開きます。</li>
 <li>画面右上の<strong>新しいSLOの追加</strong>ボタンをクリックします。</li>
-<li><strong>このSLOに名前付け</strong>に任意の名前を入力します（例：<code>Catalogue Availability SLO</code>）</li>
-<li>メトリック式には<code>(100)*(calc:service.cataloguesuccesscount:splitBy():sum)/(calc:service.cataloguecount:splitBy():sum)</code>と入力します。</li>
-<li>フィルターの定義では時間枠のフィルターは<code>-5m</code>（過去5分間）を指定します。</li>
-<li>エンティティ セレクターはデフォルトで入力されているものを削除します。</li>
-<li>成功条件の追加はデフォルトのままとします。</li>
+<li><strong>このSLOに名前付け</strong>に任意の名前を入力します（例：<code>findJourneys Availability SLO</code>）</li>
+<li>メトリックを定義を開きます。メトリック式には<code>(100)*(calc:service.findjourneyssuccesscount:splitBy():sum)/(calc:service.findjourneyscount:splitBy():sum)</code>と入力します。</li>
+<li>フィルターの定義を開きます。時間枠のフィルターは<code>-5m</code>（過去5分間）を指定します。</li>
+<li>エンティティ セレクターは空白のままにします。</li>
+<li>成功条件の追加はデフォルトのままにしておきます。</li>
 <li><strong>評価</strong>ボタンをクリックし、グラフが表示されることを確認します。</li>
 <li><strong>作成</strong>ボタンをクリックして、SLOを作成します。</li>
 </ol>
@@ -217,48 +246,31 @@ kubectl delete pods --all -n production
 <ul>
 <li>ナビゲーションメニューから<strong>観察と探索 &gt; ダッシュボード</strong>もしくは<strong>お気に入り &gt; ダッシュボード</strong>を開きます。</li>
 </ul>
-<p>左のナビゲーションバーを参照し、<strong>Dashboards</strong>に進みます。Dynatraceには、<strong>Kubernetes Dashboards</strong>や<strong>Real User Monitoring</strong>といったダッシュボードのテンプレートがあらかじめ用意されています。</p>
-<p>それぞれのダッシュボードにドリルダウンして、アプリオーナーやビジネスユーザー向けの様々なダッシュボードウィジェットを確認できます。</p>
-<p class="image-container"><img alt="k8s dashboard" src="../assets/k8s/jp/k8s-workload-overview.png"></p>
-<h2 is-upgraded>SLOウィジェットの追加</h2>
-<p>作成したSLOに基づいて、新しいSLOウィジェットを追加します。</p>
+<p>Dynatraceには、<strong>Kubernetes workload overview</strong>や<strong>Real User Monitoring</strong>など複数のダッシュボードがあらかじめ用意されています。</p>
+<h2 is-upgraded>新規ダッシュボードの作成</h2>
+<p>ここでは、既存のダッシュボードではなく</p>
 <ul>
 <li>ダッシュボードのリスト画面から<strong>ダッシュボードの作成</strong>ボタンをクリックします。</li>
-<li>ダッシュボード名に任意の名前（例：<code>SRE向けダッシュボード</code>を入力し、<strong>作成</strong>をクリックします。</li>
+<li>ダッシュボード名に任意の名前（例：<code>SRE向けダッシュボード</code>）を入力し、<strong>作成</strong>をクリックします。</li>
 </ul>
 <p class="image-container"><img alt="dashboard" src="../assets/cloud-observe/jp/dashboard1.gif"></p>
+<h2 is-upgraded>SLOタイルの追加</h2>
 <ul>
 <li>ダッシュボードの編集でタイルのフィルタリングに<code>slo</code>と入力することでサービスレベル目標タイルだけが表示されます。</li>
 <li><strong>サービスレベル目標</strong>をダッシュボードへドラッグアンドドロップします。</li>
-<li>SLOの選択では<code>Sockshop Frontend Error SLO</code>を選択します。</li>
+<li>SLOの選択では<code>EasytravelService Availability SLO</code>を選択します。</li>
+<li>ダッシュボード上の何もタイルが置かれていないところをクリックし、同様の手順で<code>JourneyService Availability SLO</code>と<code>findJourneys Availability SLO</code>も追加します。</li>
 </ul>
 <p class="image-container"><img alt="dashboard" src="../assets/cloud-observe/jp/dashboard2.gif"></p>
-<ul>
-<li>ダッシュボード上の何もタイルが置かれていないところをクリックし、同様の手順で<code>Catalogue Availability SLO</code>も追加します。</li>
-<li>ダッシュボードの編集の横の<strong>完了</strong>ボタンをクリックします。</li>
-</ul>
-<h2 is-upgraded>メトリック・ウィジェットの追加</h2>
-<ul>
-<li>ダッシュボードの<strong>編集</strong>ボタンをクリックします。</li>
-<li><strong>単一の値</strong>タイルをダッシュボードの任意の場所にドラッグアンドドロップします。</li>
-<li><strong>データ エクスプローラーでタイルを設定</strong>をクリックします。</li>
-<li><strong>メトリックを選択してください</strong>と記載されているところに<code>server successcount</code>などと入力し、<code>Number of calls without server side errors</code>を選びます。</li>
-<li><strong>平均値</strong>から<strong>合計値</strong>に変更し、フィルター条件に<code>タグ、[Kubernetes]stage、prod</code>と<code>タグ、[Kubernetes]tier、frontend</code>を選択します。</li>
-<li><strong>クエリの実行</strong>ボタンをクリックします。</li>
-</ul>
-<p class="image-container"><img alt="dashboard" src="../assets/cloud-observe/jp/dashboard3.png"></p>
-<ul>
-<li><strong>変更をダッシュボードに保存します</strong>ボタンをクリックします。</li>
-<li><strong>タイトル</strong>を<code>Sockshop Frontend 成功リクエスト数</code>などに変更し、<strong>完了</strong>をクリックします。</li>
-</ul>
-<h2 is-upgraded>コードによるグラフ・ウィジェットの追加</h2>
+<h2 is-upgraded>グラフ・ウィジェットの追加 - SLOステータスのグラフ表示</h2>
 <ul>
 <li>ダッシュボード上の何もタイルが置かれていないところをクリックし、<strong>グラフ</strong>タイルを任意の場所にドラッグアンドドロップします。</li>
 <li><strong>データ エクスプローラーでタイルを設定</strong>をクリックします。</li>
-<li>コードを選択し、SLO設定（応用）で設定したメトリック式（<code>(100)*(calc:service.cataloguesuccesscount:splitBy():sum)/(calc:service.cataloguecount:splitBy():sum)</code>）を入力し、<strong>クエリの実行</strong>をクリックします。</li>
-<li>右側の設定項目から<strong>形式</strong>を<strong>0.00</strong>を選択し、<strong>軸 &gt; Y axis 1</strong>の最小、最大に<code>99.95, 100</code>と入力し、<strong>しきい値</strong>に以下の値を入力します。  <ul>
-<li>🟩 ≥ <code>99.99</code></li>
-<li>🟨 ≥ <code>99.98</code></li>
+<li><strong>メトリックを選択してください</strong>と記載されているところに<code>func:slo</code>と入力し、<code>EasytravelService Availability SLO</code>を選びます。</li>
+<li><strong>クエリの実行</strong>ボタンをクリックします。</li>
+<li>右側の設定項目から<strong>形式</strong>を<strong>0.00</strong>を選択し、<strong>軸 &gt; Y axis 1</strong>の最小、最大に<code>90, 100</code>と入力し、<strong>しきい値</strong>に以下の値を入力します。  <ul>
+<li>🟩 ≥ <code>99</code></li>
+<li>🟨 ≥ <code>98</code></li>
 <li>🟥 ≥ <code>0</code></li>
 </ul>
 </li>
@@ -266,99 +278,52 @@ kubectl delete pods --all -n production
 <p class="image-container"><img alt="data-explorer" src="../assets/cloud-observe/jp/data-explorer.png"></p>
 <ul>
 <li><strong>変更をダッシュボードに保存します</strong>ボタンをクリックします。</li>
-<li><strong>タイトル</strong>を<code>Sockshop Frontend SLOの推移</code>などに変更し、<strong>完了</strong>をクリックします。</li>
+<li><strong>タイトル</strong>を<code>EasytravelService Availability SLO</code>に変更します。</li>
+<li>同様に<strong>JourneyService</strong>と<strong>findJourneys</strong>に関してもグラフを追加します。</li>
+<li><strong>findJourneys</strong>に関しては<strong>形式</strong>を<strong>0.00</strong>を選択し、<strong>軸 &gt; Y axis 1</strong>の最小、最大に<code>99, 100</code>と入力し、<strong>しきい値</strong>に以下の値を入力します。  <ul>
+<li>🟩 ≥ <code>99.99</code></li>
+<li>🟨 ≥ <code>99.98</code></li>
+<li>🟥 ≥ <code>0</code></li>
 </ul>
-<h2 is-upgraded>各タイルのサイズ変更</h2>
-<p>タイルの右下をドラッグすることでサイズを変更することができるので、見やすい大きさに変更します。 編集が完了したら、<strong>完了</strong>ボタンをクリックします。</p>
-<p class="image-container"><img alt="dashboard" src="../assets/cloud-observe/jp/dashboard4.png"></p>
+</li>
+</ul>
+<h2 is-upgraded>グラフ・ウィジェットの追加 - バーンレートのグラフ表示</h2>
+<ul>
+<li><strong>グラフ</strong>タイルをダッシュボードの任意の場所にドラッグアンドドロップします。</li>
+<li><strong>データ エクスプローラーでタイルを設定</strong>をクリックします。</li>
+<li><strong>メトリックを選択してください</strong>と記載されているところに<code>func:slo.errorBudgetBurnRate</code>と入力し、<code>Error budget burn rate - EasytravelService Availability SLO</code>を選びます。</li>
+<li><strong>クエリの実行</strong>ボタンをクリックします。</li>
+</ul>
+<p class="image-container"><img alt="dashboard" src="../assets/cloud-observe/jp/burn-rate.png"></p>
+<ul>
+<li><strong>変更をダッシュボードに保存します</strong>ボタンをクリックします。</li>
+<li><strong>タイトル</strong>を<code>EasytravelService Error budget burn rate</code>などに変更し、<strong>完了</strong>をクリックします。</li>
+<li>同様に<strong>JourneyService</strong>と<strong>findJourneys</strong>に関してもグラフを追加します。</li>
+</ul>
+<p>編集が完了したら、<strong>完了</strong>ボタンをクリックします。</p>
+<p class="image-container"><img alt="dashboard" src="../assets/cloud-observe/jp/dashboard3.png"></p>
 
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="Monitoring-as-Code" duration="10">
-        <p><a href="https://github.com/dynatrace-oss/dynatrace-monitoring-as-code" target="_blank">Dynatrace Monitoring as Code (Monaco)</a>を使用して、Dynatraceの設定をコートとして管理することが可能です。</p>
-<p>これには以下のようなユースケースがあります。</p>
-<ul>
-<li>複数の環境で再利用できるように、構成をテンプレート化する機能を持つこと</li>
-<li>コンフィグレーション間の相互依存性は、一意の識別子を追跡することなく処理する必要があります。</li>
-<li>同じコンフィグレーションを何百ものDynatrace環境に簡単に適用・更新できる機能を導入し、特定の環境にロールアウトすることができます。</li>
-<li>アプリケーション固有の構成をある環境から別の環境へと促進するための簡単な方法を特定し、開発からハードニング、本番までのデプロイメントを追跡します。</li>
-<li>プルリクエスト、マージ、承認など、gitベースのワークフローのすべてのメカニズムとベストプラクティスをサポートする。</li>
-<li>コンフィグレーションは、開発からハードニング、本番へのデプロイメント後、1つの環境から別の環境へと簡単に昇格できなければなりません。</li>
-</ul>
-<h2 is-upgraded>monacoのインストール</h2>
-<p>monacoはGithubからダウンロードすることができます。</p>
-<pre><code language="language-bash" class="language-bash">cd sockshop/
-curl -L https://github.com/dynatrace-oss/dynatrace-monitoring-as-code/releases/download/v1.7.0/monaco-linux-amd64 -o monaco-cli
-chmod +x monaco-cli
-</code></pre>
-<p><code>monaco-cli help</code>と入力することでコマンドの詳細を確認することができます。</p>
-<p><strong>DT_TENANT</strong>と<strong>DT_API_TOKEN</strong>と<strong>DT_DASHBOARD_OWNER</strong>の変数を設定します。 これらは、ラボの登録メール内に記載されています。</p>
-<pre><code language="language-bash" class="language-bash">export DT_TENANT=https://mou612.managed-sprint.dynalabs.io/e/&lt;ENV&gt;
-export DT_API_TOKEN=dt0c01.********************************************
-export DT_DASHBOARD_OWNER=&lt;your email address&gt;
-</code></pre>
-<p>本演習ではエラーの発生を防ぐため、一部の設定については移動させておきます。</p>
-<pre><code language="language-bash" class="language-bash">mv monaco/sockshop/azure-credentials /tmp
-mv monaco/sockshop/kubernetes-credentials /tmp
-mv monaco/sockshop/synthetic-monitor /tmp
-</code></pre>
-<p>以下のコマンドを実行してDynatraceの設定を行います。</p>
-<pre><code language="language-bash" class="language-bash">export dev_frontend_ip=$(kubectl -n dev get ingresses.networking.k8s.io front-end -o jsonpath=&#39;{.spec.rules[0].host}&#39;)
-export production_frontend_ip=$(kubectl -n production get ingresses.networking.k8s.io front-end -o jsonpath=&#39;{.spec.rules[0].host}&#39;)
-export SKIP_PROMETHEUS=true
-./monaco-cli -e=monaco/sockshop-environment.yaml -p=sockshop monaco
-</code></pre>
-<p><code>Deployment finished without errors</code>が出力されていれば成功です。</p>
-<p class="image-container"><img alt="monaco" src="../assets/cloud-observe/jp/monaco.png"></p>
-<h2 is-upgraded>実行結果の確認</h2>
-<p>monacoにより、以下の設定が行われたことを確認します。</p>
-<ul>
-<li>ダッシュボード</li>
-<li>SLO</li>
-<li>アプリケーション定義</li>
-<li>サービスネーミングルール</li>
-<li>プロセスのネーミングルール</li>
-<li>管理ゾーン</li>
-</ul>
-<p class="image-container"><img alt="monaco" src="../assets/cloud-observe/jp/monaco-slo.png"></p>
+      <google-codelab-step label="参考：Kubernetes環境の構築" duration="20">
+        <p>今回のハンズオンにおけるKubernetes環境の構築手順を掲載します。Kubernetesの環境としてはMicrok8Sを利用しており、Ubuntuホスト1台から試すことが可能です。 ハンズオン終了後に試してみたい方は以下の手順に従って、環境の構築を行うことが可能です。  </p>
+<h2 is-upgraded>Ubuntu環境の準備 </h2>
+<p> AWS EC2などにUbuntu環境を用意します。OSバージョンは以下を参考にインスタンスサイズはt3.xlarge相当以上（ストレージ容量30GB）が推奨となります。  <code>bash<br>$ cat /etc/os-release<br>NAME="Ubuntu"<br>VERSION="20.04.6 LTS (Focal Fossa)"<br>ID=ubuntu<br>ID_LIKE=debian<br>PRETTY_NAME="Ubuntu 20.04.6 LTS"<br>VERSION_ID="20.04"<br>HOME_URL="https://www.ubuntu.com/"<br>SUPPORT_URL="https://help.ubuntu.com/"<br>BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"<br>PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"<br>VERSION_CODENAME=focal<br>UBUNTU_CODENAME=focal</code><br>  必要なパッケージのインストールやアップデートを実施します。  </p>
+<h2 is-upgraded>Microk8s環境の構築 </h2>
+<p> 以下のコマンドを実行し、microk8s環境を構築します。  <code>bash<br>sudo snap install microk8s --classic --channel=1.27/stable<br>sudo snap alias microk8s.kubectl kubectl<br>mkdir -p ~/.kube<br>sudo microk8s.config > ~/.kube/config<br>sudo usermod -a -G microk8s $USER<br>sudo chown -R $USER ~/.kube</code><br>  このタイミングで一度、シェルの再接続を実施します。  <code>bash<br>microk8s.start<br>microk8s.enable dns<br>microk8s.enable hostpath-storage<br>microk8s.enable ingress<br>CLUSTER_SERVER=$(microk8s config | grep "server:" | sed 's/^.*server: //')<br>kubectl config set-cluster microk8s-cluster --insecure-skip-tls-verify=true --server="$CLUSTER_SERVER"</code><br>  </p>
+<h2 is-upgraded>サンプルアプリのインストール </h2>
+<p> サンプルアプリケーション（easyTravel）を展開していきます。スクリプトは<a href="https://github.com/sukatsu1222/easytravel-k8s" target="_blank">Github</a>上にありますので そちらを利用します。  <code>bash<br>git clone https://github.com/sukatsu1222/easytravel-k8s.git<br>easytravel-k8s/deploy-easytravel.sh<br>easytravel-k8s//deploy-ingress.sh</code><br>  しばらくするとPodsが起動し、ingress経由でアクセスができるようになります。  <img alt="angular" src="../assets/cloud-observe/jp/angular.png"></p>
 
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="アンケート" duration="3">
-        <p>このラボを楽しんでいただき、お役に立てれば幸いです。ご意見、ご感想をお待ちしております。 </p>
-<google-codelab-survey survey-id="cloud-native-observability-jp-1">
-<h4>このラボでの全体的な経験はどうでしたか？</h4>
-<paper-radio-group>
-<paper-radio-button>とても良い</paper-radio-button>
-<paper-radio-button>良い</paper-radio-button>
-<paper-radio-button>普通</paper-radio-button>
-<paper-radio-button>悪い</paper-radio-button>
-<paper-radio-button>とても悪い</paper-radio-button>
-</paper-radio-group>
-</google-codelab-survey>
-<google-codelab-survey survey-id="cloud-native-observability-jp-2">
-<h4>このラボから最も恩恵を受けたことは何ですか？</h4>
-<paper-radio-group>
-<paper-radio-button>KubernetesへのOneAgentの導入</paper-radio-button>
-<paper-radio-button>GitOps / コードとしてのモニタリング</paper-radio-button>
-<paper-radio-button>サービスレベル目標</paper-radio-button>
-<paper-radio-button>Releases</paper-radio-button>
-</paper-radio-group>
-</google-codelab-survey>
-<google-codelab-survey survey-id="cloud-native-observability-jp-3">
-<h4>このラボを友人や同僚に勧める可能性はどの程度ありますか？</h4>
-<paper-radio-group>
-<paper-radio-button>強く勧めたい</paper-radio-button>
-<paper-radio-button>勧めたい</paper-radio-button>
-<paper-radio-button>わからない</paper-radio-button>
-<paper-radio-button>勧めない</paper-radio-button>
-<paper-radio-button>全く勧めない</paper-radio-button>
-</paper-radio-group>
-</google-codelab-survey>
+      <google-codelab-step label="まとめ" duration="0">
+        <h2 is-upgraded>ハンズオンワークショップへ参加された方へ</h2>
+<p>Dynatraceでは2週間のフリートライアルを実施可能です。ぜひもっと触りたいと思った方はぜひ以下のサイトからお申込みください。</p>
+<p><a href="https://www.dynatrace.com/trial/" target="_blank">フリートライアルの申し込み</a></p>
 <aside class="special"><p>💡 その他のアイデアや提案については、<a href="mailto:DT-TYO-SE@dynatrace.com?subject=Dynatraceによるクラウドネイティブなオブザーバビリティ - アイデア、提案" target="_blank">メールでのお問い合わせ</a> をお願いします。</p>
 </aside>
 

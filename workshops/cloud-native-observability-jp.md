@@ -2,7 +2,7 @@ id: cloud-native-observability-jp
 summary: SREのためのクラウドネイティブなオブザーバビリティを実現するDynatraceの使い方
 categories: cloud-obs, cloud-automation
 tags: cloud-Obs, Intermediate
-status: Published 
+status: Published
 authors: Katsuyoshi Sumida
 Feedback Link: mailto:DT-TYO-SE@dynatrace.com
 new: 1
@@ -26,12 +26,11 @@ Dynatrace主催のハンズオンワークショップへ参加されている�
 ### 学習内容
 - Dynatrace Operatorの導入
 - リリース管理
-- サービスレベル目標の設定
-- Monitoring as Codeによる監視のコード化
+- サービスレベル目標の設定（基本・応用）
 
 <!-- Step 1 -->
 ## Dynatrace Operatorの導入
-Duration: 15
+Duration: 20
 <<snippet-jp/setup/install.md>>
 
 <!-- Step 2 -->
@@ -40,13 +39,17 @@ Duration: 10
 <<snippet-jp/explore/releases.md>>
 
 <!-- Step 3 -->
-## SLO設定（基礎）
+## CUJの特定
 Duration: 10
+<<snippet-jp/explore/cuj.md>>
+
+## SLO設定（基礎）
+Duration: 15
 <<snippet-jp/config/basic-slo.md>>
 
 <!-- Step 4 -->
 ## SLO設定（応用）
-Duration: 15
+Duration: 20
 <<snippet-jp/config/advanced-slo.md>>
 
 <!-- Step 5 -->
@@ -54,41 +57,18 @@ Duration: 15
 Duration: 15
 <<snippet-jp/config/dashboard.md>>
 
-<!-- Step 6 -->
-## Monitoring-as-Code
-Duration: 10
-<<snippet-jp/deploy/monaco.md>>
+<!-- Appendix -->
+## 参考：Kubernetes環境の構築
+Duration: 20
+<<snippet-jp/setup/k8s.md>>
 
-<!-- ------------------------ -->
-## アンケート
-Duration: 3
+## まとめ
 
-このラボを楽しんでいただき、お役に立てれば幸いです。ご意見、ご感想をお待ちしております。
-<form>
-  <name>このラボでの全体的な経験はどうでしたか？</name>
-  <input value="とても良い" />
-  <input value="良い" />
-  <input value="普通" />
-  <input value="悪い" />
-  <input value="とても悪い" />
-</form>
+### ハンズオンワークショップへ参加された方へ
 
-<form>
-  <name>このラボから最も恩恵を受けたことは何ですか？</name>。
-  <input value="KubernetesへのOneAgentの導入" />
-  <input value="GitOps / コードとしてのモニタリング" />
-  <input value="サービスレベル目標" />
-  <input value="Releases" />
-</form>
+Dynatraceでは2週間のフリートライアルを実施可能です。ぜひもっと触りたいと思った方はぜひ以下のサイトからお申込みください。
 
-<form>
-  <name>このラボを友人や同僚に勧める可能性はどの程度ありますか？</name>
-  <input value="強く勧めたい" />
-  <input value="勧めたい" />
-  <input value="わからない" />
-  <input value="勧めない" />
-  <input value="全く勧めない" />
-</form>
+[フリートライアルの申し込み](https://www.dynatrace.com/trial/)
 
 Positive
 : 💡 その他のアイデアや提案については、[メールでのお問い合わせ](mailto:DT-TYO-SE@dynatrace.com?subject=Dynatraceによるクラウドネイティブなオブザーバビリティ - アイデア、提案) をお願いします。

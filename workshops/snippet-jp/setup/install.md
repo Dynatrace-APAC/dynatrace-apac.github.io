@@ -8,6 +8,7 @@ Linuxインスタンスの**ターミナル**にアクセスします。
 
 Positive
 : ハンズオンワークショップへ参加されている方はメールに記載されている**EC2インスタンスの情報**を使用して、SSHでアクセスします。メールに記載されている**SSH Username**と**SSH Password**を使用します。
+もしくは、ブラウザ上からcode-server経由でアクセスすることも可能です。メールに記載されているURLからアクアクセスをしてください。
 
 ### Dynatrace Operatorのインストール
 
@@ -17,7 +18,7 @@ Positive
 
 * ナビゲーションメニューから **管理 > Dynatraceハブ** を開きます。
 * **Kubernetes** を選択します。
-* 右下の **Kubernetesのモニター** ボタンをクリックします。 
+* 右下の **Kubernetesのモニター** ボタンをクリックします。
 
 ![Deploy](../assets/k8s/jp/deploy-1.gif)
 
@@ -40,7 +41,7 @@ Positive
 
 * Dynatrace UIに戻り、**コピー**ボタンをクリックして、ターミナルに貼り付け実行します。
 
-![Deploy](/../assets/k8s/jp/deploy-3.png)
+![Deploy](../assets/k8s/jp/deploy-3.png)
 
 出力例
 
@@ -85,13 +86,12 @@ Negative
 Negative
 : 公式サイトのトラブルシューティングページは[こちら](https://www.dynatrace.com/support/help/shortlink/kubernetes-troubleshoot)を参照ください。
 
-### Sockshopアプリケーションの再起動
+### easytravelアプリケーションの再起動
 
 様々なプロセスが自動的に検出されているのがわかりますが、Dynatraceはそれらを再起動するよう促します。これは、コードを変更せずに自動的に監視を行うために必要です。
 
-以下のコマンドを実行して、**devとproduction**の2つのNamespacesに含まれるPodsを作り直します。
+以下のコマンドを実行して、**easytravel**のNamespacesに含まれるPodsを作り直します。
 
 ```bash
-kubectl delete pods --all -n dev
-kubectl delete pods --all -n production
+kubectl delete pods --all -n easytravel
 ```
